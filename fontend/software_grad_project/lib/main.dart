@@ -27,7 +27,16 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.bold,
               fontSize: 30,
               color: AppColors.primaryBlue),
+          headlineSmall: TextStyle(
+              fontSize: 28,
+              color: AppColors.grey,
+              fontWeight: FontWeight.w500),
+          headlineLarge: TextStyle(
+              fontWeight: FontWeight.w400,
+              fontSize: 30,
+              color: AppColors.black),
           bodyMedium: TextStyle(height: 2, color: AppColors.grey, fontSize: 18),
+          bodySmall: TextStyle(height: 2, color: AppColors.lightGrey, fontSize: 16),
         ),
       ),
       home: const OnBoarding(),
