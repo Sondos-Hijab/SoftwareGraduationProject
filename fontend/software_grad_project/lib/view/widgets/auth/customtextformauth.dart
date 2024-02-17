@@ -17,7 +17,7 @@ class CustomeTextFormAuth extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 25),
+      margin: const EdgeInsets.symmetric(vertical: 15),
       child: TextFormField(
         controller: mycontroller,
         decoration: InputDecoration(
@@ -36,7 +36,6 @@ class CustomeTextFormAuth extends StatelessWidget {
           suffixIcon: Icon(iconData),
           suffixIconColor: AppColors.lightGrey,
           border: OutlineInputBorder(
-            borderSide: const BorderSide(color: AppColors.lightGrey),
             borderRadius: BorderRadius.circular(30),
           ),
         ),

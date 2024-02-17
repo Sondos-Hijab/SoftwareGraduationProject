@@ -7,10 +7,10 @@ class CustomDescriptionTextAuth extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 5),
       child: Text(
         description,
-        style: Theme.of(context).textTheme.bodySmall,
+        style: Theme.of(context).textTheme.bodyMedium,
         textAlign: TextAlign.center,
       ),
     );
