@@ -13,7 +13,9 @@ class SignUpControllerImp extends SignUpController {
   late TextEditingController email;
   late TextEditingController confirmPassword;
   @override
-  signup() {}
+  signup() {
+    Get.offNamed(AppRoutes.successPageAfterSignUp);
+  }
 
   @override
   goToLogin() {

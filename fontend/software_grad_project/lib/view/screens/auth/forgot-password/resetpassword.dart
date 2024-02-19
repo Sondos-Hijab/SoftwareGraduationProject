@@ -30,10 +30,10 @@ class ResetPassword extends StatelessWidget {
           child: ListView(
             children: [
               const CustomTextTitleAuth(
-                titleText: "Reset Password",
+                titleText: "New Password",
               ),
               const CustomDescriptionTextAuth(
-                  description: "Enter the new password"),
+                  description: "Please enter the new password"),
               CustomeTextFormAuth(
                   hintText: "Enter your password",
                   labelText: "Password",
@@ -48,6 +48,7 @@ class ResetPassword extends StatelessWidget {
                 text: "Reset Password",
                 onPressed: () {
                   //resetting password in backend
+                  controller.goToSuccessPage();
                 },
               ),
             ],

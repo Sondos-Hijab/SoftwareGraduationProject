@@ -30,7 +30,7 @@ class Login extends StatelessWidget {
           child: ListView(
             children: [
               const CustomTextTitleAuth(
-                titleText: "Welcome Back",
+                titleText: "Welcome Back!",
               ),
               const LogoAuth(),
               const CustomDescriptionTextAuth(

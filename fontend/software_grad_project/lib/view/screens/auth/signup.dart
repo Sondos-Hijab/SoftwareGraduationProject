@@ -56,7 +56,9 @@ class SignUp extends StatelessWidget {
                   mycontroller: controller.confirmPassword),
               CustomButtonAuth(
                 text: "Sign Up",
-                onPressed: () {},
+                onPressed: () {
+                  controller.signup();
+                },
               ),
               Container(
                   margin: const EdgeInsets.only(top: 15),
