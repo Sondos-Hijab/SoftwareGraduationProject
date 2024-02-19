@@ -3,17 +3,22 @@ import 'package:get/get.dart';
 import 'package:software_grad_project/core/constants/routesnames.dart';
 
 abstract class ForgotPasswordController extends GetxController {
-  checkEmail();
-  goToResetPassword();
+  checkEmailandGoToResetPassword();
 }
 
 class ForgotPasswordControllerImp extends ForgotPasswordController {
   late TextEditingController email;
+  GlobalKey<FormState> formState = GlobalKey<FormState>();
+
   @override
-  checkEmail() {}
-  @override
-  goToResetPassword() {
-    Get.offNamed(AppRoutes.resetPassword);
+  checkEmailandGoToResetPassword() {
+    var formData = formState.currentState;
+    if (formData!.validate()) {
+      print("Valid");
+      Get.offNamed(AppRoutes.resetPassword);
+    } else {
+      print("Not valid");
+    }
   }
 
   @override

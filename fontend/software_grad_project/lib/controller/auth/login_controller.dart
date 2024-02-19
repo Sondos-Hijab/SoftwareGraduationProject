@@ -9,10 +9,20 @@ abstract class LoginController extends GetxController {
 }
 
 class LoginControllerImp extends LoginController {
-  late TextEditingController email;
+  late TextEditingController username;
   late TextEditingController password;
+
+  GlobalKey<FormState> formState = GlobalKey<FormState>();
+
   @override
-  login() {}
+  login() {
+    var formData = formState.currentState;
+    if (formData!.validate()) {
+      print("Valid");
+    } else {
+      print("Not valid");
+    }
+  }
 
   @override
   goToSignUp() {
@@ -26,14 +36,14 @@ class LoginControllerImp extends LoginController {
 
   @override
   void onInit() {
-    email = TextEditingController();
+    username = TextEditingController();
     password = TextEditingController();
     super.onInit();
   }
 
   @override
   void dispose() {
-    email.dispose();
+    username.dispose();
     password.dispose();
     super.dispose();
   }

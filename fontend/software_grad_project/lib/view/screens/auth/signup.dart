@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:software_grad_project/controller/auth/signup_controller.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
+import 'package:software_grad_project/core/functions/valid_input.dart';
 import 'package:software_grad_project/view/widgets/auth/customdescriptiontextauth.dart';
 import 'package:software_grad_project/view/widgets/auth/customebuttonauth.dart';
 import 'package:software_grad_project/view/widgets/auth/customtexttitleauth.dart';
@@ -27,47 +28,66 @@ class SignUp extends StatelessWidget {
       body: Container(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           margin: const EdgeInsets.symmetric(vertical: 40),
-          child: ListView(
-            children: [
-              const CustomTextTitleAuth(
-                titleText: "Welcome!",
-              ),
-              const CustomDescriptionTextAuth(
-                  description: "Sign up to get an account!"),
-              CustomeTextFormAuth(
+          child: Form(
+            key: controller.formState,
+            child: ListView(
+              children: [
+                const CustomTextTitleAuth(
+                  titleText: "Welcome!",
+                ),
+                const CustomDescriptionTextAuth(
+                    description: "Sign up to get an account!"),
+                CustomeTextFormAuth(
                   hintText: "Enter your username",
                   labelText: "Username",
                   iconData: Icons.person_2_outlined,
-                  mycontroller: controller.username),
-              CustomeTextFormAuth(
+                  mycontroller: controller.username,
+                  valid: (val) {
+                    return validInput(val!, 4, 10, "username");
+                  },
+                ),
+                CustomeTextFormAuth(
                   hintText: "Enter your email",
                   labelText: "Email",
                   iconData: Icons.email_outlined,
-                  mycontroller: controller.email),
-              CustomeTextFormAuth(
+                  mycontroller: controller.email,
+                  valid: (val) {
+                    return validInput(val!, 8, 30, "email");
+                  },
+                ),
+                CustomeTextFormAuth(
                   hintText: "Enter your password",
                   labelText: "Password",
                   iconData: Icons.lock_outline,
-                  mycontroller: controller.password),
-              CustomeTextFormAuth(
+                  mycontroller: controller.password,
+                  valid: (val) {
+                    return validInput(val!, 6, 12, "password");
+                  },
+                ),
+                CustomeTextFormAuth(
                   hintText: "Confirm password",
                   labelText: "Password",
                   iconData: Icons.lock_outline,
-                  mycontroller: controller.confirmPassword),
-              CustomButtonAuth(
-                text: "Sign Up",
-                onPressed: () {
-                  controller.signup();
-                },
-              ),
-              Container(
-                  margin: const EdgeInsets.only(top: 15),
-                  child: CustomTextSignUpOrLogin(
-                    leftText: "Already have an account?",
-                    rightText: "Sign In",
-                    onTap: () => controller.goToLogin(),
-                  ))
-            ],
+                  mycontroller: controller.confirmPassword,
+                  valid: (val) {
+                    return validInput(val!, 6, 12, "password");
+                  },
+                ),
+                CustomButtonAuth(
+                  text: "Sign Up",
+                  onPressed: () {
+                    controller.signup();
+                  },
+                ),
+                Container(
+                    margin: const EdgeInsets.only(top: 15),
+                    child: CustomTextSignUpOrLogin(
+                      leftText: "Already have an account?",
+                      rightText: "Sign In",
+                      onTap: () => controller.goToLogin(),
+                    ))
+              ],
+            ),
           )),
     );
   }

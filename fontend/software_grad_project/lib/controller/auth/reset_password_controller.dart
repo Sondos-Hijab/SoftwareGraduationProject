@@ -11,9 +11,18 @@ class ResetPasswordControllerImp extends ResetPasswordController {
   late TextEditingController password;
 
   late TextEditingController confirmPassword;
+  GlobalKey<FormState> formState = GlobalKey<FormState>();
 
   @override
-  resetPassword() {}
+  resetPassword() {
+    var formData = formState.currentState;
+    if (formData!.validate()) {
+      print("Valid");
+      Get.offNamed(AppRoutes.successPageAfterReset);
+    } else {
+      print("Not valid");
+    }
+  }
 
   @override
   goToSuccessPage() {

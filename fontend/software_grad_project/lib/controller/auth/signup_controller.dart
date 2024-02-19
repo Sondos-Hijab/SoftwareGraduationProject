@@ -12,9 +12,18 @@ class SignUpControllerImp extends SignUpController {
   late TextEditingController password;
   late TextEditingController email;
   late TextEditingController confirmPassword;
+
+  GlobalKey<FormState> formState = GlobalKey<FormState>();
+
   @override
   signup() {
-    Get.offNamed(AppRoutes.successPageAfterSignUp);
+    var formData = formState.currentState;
+    if (formData!.validate()) {
+      print("Valid");
+      Get.offNamed(AppRoutes.successPageAfterSignUp);
+    } else {
+      print("Not valid");
+    }
   }
 
   @override
