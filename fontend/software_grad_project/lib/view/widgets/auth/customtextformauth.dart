@@ -12,7 +12,7 @@ class CustomeTextFormAuth extends StatelessWidget {
       required this.hintText,
       required this.labelText,
       required this.iconData,
-      this.mycontroller});
+      required this.mycontroller});
 
   @override
   Widget build(BuildContext context) {
