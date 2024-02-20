@@ -9,56 +9,56 @@ class SuccessSignUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SuccessSignUpControllerImp controller =
-        Get.put(SuccessSignUpControllerImp());
+    Get.lazyPut(() => SuccessSignUpControllerImp());
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: AppColors.appWhite,
-        elevation: 0.0,
-        title: Text(
-          'Success',
-          style: Theme.of(context).textTheme.headlineSmall,
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: AppColors.appWhite,
+          elevation: 0.0,
+          title: Text(
+            'Success',
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
         ),
-      ),
-      body: Container(
-        padding: const EdgeInsets.all(15),
-        margin: const EdgeInsets.symmetric(vertical: 30),
-        child: Column(
-          children: [
-            const Center(
-              child: Icon(
-                Icons.check_circle_outline,
-                size: 350,
-                color: AppColors.primaryBlue,
-              ),
+        body: GetBuilder<SuccessSignUpControllerImp>(
+          builder: (controller) => Container(
+            padding: const EdgeInsets.all(15),
+            margin: const EdgeInsets.symmetric(vertical: 30),
+            child: Column(
+              children: [
+                const Center(
+                  child: Icon(
+                    Icons.check_circle_outline,
+                    size: 200,
+                    color: AppColors.primaryBlue,
+                  ),
+                ),
+                Text(
+                  "Success signing up!",
+                  style: Theme.of(context).textTheme.headlineLarge,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                Text(
+                  "You can go to sign in page now, and customize your profile",
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  textAlign: TextAlign.center,
+                ),
+                const Spacer(),
+                SizedBox(
+                  width: double.infinity,
+                  child: CustomButtonAuth(
+                    text: "Sign in",
+                    onPressed: () {
+                      controller.goToLoginPage();
+                    },
+                  ),
+                ),
+              ],
             ),
-            Text(
-              "Success signing up!",
-              style: Theme.of(context).textTheme.headlineLarge,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(
-              height: 25,
-            ),
-            Text(
-              "You can go to sign in page now, and customize your profile",
-              style: Theme.of(context).textTheme.bodyMedium,
-              textAlign: TextAlign.center,
-            ),
-            const Spacer(),
-            SizedBox(
-              width: double.infinity,
-              child: CustomButtonAuth(
-                text: "Sign in",
-                onPressed: () {
-                  controller.goToLoginPage();
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 }

@@ -24,6 +24,18 @@ class ResetPasswordControllerImp extends ResetPasswordController {
     }
   }
 
+  bool showPassword = true;
+  showPasswordFunction() {
+    showPassword = (showPassword == true ? false : true);
+    update();
+  }
+
+  bool showConfirmPassword = true;
+  showConfirmPasswordFunction() {
+    showConfirmPassword = (showConfirmPassword == true ? false : true);
+    update();
+  }
+
   @override
   goToSuccessPage() {
     Get.offNamed(AppRoutes.successPageAfterReset);

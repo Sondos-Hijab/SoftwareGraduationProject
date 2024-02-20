@@ -10,9 +10,10 @@ class OnBoarding extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(OnBoardingControllerImp());
+    Get.lazyPut(() => OnBoardingControllerImp());
     return Scaffold(
-      body: SafeArea(
+        body: GetBuilder<OnBoardingControllerImp>(
+      builder: (controller) => SafeArea(
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 50),
           child: const Column(
@@ -31,6 +32,6 @@ class OnBoarding extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ));
   }
 }

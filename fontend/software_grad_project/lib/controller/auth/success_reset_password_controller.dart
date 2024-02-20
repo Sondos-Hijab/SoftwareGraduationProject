@@ -8,6 +8,6 @@ abstract class SuccessResetPasswordController extends GetxController {
 class SuccessResetPasswordControllerImp extends SuccessResetPasswordController {
   @override
   goToLoginPage() {
-    Get.offAllNamed(AppRoutes.login);
+    Get.offNamed(AppRoutes.login);
   }
 }

@@ -7,6 +7,8 @@ class CustomeTextFormAuth extends StatelessWidget {
   final IconData iconData;
   final TextEditingController? mycontroller;
   final String? Function(String?)? valid;
+  final bool? obscureText;
+  final void Function()? onTapIcon;
 
   const CustomeTextFormAuth(
       {super.key,
@@ -14,7 +16,9 @@ class CustomeTextFormAuth extends StatelessWidget {
       required this.labelText,
       required this.iconData,
       required this.mycontroller,
-      required this.valid});
+      required this.valid,
+      this.obscureText,
+      this.onTapIcon});
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +27,7 @@ class CustomeTextFormAuth extends StatelessWidget {
       child: TextFormField(
         validator: valid,
         controller: mycontroller,
+        obscureText: obscureText == null || obscureText == false ? false : true,
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: const TextStyle(fontSize: 14, color: AppColors.lightGrey),
@@ -36,7 +41,10 @@ class CustomeTextFormAuth extends StatelessWidget {
               style: const TextStyle(color: AppColors.lightGrey),
             ),
           ),
-          suffixIcon: Icon(iconData),
+          suffixIcon: InkWell(
+            onTap: onTapIcon,
+            child: Icon(iconData),
+          ),
           suffixIconColor: AppColors.lightGrey,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),

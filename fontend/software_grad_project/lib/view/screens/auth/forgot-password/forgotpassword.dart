@@ -13,46 +13,46 @@ class ForgotPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ForgotPasswordControllerImp controller =
-        Get.put(ForgotPasswordControllerImp());
+    Get.lazyPut(() => ForgotPasswordControllerImp());
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: AppColors.appWhite,
-        elevation: 0.0,
-        title: Text(
-          'Forgot Password',
-          style: Theme.of(context).textTheme.headlineSmall,
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: AppColors.appWhite,
+          elevation: 0.0,
+          title: Text(
+            'Forgot Password',
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
         ),
-      ),
-      body: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: Form(
-            key: controller.formState,
-            child: ListView(
-              children: [
-                const CustomTextTitleAuth(
-                  titleText: "Check Email",
+        body: GetBuilder<ForgotPasswordControllerImp>(
+          builder: (controller) => Container(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Form(
+                key: controller.formState,
+                child: ListView(
+                  children: [
+                    const CustomTextTitleAuth(
+                      titleText: "Check Email",
+                    ),
+                    const CustomDescriptionTextAuth(
+                        description: "Enter your email to reset you password"),
+                    CustomeTextFormAuth(
+                      hintText: "Enter your email",
+                      labelText: "Email",
+                      iconData: Icons.email_outlined,
+                      mycontroller: controller.email,
+                      valid: (val) => validInput(val!, 8, 30, "email"),
+                    ),
+                    CustomButtonAuth(
+                      text: "Confirm",
+                      onPressed: () {
+                        //checking email in backend
+                        controller.checkEmailandGoToResetPassword();
+                      },
+                    ),
+                  ],
                 ),
-                const CustomDescriptionTextAuth(
-                    description: "Enter your email to reset you password"),
-                CustomeTextFormAuth(
-                  hintText: "Enter your email",
-                  labelText: "Email",
-                  iconData: Icons.email_outlined,
-                  mycontroller: controller.email,
-                  valid: (val) => validInput(val!, 8, 30, "email"),
-                ),
-                CustomButtonAuth(
-                  text: "Confirm",
-                  onPressed: () {
-                    //checking email in backend
-                    controller.checkEmailandGoToResetPassword();
-                  },
-                ),
-              ],
-            ),
-          )),
-    );
+              )),
+        ));
   }
 }

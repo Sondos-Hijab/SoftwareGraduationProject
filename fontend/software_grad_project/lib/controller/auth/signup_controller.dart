@@ -26,6 +26,18 @@ class SignUpControllerImp extends SignUpController {
     }
   }
 
+  bool showPassword = true;
+  showPasswordFunction() {
+    showPassword = (showPassword == true ? false : true);
+    update();
+  }
+
+  bool showConfirmPassword = true;
+  showConfirmPasswordFunction() {
+    showConfirmPassword = (showConfirmPassword == true ? false : true);
+    update();
+  }
+
   @override
   goToLogin() {
     Get.offNamed(AppRoutes.login);
