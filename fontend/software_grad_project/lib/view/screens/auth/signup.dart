@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:software_grad_project/controller/auth/signup_controller.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
+import 'package:software_grad_project/core/functions/valid_confirm_pass.dart';
 import 'package:software_grad_project/core/functions/valid_input.dart';
 import 'package:software_grad_project/view/widgets/auth/customdescriptiontextauth.dart';
 import 'package:software_grad_project/view/widgets/auth/customebuttonauth.dart';
@@ -70,7 +71,7 @@ class SignUp extends StatelessWidget {
                   iconData: Icons.lock_outline,
                   mycontroller: controller.confirmPassword,
                   valid: (val) {
-                    return validInput(val!, 6, 12, "password");
+                    return validPass(controller.password.text, val!);
                   },
                 ),
                 CustomButtonAuth(
