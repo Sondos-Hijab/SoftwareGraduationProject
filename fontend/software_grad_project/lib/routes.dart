@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:software_grad_project/core/middleware/middleware.dart';
 import 'package:software_grad_project/view/screens/auth/success_signup.dart';
 import 'package:software_grad_project/view/screens/onboarding.dart';
 import 'package:software_grad_project/core/constants/routesnames.dart';
@@ -8,14 +9,22 @@ import 'package:software_grad_project/view/screens/auth/forgot-password/resetpas
 import 'package:software_grad_project/view/screens/auth/signup.dart';
 import 'package:software_grad_project/view/screens/auth/forgot-password/success_reset_password.dart';
 
-Map<String, Widget Function(BuildContext)> routes = {
+List<GetPage<dynamic>>? routes = [
+  GetPage(
+      name: AppRoutes.onBoarding,
+      page: () => const OnBoarding(),
+      middlewares: [MyMiddleWare()]),
   //authentication
-  AppRoutes.login: (context) => const Login(),
-  AppRoutes.signup: (context) => const SignUp(),
-  AppRoutes.forgotPassword: (context) => const ForgotPassword(),
-  AppRoutes.resetPassword: (context) => const ResetPassword(),
-  AppRoutes.successPageAfterReset: (context) => const SuccessResetPassword(),
-  AppRoutes.successPageAfterSignUp: (context) => const SuccessSignUp(),
-  //onboarding
-  AppRoutes.onBoarding: (context) => const OnBoarding(),
-};
+  GetPage(name: AppRoutes.login, page: () => const Login()),
+  GetPage(name: AppRoutes.signup, page: () => const SignUp()),
+  GetPage(name: AppRoutes.forgotPassword, page: () => const ForgotPassword()),
+  GetPage(name: AppRoutes.resetPassword, page: () => const ResetPassword()),
+  GetPage(
+      name: AppRoutes.successPageAfterReset,
+      page: () => const SuccessResetPassword()),
+  GetPage(
+      name: AppRoutes.successPageAfterSignUp,
+      page: () => const SuccessSignUp()),
+  //OnBoarding
+  // GetPage(name: AppRoutes.onBoarding, page: () => const OnBoarding())
+];
