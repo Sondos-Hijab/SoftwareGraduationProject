@@ -11,6 +11,8 @@ class CRUDRequests {
         var response = await http.post(Uri.parse(linkurl), body: data);
         if (response.statusCode == 200 || response.statusCode == 201) {
           Map responsebody = jsonDecode(response.body);
+          //i want to add another if statement for login failed or email already exists == failure 
+          //or if she returns a status i will use it just like what he did in signupcontroller
           return Right(responsebody);
         } else {
           return const Left(StatusRequest.serverfailure);
@@ -19,7 +21,7 @@ class CRUDRequests {
         return const Left(StatusRequest.offlinefailure);
       }
     } catch (_) {
-      return const Left(StatusRequest.serverfailure);
+      return const Left(StatusRequest.serverException);
     }
   }
 
@@ -37,7 +39,7 @@ class CRUDRequests {
         return const Left(StatusRequest.offlinefailure);
       }
     } catch (_) {
-      return const Left(StatusRequest.serverfailure);
+      return const Left(StatusRequest.serverException);
     }
   }
 }
