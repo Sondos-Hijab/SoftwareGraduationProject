@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:software_grad_project/bindings/initial_binding.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
 import 'package:software_grad_project/core/constants/routesnames.dart';
 import 'package:software_grad_project/core/services/service.dart';
 import 'package:software_grad_project/routes.dart';
-import 'package:software_grad_project/view/screens/onboarding.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +42,8 @@ class MyApp extends StatelessWidget {
           bodySmall: TextStyle(color: AppColors.lightGrey, fontSize: 14),
         ),
       ),
-      initialRoute: AppRoutes.onBoarding,
+      initialRoute: AppRoutes.test,
+      initialBinding: InitialBindings(),
       getPages: routes,
     );
   }

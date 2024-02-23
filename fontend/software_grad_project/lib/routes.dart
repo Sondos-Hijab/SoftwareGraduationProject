@@ -8,6 +8,7 @@ import 'package:software_grad_project/view/screens/auth/login.dart';
 import 'package:software_grad_project/view/screens/auth/forgot-password/resetpassword.dart';
 import 'package:software_grad_project/view/screens/auth/signup.dart';
 import 'package:software_grad_project/view/screens/auth/forgot-password/success_reset_password.dart';
+import 'package:software_grad_project/view/testview.dart';
 
 List<GetPage<dynamic>>? routes = [
   GetPage(
@@ -27,4 +28,5 @@ List<GetPage<dynamic>>? routes = [
       page: () => const SuccessSignUp()),
   //OnBoarding
   // GetPage(name: AppRoutes.onBoarding, page: () => const OnBoarding())
+  GetPage(name: AppRoutes.test, page: () => const TestView()),
 ];
