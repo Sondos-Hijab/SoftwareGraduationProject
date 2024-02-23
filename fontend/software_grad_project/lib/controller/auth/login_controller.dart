@@ -36,16 +36,20 @@ class LoginControllerImp extends LoginController {
       var response = await loginData.postData(username.text, password.text);
       statusRequest = handlingData(response);
       if (StatusRequest.success == statusRequest) {
-        data.add(response);
-        await myServices.sharedPreferences.setString("username", username.text);
-        await myServices.sharedPreferences.setString("password", password.text);
+        if (response['status'] == "success") {
+          data.add(response);
+          await myServices.sharedPreferences
+              .setString("username", username.text);
+          await myServices.sharedPreferences
+              .setString("password", password.text);
 
-        Get.offNamed(AppRoutes.homePage);
-      } else if (StatusRequest.failure == statusRequest) {
-        Get.defaultDialog(title: "Warning", middleText: "User not found");
+          Get.offNamed(AppRoutes.homePage);
+        } else {
+          Get.defaultDialog(title: "Warning", middleText: "User not found");
+        }
       }
       update();
-    }
+    } else {}
   }
 
   @override

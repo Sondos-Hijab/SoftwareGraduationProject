@@ -33,13 +33,16 @@ class SignUpControllerImp extends SignUpController {
       statusRequest = handlingData(response);
 
       if (StatusRequest.success == statusRequest) {
-        data.add(response);
-        Get.offNamed(AppRoutes.successPageAfterSignUp);
-      } else if (StatusRequest.failure == statusRequest) {
-        Get.defaultDialog(title: "Warning", middleText: "Email already exists");
+        if (response['status'] == "success") {
+          data.add(response);
+          Get.offNamed(AppRoutes.successPageAfterSignUp);
+        } else {
+          Get.defaultDialog(
+              title: "Warning", middleText: "Email already exists");
+        }
       }
       update();
-    }
+    } else {}
   }
 
   bool showPassword = true;

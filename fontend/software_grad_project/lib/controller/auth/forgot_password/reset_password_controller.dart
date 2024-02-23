@@ -30,17 +30,17 @@ class ResetPasswordControllerImp extends ResetPasswordController {
           email!, password.text, confirmPassword.text);
       statusRequest = handlingData(response);
       if (StatusRequest.success == statusRequest) {
-        data.add(response);
-        Get.offNamed(AppRoutes.successPageAfterReset);
-      } else if (StatusRequest.failure == statusRequest) {
-        Get.defaultDialog(
-            title: "Warning",
-            middleText: "Can't reset password! Try Agian Later.");
+        if (response['status'] == "success") {
+          data.add(response);
+          Get.offNamed(AppRoutes.successPageAfterReset);
+        } else {
+          Get.defaultDialog(
+              title: "Warning",
+              middleText: "Can't reset password! Try Agian Later.");
+        }
+        update();
       }
-      update();
-    } else {
-      print("Not valid");
-    }
+    } else {}
   }
 
   bool showPassword = true;

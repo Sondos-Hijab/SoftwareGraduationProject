@@ -22,14 +22,14 @@ class VerifyCodeControllerImp extends VerifyCodeController {
     var response = await verifyCodeData.postData(email!, verifyCode);
     statusRequest = handlingData(response);
     if (StatusRequest.success == statusRequest) {
-      data.add(response);
-      Get.offNamed(AppRoutes.resetPassword, arguments: {"email": email});
-    } else if (StatusRequest.failure == statusRequest) {
-      Get.defaultDialog(title: "Warning", middleText: "Email not found");
-    }
-    // Get.offNamed(AppRoutes.resetPassword, arguments: {"email": email});
-
-    update();
+      if (response['status'] == "success") {
+        data.add(response);
+        Get.offNamed(AppRoutes.resetPassword, arguments: {"email": email});
+      } else {
+        Get.defaultDialog(title: "Warning", middleText: "Email not found");
+      }
+      update();
+    } else {}
   }
 
   @override
