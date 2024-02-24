@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:software_grad_project/core/classes/status_request.dart';
 import 'package:software_grad_project/core/constants/routesnames.dart';
 import 'package:software_grad_project/core/functions/handling_data_function.dart';
+import 'package:software_grad_project/core/services/service.dart';
 import 'package:software_grad_project/data/datasource/remote/authentication/forgotPassword/reset_password_datasource.dart';
 
 abstract class ResetPasswordController extends GetxController {
@@ -17,30 +18,44 @@ class ResetPasswordControllerImp extends ResetPasswordController {
   StatusRequest? statusRequest;
   ResetPasswordDataSource resetPasswordData =
       ResetPasswordDataSource(Get.find());
-  List data = [];
-  String? email;
+
+  final myServices = Get.find<MyServices>();
 
   GlobalKey<FormState> formState = GlobalKey<FormState>();
 
   @override
   resetPassword() async {
+    String? tempAccessToken =
+        myServices.sharedPreferences.getString("tempAccessToken");
+
     if (formState.currentState!.validate()) {
       statusRequest = StatusRequest.loading;
-      var response = await resetPasswordData.postData(
-          email!, password.text, confirmPassword.text);
+      var response = await resetPasswordData.putDataWithAuthorization(
+          tempAccessToken!, password.text, confirmPassword.text);
       statusRequest = handlingData(response);
       if (StatusRequest.success == statusRequest) {
-        if (response['status'] == "success") {
-          data.add(response);
+        if (response['statusCode'] == "200") {
           Get.offNamed(AppRoutes.successPageAfterReset);
-        } else {
+        } else if (response['statusCode'] == "403") {
           Get.defaultDialog(
               title: "Warning",
-              middleText: "Can't reset password! Try Agian Later.");
+              middleText:
+                  "The time specefied for you to reset your password is over.");
+        } else if (response['statusCode'] == "400") {
+          Get.defaultDialog(title: "Warning", middleText: response['error']);
+        } else {
+          Get.defaultDialog(
+              title: "Error",
+              middleText:
+                  "We are sorry, something went wrong, try again later.");
         }
         update();
       }
-    } else {}
+    } else {
+      Get.defaultDialog(
+          title: "Error",
+          middleText: "We are sorry, something went wrong, try again later.");
+    }
   }
 
   bool showPassword = true;
@@ -62,7 +77,6 @@ class ResetPasswordControllerImp extends ResetPasswordController {
 
   @override
   void onInit() {
-    email = Get.arguments['email'];
     password = TextEditingController();
     confirmPassword = TextEditingController();
     super.onInit();

@@ -6,11 +6,13 @@ class VerifyCodeDataSource {
 
   VerifyCodeDataSource(this.crud);
 
-  postData(String email, String verifyCode) async {
-    var response = await crud.postData(AppLink.verifyCode, {
-      "email": email,
-      "verifyCode": verifyCode,
-    });
+  getDataWithAuthorization(String authToken, String verifyCode) async {
+    var response = await crud.getDataWithAuthorization(
+        AppLink.verifyCode,
+        {
+          "otp": verifyCode,
+        },
+        authToken);
     return response.fold((l) => l, (r) => r);
   }
 }

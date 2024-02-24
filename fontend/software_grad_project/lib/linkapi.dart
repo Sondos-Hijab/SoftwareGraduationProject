@@ -7,7 +7,7 @@ class AppLink {
 //forgot password
   static const String checkEmail = "$server/user/checkEmail";
   static const String resetPassword = "$server/user/resetPassword";
-  static const String verifyCode = "$server/verifyCode";
+  static const String verifyCode = "$server/user/checkOTP";
 
   //Test
   static const String test = "https://jsonplaceholder.typicode.com/posts/1";

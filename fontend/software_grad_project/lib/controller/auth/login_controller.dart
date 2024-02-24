@@ -50,10 +50,19 @@ class LoginControllerImp extends LoginController {
           Get.defaultDialog(title: "Warning", middleText: response['error']);
         } else if (response['statusCode'] == "401") {
           Get.defaultDialog(title: "Warning", middleText: response['error']);
+        } else {
+          Get.defaultDialog(
+              title: "Error",
+              middleText:
+                  "We are sorry, something went wrong, try again later.");
         }
       }
       update();
-    } else {}
+    } else {
+      Get.defaultDialog(
+          title: "Error",
+          middleText: "We are sorry, something went wrong, try again later.");
+    }
   }
 
   @override

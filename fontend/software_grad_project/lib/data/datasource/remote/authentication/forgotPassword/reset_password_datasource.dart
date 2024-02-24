@@ -6,12 +6,15 @@ class ResetPasswordDataSource {
 
   ResetPasswordDataSource(this.crud);
 
-  postData(String email, String password, String confirmPassword) async {
-    var response = await crud.postData(AppLink.resetPassword, {
-      "email": email,
-      "password": password,
-      "confirmPassword": confirmPassword,
-    });
+  putDataWithAuthorization(
+      String authToken, String password, String confirmPassword) async {
+    var response = await crud.putDataWithAuthorization(
+        AppLink.resetPassword,
+        {
+          "password": password,
+          "confirmPassword": confirmPassword,
+        },
+        authToken);
     return response.fold((l) => l, (r) => r);
   }
 }

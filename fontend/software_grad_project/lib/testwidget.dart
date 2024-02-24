@@ -17,6 +17,8 @@ class TestWidget extends StatelessWidget {
     String? accessToken = myServices.sharedPreferences.getString("accessToken");
     String? refreshToken =
         myServices.sharedPreferences.getString("refreshToken");
+    String? tempAccessToken =
+        myServices.sharedPreferences.getString("tempAccessToken");
 
     return Scaffold(
       appBar: AppBar(

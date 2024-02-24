@@ -39,7 +39,12 @@ class SignUpControllerImp extends SignUpController {
         } else if (response['statusCode'] == "400") {
           Get.defaultDialog(title: "Warning", middleText: response['error']);
         }
+      } else {
+        Get.defaultDialog(
+            title: "Error",
+            middleText: "We are sorry, something went wrong, try again later.");
       }
+
       update();
     } else {
       Get.defaultDialog(
