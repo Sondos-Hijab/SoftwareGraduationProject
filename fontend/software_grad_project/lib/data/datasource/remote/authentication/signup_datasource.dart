@@ -9,10 +9,10 @@ class SignUpDataSource {
   postData(String username, String email, String password,
       String confirmPassword) async {
     var response = await crud.postData(AppLink.signupLink, {
-      "username": username,
-      "email": email,
+      "name": username,
       "password": password,
       "confirmPassword": confirmPassword,
+      "email": email,
     });
     return response.fold((l) => l, (r) => r);
   }

@@ -19,7 +19,6 @@ class LoginControllerImp extends LoginController {
   late StatusRequest statusRequest;
   LoginDataSource loginData = LoginDataSource(Get.find());
   final myServices = Get.find<MyServices>();
-  List data = [];
 
   bool showPassword = true;
   showPasswordFunction() {
@@ -35,17 +34,22 @@ class LoginControllerImp extends LoginController {
       statusRequest = StatusRequest.loading;
       var response = await loginData.postData(username.text, password.text);
       statusRequest = handlingData(response);
+
       if (StatusRequest.success == statusRequest) {
-        if (response['status'] == "success") {
-          data.add(response);
+        if (response['statusCode'] == "200") {
           await myServices.sharedPreferences
               .setString("username", username.text);
           await myServices.sharedPreferences
               .setString("password", password.text);
-
+          await myServices.sharedPreferences
+              .setString("accessToken", response['accessToken']);
+          await myServices.sharedPreferences
+              .setString("refreshToken", response['refreshToken']);
           Get.offNamed(AppRoutes.homePage);
-        } else {
-          Get.defaultDialog(title: "Warning", middleText: "User not found");
+        } else if (response['statusCode'] == "404") {
+          Get.defaultDialog(title: "Warning", middleText: response['error']);
+        } else if (response['statusCode'] == "401") {
+          Get.defaultDialog(title: "Warning", middleText: response['error']);
         }
       }
       update();

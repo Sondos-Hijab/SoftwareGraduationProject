@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:software_grad_project/core/classes/status_request.dart';
@@ -30,19 +28,24 @@ class SignUpControllerImp extends SignUpController {
       statusRequest = StatusRequest.loading;
       var response = await signupData.postData(
           username.text, email.text, password.text, confirmPassword.text);
-      statusRequest = handlingData(response);
 
+      statusRequest = handlingData(response);
       if (StatusRequest.success == statusRequest) {
-        if (response['status'] == "success") {
+        if (response['statusCode'] == "201") {
           data.add(response);
           Get.offNamed(AppRoutes.successPageAfterSignUp);
-        } else {
-          Get.defaultDialog(
-              title: "Warning", middleText: "Email already exists");
+        } else if (response['statusCode'] == "409") {
+          Get.defaultDialog(title: "Warning", middleText: response['error']);
+        } else if (response['statusCode'] == "400") {
+          Get.defaultDialog(title: "Warning", middleText: response['error']);
         }
       }
       update();
-    } else {}
+    } else {
+      Get.defaultDialog(
+          title: "Error",
+          middleText: "We are sorry, something went wrong, try again later.");
+    }
   }
 
   bool showPassword = true;

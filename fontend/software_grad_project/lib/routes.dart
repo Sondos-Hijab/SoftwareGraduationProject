@@ -36,5 +36,5 @@ List<GetPage<dynamic>>? routes = [
 
   //OnBoarding
   // GetPage(name: AppRoutes.onBoarding, page: () => const OnBoarding())
-  // GetPage(name: AppRoutes.test, page: () => const TestWidget()),
+  GetPage(name: AppRoutes.test, page: () => const TestWidget()),
 ];

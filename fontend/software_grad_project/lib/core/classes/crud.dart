@@ -6,22 +6,26 @@ import 'package:http/http.dart' as http;
 
 class CRUDRequests {
   Future<Either<StatusRequest, Map>> postData(String linkurl, Map data) async {
-    try {
-      if (await checkInternet()) {
-        var response = await http.post(Uri.parse(linkurl), body: data);
-        if (response.statusCode == 200 || response.statusCode == 201) {
-          Map responsebody = jsonDecode(response.body);
-          //i want to add another if statement for login failed or email already exists == failure 
-          //or if she returns a status i will use it just like what he did in signupcontroller
-          return Right(responsebody);
-        } else {
-          return const Left(StatusRequest.serverfailure);
-        }
+    if (await checkInternet()) {
+      var response = await http.post(Uri.parse(linkurl),
+          headers: {
+            "Content-type": "application/json",
+            "Accept": "application/json",
+          },
+          body: jsonEncode(data));
+      if (response.statusCode == 200 ||
+          response.statusCode == 201 ||
+          response.statusCode == 409 ||
+          response.statusCode == 400 ||
+          response.statusCode == 404 ||
+          response.statusCode == 401) {
+        Map responsebody = jsonDecode(response.body);
+        return Right(responsebody);
       } else {
-        return const Left(StatusRequest.offlinefailure);
+        return const Left(StatusRequest.serverfailure);
       }
-    } catch (_) {
-      return const Left(StatusRequest.serverException);
+    } else {
+      return const Left(StatusRequest.offlinefailure);
     }
   }
 

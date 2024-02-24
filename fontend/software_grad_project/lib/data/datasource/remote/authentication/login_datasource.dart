@@ -8,7 +8,7 @@ class LoginDataSource {
 
   postData(String username, String password) async {
     var response = await crud.postData(AppLink.loginLink, {
-      "username": username,
+      "name": username,
       "password": password,
     });
     return response.fold((l) => l, (r) => r);
