@@ -8,15 +8,9 @@ const queryAsync = promisify(con.query).bind(con);
 const resetPassword = async (req, res) => {
 
   const user = req.user;
-  const { otp, password, confirmPassword } = req.body;
+  const { password, confirmPassword } = req.body;
 
   try {
-    if (otp !== user.otp) {
-      return res.status(400).json({ 
-        error: 'Invalid OTP',
-        statusCode: '400',
-      });
-    }
 
     if (password !== confirmPassword) {
       return res.status(400).json({ 
