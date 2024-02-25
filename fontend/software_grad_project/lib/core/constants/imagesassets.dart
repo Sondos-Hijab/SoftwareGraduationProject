@@ -12,4 +12,7 @@ class AppImageAssets {
   static const String noData = "$rootImage/lottie/noData.json";
   static const String offline = "$rootImage/lottie/offline.json";
   static const String serverFailure = "$rootImage/lottie/serverFailure.json";
+
+  static const String profileImage = "$rootImage/profileImage.jpg";
+  static const String noUserImage = "$rootImage/no-user.jpg";
 }
