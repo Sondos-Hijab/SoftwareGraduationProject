@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:software_grad_project/core/constants/colors.dart';
-import 'package:software_grad_project/view/screens/auth/login.dart';
-import 'package:software_grad_project/view/screens/bottom-app-bar-pages/homepage.dart';
-import 'package:software_grad_project/view/screens/bottom-app-bar-pages/messagespage.dart';
-import 'package:software_grad_project/view/screens/bottom-app-bar-pages/profilepage.dart';
-import 'package:software_grad_project/view/screens/bottom-app-bar-pages/searchpage.dart';
+import 'package:software_grad_project/view/screens/app-main-pages/homepage.dart';
+import 'package:software_grad_project/view/screens/app-main-pages/messagespage.dart';
+import 'package:software_grad_project/view/screens/app-main-pages/profilepage.dart';
+import 'package:software_grad_project/view/screens/app-main-pages/searchpage.dart';
 
 abstract class HomeScreenController extends GetxController {
   changePage(int pageIndex);
