@@ -3,7 +3,11 @@ import 'package:software_grad_project/core/middleware/middleware.dart';
 import 'package:software_grad_project/testwidget.dart';
 import 'package:software_grad_project/view/screens/auth/forgot-password/verifycode.dart';
 import 'package:software_grad_project/view/screens/auth/success_signup.dart';
-import 'package:software_grad_project/view/screens/home.dart';
+import 'package:software_grad_project/view/screens/bottom-app-bar-pages/homepage.dart';
+import 'package:software_grad_project/view/screens/bottom-app-bar-pages/messagespage.dart';
+import 'package:software_grad_project/view/screens/bottom-app-bar-pages/profilepage.dart';
+import 'package:software_grad_project/view/screens/bottom-app-bar-pages/searchpage.dart';
+import 'package:software_grad_project/view/screens/homescreen.dart';
 import 'package:software_grad_project/view/screens/onboarding.dart';
 import 'package:software_grad_project/core/constants/routesnames.dart';
 import 'package:software_grad_project/view/screens/auth/forgot-password/forgotpassword.dart';
@@ -14,6 +18,7 @@ import 'package:software_grad_project/view/screens/auth/forgot-password/success_
 // import 'package:software_grad_project/view/testview.dart';
 
 List<GetPage<dynamic>>? routes = [
+  //OnBoarding
   GetPage(
       name: AppRoutes.onBoarding,
       page: () => const OnBoarding(),
@@ -32,9 +37,13 @@ List<GetPage<dynamic>>? routes = [
       name: AppRoutes.successPageAfterSignUp,
       page: () => const SuccessSignUp()),
 
+  //bottom app bar pages
+  GetPage(name: AppRoutes.homeScreen, page: () => const HomeScreen()),
   GetPage(name: AppRoutes.homePage, page: () => const HomePage()),
+  GetPage(name: AppRoutes.profilePage, page: () => const ProfilePage()),
+  GetPage(name: AppRoutes.messagesPage, page: () => const MessagesPage()),
+  GetPage(name: AppRoutes.searchPage, page: () => const SearchPage()),
 
-  //OnBoarding
-  // GetPage(name: AppRoutes.onBoarding, page: () => const OnBoarding())
+  //testing purposes
   GetPage(name: AppRoutes.test, page: () => const TestWidget()),
 ];
