@@ -15,4 +15,10 @@ class AppImageAssets {
 
   static const String profileImage = "$rootImage/profileImage.jpg";
   static const String noUserImage = "$rootImage/no-user.jpg";
+
+  static const String sliderBeauty = "$rootImage/slider/beauty.jpg";
+  static const String sliderClothes = "$rootImage/slider/clothes.jpg";
+  static const String sliderDevices = "$rootImage/slider/devices.jpg";
+  static const String sliderGyms = "$rootImage/slider/gyms.jpg";
+  static const String sliderRestaurants = "$rootImage/slider/restaurants.jpg";
 }
