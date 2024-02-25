@@ -35,6 +35,7 @@ class ResetPasswordControllerImp extends ResetPasswordController {
       statusRequest = handlingData(response);
       if (StatusRequest.success == statusRequest) {
         if (response['statusCode'] == "200") {
+          await myServices.sharedPreferences.remove('tempAccessToken');
           Get.offNamed(AppRoutes.successPageAfterReset);
         } else if (response['statusCode'] == "403") {
           Get.defaultDialog(
@@ -51,10 +52,6 @@ class ResetPasswordControllerImp extends ResetPasswordController {
         }
         update();
       }
-    } else {
-      Get.defaultDialog(
-          title: "Error",
-          middleText: "We are sorry, something went wrong, try again later.");
     }
   }
 
