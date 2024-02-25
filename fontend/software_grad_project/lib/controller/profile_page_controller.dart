@@ -3,6 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:software_grad_project/core/classes/status_request.dart';
+import 'package:software_grad_project/core/constants/routesnames.dart';
+import 'package:software_grad_project/core/functions/handling_data_function.dart';
+import 'package:software_grad_project/core/services/service.dart';
+import 'package:software_grad_project/data/datasource/remote/authentication/logout_datasource.dart';
 
 abstract class ProfilePageController extends GetxController {
   editMode();
@@ -18,6 +23,10 @@ class ProfilePageControllerImp extends ProfilePageController {
   bool isEditingBio = false;
   TextEditingController? bioController;
   File? selectedImage;
+  final myServices = Get.find<MyServices>();
+
+  StatusRequest? statusRequest;
+  LogoutDataSource logoutDataSource = LogoutDataSource(Get.find());
   @override
   editMode() {
     isEditingBio = !isEditingBio;
@@ -29,7 +38,6 @@ class ProfilePageControllerImp extends ProfilePageController {
 
   @override
   void onInit() {
-
     bioController = TextEditingController();
     getBio();
     super.onInit();
@@ -55,10 +63,33 @@ class ProfilePageControllerImp extends ProfilePageController {
   goToFeedbackPage() {}
 
   @override
-  goToChangePassword() {}
+  goToChangePassword() {
+    Get.toNamed(AppRoutes.changePassword);
+  }
 
   @override
-  logout() {}
+  logout() async {
+    String? accessToken = myServices.sharedPreferences.getString("accessToken");
+    String? refreshToken =
+        myServices.sharedPreferences.getString("refreshToken");
+
+    statusRequest = StatusRequest.loading;
+    var response = await logoutDataSource.deleteDataWithAuthorization(
+        accessToken!, refreshToken!);
+    statusRequest = handlingData(response);
+
+    if (StatusRequest.success == statusRequest) {
+      if (response['statusCode'] == "200") {
+        await myServices.sharedPreferences.remove('tempAccessToken');
+        Get.offNamed(AppRoutes.login);
+      } else {
+        Get.defaultDialog(
+            title: "Error",
+            middleText: "We are sorry, something went wrong, try again later.");
+      }
+      update();
+    }
+  }
 
   @override
   Future uploadImage() async {

@@ -121,6 +121,38 @@ class CRUDRequests {
     }
   }
 
+  Future<Either<StatusRequest, Map>> deleteDataWithAuthorization(
+      String linkurl, Map data, String authToken) async {
+    try {
+      if (await checkInternet()) {
+        var uri = Uri.parse(linkurl);
+        var jsonData = jsonDecode(
+            jsonEncode(data)); // Convert data to JSON string and then decode it
+
+        var request = http.Request('DELETE', uri)
+          ..headers['Content-type'] = 'application/json'
+          ..headers['Accept'] = 'application/json'
+          ..headers['Authorization'] =
+              'Bearer $authToken' // Include the authorization token in the headers
+          ..body = jsonEncode(jsonData); // Set jsonData as the request body
+
+        var response =
+            await request.send().then((res) => http.Response.fromStream(res));
+
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          var responseBody = json.decode(response.body);
+          return Right(responseBody);
+        } else {
+          return const Left(StatusRequest.serverfailure);
+        }
+      } else {
+        return const Left(StatusRequest.offlinefailure);
+      }
+    } catch (_) {
+      return const Left(StatusRequest.serverException);
+    }
+  }
+
   Future<Either<StatusRequest, Map>> fetchData(String linkurl) async {
     try {
       if (await checkInternet()) {

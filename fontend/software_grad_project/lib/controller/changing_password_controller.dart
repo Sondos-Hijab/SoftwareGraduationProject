@@ -6,11 +6,11 @@ import 'package:software_grad_project/core/functions/handling_data_function.dart
 import 'package:software_grad_project/core/services/service.dart';
 import 'package:software_grad_project/data/datasource/remote/authentication/forgotPassword/reset_password_datasource.dart';
 
-abstract class ResetPasswordController extends GetxController {
+abstract class ChangePasswordController extends GetxController {
   resetPassword();
 }
 
-class ResetPasswordControllerImp extends ResetPasswordController {
+class ChangePasswordControllerImp extends ChangePasswordController {
   late TextEditingController password;
   late TextEditingController confirmPassword;
 
@@ -24,23 +24,16 @@ class ResetPasswordControllerImp extends ResetPasswordController {
 
   @override
   resetPassword() async {
-    String? tempAccessToken =
-        myServices.sharedPreferences.getString("tempAccessToken");
+    String? accessToken = myServices.sharedPreferences.getString("accessToken");
 
     if (formState.currentState!.validate()) {
       statusRequest = StatusRequest.loading;
       var response = await resetPasswordData.putDataWithAuthorization(
-          tempAccessToken!, password.text, confirmPassword.text);
+          accessToken!, password.text, confirmPassword.text);
       statusRequest = handlingData(response);
       if (StatusRequest.success == statusRequest) {
         if (response['statusCode'] == "200") {
-          await myServices.sharedPreferences.remove('tempAccessToken');
-          Get.offNamed(AppRoutes.successPageAfterReset);
-        } else if (response['statusCode'] == "403") {
-          Get.defaultDialog(
-              title: "Warning",
-              middleText:
-                  "The time specefied for you to reset your password is over.");
+          Get.offNamed(AppRoutes.successAfterChangePassword);
         } else if (response['statusCode'] == "400") {
           Get.defaultDialog(title: "Warning", middleText: response['error']);
         } else {

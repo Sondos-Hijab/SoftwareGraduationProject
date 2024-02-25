@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:software_grad_project/core/middleware/middleware.dart';
 import 'package:software_grad_project/testwidget.dart';
+import 'package:software_grad_project/view/screens/app-main-pages/changepassword.dart';
+import 'package:software_grad_project/view/screens/app-main-pages/successchangingpassword.dart';
 import 'package:software_grad_project/view/screens/auth/forgot-password/verifycode.dart';
 import 'package:software_grad_project/view/screens/auth/success_signup.dart';
 import 'package:software_grad_project/view/screens/app-main-pages/homepage.dart';
@@ -43,6 +45,13 @@ List<GetPage<dynamic>>? routes = [
   GetPage(name: AppRoutes.profilePage, page: () => const ProfilePage()),
   GetPage(name: AppRoutes.messagesPage, page: () => const MessagesPage()),
   GetPage(name: AppRoutes.searchPage, page: () => const SearchPage()),
+
+  //changing password
+  GetPage(
+      name: AppRoutes.changePassword, page: () => const ChangingPasswordPage()),
+  GetPage(
+      name: AppRoutes.successAfterChangePassword,
+      page: () => const SuccessChangingPassword()),
 
   //testing purposes
   GetPage(name: AppRoutes.test, page: () => const TestWidget()),

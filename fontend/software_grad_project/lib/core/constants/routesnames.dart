@@ -11,6 +11,10 @@ class AppRoutes {
   static const String successPageAfterSignUp = '/successsignup';
   static const String verifyCode = '/verifycode';
 
+  //change password
+  static const String changePassword = '/changepassword';
+  static const String successAfterChangePassword = '/successchangingpassword';
+
   //bottom app bar pages
   static const String homeScreen = '/homescareen';
   static const String homePage = '/homepage';
