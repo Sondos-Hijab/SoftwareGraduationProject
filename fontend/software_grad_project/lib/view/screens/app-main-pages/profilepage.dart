@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:software_grad_project/controller/profile_page_controller.dart';
+import 'package:software_grad_project/controller/app-main-pages-controllers/profile_page_controller.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
 import 'package:software_grad_project/core/services/service.dart';
 import 'package:software_grad_project/view/widgets/profile/biocontainer.dart';

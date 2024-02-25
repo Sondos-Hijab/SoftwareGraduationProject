@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:software_grad_project/controller/changing_password_controller.dart';
+import 'package:software_grad_project/controller/app-main-pages-controllers/changing_password_controller.dart';
 import 'package:software_grad_project/core/classes/status_request.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
 import 'package:software_grad_project/core/constants/imagesassets.dart';

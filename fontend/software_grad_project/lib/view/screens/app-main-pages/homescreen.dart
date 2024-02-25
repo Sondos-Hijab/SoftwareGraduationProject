@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:software_grad_project/controller/home_screen_controller.dart';
+import 'package:software_grad_project/controller/app-main-pages-controllers/home_screen_controller.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
 import 'package:software_grad_project/view/widgets/home/custombuttomappbaritem.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:software_grad_project/controller/success_changing_password_controller.dart';
+import 'package:software_grad_project/controller/app-main-pages-controllers/success_changing_password_controller.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
 import 'package:software_grad_project/view/widgets/auth/customebuttonauth.dart';
 
