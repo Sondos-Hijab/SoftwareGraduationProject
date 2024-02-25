@@ -21,4 +21,11 @@ class AppImageAssets {
   static const String sliderDevices = "$rootImage/slider/devices.jpg";
   static const String sliderGyms = "$rootImage/slider/gyms.jpg";
   static const String sliderRestaurants = "$rootImage/slider/restaurants.jpg";
+
+  static const String restaurantCategory =
+      "$rootImage/categories/restaurants.svg";
+  static const String beautyCategory = "$rootImage/categories/beauty.svg";
+  static const String clothesCategory = "$rootImage/categories/clothes.svg";
+  static const String gymCategory = "$rootImage/categories/gym.svg";
+  static const String devicesCategory = "$rootImage/categories/devices.svg";
 }

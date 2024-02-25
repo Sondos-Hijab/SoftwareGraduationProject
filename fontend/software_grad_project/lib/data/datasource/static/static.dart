@@ -18,3 +18,11 @@ List<SliderModel> sliderList = [
   SliderModel("Feedback on Devices", AppImageAssets.sliderDevices),
   SliderModel("Feedback on Restaurants", AppImageAssets.sliderRestaurants),
 ];
+
+List categoriesPictures = [
+  AppImageAssets.gymCategory,
+  AppImageAssets.beautyCategory,
+  AppImageAssets.clothesCategory,
+  AppImageAssets.devicesCategory,
+  AppImageAssets.restaurantCategory
+];
