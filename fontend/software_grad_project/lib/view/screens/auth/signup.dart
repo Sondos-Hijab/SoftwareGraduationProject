@@ -49,7 +49,7 @@ class SignUp extends StatelessWidget {
                           iconData: Icons.person_2_outlined,
                           mycontroller: controller.username,
                           valid: (val) {
-                            return validInput(val!, 4, 10, "username");
+                            return validInput(val!, 4, 30, "username");
                           },
                         ),
                         CustomeTextFormAuth(
@@ -71,7 +71,7 @@ class SignUp extends StatelessWidget {
                           },
                           mycontroller: controller.password,
                           valid: (val) {
-                            return validInput(val!, 6, 12, "password");
+                            return validInput(val!, 6, 20, "password");
                           },
                         ),
                         CustomeTextFormAuth(
