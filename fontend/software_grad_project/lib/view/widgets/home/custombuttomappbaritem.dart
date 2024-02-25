@@ -19,7 +19,11 @@ class CustomButtomAppBarItem extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(iconData, color: color),
+          Icon(
+            iconData,
+            color: color,
+            size: 30,
+          ),
           Text(
             textButton,
             style: TextStyle(color: color),
