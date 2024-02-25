@@ -85,6 +85,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/lottie/
+    - assets/images/slider/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -98,16 +99,20 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    #    - family: Roboto
-    #      fonts:
-    #        - asset: assets/fonts/Roboto-Regular.ttf
-    #        - asset: assets/fonts/Roboto-Bold.ttf
-    #          weight: 700
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
+        - asset: assets/fonts/Roboto-Bold.ttf
+          weight: 700
     - family: Geologica
       fonts:
         - asset: assets/fonts/Geologica_Auto-Regular.ttf
         - asset: assets/fonts/Geologica-Bold.ttf
           weight: 700
+    - family: Anton
+      fonts:
+        - asset: assets/fonts/Anton-Regular.ttf
+
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
