@@ -88,6 +88,7 @@ flutter:
     - assets/images/lottie/
     - assets/images/slider/
     - assets/images/categories/
+    - assets/images/feedbackImages/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
