@@ -16,3 +16,13 @@ CREATE TABLE refreshtoken (
   CONSTRAINT fk_refreshtoken_user FOREIGN KEY (user_id) REFERENCES user (userID) ON DELETE CASCADE,
   CONSTRAINT refreshtoken_ibfk_1 FOREIGN KEY (user_id) REFERENCES user (userID)
 )
+CREATE TABLE `userprofile` (
+  `userProfileID` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `name` varchar(800) NOT NULL,
+  `bio` varchar(1800) DEFAULT NULL,
+  `picture` blob,
+  PRIMARY KEY (`userProfileID`),
+  KEY `user_id_idx` (`user_id`),
+  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`userID`)
+)
