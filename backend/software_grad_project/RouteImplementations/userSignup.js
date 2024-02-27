@@ -67,6 +67,13 @@ const signup = async (req, res, next) => {
     // Insert user into the database after sending the email
     await queryAsync('INSERT INTO user (name, email, password) VALUES (?, ?, ?)', [name, email, hash]);
 
+    const trueName = await getUserByField('name', name);
+
+    const userID = trueName.userID;
+
+    await queryAsync('INSERT INTO userprofile (name, user_id) VALUES (?, ?)', [name, userID]);
+
+
     return res.status(201).json({ 
       msg: 'User created and registration email sent',
       statusCode: '201',
