@@ -45,7 +45,7 @@ class LoginControllerImp extends LoginController {
               .setString("accessToken", response['accessToken']);
           await myServices.sharedPreferences
               .setString("refreshToken", response['refreshToken']);
-          Get.offNamed(AppRoutes.homeScreen);
+          Get.offAllNamed(AppRoutes.homeScreen);
         } else if (response['statusCode'] == "404") {
           Get.defaultDialog(title: "Warning", middleText: response['error']);
         } else if (response['statusCode'] == "401") {

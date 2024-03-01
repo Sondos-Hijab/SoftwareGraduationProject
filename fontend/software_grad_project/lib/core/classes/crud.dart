@@ -3,6 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:software_grad_project/core/classes/status_request.dart';
 import 'package:software_grad_project/core/functions/check_internset.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 
 class CRUDRequests {
   Future<Either<StatusRequest, Map>> postData(String linkurl, Map data) async {
@@ -94,6 +95,35 @@ class CRUDRequests {
     }
   }
 
+  Future<Either<StatusRequest, Map>> getDataWithOnlyAuthorization(
+      String linkurl, String authToken) async {
+    try {
+      if (await checkInternet()) {
+        var uri = Uri.parse(linkurl);
+
+        var request = http.Request('GET', uri)
+          ..headers['Content-type'] = 'application/json'
+          ..headers['Accept'] = 'application/json'
+          ..headers['Authorization'] =
+              'Bearer $authToken'; // Include the authorization token in the headers
+
+        var response =
+            await request.send().then((res) => http.Response.fromStream(res));
+
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          var responseBody = json.decode(response.body);
+          return Right(responseBody);
+        } else {
+          return const Left(StatusRequest.serverfailure);
+        }
+      } else {
+        return const Left(StatusRequest.offlinefailure);
+      }
+    } catch (_) {
+      return const Left(StatusRequest.serverException);
+    }
+  }
+
   Future<Either<StatusRequest, Map>> putDataWithAuthorization(
       String linkurl, Map data, String authToken) async {
     try {
@@ -160,6 +190,49 @@ class CRUDRequests {
         if (response.statusCode == 200 || response.statusCode == 201) {
           var responseBody = json.decode(response.body);
           return Right(responseBody);
+        } else {
+          return const Left(StatusRequest.serverfailure);
+        }
+      } else {
+        return const Left(StatusRequest.offlinefailure);
+      }
+    } catch (_) {
+      return const Left(StatusRequest.serverException);
+    }
+  }
+
+  Future<Either<StatusRequest, Map>> putPhotoDataWithAuthorization(
+      String linkurl, Map<String, dynamic> data, String authToken) async {
+    try {
+      if (await checkInternet()) {
+        var request = http.MultipartRequest('PUT', Uri.parse(linkurl));
+        request.headers['Authorization'] = 'Bearer $authToken';
+
+        // Add other headers if needed
+        request.headers['Content-Type'] = 'multipart/form-data';
+
+        // Add form fields
+        data.forEach((key, value) {
+          request.fields[key] = value.toString();
+        });
+
+        // Add file(s)
+        if (data.containsKey('profilePicture')) {
+          request.files.add(
+            await http.MultipartFile.fromPath(
+              'profilePicture',
+              data['profilePicture'],
+              contentType: MediaType('image', '*'),
+            ),
+          );
+        }
+
+        var streamedResponse = await request.send();
+        var response = await http.Response.fromStream(streamedResponse);
+
+        if ([200, 201, 400].contains(response.statusCode)) {
+          Map responsebody = jsonDecode(response.body);
+          return Right(responsebody);
         } else {
           return const Left(StatusRequest.serverfailure);
         }
