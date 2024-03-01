@@ -9,6 +9,6 @@ class SuccessChangingPasswordControllerImp
     extends SuccessChangingPasswordController {
   @override
   goToProfilePage() {
-    Get.offAllNamed(AppRoutes.profilePage);
+    Get.offAllNamed(AppRoutes.homeScreen);
   }
 }
