@@ -42,11 +42,7 @@ class VerifyCodeControllerImp extends VerifyCodeController {
             middleText: "We are sorry, something went wrong, try again later.");
       }
       update();
-    } else {
-      Get.defaultDialog(
-          title: "Error",
-          middleText: "We are sorry, something went wrong, try again later.");
-    }
+    } 
   }
 
   @override

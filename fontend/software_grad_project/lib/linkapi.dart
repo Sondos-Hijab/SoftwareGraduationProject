@@ -4,6 +4,8 @@ class AppLink {
   //Authentication links
   static const String signupLink = "$server/user/signup";
   static const String loginLink = "$server/user/login";
+  static const String logoutLink = "$server/user/logout";
+
 //forgot password
   static const String checkEmail = "$server/user/checkEmail";
   static const String resetPassword = "$server/user/resetPassword";

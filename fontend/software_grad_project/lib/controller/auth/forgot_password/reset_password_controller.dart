@@ -8,7 +8,6 @@ import 'package:software_grad_project/data/datasource/remote/authentication/forg
 
 abstract class ResetPasswordController extends GetxController {
   resetPassword();
-  goToSuccessPage();
 }
 
 class ResetPasswordControllerImp extends ResetPasswordController {
@@ -35,6 +34,7 @@ class ResetPasswordControllerImp extends ResetPasswordController {
       statusRequest = handlingData(response);
       if (StatusRequest.success == statusRequest) {
         if (response['statusCode'] == "200") {
+          await myServices.sharedPreferences.remove('tempAccessToken');
           Get.offNamed(AppRoutes.successPageAfterReset);
         } else if (response['statusCode'] == "403") {
           Get.defaultDialog(
@@ -51,10 +51,6 @@ class ResetPasswordControllerImp extends ResetPasswordController {
         }
         update();
       }
-    } else {
-      Get.defaultDialog(
-          title: "Error",
-          middleText: "We are sorry, something went wrong, try again later.");
     }
   }
 
@@ -68,11 +64,6 @@ class ResetPasswordControllerImp extends ResetPasswordController {
   showConfirmPasswordFunction() {
     showConfirmPassword = (showConfirmPassword == true ? false : true);
     update();
-  }
-
-  @override
-  goToSuccessPage() {
-    Get.offNamed(AppRoutes.successPageAfterReset);
   }
 
   @override

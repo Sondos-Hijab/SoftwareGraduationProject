@@ -3,50 +3,48 @@ import 'package:get/get.dart';
 import 'package:software_grad_project/core/classes/status_request.dart';
 import 'package:software_grad_project/core/constants/routesnames.dart';
 import 'package:software_grad_project/core/functions/handling_data_function.dart';
-import 'package:software_grad_project/data/datasource/remote/authentication/signup_datasource.dart';
+import 'package:software_grad_project/core/services/service.dart';
+import 'package:software_grad_project/data/datasource/remote/authentication/forgotPassword/reset_password_datasource.dart';
 
-abstract class SignUpController extends GetxController {
-  signup();
-  goToLogin();
+abstract class ChangePasswordController extends GetxController {
+  resetPassword();
 }
 
-class SignUpControllerImp extends SignUpController {
-  late TextEditingController username;
+class ChangePasswordControllerImp extends ChangePasswordController {
   late TextEditingController password;
-  late TextEditingController email;
   late TextEditingController confirmPassword;
-  late StatusRequest statusRequest;
-  SignUpDataSource signupData = SignUpDataSource(Get.find());
 
-  List data = [];
+  StatusRequest? statusRequest;
+  ResetPasswordDataSource resetPasswordData =
+      ResetPasswordDataSource(Get.find());
+
+  final myServices = Get.find<MyServices>();
 
   GlobalKey<FormState> formState = GlobalKey<FormState>();
 
   @override
-  signup() async {
+  resetPassword() async {
+    String? accessToken = myServices.sharedPreferences.getString("accessToken");
+
     if (formState.currentState!.validate()) {
       statusRequest = StatusRequest.loading;
-      var response = await signupData.postData(
-          username.text, email.text, password.text, confirmPassword.text);
-
+      var response = await resetPasswordData.putDataWithAuthorization(
+          accessToken!, password.text, confirmPassword.text);
       statusRequest = handlingData(response);
       if (StatusRequest.success == statusRequest) {
-        if (response['statusCode'] == "201") {
-          data.add(response);
-          Get.offNamed(AppRoutes.successPageAfterSignUp);
-        } else if (response['statusCode'] == "409") {
-          Get.defaultDialog(title: "Warning", middleText: response['error']);
+        if (response['statusCode'] == "200") {
+          Get.offNamed(AppRoutes.successAfterChangePassword);
         } else if (response['statusCode'] == "400") {
           Get.defaultDialog(title: "Warning", middleText: response['error']);
+        } else {
+          Get.defaultDialog(
+              title: "Error",
+              middleText:
+                  "We are sorry, something went wrong, try again later.");
         }
-      } else {
-        Get.defaultDialog(
-            title: "Error",
-            middleText: "We are sorry, something went wrong, try again later.");
+        update();
       }
-
-      update();
-    } 
+    }
   }
 
   bool showPassword = true;
@@ -62,24 +60,15 @@ class SignUpControllerImp extends SignUpController {
   }
 
   @override
-  goToLogin() {
-    Get.offNamed(AppRoutes.login);
-  }
-
-  @override
   void onInit() {
-    email = TextEditingController();
     password = TextEditingController();
     confirmPassword = TextEditingController();
-    username = TextEditingController();
     super.onInit();
   }
 
   @override
   void dispose() {
-    email.dispose();
     password.dispose();
-    username.dispose();
     confirmPassword.dispose();
     super.dispose();
   }
