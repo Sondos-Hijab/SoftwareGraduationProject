@@ -123,6 +123,9 @@ class ProfilePageControllerImp extends ProfilePageController {
         if (response['UserProfilePicture'] != null) {
           List<int> bytes = base64Decode(response['UserProfilePicture']);
 
+          await myServices.sharedPreferences
+              .setString("profileImage", response['UserProfilePicture']);
+
           // Get the directory for saving images (you may need to import 'package:path_provider/path_provider.dart')
           Directory appDocDir = await getApplicationDocumentsDirectory();
           String appDocPath = appDocDir.path;
