@@ -11,6 +11,7 @@ class MyMiddleWare extends GetMiddleware {
 
   @override
   RouteSettings? redirect(String? route) {
+    // i need to add an if statement for cheking the validity of the accessToken to not let him sign in again
     if (myServices.sharedPreferences.getString("onboarding") == "1") {
       return const RouteSettings(name: AppRoutes.login);
     }
