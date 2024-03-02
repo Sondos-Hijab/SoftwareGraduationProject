@@ -2,21 +2,22 @@ import 'dart:io';
 
 class FeedbackModel {
   final String? username;
-  final String? placeHolderProfileImage;
+  final File? userProfileImage;
   final String? businessName;
   final String? feedbackText;
-  final String? placeHolderFeedbackPicture;
+  final File? feedbackImage;
   final int? customerService;
   final int? valueOfMoney;
   final int? productQuality;
 
   FeedbackModel(
-      this.username,
-      this.placeHolderProfileImage,
-      this.businessName,
-      this.feedbackText,
-      this.placeHolderFeedbackPicture,
-      this.customerService,
-      this.valueOfMoney,
-      this.productQuality);
+    this.username,
+    this.userProfileImage,
+    this.businessName,
+    this.feedbackText,
+    this.feedbackImage,
+    this.customerService,
+    this.valueOfMoney,
+    this.productQuality,
+  );
 }

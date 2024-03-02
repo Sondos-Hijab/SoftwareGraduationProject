@@ -1,8 +1,9 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
 
 class UserInfo extends StatelessWidget {
-  final String userImage;
+  final File? userImage;
   final String username;
   const UserInfo({super.key, required this.userImage, required this.username});
 
@@ -11,12 +12,19 @@ class UserInfo extends StatelessWidget {
     return Row(
       children: [
         ClipOval(
-          child: Image.asset(
-            userImage,
-            width: 50,
-            height: 50,
-            fit: BoxFit.cover,
-          ),
+          child: userImage != null
+              ? Image.file(
+                  File(userImage!.path),
+                  width: 50,
+                  height: 50,
+                  fit: BoxFit.cover,
+                )
+              : Image.asset(
+                  'assets/images/no-user.jpg',
+                  width: 50,
+                  height: 50,
+                  fit: BoxFit.cover,
+                ),
         ),
         Padding(
           padding: const EdgeInsets.only(left: 10),

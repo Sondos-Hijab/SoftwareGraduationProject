@@ -1,12 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:software_grad_project/view/widgets/home-page/feedback-view/feedback-image.dart';
 import 'package:software_grad_project/view/widgets/home-page/feedback-view/feedback-info.dart';
 import 'package:software_grad_project/view/widgets/home-page/feedback-view/userinfo.dart';
 
 class MainFeedbackWidget extends StatelessWidget {
-  final String userImage;
+  final File? userImage;
   final String username;
-  final String feedbackImage;
+  final File? feedbackImage;
   final String busineessName;
   final String feedbackText;
   final int customerServiceRating;

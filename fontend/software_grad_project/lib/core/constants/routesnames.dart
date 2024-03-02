@@ -22,6 +22,9 @@ class AppRoutes {
   static const String messagesPage = '/messagespage';
   static const String searchPage = '/searchpage';
 
+  //business related pages
+  static const String businessPage = '/businesspage';
+
   //testing purposes
   static const String test = '/test';
 }
