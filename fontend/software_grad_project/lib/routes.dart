@@ -4,6 +4,8 @@ import 'package:software_grad_project/test-widgets-screens-controllers/testwidge
 import 'package:software_grad_project/view/screens/app-main-pages/business_page.dart';
 import 'package:software_grad_project/view/screens/app-main-pages/user-profile-related-pages/change_password.dart';
 import 'package:software_grad_project/view/screens/app-main-pages/user-profile-related-pages/success_changing_password.dart';
+import 'package:software_grad_project/view/screens/app-main-pages/user-profile-related-pages/user_feedback.dart';
+import 'package:software_grad_project/view/screens/app-main-pages/user-profile-related-pages/user_followed_businesses_page.dart';
 import 'package:software_grad_project/view/screens/auth/forgot-password/verify_code.dart';
 import 'package:software_grad_project/view/screens/auth/success_signup.dart';
 import 'package:software_grad_project/view/screens/app-main-pages/home_page.dart';
@@ -55,7 +57,14 @@ List<GetPage<dynamic>>? routes = [
       page: () => const SuccessChangingPassword()),
 
   //business page
-    GetPage(name: AppRoutes.businessPage, page: () => const BusinessPage()),
+  GetPage(name: AppRoutes.businessPage, page: () => const BusinessPage()),
+
+  //profile page => followed businesses, feedbacks
+  GetPage(
+      name: AppRoutes.followedBusinessesPage,
+      page: () => const FollowedBusinessesPage()),
+  GetPage(
+      name: AppRoutes.userFeedbackPage, page: () => const UserFeedbackPage()),
 
   //testing purposes
   GetPage(name: AppRoutes.test, page: () => const TestWidget()),

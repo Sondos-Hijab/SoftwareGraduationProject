@@ -25,6 +25,10 @@ class AppRoutes {
   //business related pages
   static const String businessPage = '/businesspage';
 
+  //profile related pages
+  static const String followedBusinessesPage = '/followedbusinessespage';
+  static const String userFeedbackPage = '/userfeedbackpage';
+
   //testing purposes
   static const String test = '/test';
 }

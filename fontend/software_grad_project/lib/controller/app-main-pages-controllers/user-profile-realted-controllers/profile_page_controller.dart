@@ -163,10 +163,14 @@ class ProfilePageControllerImp extends ProfilePageController {
   }
 
   @override
-  goToBusinessesPage() {}
+  goToBusinessesPage() {
+    Get.toNamed(AppRoutes.followedBusinessesPage);
+  }
 
   @override
-  goToFeedbackPage() {}
+  goToFeedbackPage() {
+    Get.toNamed(AppRoutes.userFeedbackPage);
+  }
 
   @override
   goToChangePassword() {
