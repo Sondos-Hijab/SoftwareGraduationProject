@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:software_grad_project/core/constants/routesnames.dart';
+import 'package:software_grad_project/core/constants/routes_names.dart';
 import 'package:software_grad_project/core/services/service.dart';
 
 class MyMiddleWare extends GetMiddleware {

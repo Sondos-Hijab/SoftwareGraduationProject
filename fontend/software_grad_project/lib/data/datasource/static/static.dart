@@ -1,10 +1,10 @@
 import 'package:intl/intl.dart';
-import 'package:software_grad_project/core/constants/imagesassets.dart';
-import 'package:software_grad_project/data/model/businessmodel.dart';
-import 'package:software_grad_project/data/model/feedbackmodel.dart';
-import 'package:software_grad_project/data/model/onboardingmodel.dart';
-import 'package:software_grad_project/data/model/postsmodel.dart';
-import 'package:software_grad_project/data/model/slidermodel.dart';
+import 'package:software_grad_project/core/constants/images_assets.dart';
+import 'package:software_grad_project/data/model/businesses_info_model.dart';
+import 'package:software_grad_project/data/model/feedback_model.dart';
+import 'package:software_grad_project/data/model/onboarding_screens_model.dart';
+import 'package:software_grad_project/data/model/posts_model.dart';
+import 'package:software_grad_project/data/model/home_page_slider_model.dart';
 
 List<OnBoardingModel> onBoardingList = [
   OnBoardingModel("Welcome!", AppImageAssets.onBoardingImageOne,
