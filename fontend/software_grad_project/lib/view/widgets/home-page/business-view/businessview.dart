@@ -30,7 +30,7 @@ class BusinessViewItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: Text(
-                  businessViewList[index].businessName,
+                  businessViewList[index].businessName!,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               )

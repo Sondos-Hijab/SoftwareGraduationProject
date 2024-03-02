@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:software_grad_project/controller/app-main-pages-controllers/business-page-controller.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
-import 'package:software_grad_project/core/constants/imagesassets.dart';
 import 'package:software_grad_project/data/datasource/static/static.dart';
 import 'package:software_grad_project/view/widgets/home-page/feedback-view/main-feedback.dart';
+import 'package:software_grad_project/view/widgets/home-page/posts-view/mainpostwidget.dart';
 
 class BusinessPage extends StatelessWidget {
   const BusinessPage({super.key});
@@ -61,29 +60,20 @@ class BusinessPage extends StatelessWidget {
               child: TabBarView(children: [
                 ListView(
                   children: [
-                    Container(
-                      width: 160,
-                      height: 160,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Colors.grey.shade200,
-                          width: 2,
-                        ),
-                      ),
-                      child: Center(
-                        child: controller.businessImage != null
-                            ? CircleAvatar(
-                                radius: 80,
-                                backgroundImage:
-                                    FileImage(controller.businessImage!),
-                              )
-                            : const Icon(
-                                Icons.business,
-                                size: 80,
-                                color: Colors.black,
+                    CircleAvatar(
+                      radius: 100,
+                      backgroundColor: Colors.transparent,
+                      backgroundImage: controller.businessImage != null
+                          ? FileImage(controller.businessImage!)
+                          : null,
+                      child: controller.businessImage == null
+                          ? ClipOval(
+                              child: Image.asset(
+                                "assets/images/coffee_business.jpeg",
+                                fit: BoxFit.cover,
                               ),
-                      ),
+                            )
+                          : null,
                     ),
                     Container(
                       margin: EdgeInsets.all(20),
@@ -202,7 +192,23 @@ class BusinessPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                Text("Posts")
+
+                //posts
+                ListView(
+                  children: [
+                    ...List.generate(
+                        postsList.length,
+                        (index) => MainPostWidget(
+                              businessProfileImage:
+                                  postsList[index].businessProfileImage,
+                              businessName: postsList[index].businessName,
+                              postText: postsList[index].postText,
+                              postImage: postsList[index].postImage,
+                              date: postsList[index].date,
+                              time: postsList[index].time,
+                            )),
+                  ],
+                ),
               ])),
         ),
       );

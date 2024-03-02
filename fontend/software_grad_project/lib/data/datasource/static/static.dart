@@ -1,7 +1,9 @@
+import 'package:intl/intl.dart';
 import 'package:software_grad_project/core/constants/imagesassets.dart';
 import 'package:software_grad_project/data/model/businessmodel.dart';
 import 'package:software_grad_project/data/model/feedbackmodel.dart';
 import 'package:software_grad_project/data/model/onboardingmodel.dart';
+import 'package:software_grad_project/data/model/postsmodel.dart';
 import 'package:software_grad_project/data/model/slidermodel.dart';
 
 List<OnBoardingModel> onBoardingList = [
@@ -92,7 +94,7 @@ List<FeedbackModel> feedbackData = [
   ),
 ];
 
-List businessViewList = [
+List<BusinessViewModel> businessViewList = [
   BusinessViewModel("Business name 1", null),
   BusinessViewModel("Business name 1", null),
   BusinessViewModel("Business name 1", null),
@@ -113,4 +115,72 @@ List businessViewList = [
   BusinessViewModel("Business name 1", null),
   BusinessViewModel("Business name 1", null),
   BusinessViewModel("Business name 1", null),
+];
+
+DateTime now = DateTime(
+  2024, // year
+  3, // month (1-12)
+  1, // day
+  10, // hour (0-23)
+  30, // minute (0-59)
+  0,
+);
+
+List<PostsModel> postsList = [
+  PostsModel(
+      null,
+      "Business 1",
+      "Step into our coffee world through this snapshot: imagine a warm cup of coffee on a wooden table, surrounded by scattered beans.",
+      null,
+      DateFormat('yyyy-MM-dd').format(now),
+      DateFormat('HH:mm:ss').format(now)),
+  PostsModel(
+      null,
+      "Business 1",
+      "Step into our coffee world through this snapshot: imagine a warm cup of coffee on a wooden table, surrounded by scattered beans.",
+      null,
+      DateFormat('yyyy-MM-dd').format(now),
+      DateFormat('HH:mm:ss').format(now)),
+  PostsModel(
+      null,
+      "Business 1",
+      "Step into our coffee world through this snapshot: imagine a warm cup of coffee on a wooden table, surrounded by scattered beans.",
+      null,
+      DateFormat('yyyy-MM-dd').format(now),
+      DateFormat('HH:mm:ss').format(now)),
+  PostsModel(
+      null,
+      "Business 1",
+      "Step into our coffee world through this snapshot: imagine a warm cup of coffee on a wooden table, surrounded by scattered beans.",
+      null,
+      DateFormat('yyyy-MM-dd').format(now),
+      DateFormat('HH:mm:ss').format(now)),
+  PostsModel(
+      null,
+      "Business 1",
+      "Step into our coffee world through this snapshot: imagine a warm cup of coffee on a wooden table, surrounded by scattered beans.",
+      null,
+      DateFormat('yyyy-MM-dd').format(now),
+      DateFormat('HH:mm:ss').format(now)),
+  PostsModel(
+      null,
+      "Business 1",
+      "Step into our coffee world through this snapshot: imagine a warm cup of coffee on a wooden table, surrounded by scattered beans.",
+      null,
+      DateFormat('yyyy-MM-dd').format(now),
+      DateFormat('HH:mm:ss').format(now)),
+  PostsModel(
+      null,
+      "Business 1",
+      "Step into our coffee world through this snapshot: imagine a warm cup of coffee on a wooden table, surrounded by scattered beans.",
+      null,
+      DateFormat('yyyy-MM-dd').format(now),
+      DateFormat('HH:mm:ss').format(now)),
+  PostsModel(
+      null,
+      "Business 1",
+      "Step into our coffee world through this snapshot: imagine a warm cup of coffee on a wooden table, surrounded by scattered beans.",
+      null,
+      DateFormat('yyyy-MM-dd').format(now),
+      DateFormat('HH:mm:ss').format(now)),
 ];
