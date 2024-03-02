@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:software_grad_project/controller/auth/success_signup_controller.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
-import 'package:software_grad_project/view/widgets/auth/customebuttonauth.dart';
+import 'package:software_grad_project/view/widgets/auth/custom_button_auth.dart';
 
 class SuccessSignUp extends StatelessWidget {
   const SuccessSignUp({super.key});

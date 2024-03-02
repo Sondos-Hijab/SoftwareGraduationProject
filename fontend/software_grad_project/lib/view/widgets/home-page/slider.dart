@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:software_grad_project/view/widgets/home-page/sliderItem.dart';
+import 'package:software_grad_project/view/widgets/home-page/slider_Item.dart';
 
 class HomePageSlider extends StatelessWidget {
   final List sliderList;

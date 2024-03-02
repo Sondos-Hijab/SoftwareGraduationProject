@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:software_grad_project/controller/auth/forgot_password/success_reset_password_controller.dart';
+import 'package:software_grad_project/controller/app-main-pages-controllers/user-profile-realted-controllers/success_changing_password_controller.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
 import 'package:software_grad_project/view/widgets/auth/custom_button_auth.dart';
 
-class SuccessResetPassword extends StatelessWidget {
-  const SuccessResetPassword({super.key});
+class SuccessChangingPassword extends StatelessWidget {
+  const SuccessChangingPassword({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => SuccessResetPasswordControllerImp());
+    Get.lazyPut(() => SuccessChangingPasswordControllerImp());
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -20,7 +20,7 @@ class SuccessResetPassword extends StatelessWidget {
             style: Theme.of(context).textTheme.headlineSmall,
           ),
         ),
-        body: GetBuilder<SuccessResetPasswordControllerImp>(
+        body: GetBuilder<SuccessChangingPasswordControllerImp>(
           builder: (controller) => Container(
             padding: const EdgeInsets.all(15),
             margin: const EdgeInsets.symmetric(vertical: 30),
@@ -34,7 +34,7 @@ class SuccessResetPassword extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "Success resetting password!",
+                  "Success changing password!",
                   style: Theme.of(context).textTheme.headlineLarge,
                   textAlign: TextAlign.center,
                 ),
@@ -42,7 +42,7 @@ class SuccessResetPassword extends StatelessWidget {
                   height: 25,
                 ),
                 Text(
-                  "You can sign in to your account using your new password now",
+                  "You can use your account with your new password now",
                   style: Theme.of(context).textTheme.bodyMedium,
                   textAlign: TextAlign.center,
                 ),
@@ -50,9 +50,9 @@ class SuccessResetPassword extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: CustomButtonAuth(
-                    text: "Sign in",
+                    text: "Go to profile",
                     onPressed: () {
-                      controller.goToLoginPage();
+                      controller.goToProfilePage();
                     },
                   ),
                 ),

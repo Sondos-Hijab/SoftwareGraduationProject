@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:software_grad_project/core/classes/status_request.dart';
-import 'package:software_grad_project/core/constants/routesnames.dart';
+import 'package:software_grad_project/core/constants/routes_names.dart';
 import 'package:software_grad_project/core/functions/handling_data_function.dart';
 import 'package:software_grad_project/core/services/service.dart';
 import 'package:software_grad_project/data/datasource/remote/authentication/forgotPassword/verify_code_datasource.dart';

@@ -4,12 +4,12 @@ import 'package:software_grad_project/controller/auth/login_controller.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
 import 'package:software_grad_project/core/functions/alert_exit_app.dart';
 import 'package:software_grad_project/core/functions/valid_input.dart';
-import 'package:software_grad_project/view/widgets/auth/customdescriptiontextauth.dart';
-import 'package:software_grad_project/view/widgets/auth/customebuttonauth.dart';
-import 'package:software_grad_project/view/widgets/auth/customtexttitleauth.dart';
-import 'package:software_grad_project/view/widgets/auth/customtextformauth.dart';
-import 'package:software_grad_project/view/widgets/auth/logoauth.dart';
-import 'package:software_grad_project/view/widgets/auth/textsignuplogin.dart';
+import 'package:software_grad_project/view/widgets/auth/custom_description_text_auth.dart';
+import 'package:software_grad_project/view/widgets/auth/custom_button_auth.dart';
+import 'package:software_grad_project/view/widgets/auth/custom_text_title_auth.dart';
+import 'package:software_grad_project/view/widgets/auth/custom_text_form_auth.dart';
+import 'package:software_grad_project/view/widgets/auth/logo_auth.dart';
+import 'package:software_grad_project/view/widgets/auth/text_signup_login.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
