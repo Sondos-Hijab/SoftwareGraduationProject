@@ -2,9 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
-import 'package:software_grad_project/view/widgets/business/feedback-view/feedback-image.dart';
-import 'package:software_grad_project/view/widgets/business/feedback-view/feedback_info.dart';
-import 'package:software_grad_project/view/widgets/business/feedback-view/user_info.dart';
+
 import 'package:software_grad_project/view/widgets/business/posts-view/businessinfo.dart';
 import 'package:software_grad_project/view/widgets/business/posts-view/postimage.dart';
 

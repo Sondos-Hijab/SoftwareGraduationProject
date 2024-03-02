@@ -22,20 +22,18 @@ class TestWidget extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("TEST TEST"),
+        title: const Text("TEST TEST"),
       ),
       body: GetBuilder<TestController>(
         builder: (controller) {
-          return Container(
-            child: Column(
-              children: [
-                Text(username!),
-                Text(password!),
-                Text(accessToken!),
-                Text(refreshToken!)
-              ],
-            ),
-            // child: MaterialButton(onPressed: () => controller.getData()),
+          return Column(
+            children: [
+              Text(username!),
+              Text(password!),
+              Text(accessToken!),
+              Text(refreshToken!),
+              Text(tempAccessToken!)
+            ],
           );
         },
       ),
