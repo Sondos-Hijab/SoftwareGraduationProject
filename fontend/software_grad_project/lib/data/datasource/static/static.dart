@@ -1,4 +1,5 @@
 import 'package:software_grad_project/core/constants/imagesassets.dart';
+import 'package:software_grad_project/data/model/businessmodel.dart';
 import 'package:software_grad_project/data/model/feedbackmodel.dart';
 import 'package:software_grad_project/data/model/onboardingmodel.dart';
 import 'package:software_grad_project/data/model/slidermodel.dart';
@@ -59,4 +60,27 @@ List<FeedbackModel> feedbackData = [
     4,
     5,
   ),
+];
+
+List businessViewList = [
+  BusinessViewModel("Business name 1", null),
+  BusinessViewModel("Business name 1", null),
+  BusinessViewModel("Business name 1", null),
+  BusinessViewModel("Business name 1", null),
+  BusinessViewModel("Business name 1", null),
+  BusinessViewModel("Business name 1", null),
+  BusinessViewModel("Business name 1", null),
+  BusinessViewModel("Business name 1", null),
+  BusinessViewModel("Business name 1", null),
+  BusinessViewModel("Business name 1", null),
+  BusinessViewModel("Business name 1", null),
+  BusinessViewModel("Business name 1", null),
+  BusinessViewModel("Business name 1", null),
+  BusinessViewModel("Business name 1", null),
+  BusinessViewModel("Business name 1", null),
+  BusinessViewModel("Business name 1", null),
+  BusinessViewModel("Business name 1", null),
+  BusinessViewModel("Business name 1", null),
+  BusinessViewModel("Business name 1", null),
+  BusinessViewModel("Business name 1", null),
 ];
