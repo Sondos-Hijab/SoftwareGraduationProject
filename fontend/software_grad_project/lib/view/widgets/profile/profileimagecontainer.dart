@@ -21,7 +21,7 @@ class ProfileImageContainer extends StatelessWidget {
             )
           : const CircleAvatar(
               radius: 120,
-              backgroundImage: AssetImage(AppImageAssets.profileImage),
+              backgroundImage: AssetImage(AppImageAssets.noUserImage),
             ),
       InkWell(
         onTap: onTap,

@@ -60,6 +60,8 @@ dependencies:
   flutter_otp_text_field: ^1.1.1
   dio: ^5.4.1
   flutter_svg: ^2.0.10+1
+  http_parser: ^4.0.2
+  path_provider: ^2.1.2
 
 dev_dependencies:
   flutter_test:

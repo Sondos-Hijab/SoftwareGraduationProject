@@ -30,7 +30,7 @@ class BioContainer extends StatelessWidget {
           children: [
             TextFormField(
               readOnly: !isEditingBio,
-              maxLines: 3,
+              maxLines: 2,
               textAlign: TextAlign.center,
               controller: bioTextEditingController,
               style: Theme.of(context).textTheme.bodyMedium,
