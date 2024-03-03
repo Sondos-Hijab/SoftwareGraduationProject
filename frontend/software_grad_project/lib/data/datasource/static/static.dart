@@ -2,6 +2,7 @@ import 'package:intl/intl.dart';
 import 'package:software_grad_project/core/constants/images_assets.dart';
 import 'package:software_grad_project/data/model/businesses_info_model.dart';
 import 'package:software_grad_project/data/model/feedback_model.dart';
+import 'package:software_grad_project/data/model/notification_item_model.dart';
 import 'package:software_grad_project/data/model/onboarding_screens_model.dart';
 import 'package:software_grad_project/data/model/posts_model.dart';
 import 'package:software_grad_project/data/model/home_page_slider_model.dart';
@@ -183,4 +184,87 @@ List<PostsModel> postsList = [
       null,
       DateFormat('yyyy-MM-dd').format(now),
       DateFormat('HH:mm:ss').format(now)),
+];
+
+final List<NotificationItem> notifications = [
+  NotificationItem(
+    userPicture: 'assets/images/no-user.jpg',
+    username: 'business1',
+    time: '2 hours ago',
+  ),
+  NotificationItem(
+    userPicture: 'assets/images/no-user.jpg',
+    username: 'business2',
+    time: '1 hour ago',
+  ),
+  NotificationItem(
+    userPicture: 'assets/images/no-user.jpg',
+    username: 'business1',
+    time: '2 hours ago',
+  ),
+  NotificationItem(
+    userPicture: 'assets/images/no-user.jpg',
+    username: 'business2',
+    time: '1 hour ago',
+  ),
+  NotificationItem(
+    userPicture: 'assets/images/no-user.jpg',
+    username: 'business1',
+    time: '2 hours ago',
+  ),
+  NotificationItem(
+    userPicture: 'assets/images/no-user.jpg',
+    username: 'business2',
+    time: '1 hour ago',
+  ),
+  NotificationItem(
+    userPicture: 'assets/images/no-user.jpg',
+    username: 'business1',
+    time: '2 hours ago',
+  ),
+  NotificationItem(
+    userPicture: 'assets/images/no-user.jpg',
+    username: 'business2',
+    time: '1 hour ago',
+  ),
+  NotificationItem(
+    userPicture: 'assets/images/no-user.jpg',
+    username: 'business1',
+    time: '2 hours ago',
+  ),
+  NotificationItem(
+    userPicture: 'assets/images/no-user.jpg',
+    username: 'business2',
+    time: '1 hour ago',
+  ),
+  NotificationItem(
+    userPicture: 'assets/images/no-user.jpg',
+    username: 'business1',
+    time: '2 hours ago',
+  ),
+  NotificationItem(
+    userPicture: 'assets/images/no-user.jpg',
+    username: 'business2',
+    time: '1 hour ago',
+  ),
+  NotificationItem(
+    userPicture: 'assets/images/no-user.jpg',
+    username: 'business1',
+    time: '2 hours ago',
+  ),
+  NotificationItem(
+    userPicture: 'assets/images/no-user.jpg',
+    username: 'business2',
+    time: '1 hour ago',
+  ),
+  NotificationItem(
+    userPicture: 'assets/images/no-user.jpg',
+    username: 'business1',
+    time: '2 hours ago',
+  ),
+  NotificationItem(
+    userPicture: 'assets/images/no-user.jpg',
+    username: 'business2',
+    time: '1 hour ago',
+  ),
 ];

@@ -1,8 +1,6 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:software_grad_project/test-widgets-screens-controllers/test_controller.dart';
 import 'package:software_grad_project/core/services/service.dart';
 

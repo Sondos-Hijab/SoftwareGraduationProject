@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
+import 'package:software_grad_project/core/constants/routes_names.dart';
 import 'package:software_grad_project/view/widgets/business/business_location.dart';
 
 class BusinessMainInfoWidget extends StatelessWidget {
@@ -142,7 +144,9 @@ class BusinessMainInfoWidget extends StatelessWidget {
                   children: [
                     Expanded(
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Get.toNamed(AppRoutes.feedbackFormPage);
+                        },
                         child: Container(
                           decoration: BoxDecoration(
                             color: AppColors.primaryBlue,
@@ -172,7 +176,9 @@ class BusinessMainInfoWidget extends StatelessWidget {
                     ),
                     Expanded(
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Get.toNamed(AppRoutes.messagesPage);
+                        },
                         child: Container(
                           decoration: BoxDecoration(
                             color: AppColors.primaryBlue,
