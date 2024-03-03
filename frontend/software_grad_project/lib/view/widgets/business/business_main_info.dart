@@ -1,10 +1,22 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
+import 'package:software_grad_project/view/widgets/business/business_location.dart';
 
 class BusinessMainInfoWidget extends StatelessWidget {
+  final Completer<GoogleMapController> gmController;
+
+  final List<Marker> markers;
+  final CameraPosition businessLocation;
   final File? businessImage;
-  const BusinessMainInfoWidget({super.key, required this.businessImage});
+  const BusinessMainInfoWidget(
+      {super.key,
+      required this.businessImage,
+      required this.gmController,
+      required this.markers,
+      required this.businessLocation});
 
   @override
   Widget build(BuildContext context) {
@@ -104,6 +116,24 @@ class BusinessMainInfoWidget extends StatelessWidget {
                         .bodyMedium!
                         .copyWith(fontSize: 16)),
               ),
+              Text(
+                textAlign: TextAlign.center,
+                "Location",
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall
+                    ?.copyWith(color: AppColors.primaryDarkBlue, fontSize: 20),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              BusinessLocation(
+                  markers: markers,
+                  businessLocation: businessLocation,
+                  gmController: gmController),
+              const SizedBox(
+                height: 20,
+              ),
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -172,7 +202,7 @@ class BusinessMainInfoWidget extends StatelessWidget {
               ),
             ],
           ),
-        )
+        ),
       ],
     );
   }

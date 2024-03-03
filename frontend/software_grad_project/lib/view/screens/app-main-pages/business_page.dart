@@ -59,7 +59,12 @@ class BusinessPage extends StatelessWidget {
             padding: const EdgeInsets.all(10),
             child: TabBarView(
               children: [
-                BusinessMainInfoWidget(businessImage: controller.businessImage),
+                BusinessMainInfoWidget(
+                  businessImage: controller.businessImage,
+                  gmController: controller.gmController,
+                  businessLocation: controller.businessLocation,
+                  markers: controller.markers,
+                ),
                 const BusinessFeedback(),
                 const BusinessPosts()
               ],

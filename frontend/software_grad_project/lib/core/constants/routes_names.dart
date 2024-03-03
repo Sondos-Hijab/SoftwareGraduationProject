@@ -29,6 +29,12 @@ class AppRoutes {
   static const String followedBusinessesPage = '/followedbusinessespage';
   static const String userFeedbackPage = '/userfeedbackpage';
 
+  //feedback form
+  static const String feedbackFormPage = '/feedbackFormPage';
+
+  //messages page
+  static const String speceficChatPage = '/speceficChatPage';
+
   //testing purposes
   static const String test = '/test';
 }
