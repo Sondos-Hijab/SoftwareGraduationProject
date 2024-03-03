@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
           bodySmall: TextStyle(color: AppColors.lightGrey, fontSize: 14),
         ),
       ),
-      initialRoute: AppRoutes.onBoarding,
+      initialRoute: AppRoutes.feedbackFormPage,
       initialBinding: InitialBindings(),
       getPages: routes,
     );

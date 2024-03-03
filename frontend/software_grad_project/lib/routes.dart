@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:software_grad_project/core/middleware/middleware.dart';
 import 'package:software_grad_project/test-widgets-screens-controllers/testwidget.dart';
 import 'package:software_grad_project/view/screens/app-main-pages/business_page.dart';
+import 'package:software_grad_project/view/screens/app-main-pages/feedback_form_page.dart';
 import 'package:software_grad_project/view/screens/app-main-pages/user-profile-related-pages/change_password.dart';
 import 'package:software_grad_project/view/screens/app-main-pages/user-profile-related-pages/success_changing_password.dart';
 import 'package:software_grad_project/view/screens/app-main-pages/user-profile-related-pages/user_feedback.dart';
@@ -65,6 +66,10 @@ List<GetPage<dynamic>>? routes = [
       page: () => const FollowedBusinessesPage()),
   GetPage(
       name: AppRoutes.userFeedbackPage, page: () => const UserFeedbackPage()),
+
+  //feedback form
+  GetPage(
+      name: AppRoutes.feedbackFormPage, page: () => const FeedbackFormPage()),
 
   //testing purposes
   GetPage(name: AppRoutes.test, page: () => const TestWidget()),
