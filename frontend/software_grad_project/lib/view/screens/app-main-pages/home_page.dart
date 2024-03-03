@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:software_grad_project/controller/app-main-pages-controllers/home_page_controller.dart';
+import 'package:software_grad_project/core/constants/routes_names.dart';
 import 'package:software_grad_project/core/services/service.dart';
 import 'package:software_grad_project/data/datasource/static/static.dart';
 import 'package:software_grad_project/view/widgets/home-page/business-view/business_view.dart';
@@ -27,7 +28,10 @@ class HomePage extends StatelessWidget {
                 height: 40,
               ),
               HomePageHeader(
-                  username: username, onPressedNotificationButton: () {}),
+                  username: username,
+                  onPressedNotificationButton: () {
+                    Get.toNamed(AppRoutes.notificationsPage);
+                  }),
 
               HomePageSlider(
                 sliderList: sliderList,

@@ -35,6 +35,9 @@ class AppRoutes {
   //messages page
   static const String speceficChatPage = '/speceficChatPage';
 
+  //notifications page
+  static const String notificationsPage = '/notificationsPage';
+
   //testing purposes
   static const String test = '/test';
 }
