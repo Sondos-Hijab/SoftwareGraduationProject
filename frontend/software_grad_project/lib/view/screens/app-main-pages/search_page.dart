@@ -54,7 +54,10 @@ class SearchPage extends StatelessWidget {
                       ),
                     ),
                   )
-                : Text("Search for a business"),
+                : Container(
+                    margin: EdgeInsets.all(20),
+                    child: Text(
+                        "Results of your search will appear here when you click the search button above.")),
           ],
         );
       }),
