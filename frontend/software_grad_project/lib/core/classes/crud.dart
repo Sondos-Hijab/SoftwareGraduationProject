@@ -123,6 +123,7 @@ class CRUDRequests {
       return const Left(StatusRequest.serverException);
     }
   }
+  
 
   Future<Either<StatusRequest, Map>> putDataWithAuthorization(
       String linkurl, Map data, String authToken) async {

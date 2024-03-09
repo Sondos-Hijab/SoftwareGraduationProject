@@ -17,6 +17,9 @@ class AppLink {
   static const String addUserPictureLink = "$server/user/addUserProfilePicture";
   static const String getUserPictureLink = "$server/user/getUserProfilePicture";
 
+  //business page
+  static const String getBusinessPostsLink = "$server/user/getPost";
+
   //Test
   static const String test = "https://jsonplaceholder.typicode.com/posts/1";
 }

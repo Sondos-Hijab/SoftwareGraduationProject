@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:software_grad_project/core/middleware/middleware.dart';
+import 'package:software_grad_project/test-widgets-screens-controllers/image_widget.dart';
 import 'package:software_grad_project/test-widgets-screens-controllers/testwidget.dart';
 import 'package:software_grad_project/view/screens/app-main-pages/business_page.dart';
 import 'package:software_grad_project/view/screens/app-main-pages/chatting-system-pages/specefic_chat_page.dart';
@@ -81,5 +82,7 @@ List<GetPage<dynamic>>? routes = [
   GetPage(name: AppRoutes.notificationsPage, page: () => NotificationsPage()),
 
   //testing purposes
-  GetPage(name: AppRoutes.test, page: () => const TestWidget()),
+  // GetPage(
+  //     name: AppRoutes.test,
+  //     page: () => ImageDisplay()),
 ];

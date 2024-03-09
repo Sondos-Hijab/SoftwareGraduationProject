@@ -75,3 +75,6 @@ class BusinessPage extends StatelessWidget {
     });
   }
 }
+
+
+//recieve the images as controller.businessesPosts[2].picture!
