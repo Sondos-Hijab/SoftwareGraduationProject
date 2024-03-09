@@ -33,6 +33,9 @@ CREATE TABLE `business` (
   PRIMARY KEY (`adminID`)
 ) 
 
+ALTER TABLE `softwaredb`.`business` 
+CHANGE COLUMN `phoneNumber` `phoneNumber` BIGINT NOT NULL ;
+
 CREATE TABLE `refreshtoken` (
   `tokenID` int NOT NULL AUTO_INCREMENT,
   `user_id` int DEFAULT NULL,
