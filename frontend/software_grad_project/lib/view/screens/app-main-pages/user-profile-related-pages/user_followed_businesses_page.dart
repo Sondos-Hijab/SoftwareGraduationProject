@@ -30,7 +30,8 @@ class FollowedBusinessesPage extends StatelessWidget {
                   (index) => BusinessViewItem(
                         index: index,
                         onTap: () {
-                          controller.goToBusinessPage();
+                          controller.goToBusinessPage(
+                              businessViewList[index].businessName!);
                         },
                       ))
             ],

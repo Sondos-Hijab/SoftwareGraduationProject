@@ -92,7 +92,7 @@ Uint8List? _convertDataToFile(Map<String, dynamic>? pictureData) {
     if (data is List<dynamic>) {
       try {
         Uint8List bytes = Uint8List.fromList(data.cast<int>());
-        print(bytes);
+        // print(bytes);
         return bytes;
       } catch (e) {
         print("Error creating file: $e");

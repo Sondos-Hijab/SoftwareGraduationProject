@@ -12,6 +12,7 @@ import 'package:software_grad_project/core/services/service.dart';
 import 'package:software_grad_project/data/datasource/remote/authentication/logout_datasource.dart';
 import 'package:software_grad_project/data/datasource/remote/profile-page/bio_datasource.dart';
 import 'package:software_grad_project/data/datasource/remote/profile-page/profile_image_datasource.dart';
+import 'package:software_grad_project/data/datasource/remote/authentication/check_authentication_datasource.dart';
 
 abstract class ProfilePageController extends GetxController {
   editMode();
@@ -22,6 +23,7 @@ abstract class ProfilePageController extends GetxController {
   goToChangePassword();
   Future uploadImage();
   getProfileImage();
+  checkAuthentication();
 }
 
 class ProfilePageControllerImp extends ProfilePageController {
@@ -39,6 +41,8 @@ class ProfilePageControllerImp extends ProfilePageController {
   ProfileImageDataSource profileImageDataSource =
       ProfileImageDataSource(Get.find());
 
+  CheckAuthenticationDataSource checkAuthenticationDataSource =
+      CheckAuthenticationDataSource(Get.find());
   @override
   editMode() async {
     isEditingBio = !isEditingBio;
@@ -73,12 +77,12 @@ class ProfilePageControllerImp extends ProfilePageController {
 
   @override
   void onInit() {
+    super.onInit();
     accessToken = myServices.sharedPreferences.getString("accessToken");
     refreshToken = myServices.sharedPreferences.getString("refreshToken");
     bioController = TextEditingController();
     getBio();
     getProfileImage();
-    super.onInit();
   }
 
   @override
@@ -238,6 +242,23 @@ class ProfilePageControllerImp extends ProfilePageController {
     if (await File(filePath).exists()) {
       // Delete the file
       await File(filePath).delete();
+    }
+  }
+
+  @override
+  checkAuthentication() async {
+    statusRequest = StatusRequest.loading;
+    accessToken = myServices.sharedPreferences.getString("accessToken");
+    var response = await checkAuthenticationDataSource
+        .getDataWithOnlyAuthorization(accessToken!);
+    statusRequest = handlingData(response);
+
+    if (StatusRequest.success == statusRequest) {
+      if (response['statusCode'] == "200") {
+        myServices.sharedPreferences.setBool("isLoggedIn", true);
+      } else {
+        myServices.sharedPreferences.setBool("isLoggedIn", false);
+      }
     }
   }
 }
