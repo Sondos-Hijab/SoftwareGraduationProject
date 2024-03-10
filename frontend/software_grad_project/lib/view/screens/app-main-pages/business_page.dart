@@ -66,7 +66,9 @@ class BusinessPage extends StatelessWidget {
                   markers: controller.markers,
                 ),
                 const BusinessFeedback(),
-                const BusinessPosts()
+                BusinessPosts(
+                  businessesPosts: controller.businessesPosts,
+                )
               ],
             ),
           ),

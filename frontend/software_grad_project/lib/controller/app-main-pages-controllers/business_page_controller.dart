@@ -28,7 +28,7 @@ class BusinessPagesControllerImp extends BusinessPagesController {
   BusinessPostsDataSource businessPostsDatasource =
       BusinessPostsDataSource(Get.find());
 
-  late List<FetchedPostModel> businessesPosts;
+  List<FetchedPostModel>? businessesPosts = [];
 
   List<Marker> markers = [
     const Marker(
