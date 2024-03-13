@@ -5,11 +5,20 @@ import SignupForm from "./_auth/forms/SignupForm";
 import RootLayout from "./_root/RootLayout";
 import BusinessInfoForm from "./_auth/forms/BusinessInfoForm";
 import LocationInfoForm from "./_auth/forms/LocationInfoForm";
-import { Home } from "./_root/pages";
 import { Routes, Route } from "react-router-dom";
 import ResetPasswordForm from "./_auth/forms/forgot-password/ResetPasswordForm";
 import EmailConfirmationForm from "./_auth/forms/forgot-password/EmailConfirmationForm";
 import OTPcodeForm from "./_auth/forms/forgot-password/OTPcodeForm";
+import {
+  Home,
+  Feedback,
+  Messages,
+  Dashboard,
+  AddPost,
+  Notifications,
+  Posts,
+  Profile,
+} from "./_root/pages";
 
 function App() {
   return (
@@ -28,6 +37,13 @@ function App() {
         {/* private routes */}
         <Route element={<RootLayout />}>
           <Route index element={<Home />} />
+          <Route path="/Feedback" element={<Feedback />} />
+          <Route path="/AddPost" element={<AddPost />} />
+          <Route path="/Dashboard" element={<Dashboard />} />
+          <Route path="/Messages" element={<Messages />} />
+          <Route path="/Notifications" element={<Notifications />} />
+          <Route path="/Posts" element={<Posts />} />
+          <Route path="/Profile" element={<Profile />} />
         </Route>
       </Routes>
     </main>
