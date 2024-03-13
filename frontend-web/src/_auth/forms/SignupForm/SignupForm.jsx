@@ -1,5 +1,5 @@
 import { useState } from "react";
-import logo from "../../assets/images/logo.png";
+import logo from "../../../assets/images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./SignupForm.module.css";
 export default function SignupForm() {

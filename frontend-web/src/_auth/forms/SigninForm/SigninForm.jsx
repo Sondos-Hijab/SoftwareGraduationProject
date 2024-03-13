@@ -1,5 +1,5 @@
 import { useState } from "react";
-import logo from "../../assets/images/logo.png";
+import logo from "../../../assets/images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import Modal from "@/helper-components/Modal";
 import styles from "./SigninForm.module.css";

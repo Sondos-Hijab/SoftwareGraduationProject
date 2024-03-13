@@ -1,5 +1,5 @@
 "use client";
-import logo from "../../../assets/images/logo.png";
+import logo from "../../../../assets/images/logo.png";
 import styles from "./OTPcodeForm.module.css";
 import { useState } from "react";
 import {

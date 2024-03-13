@@ -1,14 +1,17 @@
 import "./index.css";
 import AuthLayout from "./_auth/AuthLayout";
-import SigninForm from "./_auth/forms/SigninForm";
-import SignupForm from "./_auth/forms/SignupForm";
 import RootLayout from "./_root/RootLayout";
-import BusinessInfoForm from "./_auth/forms/BusinessInfoForm";
-import LocationInfoForm from "./_auth/forms/LocationInfoForm";
+import Error from "./helper-components/Error";
 import { Routes, Route } from "react-router-dom";
-import ResetPasswordForm from "./_auth/forms/forgot-password/ResetPasswordForm";
-import EmailConfirmationForm from "./_auth/forms/forgot-password/EmailConfirmationForm";
-import OTPcodeForm from "./_auth/forms/forgot-password/OTPcodeForm";
+import {
+  SignupForm,
+  SigninForm,
+  BusinessInfoForm,
+  EmailConfirmationForm,
+  LocationInfoForm,
+  OTPcodeForm,
+  ResetPasswordForm,
+} from "./_auth/forms";
 import {
   Home,
   Feedback,
@@ -19,7 +22,6 @@ import {
   Posts,
   Profile,
 } from "./_root/pages";
-
 function App() {
   return (
     <main>
@@ -37,14 +39,16 @@ function App() {
         {/* private routes */}
         <Route element={<RootLayout />}>
           <Route index element={<Home />} />
-          <Route path="/Feedback" element={<Feedback />} />
-          <Route path="/AddPost" element={<AddPost />} />
-          <Route path="/Dashboard" element={<Dashboard />} />
-          <Route path="/Messages" element={<Messages />} />
-          <Route path="/Notifications" element={<Notifications />} />
-          <Route path="/Posts" element={<Posts />} />
-          <Route path="/Profile" element={<Profile />} />
+          <Route path="/feedback" element={<Feedback />} />
+          <Route path="/addPost" element={<AddPost />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/messages" element={<Messages />} />
+          <Route path="/notifications" element={<Notifications />} />
+          <Route path="/posts" element={<Posts />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
+        {/* when the use navigates to undefined page - route */}
+        <Route path="*" element={<Error />} />
       </Routes>
     </main>
   );
