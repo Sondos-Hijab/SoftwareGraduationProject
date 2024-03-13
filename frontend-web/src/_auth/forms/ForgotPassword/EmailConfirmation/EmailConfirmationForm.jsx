@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import logo from "../../../../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
-import Modal from "@/helper-components/Modal";
+import Modal from "@/helper-components/Modal/Modal";
 import styles from "./EmailConfirmationForm.module.css";
 const EmailConfirmationForm = () => {
   //routing variables

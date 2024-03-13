@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import logo from "../../../assets/images/logo.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import LocationForm from "./LocationForm";
-import Modal from "@/helper-components/Modal";
+import Modal from "@/helper-components/Modal/Modal";
 import styles from "./LocationInfoForm.module.css";
 const LocationInfoForm = () => {
   //routing variables

@@ -1,7 +1,7 @@
 import "./index.css";
 import AuthLayout from "./_auth/AuthLayout";
 import RootLayout from "./_root/RootLayout";
-import Error from "./helper-components/Error";
+import Error from "./helper-components/Error/Error";
 import { Routes, Route } from "react-router-dom";
 import {
   SignupForm,
@@ -21,6 +21,7 @@ import {
   Notifications,
   Posts,
   Profile,
+  Post,
 } from "./_root/pages";
 function App() {
   return (
@@ -38,14 +39,17 @@ function App() {
         </Route>
         {/* private routes */}
         <Route element={<RootLayout />}>
+          {/* home page will be containing all feedback */}
           <Route index element={<Home />} />
-          <Route path="/feedback" element={<Feedback />} />
+          {/* this is a page for a single feedback */}
+          <Route path="/feedback/:feedbackId" element={<Feedback />} />
+          <Route path="/posts" element={<Posts />} />
+          <Route path="/posts/:postId" element={<Post />} />
           <Route path="/addPost" element={<AddPost />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/messages" element={<Messages />} />
           <Route path="/notifications" element={<Notifications />} />
-          <Route path="/posts" element={<Posts />} />
-          <Route path="/profile" element={<Profile />} />
         </Route>
         {/* when the use navigates to undefined page - route */}
         <Route path="*" element={<Error />} />

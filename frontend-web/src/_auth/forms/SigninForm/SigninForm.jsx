@@ -1,7 +1,7 @@
 import { useState } from "react";
 import logo from "../../../assets/images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
-import Modal from "@/helper-components/Modal";
+import Modal from "@/helper-components/Modal/Modal";
 import styles from "./SigninForm.module.css";
 export default function SigninForm() {
   //routing variables
