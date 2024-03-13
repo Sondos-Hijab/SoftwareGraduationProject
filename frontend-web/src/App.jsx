@@ -22,6 +22,7 @@ import {
   Posts,
   Profile,
   Post,
+  EditPost,
   // allFeedbackLoader,
   // feedbackLoader,
   // postsLoader,
@@ -65,10 +66,13 @@ function App() {
             // loader={postsLoader}
           />
           <Route
-            path="/posts/:postId"
-            element={<Post />}
+            path="/post"
             // loader={postLoader}
-          />
+          >
+            <Route path=":postId" element={<Post />} />
+            <Route path=":postId/edit-post" element={<EditPost />} />
+          </Route>
+
           <Route path="/addPost" element={<AddPost />} />
           <Route
             path="/profile"
