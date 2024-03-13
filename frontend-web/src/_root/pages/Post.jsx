@@ -6,7 +6,8 @@ const Post = () => {
 
 export default Post;
 
-export async function postLoader() {
+export async function postLoader({ request, params }) {
+  //note that you can access params here to go to the post with specefic id
   // const response = await fetch("url");
   // if (!response.ok) {
   //   // handle error
