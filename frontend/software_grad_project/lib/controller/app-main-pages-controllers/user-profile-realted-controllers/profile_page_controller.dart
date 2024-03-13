@@ -194,6 +194,8 @@ class ProfilePageControllerImp extends ProfilePageController {
       if (response['statusCode'] == "200") {
         await myServices.sharedPreferences.remove('accessToken');
         await myServices.sharedPreferences.remove('refreshToken');
+
+        myServices.sharedPreferences.setString("step", "1");
         Get.offAllNamed(AppRoutes.login);
       } else {
         Get.defaultDialog(
