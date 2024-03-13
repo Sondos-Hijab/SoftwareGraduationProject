@@ -7,12 +7,12 @@ const Notifications = () => {
 export default Notifications;
 
 export async function notificationsLoader() {
-  const response = await fetch("url");
-  if (!response.ok) {
-    // handle error
-  } else {
-    const resData = await response.json();
-    //return data
-    return resData;
-  }
+  // const response = await fetch("url");
+  // if (!response.ok) {
+  //   // handle error
+  // } else {
+  //   const resData = await response.json();
+  //   //return data
+  //   return resData;
+  // }
 }

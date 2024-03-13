@@ -22,14 +22,14 @@ import {
   Posts,
   Profile,
   Post,
-  allFeedbackLoader,
-  feedbackLoader,
-  postsLoader,
-  postLoader,
-  profileLoader,
-  dashboardLoader,
-  notificationsLoader,
-  messagesLoader,
+  // allFeedbackLoader,
+  // feedbackLoader,
+  // postsLoader,
+  // postLoader,
+  // profileLoader,
+  // dashboardLoader,
+  // notificationsLoader,
+  // messagesLoader,
 } from "./_root/pages";
 function App() {
   return (
@@ -48,31 +48,47 @@ function App() {
         {/* private routes */}
         <Route element={<RootLayout />}>
           {/* home page will be containing all feedback */}
-          <Route index element={<Home />} loader={allFeedbackLoader} />
+          <Route
+            index
+            element={<Home />}
+            // loader={allFeedbackLoader}
+          />
           {/* this is a page for a single feedback */}
           <Route
             path="/feedback/:feedbackId"
             element={<Feedback />}
-            loader={feedbackLoader}
+            // loader={feedbackLoader}
           />
-          <Route path="/posts" element={<Posts />} loader={postsLoader} />
-          <Route path="/posts/:postId" element={<Post />} loader={postLoader} />
+          <Route
+            path="/posts"
+            element={<Posts />}
+            // loader={postsLoader}
+          />
+          <Route
+            path="/posts/:postId"
+            element={<Post />}
+            // loader={postLoader}
+          />
           <Route path="/addPost" element={<AddPost />} />
-          <Route path="/profile" element={<Profile />} loader={profileLoader} />
+          <Route
+            path="/profile"
+            element={<Profile />}
+            // loader={profileLoader}
+          />
           <Route
             path="/dashboard"
             element={<Dashboard />}
-            loader={dashboardLoader}
+            // loader={dashboardLoader}
           />
           <Route
             path="/messages"
             element={<Messages />}
-            loader={messagesLoader}
+            // loader={messagesLoader}
           />
           <Route
             path="/notifications"
             element={<Notifications />}
-            loader={notificationsLoader}
+            // loader={notificationsLoader}
           />
         </Route>
         {/* when the use navigates to undefined page - route */}
