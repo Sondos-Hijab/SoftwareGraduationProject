@@ -1,10 +1,10 @@
-import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
 class PostImage extends StatelessWidget {
-  final File? postImageFile;
-  const PostImage({super.key, required this.postImageFile});
+  final Uint8List? postImage;
+  const PostImage({super.key,required this.postImage});
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +15,9 @@ class PostImage extends StatelessWidget {
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10.0),
-          child: postImageFile != null
-              ? Image.file(
-                  File(postImageFile!.path),
+          child: postImage != null
+              ? Image.memory(
+                  postImage!,
                   width: double.infinity,
                   fit: BoxFit.cover,
                 )

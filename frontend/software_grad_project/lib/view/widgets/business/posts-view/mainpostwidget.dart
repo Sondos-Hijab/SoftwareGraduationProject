@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
@@ -9,23 +10,27 @@ import 'package:software_grad_project/view/widgets/business/posts-view/postimage
 class MainPostWidget extends StatelessWidget {
   final File? businessProfileImage;
   final String? businessName;
-  final String? postText;
-  final File? postImage;
-  final String? date;
-  final String? time;
+  final String? description;
+  final Uint8List? picture;
+  final String? createdAt;
 
   const MainPostWidget({
     super.key,
-    required this.businessProfileImage,
     required this.businessName,
-    required this.postText,
-    required this.postImage,
-    required this.date,
-    required this.time,
+    required this.description,
+    required this.picture,
+    required this.createdAt,
+    required this.businessProfileImage,
   });
 
   @override
   Widget build(BuildContext context) {
+    DateTime dateTime = DateTime.parse(createdAt!);
+    String date =
+        '${dateTime.year}-${_formatNumber(dateTime.month)}-${_formatNumber(dateTime.day)}';
+    String time =
+        '${_formatNumber(dateTime.hour)}:${_formatNumber(dateTime.minute)}:${_formatNumber(dateTime.second)}';
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
@@ -51,7 +56,11 @@ class MainPostWidget extends StatelessWidget {
             BusinessInfo(
                 businessImage: businessProfileImage,
                 businessName: businessName!),
-            PostImage(postImageFile: postImage),
+            if (picture != null)
+              PostImage(
+                postImage: picture,
+              ),
+            Text(description!),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -65,10 +74,13 @@ class MainPostWidget extends StatelessWidget {
                 ),
               ],
             ),
-            Text(postText!)
           ],
         ),
       ),
     );
+  }
+
+  String _formatNumber(int number) {
+    return number < 10 ? '0$number' : '$number';
   }
 }

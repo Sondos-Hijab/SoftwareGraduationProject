@@ -17,3 +17,10 @@ class PostsModel {
     this.time,
   );
 }
+
+//  "postID": 1,
+//             "admin_id": 1,
+//             "name": "RateRelay Business",
+//             "description": "this is our new product",
+//             "picture": null,
+//             "created_at": "2024-03-09T17:41:30.000Z"

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:software_grad_project/controller/check_authentication_controller.dart';
 
 class MyServices extends GetxService {
   late SharedPreferences sharedPreferences;
@@ -12,4 +13,8 @@ class MyServices extends GetxService {
 
 initialServices() async {
   await Get.putAsync(() => MyServices().init());
+
+  // // Perform the authentication check
+  // final CheckAuthenticationControllerImp authController = Get.find();
+  // await authController.checkAuthentication();
 }
