@@ -66,7 +66,9 @@ class BusinessPage extends StatelessWidget {
                   markers: controller.markers,
                 ),
                 const BusinessFeedback(),
-                const BusinessPosts()
+                BusinessPosts(
+                  businessesPosts: controller.businessesPosts,
+                )
               ],
             ),
           ),
@@ -75,3 +77,6 @@ class BusinessPage extends StatelessWidget {
     });
   }
 }
+
+
+//recieve the images as controller.businessesPosts[2].picture!

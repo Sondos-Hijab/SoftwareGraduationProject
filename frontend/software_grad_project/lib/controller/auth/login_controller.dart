@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:software_grad_project/core/classes/status_request.dart';
 import 'package:software_grad_project/core/constants/routes_names.dart';
+import 'package:software_grad_project/core/functions/date_check.dart';
 import 'package:software_grad_project/core/functions/handling_data_function.dart';
 import 'package:software_grad_project/core/services/service.dart';
 import 'package:software_grad_project/data/datasource/remote/authentication/login_datasource.dart';
@@ -45,6 +46,13 @@ class LoginControllerImp extends LoginController {
               .setString("accessToken", response['accessToken']);
           await myServices.sharedPreferences
               .setString("refreshToken", response['refreshToken']);
+
+          //will put step in shared preferences to 2 + adding the expiration date to shared preferences
+          myServices.sharedPreferences.setString("step", "2");
+          DateTime expirationDate = getExpirationDate();
+          myServices.sharedPreferences
+              .setString("expires", expirationDate.toString());
+
           Get.offAllNamed(AppRoutes.homeScreen);
         } else if (response['statusCode'] == "404") {
           Get.defaultDialog(title: "Warning", middleText: response['error']);

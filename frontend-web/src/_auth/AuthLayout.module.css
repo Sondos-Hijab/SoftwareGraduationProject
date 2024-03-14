@@ -1,0 +1,28 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+
+.form-container {
+  width: 50vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container {
+  width: 50vw;
+}
+
+.image {
+  max-height: 100vh;
+}
+@media screen and (max-width: 1024px) {
+  .image-container {
+    display: none;
+  }
+  .form-container {
+    width: 100vw;
+  }
+}

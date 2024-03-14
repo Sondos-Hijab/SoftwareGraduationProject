@@ -96,7 +96,7 @@ List<FeedbackModel> feedbackData = [
 ];
 
 List<BusinessViewModel> businessViewList = [
-  BusinessViewModel("Business name 1", null),
+  BusinessViewModel("RateRelay Business", null),
   BusinessViewModel("Business name 1", null),
   BusinessViewModel("Business name 1", null),
   BusinessViewModel("Business name 1", null),
