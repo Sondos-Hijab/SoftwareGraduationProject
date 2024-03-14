@@ -23,6 +23,8 @@ import {
   Profile,
   Post,
   EditPost,
+  Followers,
+  Follower,
   // allFeedbackLoader,
   // feedbackLoader,
   // postsLoader,
@@ -71,9 +73,12 @@ function App() {
           >
             <Route path=":postId" element={<Post />} />
             <Route path=":postId/edit-post" element={<EditPost />} />
+            <Route path="/addPost" element={<AddPost />} />
           </Route>
 
-          <Route path="/addPost" element={<AddPost />} />
+          <Route path="followers" element={<Followers />} />
+          <Route path="follower" element={<Follower />} />
+
           <Route
             path="/profile"
             element={<Profile />}

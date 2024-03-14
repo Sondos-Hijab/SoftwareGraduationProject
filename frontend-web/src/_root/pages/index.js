@@ -8,6 +8,8 @@ export { default as EditPost } from "./EditPost";
 export { default as Messages } from "./Messages";
 export { default as Notifications } from "./Notifications";
 export { default as Profile } from "./Profile";
+export { default as Followers } from "./Followers";
+export { default as Follower } from "./Follower";
 
 export { allFeedbackLoader } from "./Home";
 export { feedbackLoader } from "./Feedback";
