@@ -4,10 +4,9 @@ const con = require('../config/config');
 const queryAsync = promisify(con.query).bind(con);
 
 const getPost = async (req, res) => {
-
   try {
-    // Check if required fields are provided in the request
-    const { name } = req.body;
+    // Check if required fields are provided in the request query parameters
+    const { name } = req.query;
     if (!name) {
       return res.status(400).json({
         error: 'Name is required',
@@ -19,11 +18,11 @@ const getPost = async (req, res) => {
     const posts = await queryAsync('SELECT * FROM post WHERE name = ?', [name]);
 
     if (posts.length === 0) {
-        return res.status(404).json({
-          error: 'No posts found for the specified name',
-          statusCode: '404',
-        });
-      }
+      return res.status(404).json({
+        error: 'No posts found for the specified name',
+        statusCode: '404',
+      });
+    }
 
     return res.status(200).json({
       posts,
