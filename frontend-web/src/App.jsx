@@ -42,17 +42,17 @@ function App() {
   //   username: "",
   // });
 
-  const [signinContext, setSigninContext] = useState({
+  const [signinContextData, setSigninContextData] = useState({
     accessToken: "",
     username: "",
   });
 
-  const handleSignin = (accessToken, username) => {
-    setSigninContext({ accessToken, username });
+  const addSigninData = (accessToken, username) => {
+    setSigninContextData({ accessToken, username });
   };
 
   return (
-    <SigninContext.Provider value={{ signinContext, handleSignin }}>
+    <SigninContext.Provider value={{ signinContextData, addSigninData }}>
       <main>
         <Routes>
           {/* public routes */}
