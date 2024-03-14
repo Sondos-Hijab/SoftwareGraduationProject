@@ -4,8 +4,6 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const cors = require("cors");
 
-app.use(cors());
-
 const userSignup = require("./Routes/userSignup");
 const login = require("./Routes/login");
 const refreshToken = require("./Routes/refreshToken");
@@ -32,8 +30,11 @@ const getPost = require("./Routes/getPost");
 const getBusinessesByCategory = require('./Routes/getBusinessesByCategory'); 
 const getBusinessesByName = require('./Routes/getBusinessesByName'); 
 const getBusinessesBySearch = require('./Routes/getBusinessesBySearch'); 
+const addFeedback = require('./Routes/addFeedback'); 
+const deleteFeedback = require('./Routes/deleteFeedback'); 
 
 app.use(express.json());
+app.use(cors());
 
 app.use("/RateRelay", userSignup);
 app.use("/RateRelay", login);
@@ -61,6 +62,8 @@ app.use("/RateRelay", getPost);
 app.use('/RateRelay', getBusinessesByCategory); 
 app.use('/RateRelay', getBusinessesByName); 
 app.use('/RateRelay', getBusinessesBySearch);
+app.use('/RateRelay', addFeedback);  
+app.use('/RateRelay', deleteFeedback); 
 
 app.listen(PORT, (err) => {
   if (err) {
