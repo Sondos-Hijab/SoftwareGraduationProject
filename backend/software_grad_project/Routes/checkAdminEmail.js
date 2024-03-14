@@ -3,6 +3,6 @@ const router = express.Router();
 
 const {checkAdminEmail} = require('../RouteImplementations/checkAdminEmail');
 
-router.get('/user/checkAdminEmail', checkAdminEmail )
+router.post('/user/checkAdminEmail', checkAdminEmail )
 
 module.exports = router;
