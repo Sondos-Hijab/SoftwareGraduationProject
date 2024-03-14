@@ -27,6 +27,7 @@ import {
   EditPost,
   Followers,
   Follower,
+  EditProfile,
   // allFeedbackLoader,
   // feedbackLoader,
   // postsLoader,
@@ -102,6 +103,9 @@ function App() {
               element={<Profile />}
               // loader={profileLoader}
             />
+
+            <Route path="/editProfile" element={<EditProfile />} />
+
             <Route
               path="/dashboard"
               element={<Dashboard />}
