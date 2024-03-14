@@ -29,6 +29,9 @@ const updateAdminProfile = require("./Routes/updateAdminProfile");
 const addPost = require("./Routes/addPost");
 const deletePost = require("./Routes/deletePost");
 const getPost = require("./Routes/getPost");
+const getBusinessesByCategory = require('./Routes/getBusinessesByCategory'); 
+const getBusinessesByName = require('./Routes/getBusinessesByName'); 
+const getBusinessesBySearch = require('./Routes/getBusinessesBySearch'); 
 
 app.use(express.json());
 
@@ -55,6 +58,9 @@ app.use("/RateRelay", updateAdminProfile);
 app.use("/RateRelay", addPost);
 app.use("/RateRelay", deletePost);
 app.use("/RateRelay", getPost);
+app.use('/RateRelay', getBusinessesByCategory); 
+app.use('/RateRelay', getBusinessesByName); 
+app.use('/RateRelay', getBusinessesBySearch);
 
 app.listen(PORT, (err) => {
   if (err) {
