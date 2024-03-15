@@ -39,13 +39,15 @@ function App() {
       path: "/auth",
       element: <AuthLayout />,
       children: [
-        { path: "sign-up", element: <SignupForm /> },
         {
           path: "sign-in",
           element: <SigninFormPage />,
           action: signinAction,
           errorElement: <Error />,
         },
+        { path: "sign-up", element: <SignupForm /> },
+        { path: "business-info", element: <BusinessInfoForm /> },
+        { path: "location-info", element: <LocationInfoForm /> },
       ],
     },
     { path: "*", element: <Error /> },

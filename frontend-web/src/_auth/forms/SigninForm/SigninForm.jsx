@@ -1,7 +1,7 @@
 import { useState } from "react";
 import logo from "../../../assets/images/logo.png";
 import { Link, Form } from "react-router-dom";
-import styles from "./SigninForm.module.css";
+import styles from "../Form.module.css";
 import { hasMinLength } from "@/_auth/utils/validation";
 
 export default function SigninForm({}) {
