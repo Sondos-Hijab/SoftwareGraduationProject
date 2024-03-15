@@ -16,7 +16,7 @@ import {
 } from "./_auth/forms";
 
 import { Home } from "./_root/pages";
-import Error from "./helper-components/Error/Error";
+import Error from "./helper-components/Error";
 
 function App() {
   const router = createBrowserRouter([

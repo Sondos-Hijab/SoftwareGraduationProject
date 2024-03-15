@@ -1,12 +1,11 @@
 import React from "react";
-import styles from "./Error.module.css";
 import { useRouteError } from "react-router-dom";
 
 const Error = () => {
   const error = useRouteError();
 
   let title = "An error occured!";
-  let message = "Something went wrong, The path provided doesn't exist!";
+  let message = "Something went wrong!";
 
   if (error) {
     if (error.data !== undefined) {
@@ -18,9 +17,9 @@ const Error = () => {
   }
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.heading}>{title}</h1>
-      <p className={styles.paragraph}>{message}</p>
+    <div className="text-center mt-12">
+      <h1 className="text-red-500 text-3xl mb-8">{title}</h1>
+      <p className="text-gray-500 text-lg">{message}</p>
     </div>
   );
 };

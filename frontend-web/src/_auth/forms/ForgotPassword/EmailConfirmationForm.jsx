@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import logo from "../../../assets/images/logo.png";
 import styles from "../Form.module.css";
 import { isEmail } from "@/_auth/utils/validation";
-import Modal from "@/helper-components/Modal/Modal";
+import Modal from "@/helper-components/Modal";
 import { useNavigate } from "react-router-dom";
 
 const EmailConfirmationForm = () => {
