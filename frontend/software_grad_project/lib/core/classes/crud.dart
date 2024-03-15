@@ -60,6 +60,39 @@ class CRUDRequests {
     }
   }
 
+  Future<Either<StatusRequest, Map>> getDataWithAuthorizationParams(
+      String linkurl, Map<String, dynamic> params, String authToken) async {
+    try {
+      if (await checkInternet()) {
+        var uri = Uri.parse(linkurl);
+        uri = uri.replace(queryParameters: params);
+
+        var response = await http.get(
+          uri,
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $authToken',
+          },
+        );
+
+        if (response.statusCode == 200 ||
+            response.statusCode == 201 ||
+            response.statusCode == 400 ||
+            response.statusCode == 403) {
+          var responseBody = json.decode(response.body);
+          return Right(responseBody);
+        } else {
+          return const Left(StatusRequest.serverfailure);
+        }
+      } else {
+        return const Left(StatusRequest.offlinefailure);
+      }
+    } catch (_) {
+      return const Left(StatusRequest.serverException);
+    }
+  }
+
   Future<Either<StatusRequest, Map>> getDataWithAuthorization(
       String linkurl, Map data, String authToken) async {
     try {
@@ -123,13 +156,39 @@ class CRUDRequests {
       return const Left(StatusRequest.serverException);
     }
   }
-  
 
   Future<Either<StatusRequest, Map>> putDataWithAuthorization(
       String linkurl, Map data, String authToken) async {
     try {
       if (await checkInternet()) {
         var response = await http.put(Uri.parse(linkurl),
+            headers: {
+              "Content-type": "application/json",
+              "Accept": "application/json",
+              "Authorization":
+                  "Bearer $authToken", // Include authorization token in the headers
+            },
+            body: jsonEncode(data));
+        if ([200, 201, 400, 403].contains(response.statusCode)) {
+          // Handle the appropriate status codes
+          Map responsebody = jsonDecode(response.body);
+          return Right(responsebody);
+        } else {
+          return const Left(StatusRequest.serverfailure);
+        }
+      } else {
+        return const Left(StatusRequest.offlinefailure);
+      }
+    } catch (_) {
+      return const Left(StatusRequest.serverException);
+    }
+  }
+
+    Future<Either<StatusRequest, Map>> postDataWithAuthorization(
+      String linkurl, Map data, String authToken) async {
+    try {
+      if (await checkInternet()) {
+        var response = await http.post(Uri.parse(linkurl),
             headers: {
               "Content-type": "application/json",
               "Accept": "application/json",

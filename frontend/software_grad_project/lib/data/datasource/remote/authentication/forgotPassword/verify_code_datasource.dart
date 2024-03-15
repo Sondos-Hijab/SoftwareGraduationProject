@@ -6,8 +6,8 @@ class VerifyCodeDataSource {
 
   VerifyCodeDataSource(this.crud);
 
-  getDataWithAuthorization(String authToken, String verifyCode) async {
-    var response = await crud.getDataWithAuthorization(
+  postDataWithAuthorization(String authToken, String verifyCode) async {
+    var response = await crud.postDataWithAuthorization(
         AppLink.verifyCode,
         {
           "otp": verifyCode,
