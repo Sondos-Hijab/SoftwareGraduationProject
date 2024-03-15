@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import logo from "../../../assets/images/logo.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import LocationForm from "./LocationForm";
-import Modal from "@/helper-components/Modal/Modal";
-import styles from "./LocationInfoForm.module.css";
+import Modal from "@/helper-components/Modal";
+import styles from "../Form.module.css";
 const LocationInfoForm = () => {
   //routing variables
   const location = useLocation();
@@ -37,31 +37,34 @@ const LocationInfoForm = () => {
       return;
     }
 
-    const dataToSubmit = {
+    const signupInfo = {
       ...userAndBusinessEnteredData,
       location: `lat: ${selectedMarker.lat}, lng:${selectedMarker.lng}`,
     };
-    fetch("http://localhost:3000/RateRelay/user/adminSignup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(dataToSubmit),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        if (data.statusCode == "409") {
-          throw new Error(data.error);
-        } else if (data.statusCode == "201") {
-          navigate("/sign-in");
+
+    async function signupFunction() {
+      const response = await fetch(
+        "http://localhost:3000/RateRelay/user/adminSignup",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(signupInfo),
         }
-      })
-      .catch((error) => {
-        setModalMessage("There was a problem signing up: " + error.message);
+      );
+
+      if (!response.ok) {
+        const errorMessage = await response.json();
+        console.log(errorMessage);
+        setModalMessage(
+          "There was a problem signing up: " + errorMessage.error
+        );
         setShowModal(true);
-      });
+      } else navigate("/auth/sign-in");
+    }
+
+    signupFunction();
   };
 
   return (
@@ -99,7 +102,13 @@ const LocationInfoForm = () => {
         </div>
       </div>
 
-      {showModal && <Modal message={modalMessage} onClose={closeModal} />}
+      {showModal && (
+        <Modal
+          title="Can't Sign Your Business Up"
+          message={modalMessage}
+          onClose={closeModal}
+        />
+      )}
     </>
   );
 };

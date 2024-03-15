@@ -7,6 +7,7 @@ export function isNotEmpty(value) {
 }
 
 export function hasMinLength(value, minLength) {
+  if (typeof value !== "string") value.toString();
   return value.length >= minLength;
 }
 

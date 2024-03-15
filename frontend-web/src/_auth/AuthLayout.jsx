@@ -1,4 +1,4 @@
-import { Outlet, Navigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import onBoarding from "../assets/images/onboarding.png";
 import styles from "./AuthLayout.module.css";
 
