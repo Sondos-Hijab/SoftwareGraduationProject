@@ -12,7 +12,6 @@ import {
   OTPcodeForm,
   ResetPasswordForm,
   signinAction,
-  emailConfirmationAction,
   EmailConfirmationForm,
 } from "./_auth/forms";
 

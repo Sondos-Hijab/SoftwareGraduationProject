@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import logo from "../../../../assets/images/logo.png";
-import styles from "../../Form.module.css";
+import logo from "../../../assets/images/logo.png";
+import styles from "../Form.module.css";
 import { isEmail } from "@/_auth/utils/validation";
 import Modal from "@/helper-components/Modal/Modal";
 import { useNavigate } from "react-router-dom";
@@ -41,14 +41,13 @@ const EmailConfirmationForm = () => {
     );
     if (!response.ok) {
       const errorMessage = await response.json();
-      console.log(errorMessage);
       setModalMessage(
         "There was a problem confirming email: " + errorMessage.error
       );
       setShowModal(true);
     } else {
       const data = await response.json();
-      console.log(data);
+      localStorage.setItem("tempAccessToken", data.tempAccessToken);
       navigate("/auth/otp-code-form");
     }
   };
