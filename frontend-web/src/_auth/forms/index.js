@@ -7,4 +7,4 @@ export {
   EmailConfirmationForm,
   OTPcodeForm,
 } from "./ForgotPassword";
-export { signinAction } from "./actions";
+export { signinAction, emailConfirmationAction } from "./actions";

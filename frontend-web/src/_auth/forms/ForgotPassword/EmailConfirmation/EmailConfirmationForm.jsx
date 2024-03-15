@@ -1,62 +1,57 @@
 import React, { useState } from "react";
 import logo from "../../../../assets/images/logo.png";
-import { useNavigate } from "react-router-dom";
+import styles from "../../Form.module.css";
+import { isEmail } from "@/_auth/utils/validation";
 import Modal from "@/helper-components/Modal/Modal";
-import styles from "./EmailConfirmationForm.module.css";
+import { useNavigate } from "react-router-dom";
+
 const EmailConfirmationForm = () => {
-  //routing variables
   const navigate = useNavigate();
 
   //state management
-  const [email, setEmail] = useState("");
   const [error, setError] = useState("");
+  const [canSubmit, setCanSubmit] = useState(false);
+
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
 
-  //closing modal that shows when there is an error
+  //modal showing when an error occurs
   const closeModal = () => {
     setShowModal(false);
   };
 
-  //handling submitting email
-  const handleSubmitEmail = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Basic validation
-    if (!email) {
-      setError("Please fill the email field.");
-      return;
-    }
+    const formData = new FormData(event.target);
 
-    const dataToSubmit = {
-      email: email,
+    const emailCofirmationData = {
+      email: formData.get("email"),
     };
 
-    // fetch("http://localhost:3000/RateRelay/user/checkAdminEmail", {
-    //   method: "GET",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(dataToSubmit),
-    // })
-    //   .then((response) => {
-    //     return response.json();
-    //   })
-    //   .then((data) => {
-    //     if (data.statusCode == "404") {
-    //       throw new Error(data.error);
-    //     } else if (data.statusCode == "200") {
-    //       //i need to store temp token data.tempAccessToken , and username
-    //       console.log(data.tempAccessToken);
-    //       navigate("/otp-code-form");
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     setModalMessage("There was a problem signing up: " + error.message);
-    //     setShowModal(true);
-    //   });
+    const response = await fetch(
+      "http://localhost:3000/RateRelay/user/checkAdminEmail",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(emailCofirmationData),
+      }
+    );
+    if (!response.ok) {
+      const errorMessage = await response.json();
+      console.log(errorMessage);
+      setModalMessage(
+        "There was a problem confirming email: " + errorMessage.error
+      );
+      setShowModal(true);
+    } else {
+      const data = await response.json();
+      console.log(data);
+      navigate("/auth/otp-code-form");
+    }
   };
-
   return (
     <>
       <div className={styles["form-container"]}>
@@ -66,7 +61,7 @@ const EmailConfirmationForm = () => {
         </div>
 
         <div className={styles["form-container"]}>
-          <form className={styles.form} action="#" method="POST">
+          <form className={styles.form} method="POST" onSubmit={handleSubmit}>
             <div className={styles["input-container"]}>
               <label htmlFor="email">Email address</label>
               <div>
@@ -76,7 +71,16 @@ const EmailConfirmationForm = () => {
                   type="email"
                   autoComplete="email"
                   onChange={(event) => {
-                    setEmail(event.target.value);
+                    if (event.target.value == "") {
+                      setError("");
+                      setCanSubmit(false);
+                    } else if (!isEmail(event.target.value)) {
+                      setError("Please enter a valid email");
+                      setCanSubmit(false);
+                    } else {
+                      setError("");
+                      setCanSubmit(true);
+                    }
                   }}
                   required
                 />
@@ -86,15 +90,21 @@ const EmailConfirmationForm = () => {
 
             <button
               type="submit"
-              onClick={handleSubmitEmail}
               className={styles.button}
+              disabled={!canSubmit}
             >
               Confirm
             </button>
           </form>
         </div>
       </div>
-      {showModal && <Modal message={modalMessage} onClose={closeModal} />}
+      {showModal && (
+        <Modal
+          title="Can't continue the process of resetting password"
+          message={modalMessage}
+          onClose={closeModal}
+        />
+      )}
     </>
   );
 };

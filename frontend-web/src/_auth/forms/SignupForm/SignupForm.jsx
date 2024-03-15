@@ -16,7 +16,6 @@ export default function SignupForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
 
   //validation values
   const [usernameError, setUsernameError] = useState("");

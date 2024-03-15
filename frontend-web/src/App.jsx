@@ -8,28 +8,15 @@ import {
   SignupForm,
   SigninFormPage,
   BusinessInfoForm,
-  EmailConfirmationForm,
   LocationInfoForm,
   OTPcodeForm,
   ResetPasswordForm,
   signinAction,
+  emailConfirmationAction,
+  EmailConfirmationForm,
 } from "./_auth/forms";
 
-import {
-  Home,
-  Feedback,
-  Messages,
-  Dashboard,
-  AddPost,
-  Notifications,
-  Posts,
-  Profile,
-  Post,
-  EditPost,
-  Followers,
-  Follower,
-  EditProfile,
-} from "./_root/pages";
+import { Home } from "./_root/pages";
 import Error from "./helper-components/Error/Error";
 
 function App() {
@@ -48,6 +35,9 @@ function App() {
         { path: "sign-up", element: <SignupForm /> },
         { path: "business-info", element: <BusinessInfoForm /> },
         { path: "location-info", element: <LocationInfoForm /> },
+        { path: "confirm-email", element: <EmailConfirmationForm /> },
+        { path: "otp-code-form", element: <OTPcodeForm /> },
+        { path: "reset-password", element: <ResetPasswordForm /> },
       ],
     },
     { path: "*", element: <Error /> },

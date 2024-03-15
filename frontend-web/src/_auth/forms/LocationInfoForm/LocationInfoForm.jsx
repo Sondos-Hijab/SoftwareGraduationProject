@@ -114,25 +114,3 @@ const LocationInfoForm = () => {
 };
 
 export default LocationInfoForm;
-
-// fetch("http://localhost:3000/RateRelay/user/adminSignup", {
-//   method: "POST",
-//   headers: {
-//     "Content-Type": "application/json",
-//   },
-//   body: JSON.stringify(signupInfo),
-// })
-//   .then((response) => {
-//     return response.json();
-//   })
-//   .then((data) => {
-//     if (data.statusCode == "409") {
-//       throw new Error(data.error);
-//     } else if (data.statusCode == "201") {
-//       navigate("/sign-in");
-//     }
-//   })
-//   .catch((error) => {
-//     setModalMessage("There was a problem signing up: " + error.message);
-//     setShowModal(true);
-//   });
