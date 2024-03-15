@@ -1,9 +1,14 @@
-import { useState } from "react";
-import logo from "../../assets/images/logo.png";
+import { useState, useContext } from "react";
+import logo from "../../../assets/images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
-import Modal from "@/helper-components/Modal";
+import Modal from "@/helper-components/Modal/Modal";
 import styles from "./SigninForm.module.css";
-export default function SigninForm() {
+import { SigninContext } from "../../../store/sign-in-context";
+
+export default function SigninForm({}) {
+  //context
+  const { addSigninData } = useContext(SigninContext);
+
   //routing variables
   const navigate = useNavigate();
 
@@ -34,29 +39,33 @@ export default function SigninForm() {
       password: password,
     };
 
-    fetch("http://localhost:3000/RateRelay/user/adminLogin", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(dataToSubmit),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        if (data.statusCode == "401" || data.statusCode == "404") {
-          throw new Error(data.error);
-        } else if (data.statusCode == "200") {
-          //i need to store access token data.accessToken , and username
-          console.log(data.accessToken);
-          navigate("/");
-        }
-      })
-      .catch((error) => {
-        setModalMessage("There was a problem signing up: " + error.message);
-        setShowModal(true);
-      });
+    addSigninData("Sondos Access Token", "Sondos Hijsb");
+    navigate("/");
+
+    // fetch("http://localhost:3000/RateRelay/user/adminLogin", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(dataToSubmit),
+    // })
+    //   .then((response) => {
+    //     return response.json();
+    //   })
+    //   .then((data) => {
+    //     if (data.statusCode == "401" || data.statusCode == "404") {
+    //       throw new Error(data.error);
+    //     } else if (data.statusCode == "200") {
+    //       //i need to store access token data.accessToken , and username
+    //       //addSigninData(data.accessToken, data.username);
+    //       console.log(data.accessToken);
+    //       navigate("/");
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     setModalMessage("There was a problem signing up: " + error.message);
+    //     setShowModal(true);
+    //   });
   };
 
   return (

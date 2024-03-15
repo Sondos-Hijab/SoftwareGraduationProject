@@ -1,6 +1,6 @@
 import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
 const apiKey = "AIzaSyBy1NOGFFQuymSwJw0syVAR73lR1fhVLXg";
-console.log(apiKey);
+// console.log(apiKey);
 const LocationForm = (props) => {
   const position = { lat: 32.2228832, lng: 35.2457401 };
 

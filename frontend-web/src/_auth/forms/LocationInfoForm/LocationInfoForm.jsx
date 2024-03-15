@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import logo from "../../assets/images/logo.png";
+import logo from "../../../assets/images/logo.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import LocationForm from "./LocationForm";
-import Modal from "@/helper-components/Modal";
+import Modal from "@/helper-components/Modal/Modal";
 import styles from "./LocationInfoForm.module.css";
 const LocationInfoForm = () => {
   //routing variables
@@ -69,7 +69,7 @@ const LocationInfoForm = () => {
       <div className={styles["form-container"]}>
         <div className={styles["header-info-container"]}>
           <img src={logo} alt="RateRelay" />
-          <h2>Enter you business's location</h2>
+          <h2>Enter your business location</h2>
         </div>
 
         <div className={styles["form-container"]}>
