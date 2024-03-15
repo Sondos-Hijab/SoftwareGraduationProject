@@ -1,12 +1,14 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
 import onBoarding from "../assets/images/onboarding.png";
 import styles from "./AuthLayout.module.css";
+import SigninForm from "./pages/Signin";
 
 const AuthLayout = () => {
   return (
     <div className={styles.container}>
       <div className={styles["form-container"]}>
-        <Outlet className={styles.outlet} />
+        {/* <Outlet className={styles.outlet} /> */}
+        <SigninForm className={styles.outlet}/>
       </div>
       <div className={styles["image-container"]}>
         <img src={onBoarding} className={styles.image} />

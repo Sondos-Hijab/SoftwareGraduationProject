@@ -1,20 +1,21 @@
 import React from "react";
 import styles from "./Error.module.css";
-// import { useRouteError } from "react-router-dom";
+import { useRouteError } from "react-router-dom";
 
 const Error = () => {
-  // const error = useRouteError();
+  const error = useRouteError();
 
   let title = "An error occured!";
-  let message = "Something went wrong!";
+  let message = "Something went wrong, The path provided doesn't exist!";
 
-  // if (error) {
-  //   if (error.status === 500) {
-  //     message = JSON.parse(error.data).message;
-  //   } else if (error.status === 404) {
-  //     message = "Couldn't find resource or page.";
-  //   }
-  // }
+  if (error) {
+    if (error.data !== undefined) {
+      title = `An error of status code ${
+        JSON.parse(error.data).statusCode
+      } has occured`;
+      message = JSON.parse(error.data).error;
+    }
+  }
 
   return (
     <div className={styles.container}>

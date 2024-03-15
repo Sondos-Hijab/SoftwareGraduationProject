@@ -24,3 +24,5 @@ const Modal = ({ message, onClose }) => {
 };
 
 export default Modal;
+
+
