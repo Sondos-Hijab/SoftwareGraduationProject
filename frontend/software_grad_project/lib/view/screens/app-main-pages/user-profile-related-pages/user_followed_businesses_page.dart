@@ -25,15 +25,15 @@ class FollowedBusinessesPage extends StatelessWidget {
             builder: (controller) {
           return ListView(
             children: [
-              ...List.generate(
-                  businessViewList.length,
-                  (index) => BusinessViewItem(
-                        index: index,
-                        onTap: () {
-                          controller.goToBusinessPage(
-                              businessViewList[index].businessName!);
-                        },
-                      ))
+              // ...List.generate(
+              //     businessViewList.length,
+              //     (index) => BusinessViewItem(
+              //           index: index,
+              //           onTap: () {
+              //             controller.goToBusinessPage(
+              //                 businessViewList[index].businessName!);
+              //           },
+              //         ))
             ],
           );
         }));

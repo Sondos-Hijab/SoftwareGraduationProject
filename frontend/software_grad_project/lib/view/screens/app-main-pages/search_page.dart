@@ -43,17 +43,17 @@ class SearchPage extends StatelessWidget {
             controller.isSearch != null && controller.isSearch!
                 ? Container(
                     child: Column(
-                      children: List.generate(
-                        businessViewList.length,
-                        (index) => BusinessViewItem(
-                          index: index,
-                          onTap: () {
-                            controller.goToBusinessPage(
-                                businessViewList[index].businessName!);
-                          },
+                        // children: List.generate(
+                        //   businessViewList.length,
+                        //   (index) => BusinessViewItem(
+                        //     index: index,
+                        //     onTap: () {
+                        //       controller.goToBusinessPage(
+                        //           businessViewList[index].businessName!);
+                        //     },
+                        //   ),
+                        // ),
                         ),
-                      ),
-                    ),
                   )
                 : Container(
                     margin: EdgeInsets.all(20),

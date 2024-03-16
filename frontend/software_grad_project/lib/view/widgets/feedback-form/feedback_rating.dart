@@ -3,7 +3,9 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class FeedbackRatingBar extends StatelessWidget {
   final String? title;
-  const FeedbackRatingBar({super.key, required this.title});
+  final void Function(String rate) updateRate;
+  const FeedbackRatingBar(
+      {super.key, required this.title, required this.updateRate});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class FeedbackRatingBar extends StatelessWidget {
               color: Colors.amber,
             ),
             onRatingUpdate: (rating) {
-              print(rating);
+              updateRate(rating.toString());
             },
           ),
         ],

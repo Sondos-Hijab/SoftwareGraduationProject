@@ -8,12 +8,15 @@ import 'package:software_grad_project/core/constants/routes_names.dart';
 import 'package:software_grad_project/view/widgets/business/business_location.dart';
 
 class BusinessMainInfoWidget extends StatelessWidget {
+  final String businessName;
   final Completer<GoogleMapController> gmController;
   final bool isFollowing;
   final List<Marker> markers;
   final CameraPosition businessLocation;
   final File? businessImage;
   final void Function() onPressFollowing;
+  final void Function() onTapAddFeedback;
+  
   const BusinessMainInfoWidget(
       {super.key,
       required this.businessImage,
@@ -21,7 +24,8 @@ class BusinessMainInfoWidget extends StatelessWidget {
       required this.markers,
       required this.businessLocation,
       required this.isFollowing,
-      required this.onPressFollowing});
+      required this.onPressFollowing,
+      required this.businessName, required this.onTapAddFeedback});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +51,7 @@ class BusinessMainInfoWidget extends StatelessWidget {
             children: [
               Text(
                 textAlign: TextAlign.center,
-                "Business Name",
+                businessName,
                 style: Theme.of(context)
                     .textTheme
                     .headlineSmall
@@ -173,9 +177,7 @@ class BusinessMainInfoWidget extends StatelessWidget {
                   children: [
                     Expanded(
                       child: InkWell(
-                        onTap: () {
-                          Get.toNamed(AppRoutes.feedbackFormPage);
-                        },
+                        onTap: onTapAddFeedback,
                         child: Container(
                           decoration: BoxDecoration(
                             color: AppColors.primaryBlue,

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:software_grad_project/core/classes/status_request.dart';
+import 'package:software_grad_project/core/constants/routes_names.dart';
 import 'package:software_grad_project/core/functions/handling_data_function.dart';
 import 'package:software_grad_project/core/services/service.dart';
 import 'package:software_grad_project/data/datasource/remote/business-page/posts_datasource.dart';
@@ -14,6 +15,7 @@ import 'package:software_grad_project/data/model/fetched_post_model.dart';
 abstract class BusinessPagesController extends GetxController {
   getPosts(String businessName);
   pressFollowUnfollow();
+  goToAddFeedbackPage();
 }
 
 class BusinessPagesControllerImp extends BusinessPagesController {
@@ -21,6 +23,8 @@ class BusinessPagesControllerImp extends BusinessPagesController {
   bool isFollowing = false;
 
   File? businessImage;
+  String? businessName;
+
   final Completer<GoogleMapController> gmController =
       Completer<GoogleMapController>();
 
@@ -47,8 +51,8 @@ class BusinessPagesControllerImp extends BusinessPagesController {
   @override
   void onInit() {
     scaffoldKey = GlobalKey();
-    final String businessName = Get.arguments;
-    getPosts(businessName);
+    businessName = Get.arguments;
+    getPosts(businessName!);
     super.onInit();
   }
 
@@ -92,6 +96,11 @@ class BusinessPagesControllerImp extends BusinessPagesController {
   pressFollowUnfollow() {
     isFollowing = !isFollowing;
     update();
+  }
+
+  @override
+  goToAddFeedbackPage() {
+    Get.toNamed(AppRoutes.feedbackFormPage, arguments: businessName);
   }
 }
 

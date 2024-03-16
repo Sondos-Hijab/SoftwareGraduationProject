@@ -184,7 +184,7 @@ class CRUDRequests {
     }
   }
 
-    Future<Either<StatusRequest, Map>> postDataWithAuthorization(
+  Future<Either<StatusRequest, Map>> postDataWithAuthorization(
       String linkurl, Map data, String authToken) async {
     try {
       if (await checkInternet()) {
@@ -301,6 +301,82 @@ class CRUDRequests {
       }
     } catch (_) {
       return const Left(StatusRequest.serverException);
+    }
+  }
+
+  Future<Either<StatusRequest, Map>> postPhotoDataWithAuthorization(
+      String linkurl, Map<String, dynamic> data, String authToken) async {
+    try {
+      if (await checkInternet()) {
+        var request = http.MultipartRequest('POST', Uri.parse(linkurl));
+        request.headers['Authorization'] = 'Bearer $authToken';
+
+        // Add other headers if needed
+        request.headers['Content-Type'] = 'multipart/form-data';
+
+        // Add form fields
+        data.forEach((key, value) {
+          request.fields[key] = value.toString();
+        });
+
+        // Add file(s)
+        if (data.containsKey('picture')) {
+          request.files.add(
+            await http.MultipartFile.fromPath(
+              'picture',
+              data['picture'],
+              contentType: MediaType('image', '*'),
+            ),
+          );
+        }
+
+        var streamedResponse = await request.send();
+        var response = await http.Response.fromStream(streamedResponse);
+
+        if ([200, 201, 400].contains(response.statusCode)) {
+          Map responsebody = jsonDecode(response.body);
+          return Right(responsebody);
+        } else {
+          return const Left(StatusRequest.serverfailure);
+        }
+      } else {
+        return const Left(StatusRequest.offlinefailure);
+      }
+    } catch (_) {
+      return const Left(StatusRequest.serverException);
+    }
+  }
+
+  Future<Either<StatusRequest, Map>> getDataWithParams(
+    String linkUrl,
+    Map<String, dynamic> params,
+    String authToken,
+  ) async {
+    try {
+      if (await checkInternet()) {
+        var uri = Uri.parse(linkUrl);
+        uri = uri.replace(queryParameters: params);
+
+        var response = await http.get(
+          uri,
+          headers: {
+            "Authorization": "Bearer $authToken",
+            "Content-type": "application/json",
+            "Accept": "application/json",
+          },
+        );
+
+        if ([200, 201, 400, 403, 404].contains(response.statusCode)) {
+          var responseBody = json.decode(response.body);
+          return Right(responseBody);
+        } else {
+          return Left(StatusRequest.serverfailure);
+        }
+      } else {
+        return Left(StatusRequest.offlinefailure);
+      }
+    } catch (_) {
+      return Left(StatusRequest.serverException);
     }
   }
 }

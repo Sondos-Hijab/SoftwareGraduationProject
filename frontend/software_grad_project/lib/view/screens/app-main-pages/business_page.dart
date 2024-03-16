@@ -62,7 +62,7 @@ class BusinessPage extends StatelessWidget {
             backgroundColor: AppColors.appWhite,
             elevation: 0.0,
             title: Text(
-              "Business Page",
+              controller.businessName!,
               style: Theme.of(context).textTheme.headlineSmall,
             ),
           ),
@@ -71,22 +71,27 @@ class BusinessPage extends StatelessWidget {
             child: TabBarView(
               children: [
                 BusinessMainInfoWidget(
-                    businessImage: controller.businessImage,
-                    gmController: controller.gmController,
-                    businessLocation: controller.businessLocation,
-                    markers: controller.markers,
-                    isFollowing: controller.isFollowing,
-                    onPressFollowing: () {
-                      controller.pressFollowUnfollow();
-                      Get.snackbar(
-                        'Notification',
-                        controller.isFollowing
-                            ? 'You followed this business!'
-                            : 'You unfollowed this business!',
-                        snackPosition: SnackPosition.BOTTOM,
-                        duration: const Duration(seconds: 2),
-                      );
-                    }),
+                  businessName: controller.businessName!,
+                  businessImage: controller.businessImage,
+                  gmController: controller.gmController,
+                  businessLocation: controller.businessLocation,
+                  markers: controller.markers,
+                  isFollowing: controller.isFollowing,
+                  onPressFollowing: () {
+                    controller.pressFollowUnfollow();
+                    Get.snackbar(
+                      'Notification',
+                      controller.isFollowing
+                          ? 'You followed this business!'
+                          : 'You unfollowed this business!',
+                      snackPosition: SnackPosition.BOTTOM,
+                      duration: const Duration(seconds: 2),
+                    );
+                  },
+                  onTapAddFeedback: () {
+                    controller.goToAddFeedbackPage();
+                  },
+                ),
                 const BusinessFeedback(),
                 BusinessPosts(
                   businessesPosts: controller.businessesPosts,
