@@ -74,6 +74,7 @@ class SearchPageControllerImp extends SearchPageController {
   checkSearch(value) {
     if (value == "") {
       isSearch = false;
+      businessesList = [];
     }
     update();
   }
