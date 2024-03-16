@@ -38,7 +38,13 @@ class SearchPageControllerImp extends SearchPageController {
   @override
   onSearch() async {
     isSearch = true;
-    print(searchText.text);
+
+    if (searchText.text == "") {
+      Get.defaultDialog(
+          title: "Alert",
+          middleText: "You should write a business name to search for");
+      return;
+    }
 
     statusRequest = StatusRequest.loading;
     String? accessToken = myServices.sharedPreferences.getString("accessToken");
