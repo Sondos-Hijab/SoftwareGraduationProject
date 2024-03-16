@@ -53,7 +53,8 @@ class HomePage extends StatelessWidget {
                   (index) => BusinessViewItem(
                         index: index,
                         onTap: () {
-                          controller.goToBusinessPage(businessViewList[index].businessName!);
+                          controller.goToBusinessPage(
+                              businessViewList[index].businessName!);
                         },
                       )),
             ],

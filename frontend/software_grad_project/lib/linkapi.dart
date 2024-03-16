@@ -24,6 +24,9 @@ class AppLink {
   static const String checkAccessTokenLink =
       "$server/user/checkAuthenticateToken";
 
+  //feedback
+  static const String addFeedbackLink = "$server/user/addFeedback";
+
   //Test
   static const String test = "https://jsonplaceholder.typicode.com/posts/1";
 }

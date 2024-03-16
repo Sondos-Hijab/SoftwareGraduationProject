@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:software_grad_project/controller/app-main-pages-controllers/user-profile-realted-controllers/user_feedback_controller.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
 import 'package:software_grad_project/view/widgets/feedback-form/feedback_button.dart';
 import 'package:software_grad_project/view/widgets/feedback-form/feedback_description.dart';
@@ -11,6 +13,8 @@ class FeedbackFormPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(UserFeedbackControllerImp());
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -21,26 +25,49 @@ class FeedbackFormPage extends StatelessWidget {
           style: Theme.of(context).textTheme.headlineSmall,
         ),
       ),
-      body: ListView(
-        children: [
-          const SizedBox(
-            height: 20,
-          ),
-          const FeedbackDescriptionTextArea(),
-          Container(
-            margin: const EdgeInsets.only(top: 20),
-            child: const Column(
-              children: [
-                FeedbackRatingBar(title: "Customer Service:"),
-                FeedbackRatingBar(title: "Value of Money:"),
-                FeedbackRatingBar(title: "Quality:"),
-              ],
+      body: GetBuilder<UserFeedbackControllerImp>(builder: (controller) {
+        return ListView(
+          children: [
+            const SizedBox(
+              height: 20,
             ),
-          ),
-          const FeedbackImageUploud(),
-          const FeedbackFormButton()
-        ],
-      ),
+            FeedbackDescriptionTextArea(
+              feedbackTextEditingController:
+                  controller.feedbackTextEditingController,
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 20),
+              child: Column(
+                children: [
+                  FeedbackRatingBar(
+                    title: "Customer Service:",
+                    updateRate: controller.updateCustomerServiceRate,
+                  ),
+                  FeedbackRatingBar(
+                    title: "Value of Money:",
+                    updateRate: controller.updateValueOfMoneyRate,
+                  ),
+                  FeedbackRatingBar(
+                    title: "Quality:",
+                    updateRate: controller.updateProductQualityRate,
+                  ),
+                ],
+              ),
+            ),
+            FeedbackImageUploud(
+              selectedImage: controller.selectedImage,
+              onTap: () {
+                controller.uploadImage();
+              },
+            ),
+            FeedbackFormButton(
+              onPressed: () {
+                controller.handleSubmitFeedback();
+              },
+            )
+          ],
+        );
+      }),
     );
   }
 }
