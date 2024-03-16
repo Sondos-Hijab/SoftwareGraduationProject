@@ -33,6 +33,14 @@ List categoriesPictures = [
   AppImageAssets.restaurantCategory
 ];
 
+Map<int, String> categoriesMapping = {
+  0: "gym",
+  1: "beauty",
+  2: "clothes",
+  3: "devices",
+  4: "restaurants",
+};
+
 List<FeedbackModel> feedbackData = [
   FeedbackModel(
     "John Doe",

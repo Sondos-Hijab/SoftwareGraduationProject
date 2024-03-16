@@ -346,4 +346,37 @@ class CRUDRequests {
       return const Left(StatusRequest.serverException);
     }
   }
+
+  Future<Either<StatusRequest, Map>> getDataWithParams(
+    String linkUrl,
+    Map<String, dynamic> params,
+    String authToken,
+  ) async {
+    try {
+      if (await checkInternet()) {
+        var uri = Uri.parse(linkUrl);
+        uri = uri.replace(queryParameters: params);
+
+        var response = await http.get(
+          uri,
+          headers: {
+            "Authorization": "Bearer $authToken",
+            "Content-type": "application/json",
+            "Accept": "application/json",
+          },
+        );
+
+        if ([200, 201, 400, 403, 404].contains(response.statusCode)) {
+          var responseBody = json.decode(response.body);
+          return Right(responseBody);
+        } else {
+          return Left(StatusRequest.serverfailure);
+        }
+      } else {
+        return Left(StatusRequest.offlinefailure);
+      }
+    } catch (_) {
+      return Left(StatusRequest.serverException);
+    }
+  }
 }

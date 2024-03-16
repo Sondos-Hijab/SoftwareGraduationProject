@@ -4,7 +4,8 @@ import 'package:software_grad_project/core/constants/colors.dart';
 import 'package:software_grad_project/data/datasource/static/static.dart';
 
 class CategoriesButtons extends StatelessWidget {
-  const CategoriesButtons({super.key});
+  final void Function(String cat) setCategory;
+  const CategoriesButtons({super.key, required this.setCategory});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,10 @@ class CategoriesButtons extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             return InkWell(
-              onTap: () {},
+              onTap: () {
+                print(categoriesMapping[index]);
+                setCategory(categoriesMapping[index]!);
+              },
               child: Container(
                 width: 80,
                 decoration: BoxDecoration(

@@ -45,18 +45,22 @@ class HomePage extends StatelessWidget {
               ),
 
               //categories
-              const CategoriesButtons(),
+              CategoriesButtons(
+                setCategory: controller.setCatagory,
+              ),
 
               //business view depending on selected category
               ...List.generate(
-                  businessViewList.length,
-                  (index) => BusinessViewItem(
-                        index: index,
-                        onTap: () {
-                          controller.goToBusinessPage(
-                              businessViewList[index].businessName!);
-                        },
-                      )),
+                controller.businessesList!.length,
+                (index) => BusinessViewItem(
+                  businessName: controller.businessesList![index].businessName,
+                  picture: controller.businessesList![index].picture,
+                  onTap: () {
+                    controller.goToBusinessPage(
+                        businessViewList[index].businessName!);
+                  },
+                ),
+              ),
             ],
           );
         }),

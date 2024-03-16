@@ -18,6 +18,12 @@ class AppLink {
   static const String getUserPictureLink = "$server/user/getUserProfilePicture";
 
   //business page
+  static const String getBusinessBySearchLink =
+      "$server/user/getBusinessesBySearch";
+  static const String getBusinessesByCategoryLink =
+      "$server/user/getBusinessesByCategory";
+  static const String getBusinessByNameLink =
+      "$server/user/getBusinessesByName";
   static const String getBusinessPostsLink = "$server/user/getPost";
 
   //checking access token

@@ -1,11 +1,18 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:software_grad_project/core/constants/images_assets.dart';
 import 'package:software_grad_project/data/datasource/static/static.dart';
 
 class BusinessViewItem extends StatelessWidget {
-  final int index;
+  final String? businessName;
+  final Uint8List? picture;
   final Function()? onTap;
-  const BusinessViewItem({super.key, required this.index, required this.onTap});
+  const BusinessViewItem(
+      {super.key,
+      required this.onTap,
+      required this.businessName,
+      required this.picture});
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +25,9 @@ class BusinessViewItem extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           child: Row(
             children: [
-              businessViewList[index].imageFile != null
+              picture != null
                   ? CircleAvatar(
-                      radius: 30,
-                      backgroundImage:
-                          FileImage(businessViewList[index].imageFile!),
-                    )
+                      radius: 30, backgroundImage: MemoryImage(picture!))
                   : const CircleAvatar(
                       radius: 30,
                       backgroundImage: AssetImage(AppImageAssets.noUserImage),
@@ -31,7 +35,7 @@ class BusinessViewItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: Text(
-                  businessViewList[index].businessName!,
+                  businessName!,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               )

@@ -1,8 +1,8 @@
-import 'dart:io';
+import 'dart:typed_data';
 
 class BusinessViewModel {
   final String? businessName;
-  final File? imageFile;
+  final Uint8List? picture;
 
-  BusinessViewModel(this.businessName, this.imageFile);
+  BusinessViewModel(this.businessName, this.picture);
 }
