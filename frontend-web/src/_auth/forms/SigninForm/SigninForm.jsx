@@ -75,7 +75,7 @@ export default function SigninForm({}) {
             </div>
 
             <div className={styles["flex-end"]}>
-              <Link to="/confirm-email" className={styles["link-text"]}>
+              <Link to="/auth/confirm-email" className={styles["link-text"]}>
                 Forgot password?
               </Link>
             </div>

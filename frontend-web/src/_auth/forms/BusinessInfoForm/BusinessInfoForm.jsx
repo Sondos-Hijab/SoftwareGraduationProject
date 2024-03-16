@@ -188,8 +188,8 @@ const BusinessInfoForm = () => {
         </form>
 
         <p className={styles["paragraph-text"]}>
-          Already have an account?
-          <Link to="/sign-in" className={styles["link-text"]}>
+          Already have an account?{" "}
+          <Link to="/auth/sign-in" className={styles["link-text"]}>
             Go to Sign in
           </Link>
         </p>
