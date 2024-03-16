@@ -21,7 +21,6 @@ class CategoriesButtons extends StatelessWidget {
           itemBuilder: (context, index) {
             return InkWell(
               onTap: () {
-                print(categoriesMapping[index]);
                 setCategory(categoriesMapping[index]!);
               },
               child: Container(

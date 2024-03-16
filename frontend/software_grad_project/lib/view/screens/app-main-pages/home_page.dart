@@ -57,7 +57,7 @@ class HomePage extends StatelessWidget {
                   picture: controller.businessesList![index].picture,
                   onTap: () {
                     controller.goToBusinessPage(
-                        businessViewList[index].businessName!);
+                        controller.businessesList![index].businessName!);
                   },
                 ),
               ),
