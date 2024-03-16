@@ -13,10 +13,13 @@ import 'package:software_grad_project/data/model/fetched_post_model.dart';
 
 abstract class BusinessPagesController extends GetxController {
   getPosts(String businessName);
+  pressFollowUnfollow();
 }
 
 class BusinessPagesControllerImp extends BusinessPagesController {
   GlobalKey<ScaffoldState>? scaffoldKey;
+  bool isFollowing = false;
+
   File? businessImage;
   final Completer<GoogleMapController> gmController =
       Completer<GoogleMapController>();
@@ -83,6 +86,12 @@ class BusinessPagesControllerImp extends BusinessPagesController {
       }
       update();
     }
+  }
+
+  @override
+  pressFollowUnfollow() {
+    isFollowing = !isFollowing;
+    update();
   }
 }
 

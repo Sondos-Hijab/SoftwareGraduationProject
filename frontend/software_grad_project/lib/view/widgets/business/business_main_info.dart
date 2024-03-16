@@ -9,16 +9,19 @@ import 'package:software_grad_project/view/widgets/business/business_location.da
 
 class BusinessMainInfoWidget extends StatelessWidget {
   final Completer<GoogleMapController> gmController;
-
+  final bool isFollowing;
   final List<Marker> markers;
   final CameraPosition businessLocation;
   final File? businessImage;
+  final void Function() onPressFollowing;
   const BusinessMainInfoWidget(
       {super.key,
       required this.businessImage,
       required this.gmController,
       required this.markers,
-      required this.businessLocation});
+      required this.businessLocation,
+      required this.isFollowing,
+      required this.onPressFollowing});
 
   @override
   Widget build(BuildContext context) {
@@ -92,6 +95,32 @@ class BusinessMainInfoWidget extends StatelessWidget {
                   )
                 ],
               ),
+              const SizedBox(
+                height: 20,
+              ),
+              // Follow/Unfollow Button
+              ElevatedButton(
+                onPressed: onPressFollowing,
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 15.0, horizontal: 100.0),
+                  backgroundColor: isFollowing
+                      ? AppColors.primaryYellow
+                      : AppColors.primaryBlue,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+                child: Text(
+                  isFollowing ? 'Unfollow' : 'Follow',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: AppColors.appWhite,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+
               const SizedBox(
                 height: 20,
               ),
