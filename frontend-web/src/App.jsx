@@ -15,12 +15,19 @@ import {
   EmailConfirmationForm,
 } from "./_auth/forms";
 
-import { Home } from "./_root/pages";
+import { Profile, Home } from "./_root/pages";
 import Error from "./helper-components/Error";
 
 function App() {
   const router = createBrowserRouter([
-    { path: "/", element: <Home /> },
+    {
+      path: "/",
+      element: <RootLayout />,
+      children: [
+        { path: "", element: <Home /> },
+        { path: "profile", element: <Profile /> },
+      ],
+    },
     {
       path: "/auth",
       element: <AuthLayout />,

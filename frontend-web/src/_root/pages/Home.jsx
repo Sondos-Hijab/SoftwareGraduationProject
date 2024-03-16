@@ -4,11 +4,6 @@ import { SigninContext } from "../../store/sign-in-context";
 const Home = () => {
   // const allFeedback = useLoaderData();
 
-  //trying the context
-  const signinContext = useContext(SigninContext);
-  console.log(signinContext);
-
-  
   return (
     <div>
       Home

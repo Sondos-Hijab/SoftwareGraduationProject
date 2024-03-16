@@ -175,7 +175,7 @@ export default function SignupForm() {
 
         <p className={styles["paragraph-text"]}>
           Already have an account?
-          <Link className={styles["link-text"]} to="/sign-in">
+          <Link className={styles["link-text"]} to="/auth/sign-in">
             {" "}
             Go to Sign in
           </Link>
