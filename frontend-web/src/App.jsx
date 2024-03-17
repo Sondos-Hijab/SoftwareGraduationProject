@@ -17,6 +17,7 @@ import {
 
 import { Profile, Home } from "./_root/pages";
 import Error from "./helper-components/Error";
+import ImageProvider from "./Providers/AppPovider";
 
 function App() {
   const router = createBrowserRouter([
@@ -49,19 +50,22 @@ function App() {
     { path: "*", element: <Error /> },
   ]);
 
-  const [signinContextData, setSigninContextData] = useState({
-    accessToken: "",
-    username: "",
-  });
+  // const [signinContextData, setSigninContextData] = useState({
+  //   accessToken: "",
+  //   username: "",
+  // });
 
-  const addSigninData = (accessToken, username) => {
-    setSigninContextData({ accessToken, username });
-  };
+  // const addSigninData = (accessToken, username) => {
+  //   setSigninContextData({ accessToken, username });
+  // };
 
   return (
-    <SigninContext.Provider value={{ signinContextData, addSigninData }}>
+    <ImageProvider>
       <RouterProvider router={router} />
-    </SigninContext.Provider>
+    </ImageProvider>
+    // <SigninContext.Provider value={{ signinContextData, addSigninData }}>
+    //   <RouterProvider router={router} />
+    // </SigninContext.Provider>
   );
 }
 
