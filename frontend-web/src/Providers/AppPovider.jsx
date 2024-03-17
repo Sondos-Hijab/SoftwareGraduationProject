@@ -45,6 +45,7 @@ const AppPovider = ({ children }) => {
   }
 
   function handleBusinessNameChange(name) {
+    localStorage.setItem("businessName", name);
     setBusinessName(name);
   }
 
