@@ -10,7 +10,6 @@ import EditBusinessLocationModal from "@/helper-components/EditBusinessLocationM
 const Profile = () => {
   //information that will be fetched
   const [profileImage, setProfileImage] = useState();
-  // const [businessName, setBusinessName] = useState("");
   const [businessPhoneNumber, setBusinessPhoneNumber] = useState(0);
   const [businessDescription, setBusinessDescription] = useState("");
   const [businessLocation, setBusinessLocation] = useState("");
@@ -205,12 +204,18 @@ const Profile = () => {
       </div>
 
       {showEditPhoneNumberModal ? (
-        <EditPhoneNumberModal setShowModal={setShowPhoneNumberModal} />
+        <EditPhoneNumberModal
+          businessPhoneNumber={businessPhoneNumber}
+          setBusinessPhoneNumber={setBusinessPhoneNumber}
+          setShowModal={setShowPhoneNumberModal}
+        />
       ) : (
         ""
       )}
       {showEditBusinessDescriptionModal ? (
         <EditBusinessDescriptionModal
+          businessDescription={businessDescription}
+          setBusinessDescription={setBusinessDescription}
           setShowModal={setShowEditBusinessDescriptionModal}
         />
       ) : (
@@ -218,6 +223,7 @@ const Profile = () => {
       )}
       {showEditBusinessLocationModal ? (
         <EditBusinessLocationModal
+          setBusinessLocation={setBusinessLocation}
           setShowModal={setShowEditBusinessLocationModal}
         />
       ) : (
