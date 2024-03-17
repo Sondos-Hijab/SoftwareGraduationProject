@@ -18,8 +18,8 @@ const LocationInfoForm = () => {
 
   // Function to handle map click
   const handleMapClick = (lngLat) => {
-    console.log(lngLat.detail.latLng);
-    setSelectedMarker(lngLat.detail.latLng);
+    console.log(lngLat);
+    setSelectedMarker(lngLat);
   };
 
   //modal showing when an error occurs
@@ -80,6 +80,7 @@ const LocationInfoForm = () => {
             <LocationForm
               handleMapClick={handleMapClick}
               selectedMarker={selectedMarker}
+              width={"500px"}
             />
 
             {error && <p className={styles.error}>{error}</p>}

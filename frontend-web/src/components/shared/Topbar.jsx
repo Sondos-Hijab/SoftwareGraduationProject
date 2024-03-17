@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import profileImage from "../../assets/images/placeholder.png";
 import logo from "../../assets/images/logo.png";
 
-const TopBar = () => {
+const TopBar = ({ showNavbar, setShowNavbar }) => {
   return (
-    <section className="sticky top-0 z-50 md:hidden w-full">
+    <section className="sticky top-0 z-40 md:hidden w-full bg-slate-100">
       <div className="flex justify-between items-center py-4 px-5">
+        <Button
+          className="text-slate-600"
+          onClick={() => {
+            setShowNavbar(!showNavbar);
+          }}
+        >
+          <FontAwesomeIcon icon={faBars} className="h-5 w-5" />
+        </Button>
         <Link to="/" className="flex gap-3 items-center">
           <img src={logo} alt="logo" width={130} height={350} />
         </Link>
@@ -17,10 +25,6 @@ const TopBar = () => {
           <Link className="flex justify-center items-center gap-3">
             <img src={profileImage} className="h-10 w-10 rounded-full " />
           </Link>
-
-          <Button className="text-[#fac100]">
-            <FontAwesomeIcon icon={faRightFromBracket} className="h-5 w-5" />
-          </Button>
         </div>
       </div>
     </section>

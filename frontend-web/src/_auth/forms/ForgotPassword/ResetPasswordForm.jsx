@@ -57,8 +57,9 @@ const ResetPasswordForm = () => {
       );
       setShowModal(true);
     } else {
-      const data = await response.json();
-      console.log(data);
+      // const data = await response.json();
+      // console.log(data);
+      localStorage.removeItem("tempAccessToken");
       navigate("/auth/sign-in");
     }
   };

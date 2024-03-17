@@ -1,82 +1,104 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
-import profileImage from "../../assets/images/placeholder.png";
-
-import {
-  faBell,
-  faComments,
-  faHouse,
-  faImage,
-  faRightFromBracket,
-  faTableColumns,
-  faUpload,
-} from "@fortawesome/free-solid-svg-icons";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { leftSidebarLinks } from "@/constants";
+import { leftSidebarStyles } from "./LeftSidebarStyleClasses";
+import { smallScreenLeftSidebar } from "./SmallScreenLeftSidebar";
+import { appContext as AppContext } from "@/store/app-context";
 
-const LeftSidebar = () => {
-  const linkStyle =
-    "text-lg font-semibold tracking-wide text-slate-600 rounded-lg hover:bg-white hover:text-[#13b6f5] py-3 px-3";
+const LeftSidebar = ({ showNavbar, setShowNavbar }) => {
+  const useAppContext = () => useContext(AppContext);
+  const { selectedImage, businessName } = useAppContext();
+  
+  const [profileImage, setProfileImage] = useState();
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      try {
+        const accessToken = localStorage.getItem("accessToken");
+        const response = await fetch(
+          "http://localhost:3000/RateRelay/user/getAdminProfilePicture",
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setProfileImage(data["UserProfilePicture"]);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchImage();
+  }, []);
 
   return (
-    <nav className="sticky top-0 hidden md:flex px-6 py-10 flex-col justify-between min-w-[270px] bg-slate-100 h-screen">
-      <div className="flex flex-col gap-5 ">
-        <Link to="/" className="flex gap-3 items-center">
-          <img src={logo} alt="logo" width={170} height={36} />
-        </Link>
-        <Link className="flex gap-3 items-center">
-          <img
-            src={profileImage}
-            alt="profile"
-            className="h-14 w-14 rounded-full"
-          />
-          <div className="flex flex-col">
-            <p className="text-[18px] font-bold leading-[140%] text-[#0db783]">
-              {"Sondos Hijab"}
-            </p>
-            <p className="text-[14px] font-normal leading-[140%] text-light-3">
-              {"Sondos.hijab@gmail.com"}
-            </p>
-          </div>
-        </Link>
-        <Link className={linkStyle}>
-          <FontAwesomeIcon className="text-[#13b6f5] mr-3" icon={faHouse} />
-          Home
-        </Link>
-        <Link className={linkStyle}>
-          <FontAwesomeIcon
-            className="text-[#13b6f5] mr-3"
-            icon={faTableColumns}
-          />
-          Dashboard
-        </Link>
-        <Link className={linkStyle}>
-          <FontAwesomeIcon className="text-[#13b6f5] mr-3" icon={faImage} />
-          My posts
-        </Link>
-        <Link className={linkStyle}>
-          <FontAwesomeIcon className="text-[#13b6f5] mr-3" icon={faUpload} />{" "}
-          Add a post
-        </Link>
-        <Link className={linkStyle}>
-          <FontAwesomeIcon className="text-[#13b6f5] mr-3" icon={faComments} />
-          Messages
-        </Link>
-        <Link className={linkStyle}>
-          <FontAwesomeIcon className="text-[#13b6f5] mr-3" icon={faBell} />
-          Notifications
-        </Link>
+    <>
+      <nav
+        className={
+          showNavbar
+            ? smallScreenLeftSidebar.navStyle
+            : leftSidebarStyles.navStyle
+        }
+      >
+        <div className={leftSidebarStyles.linksContainer}>
+          <Link to="/" className={leftSidebarStyles.profileAndLogoLinkStyle}>
+            <img src={logo} alt="logo" width={170} height={36} />
+          </Link>
+          <Link
+            to="/profile"
+            className={
+              showNavbar
+                ? smallScreenLeftSidebar.profileLinkStyle
+                : leftSidebarStyles.profileAndLogoLinkStyle
+            }
+          >
+            <img
+              src={selectedImage || `data:image/*;base64,${profileImage}`}
+              alt="profile"
+              className={leftSidebarStyles.profilePictureStyle}
+            />
+            <div className={leftSidebarStyles.businessInfoStyle}>
+              <p className={leftSidebarStyles.businessNameStyle}>
+                {businessName}
+              </p>
+            </div>
+          </Link>
 
-        <Link className={linkStyle}>
-          <FontAwesomeIcon
-            className="text-[#13b6f5] mr-3"
-            icon={faRightFromBracket}
-          />
-          Logout
-        </Link>
-      </div>
-    </nav>
+          {leftSidebarLinks.map((element) => (
+            <Link
+              to={element.route}
+              className={
+                showNavbar
+                  ? smallScreenLeftSidebar.linkStyle
+                  : leftSidebarStyles.linkStyle
+              }
+            >
+              <FontAwesomeIcon
+                className={leftSidebarStyles.iconStyle}
+                icon={element.icon}
+              />
+              {element.label}
+            </Link>
+          ))}
+        </div>
+      </nav>
+      <div
+        className={
+          showNavbar
+            ? smallScreenLeftSidebar.overlay
+            : leftSidebarStyles.overlay
+        }
+        onClick={() => {
+          setShowNavbar(!showNavbar);
+        }}
+      ></div>
+    </>
   );
 };
 
