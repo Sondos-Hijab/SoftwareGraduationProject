@@ -22,7 +22,6 @@ const AppPovider = ({ children }) => {
             method: "PUT",
             headers: {
               Authorization: `Bearer ${authToken}`,
-              "Content-Type": "multipart/form-data",
             },
             body: formData,
           }
@@ -45,6 +44,7 @@ const AppPovider = ({ children }) => {
   }
 
   function handleBusinessNameChange(name) {
+    localStorage.setItem("businessName", name);
     setBusinessName(name);
   }
 

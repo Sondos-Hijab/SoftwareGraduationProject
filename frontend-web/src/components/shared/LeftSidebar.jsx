@@ -10,7 +10,7 @@ import { appContext as AppContext } from "@/store/app-context";
 const LeftSidebar = ({ showNavbar, setShowNavbar }) => {
   const useAppContext = () => useContext(AppContext);
   const { selectedImage, businessName } = useAppContext();
-  
+
   const [profileImage, setProfileImage] = useState();
 
   useEffect(() => {
@@ -65,7 +65,7 @@ const LeftSidebar = ({ showNavbar, setShowNavbar }) => {
             />
             <div className={leftSidebarStyles.businessInfoStyle}>
               <p className={leftSidebarStyles.businessNameStyle}>
-                {businessName}
+                {businessName || localStorage.getItem("businessName")}
               </p>
             </div>
           </Link>
