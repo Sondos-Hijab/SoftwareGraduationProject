@@ -22,7 +22,6 @@ const AppPovider = ({ children }) => {
             method: "PUT",
             headers: {
               Authorization: `Bearer ${authToken}`,
-              "Content-Type": "multipart/form-data",
             },
             body: formData,
           }
