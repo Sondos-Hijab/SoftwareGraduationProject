@@ -39,3 +39,25 @@ export const fetchInfo = async () => {
     console.error("Error fetching data:", error);
   }
 };
+
+export async function updateInfo(updatedInfo) {
+  const accessToken = localStorage.getItem("accessToken");
+  const response = await fetch(
+    "http://localhost:3000/RateRelay/user/updateAdminProfile",
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(updatedInfo),
+    }
+  );
+  if (!response.ok) {
+    const errorMessage = await response.json();
+    return errorMessage;
+  } else {
+    const data = await response.json();
+    return data;
+  }
+}
