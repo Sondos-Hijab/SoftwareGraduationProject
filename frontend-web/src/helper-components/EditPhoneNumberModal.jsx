@@ -1,12 +1,17 @@
+import { hasMinLength } from "@/_auth/utils/validation";
+import { updateInfo } from "@/apis/profileAndBusinessInfo";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useState } from "react";
 
 const EditPhoneNumberModal = ({
   setShowModal,
   businessPhoneNumber,
   setBusinessPhoneNumber,
 }) => {
+  const [canSubmit, setCanSubmit] = useState(false);
+  const [error, setError] = useState("");
+
   async function handlePhoneChange(event) {
     event.preventDefault();
 
@@ -15,27 +20,15 @@ const EditPhoneNumberModal = ({
     const phoneNumberData = {
       phoneNumber: formData.get("phoneNumber"),
     };
-    const accessToken = localStorage.getItem("accessToken");
 
-    const response = await fetch(
-      "http://localhost:3000/RateRelay/user/updateAdminProfile",
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify(phoneNumberData),
+    updateInfo(phoneNumberData).then((response) => {
+      if (response.error) {
+        console.log(errorMessage.error);
+      } else {
+        setBusinessPhoneNumber(formData.get("phoneNumber"));
+        setShowModal(false);
       }
-    );
-    if (!response.ok) {
-      const errorMessage = await response.json();
-      console.log(errorMessage.error);
-    } else {
-      const data = await response.json();
-      setBusinessPhoneNumber(formData.get("phoneNumber"));
-      setShowModal(false);
-    }
+    });
   }
   return (
     <div className="fixed top-0 right-0 w-screen h-screen bg-[#0000007f]">
@@ -90,12 +83,25 @@ const EditPhoneNumberModal = ({
                   type="number"
                   className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                   placeholder="Enter new value"
+                  onChange={(event) => {
+                    if (event.target.value == "") {
+                      setError("");
+                      setCanSubmit(false);
+                    } else if (!hasMinLength(event.target.value, 7)) {
+                      setError("Phone number can't be less than 7 digits");
+                      setCanSubmit(false);
+                    } else {
+                      setError("");
+                      setCanSubmit(true);
+                    }
+                  }}
                 />
               </div>
             </div>
-
+            {error && <p className="text-[#d90429]">{error}</p>}
             <button
               type="submit"
+              disabled={!canSubmit}
               className="block w-full rounded-lg bg-[#13b6f5] px-5 py-3 text-sm font-medium text-white"
             >
               Submit changes

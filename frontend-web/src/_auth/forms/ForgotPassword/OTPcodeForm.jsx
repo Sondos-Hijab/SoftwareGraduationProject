@@ -10,6 +10,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import { validateOTP } from "@/apis/authRequests";
 
 export default function InputOTPControlled() {
   const navigate = useNavigate();
@@ -35,28 +36,14 @@ export default function InputOTPControlled() {
       otp: value,
     };
 
-    const response = await fetch(
-      "http://localhost:3000/RateRelay/user/checkOTP",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("tempAccessToken")}`,
-        },
-        body: JSON.stringify(otpCode),
+    validateOTP(otpCode).then((value) => {
+      if (value.error) {
+        setModalMessage("There was a problem checking otp: " + value.error);
+        setShowModal(true);
+      } else {
+        navigate("/auth/reset-password");
       }
-    );
-    if (!response.ok) {
-      const errorMessage = await response.json();
-      setModalMessage(
-        "There was a problem checking otp: " + errorMessage.error
-      );
-      setShowModal(true);
-    } else {
-      // const data = await response.json();
-      // console.log(data);
-      navigate("/auth/reset-password");
-    }
+    });
   };
 
   return (

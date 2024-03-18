@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Modal from "@/helper-components/Modal";
 import styles from "../Form.module.css";
 import { hasMinLength, isEqualsToOtherValue } from "@/_auth/utils/validation";
+import { resetPassword } from "@/apis/authRequests";
 
 const ResetPasswordForm = () => {
   const navigate = useNavigate();
@@ -39,29 +40,16 @@ const ResetPasswordForm = () => {
       confirmPassword: formData.get("confirmPassword"),
     };
 
-    const response = await fetch(
-      "http://localhost:3000/RateRelay/user/resetAdminPassword",
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("tempAccessToken")}`,
-        },
-        body: JSON.stringify(resetPasswordInfo),
+    resetPassword(resetPasswordInfo).then((value) => {
+      if (value.error) {
+        setModalMessage(
+          "There was a problem resetting password: " + value.error
+        );
+        setShowModal(true);
+      } else {
+        navigate("/auth/sign-in");
       }
-    );
-    if (!response.ok) {
-      const errorMessage = await response.json();
-      setModalMessage(
-        "There was a problem resetting password: " + errorMessage.error
-      );
-      setShowModal(true);
-    } else {
-      // const data = await response.json();
-      // console.log(data);
-      localStorage.removeItem("tempAccessToken");
-      navigate("/auth/sign-in");
-    }
+    });
   };
 
   return (

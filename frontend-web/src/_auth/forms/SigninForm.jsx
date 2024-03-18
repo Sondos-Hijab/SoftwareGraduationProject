@@ -1,14 +1,36 @@
 import { useState } from "react";
-import logo from "../../../assets/images/logo.png";
-import { Link, Form } from "react-router-dom";
-import styles from "../Form.module.css";
+import logo from "../../assets/images/logo.png";
+import { Link, useNavigate } from "react-router-dom";
+import styles from "./Form.module.css";
 import { hasMinLength } from "@/_auth/utils/validation";
+import Modal from "@/helper-components/Modal";
+import { signin } from "@/apis/authRequests";
 
 export default function SigninForm({}) {
+  const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
   //state management and validation
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [canSubmit, setCanSubmit] = useState(false);
+
+  //modal showing when an error occurs
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  async function submitSigninData(event) {
+    signin(event).then((response) => {
+      if (response.error) {
+        setModalMessage("There was a problem signing in: " + response.error);
+        setShowModal(true);
+      } else {
+        localStorage.setItem("accessToken", response.accessToken);
+        navigate("/");
+      }
+    });
+  }
 
   return (
     <>
@@ -19,7 +41,7 @@ export default function SigninForm({}) {
         </div>
 
         <div className={styles["form-container"]}>
-          <Form className={styles.form} method="POST">
+          <form className={styles.form} onSubmit={submitSigninData}>
             <div className={styles["input-container"]}>
               <label htmlFor="username">Username</label>
               <div>
@@ -87,7 +109,7 @@ export default function SigninForm({}) {
             >
               Sign in
             </button>
-          </Form>
+          </form>
 
           <p className={styles["paragraph-text"]}>
             Not a member?
@@ -102,6 +124,13 @@ export default function SigninForm({}) {
           </p>
         </div>
       </div>
+      {showModal && (
+        <Modal
+          title="Can't Sign Your Business In"
+          message={modalMessage}
+          onClose={closeModal}
+        />
+      )}
     </>
   );
 }

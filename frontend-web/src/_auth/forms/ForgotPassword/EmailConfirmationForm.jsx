@@ -4,6 +4,7 @@ import styles from "../Form.module.css";
 import { isEmail } from "@/_auth/utils/validation";
 import Modal from "@/helper-components/Modal";
 import { useNavigate } from "react-router-dom";
+import { confirmEmail } from "@/apis/authRequests";
 
 const EmailConfirmationForm = () => {
   const navigate = useNavigate();
@@ -29,27 +30,14 @@ const EmailConfirmationForm = () => {
       email: formData.get("email"),
     };
 
-    const response = await fetch(
-      "http://localhost:3000/RateRelay/user/checkAdminEmail",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(emailCofirmationData),
+    confirmEmail(emailCofirmationData).then((value) => {
+      if (value.error) {
+        setModalMessage("There was a problem confirming email: " + value.error);
+        setShowModal(true);
+      } else {
+        navigate("/auth/otp-code-form");
       }
-    );
-    if (!response.ok) {
-      const errorMessage = await response.json();
-      setModalMessage(
-        "There was a problem confirming email: " + errorMessage.error
-      );
-      setShowModal(true);
-    } else {
-      const data = await response.json();
-      localStorage.setItem("tempAccessToken", data.tempAccessToken);
-      navigate("/auth/otp-code-form");
-    }
+    });
   };
   return (
     <>

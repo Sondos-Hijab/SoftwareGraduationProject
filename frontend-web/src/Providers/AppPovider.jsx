@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { appContext as AppContext } from "@/store/app-context";
 
 const AppPovider = ({ children }) => {
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [profileImage, setProfileImage] = useState(null);
   const [businessName, setBusinessName] = useState("");
 
   async function handleImageChange(event) {
@@ -33,7 +33,7 @@ const AppPovider = ({ children }) => {
 
         //update in ui
         reader.onloadend = () => {
-          setSelectedImage(reader.result);
+          setProfileImage(reader.result);
         };
       } catch (error) {
         console.error("Error updating profile picture:", error);
@@ -43,6 +43,9 @@ const AppPovider = ({ children }) => {
     }
   }
 
+  function setFetchedImage(image) {
+    setProfileImage(image);
+  }
   function handleBusinessNameChange(name) {
     localStorage.setItem("businessName", name);
     setBusinessName(name);
@@ -51,10 +54,11 @@ const AppPovider = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
-        selectedImage,
+        profileImage,
         handleImageChange,
         businessName,
         handleBusinessNameChange,
+        setFetchedImage,
       }}
     >
       {children}

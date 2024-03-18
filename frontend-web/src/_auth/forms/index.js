@@ -1,10 +1,9 @@
-export { default as SigninFormPage } from "./SigninForm/SigninFormPage";
-export { default as SignupForm } from "./SignupForm/SignupForm";
-export { default as BusinessInfoForm } from "./BusinessInfoForm/BusinessInfoForm";
+export { default as SigninForm } from "./SigninForm";
+export { default as SignupForm } from "./SignupForm";
+export { default as BusinessInfoForm } from "./BusinessInfoForm";
 export { default as LocationInfoForm } from "./LocationInfoForm/LocationInfoForm";
 export {
   ResetPasswordForm,
   EmailConfirmationForm,
   OTPcodeForm,
 } from "./ForgotPassword";
-export { signinAction } from "./actions";

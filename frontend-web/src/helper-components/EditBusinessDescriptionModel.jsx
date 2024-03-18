@@ -1,41 +1,41 @@
+import { hasMinLength } from "@/_auth/utils/validation";
+import { updateInfo } from "@/apis/profileAndBusinessInfo";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useState } from "react";
 
 const EditBusinessDescriptionModal = ({
   setShowModal,
   businessDescription,
   setBusinessDescription,
 }) => {
+  const [error, setError] = useState("");
+
   async function handleDescriptionChange(event) {
     event.preventDefault();
 
     const formData = new FormData(event.target);
 
+    if (
+      !formData.get("description") ||
+      !hasMinLength(formData.get("description"), 20)
+    ) {
+      setError("Description can't be less than 20 digits");
+      return;
+    }
+
     const descriptionData = {
       description: formData.get("description"),
     };
-    const accessToken = localStorage.getItem("accessToken");
 
-    const response = await fetch(
-      "http://localhost:3000/RateRelay/user/updateAdminProfile",
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify(descriptionData),
+    updateInfo(descriptionData).then((response) => {
+      if (response.error) {
+        console.log(errorMessage.error);
+      } else {
+        setBusinessDescription(formData.get("description"));
+        setShowModal(false);
       }
-    );
-    if (!response.ok) {
-      const errorMessage = await response.json();
-      console.log(errorMessage.error);
-    } else {
-      const data = await response.json();
-      setBusinessDescription(formData.get("description"));
-      setShowModal(false);
-    }
+    });
   }
   return (
     <div className="fixed top-0 right-0 w-screen h-screen bg-[#0000007f]">
@@ -91,6 +91,7 @@ const EditBusinessDescriptionModal = ({
                 ></textarea>
               </div>
             </div>
+            {error && <p className="text-[#d90429]">{error}</p>}
 
             <button
               type="submit"

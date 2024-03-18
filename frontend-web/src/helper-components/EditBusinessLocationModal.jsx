@@ -1,10 +1,12 @@
 import LocationForm from "@/_auth/forms/LocationInfoForm/LocationForm";
+import { updateInfo } from "@/apis/profileAndBusinessInfo";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 
 const EditBusinessLocationModal = ({ setShowModal, setBusinessLocation }) => {
   const [selectedMarker, setSelectedMarker] = useState(null);
+  const [error, setError] = useState("");
 
   // Function to handle map click
   const handleMapClick = (lngLat) => {
@@ -13,6 +15,12 @@ const EditBusinessLocationModal = ({ setShowModal, setBusinessLocation }) => {
 
   async function handleLocationChange(event) {
     event.preventDefault();
+
+    if (!selectedMarker) {
+      setError("Please specify your location.");
+      return;
+    }
+
     const coordinatesString = Object.entries(selectedMarker)
       .map(([key, value]) => `${key}:${value}`)
       .join(", ");
@@ -20,28 +28,15 @@ const EditBusinessLocationModal = ({ setShowModal, setBusinessLocation }) => {
     const location = {
       location: coordinatesString,
     };
-    const accessToken = localStorage.getItem("accessToken");
 
-    const response = await fetch(
-      "http://localhost:3000/RateRelay/user/updateAdminProfile",
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify(location),
+    updateInfo(location).then((response) => {
+      if (response.error) {
+        console.log(errorMessage.error);
+      } else {
+        setBusinessLocation(selectedMarker);
+        setShowModal(false);
       }
-    );
-    if (!response.ok) {
-      const errorMessage = await response.json();
-      console.log(errorMessage.error);
-    } else {
-      const data = await response.json();
-      console.log(data);
-      setBusinessLocation(selectedMarker);
-      setShowModal(false);
-    }
+    });
   }
   return (
     <div className="fixed top-0 right-0 w-screen h-screen bg-[#0000007f]">
@@ -65,6 +60,7 @@ const EditBusinessLocationModal = ({ setShowModal, setBusinessLocation }) => {
               selectedMarker={selectedMarker}
             />
           </div>
+          {error && <p className="text-[#d90429]">{error}</p>}
 
           <button
             onClick={handleLocationChange}
