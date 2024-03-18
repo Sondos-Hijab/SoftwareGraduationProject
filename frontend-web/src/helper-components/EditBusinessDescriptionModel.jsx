@@ -1,16 +1,27 @@
+import { hasMinLength } from "@/_auth/utils/validation";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useState } from "react";
 
 const EditBusinessDescriptionModal = ({
   setShowModal,
   businessDescription,
   setBusinessDescription,
 }) => {
+  const [error, setError] = useState("");
+
   async function handleDescriptionChange(event) {
     event.preventDefault();
 
     const formData = new FormData(event.target);
+
+    if (
+      !formData.get("description") ||
+      !hasMinLength(formData.get("description"), 20)
+    ) {
+      setError("Description can't be less than 20 digits");
+      return;
+    }
 
     const descriptionData = {
       description: formData.get("description"),
@@ -91,6 +102,7 @@ const EditBusinessDescriptionModal = ({
                 ></textarea>
               </div>
             </div>
+            {error && <p className="text-[#d90429]">{error}</p>}
 
             <button
               type="submit"
