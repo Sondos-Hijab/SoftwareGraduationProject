@@ -56,7 +56,6 @@ const LocationInfoForm = () => {
 
       if (!response.ok) {
         const errorMessage = await response.json();
-        console.log(errorMessage);
         setModalMessage(
           "There was a problem signing up: " + errorMessage.error
         );

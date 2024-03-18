@@ -6,22 +6,16 @@ import { useAppContext } from "@/Providers/AppPovider";
 import EditPhoneNumberModal from "@/helper-components/EditPhoneNumberModal";
 import EditBusinessDescriptionModal from "@/helper-components/EditBusinessDescriptionModel";
 import EditBusinessLocationModal from "@/helper-components/EditBusinessLocationModal";
+import { fetchImage, fetchInfo } from "@/apis/profileAndBusinessInfo";
 
 const Profile = () => {
-  //information that will be fetched
-  const [profileImage, setProfileImage] = useState();
   const [businessPhoneNumber, setBusinessPhoneNumber] = useState(0);
   const [businessDescription, setBusinessDescription] = useState("");
   const [businessLocation, setBusinessLocation] = useState("");
   const [businessCategory, setBusinessCategory] = useState("");
 
   //functionality
-  const {
-    selectedImage,
-    handleImageChange,
-    businessName,
-    handleBusinessNameChange,
-  } = useAppContext();
+  const { profileImage, handleImageChange, businessName } = useAppContext();
 
   const [showEditPhoneNumberModal, setShowPhoneNumberModal] = useState(false);
   const [
@@ -33,67 +27,21 @@ const Profile = () => {
     useState(false);
 
   useEffect(() => {
-    const fetchImage = async () => {
-      try {
-        const accessToken = localStorage.getItem("accessToken");
-        const response = await fetch(
-          "http://localhost:3000/RateRelay/user/getAdminProfilePicture",
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setProfileImage(data["UserProfilePicture"]);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+    fetchInfo().then((businessInfo) => {
+      setBusinessDescription(businessInfo["description"]);
+      setBusinessPhoneNumber(businessInfo["phoneNumber"]);
+      setBusinessCategory(businessInfo["category"]);
 
-    const fetchInfo = async () => {
-      try {
-        const accessToken = localStorage.getItem("accessToken");
-        const response = await fetch(
-          "http://localhost:3000/RateRelay/user/getAdminProfileInfo",
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        console.log(data);
-        handleBusinessNameChange(data["businessInfo"]["name"]);
-        // setBusinessName(data["businessInfo"]["name"]);
-        setBusinessDescription(data["businessInfo"]["description"]);
-        setBusinessPhoneNumber(data["businessInfo"]["phoneNumber"]);
-        setBusinessCategory(data["businessInfo"]["category"]);
-
-        //handling location to set a marker
-        const locationParts = data["businessInfo"]["location"]
-          .split(/[,:]/)
-          .map((part) => part.trim());
-
-        // Create an object using destructuring
-        const locationMarker = {
-          lat: parseFloat(locationParts[1]),
-          lng: parseFloat(locationParts[3]),
-        };
-
-        setBusinessLocation(locationMarker);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchImage();
-    fetchInfo();
+      //handling location to set a marker
+      const locationParts = businessInfo["location"]
+        .split(/[,:]/)
+        .map((part) => part.trim());
+      const locationMarker = {
+        lat: parseFloat(locationParts[1]),
+        lng: parseFloat(locationParts[3]),
+      };
+      setBusinessLocation(locationMarker);
+    });
   }, []);
 
   return (
@@ -103,7 +51,7 @@ const Profile = () => {
         <div className="relative">
           <img
             className="inline-block h-52 w-52 rounded-full border border-gray-300 ring-2 ring-white mx-auto"
-            src={selectedImage || `data:image/*;base64,${profileImage}`}
+            src={profileImage}
             alt="business logo"
           />
           <label

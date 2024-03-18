@@ -1,10 +1,25 @@
 import LeftSidebar from "@/components/shared/LeftSidebar";
 import TopBar from "@/components/shared/Topbar";
 import { Outlet } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useAppContext } from "@/Providers/AppPovider";
+import { fetchImage, fetchInfo } from "@/apis/profileAndBusinessInfo";
 
 const RootLayout = () => {
+  const { handleBusinessNameChange, setFetchedImage } = useAppContext();
+
   const [showNavbar, setShowNavbar] = useState(false);
+
+  useEffect(() => {
+    fetchImage().then((value) => {
+      setFetchedImage(`data:image/*;base64,${value}`);
+    });
+
+    fetchInfo().then((businessInfo) => {
+      handleBusinessNameChange(businessInfo["name"]);
+    });
+  }, []);
+
   return (
     <div className="w-full md:flex">
       <TopBar setShowNavbar={setShowNavbar} showNavbar={showNavbar} />

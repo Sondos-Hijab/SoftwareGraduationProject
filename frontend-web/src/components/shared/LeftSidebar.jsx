@@ -9,33 +9,7 @@ import { appContext as AppContext } from "@/store/app-context";
 
 const LeftSidebar = ({ showNavbar, setShowNavbar }) => {
   const useAppContext = () => useContext(AppContext);
-  const { selectedImage, businessName } = useAppContext();
-
-  const [profileImage, setProfileImage] = useState();
-
-  useEffect(() => {
-    const fetchImage = async () => {
-      try {
-        const accessToken = localStorage.getItem("accessToken");
-        const response = await fetch(
-          "http://localhost:3000/RateRelay/user/getAdminProfilePicture",
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setProfileImage(data["UserProfilePicture"]);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchImage();
-  }, []);
+  const { profileImage, businessName } = useAppContext();
 
   return (
     <>
@@ -59,13 +33,13 @@ const LeftSidebar = ({ showNavbar, setShowNavbar }) => {
             }
           >
             <img
-              src={selectedImage || `data:image/*;base64,${profileImage}`}
+              src={profileImage}
               alt="profile"
               className={leftSidebarStyles.profilePictureStyle}
             />
             <div className={leftSidebarStyles.businessInfoStyle}>
               <p className={leftSidebarStyles.businessNameStyle}>
-                {businessName || localStorage.getItem("businessName")}
+                {businessName}
               </p>
             </div>
           </Link>

@@ -18,6 +18,7 @@ import {
 import { Profile, Home } from "./_root/pages";
 import Error from "./helper-components/Error";
 import ImageProvider from "./Providers/AppPovider";
+import SigninForm from "./_auth/forms/SigninForm/SigninForm";
 
 function App() {
   const router = createBrowserRouter([
@@ -35,9 +36,9 @@ function App() {
       children: [
         {
           path: "sign-in",
-          element: <SigninFormPage />,
-          action: signinAction,
-          errorElement: <Error />,
+          element: <SigninForm />,
+          // action: signinAction,
+          // errorElement: <Error />,
         },
         { path: "sign-up", element: <SignupForm /> },
         { path: "business-info", element: <BusinessInfoForm /> },
