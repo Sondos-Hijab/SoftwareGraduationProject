@@ -1,7 +1,7 @@
 import { useState } from "react";
-import logo from "../../../assets/images/logo.png";
+import logo from "../../assets/images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
-import styles from "../Form.module.css";
+import styles from "./Form.module.css";
 import { hasMinLength } from "@/_auth/utils/validation";
 import Modal from "@/helper-components/Modal";
 import { signin } from "@/apis/authRequests";

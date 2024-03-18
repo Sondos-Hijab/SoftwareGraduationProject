@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import LocationForm from "./LocationForm";
 import Modal from "@/helper-components/Modal";
 import styles from "../Form.module.css";
+import { signup } from "@/apis/authRequests";
 const LocationInfoForm = () => {
   //routing variables
   const location = useLocation();
@@ -42,28 +43,12 @@ const LocationInfoForm = () => {
       location: `lat: ${selectedMarker.lat}, lng:${selectedMarker.lng}`,
     };
 
-    async function signupFunction() {
-      const response = await fetch(
-        "http://localhost:3000/RateRelay/user/adminSignup",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(signupInfo),
-        }
-      );
-
-      if (!response.ok) {
-        const errorMessage = await response.json();
-        setModalMessage(
-          "There was a problem signing up: " + errorMessage.error
-        );
+    signup(signupInfo).then((value) => {
+      if (value.error) {
+        setModalMessage("There was a problem signing up: " + value.error);
         setShowModal(true);
       } else navigate("/auth/sign-in");
-    }
-
-    signupFunction();
+    });
   };
 
   return (

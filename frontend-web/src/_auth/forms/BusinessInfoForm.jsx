@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import logo from "../../../assets/images/logo.png";
+import logo from "../../assets/images/logo.png";
+import styles from "./Form.module.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import styles from "../Form.module.css";
 import { hasMinLength } from "@/_auth/utils/validation";
 const BusinessInfoForm = () => {
   //routing variables
