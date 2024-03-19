@@ -109,3 +109,22 @@ export async function resetPassword(resetPasswordInfo) {
     return data;
   }
 }
+
+export async function logout(accessToken) {
+  const response = await fetch("http://localhost:3000/RateRelay/user/logout", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${
+        accessToken || localStorage.getItem("accessToken")
+      }`,
+    },
+  });
+  if (!response.ok) {
+    const errorMessage = await response.json();
+    return errorMessage;
+  } else {
+    const data = await response.json();
+    return data;
+  }
+}

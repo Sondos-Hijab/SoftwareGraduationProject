@@ -6,16 +6,16 @@ import { useAppContext } from "@/Providers/AppPovider";
 import { fetchImage, fetchInfo } from "@/apis/profileAndBusinessInfo";
 
 const RootLayout = () => {
-  const { handleBusinessNameChange, setFetchedImage } = useAppContext();
+  const { handleBusinessNameChange, setFetchedImage , accessToken} = useAppContext();
 
   const [showNavbar, setShowNavbar] = useState(false);
 
   useEffect(() => {
-    fetchImage().then((value) => {
+    fetchImage(accessToken).then((value) => {
       setFetchedImage(`data:image/*;base64,${value}`);
     });
 
-    fetchInfo().then((businessInfo) => {
+    fetchInfo(accessToken).then((businessInfo) => {
       handleBusinessNameChange(businessInfo["name"]);
     });
   }, []);

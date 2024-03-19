@@ -3,8 +3,9 @@ import logo from "../../assets/images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./Form.module.css";
 import { hasMinLength } from "@/_auth/utils/validation";
-import Modal from "@/helper-components/Modal";
+import Modal from "@/helper-components/WarningsErrors/Modal";
 import { signin } from "@/apis/authRequests";
+import { useAppContext } from "@/Providers/AppPovider";
 
 export default function SigninForm({}) {
   const navigate = useNavigate();
@@ -14,6 +15,9 @@ export default function SigninForm({}) {
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [canSubmit, setCanSubmit] = useState(false);
+
+  //app context
+  const { setFetchedAccessToken } = useAppContext();
 
   //modal showing when an error occurs
   const closeModal = () => {
@@ -27,6 +31,7 @@ export default function SigninForm({}) {
         setShowModal(true);
       } else {
         localStorage.setItem("accessToken", response.accessToken);
+        setFetchedAccessToken(response.accessToken);
         navigate("/");
       }
     });

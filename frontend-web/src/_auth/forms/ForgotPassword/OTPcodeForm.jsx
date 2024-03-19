@@ -2,7 +2,7 @@
 import logo from "../../../assets/images/logo.png";
 import styles from "../Form.module.css";
 import { useState } from "react";
-import Modal from "@/helper-components/Modal";
+import Modal from "@/helper-components/WarningsErrors/Modal";
 import { useNavigate } from "react-router-dom";
 
 import {

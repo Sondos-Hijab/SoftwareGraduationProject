@@ -26,8 +26,8 @@ export const leftSidebarLinks = [
   },
   {
     icon: faUpload,
-    route: "/",
-    label: "Add a post",
+    route: "/create-post",
+    label: "Create post",
   },
   {
     icon: faComments,
@@ -38,10 +38,5 @@ export const leftSidebarLinks = [
     icon: faBell,
     route: "/",
     label: "Notifications",
-  },
-  {
-    icon: faRightFromBracket,
-    route: "/",
-    label: "Logout",
   },
 ];
