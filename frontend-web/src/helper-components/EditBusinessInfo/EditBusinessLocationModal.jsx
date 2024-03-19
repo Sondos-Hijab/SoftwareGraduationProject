@@ -1,12 +1,15 @@
-import LocationForm from "@/_auth/forms/LocationInfoForm/LocationForm";
+import LocationForm from "@/helper-components/Location/LocationForm";
 import { updateInfo } from "@/apis/profileAndBusinessInfo";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
+import { useAppContext } from "@/Providers/AppPovider";
 
 const EditBusinessLocationModal = ({ setShowModal, setBusinessLocation }) => {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [error, setError] = useState("");
+
+  const { accessToken } = useAppContext();
 
   // Function to handle map click
   const handleMapClick = (lngLat) => {
@@ -29,7 +32,7 @@ const EditBusinessLocationModal = ({ setShowModal, setBusinessLocation }) => {
       location: coordinatesString,
     };
 
-    updateInfo(location).then((response) => {
+    updateInfo(accessToken, location).then((response) => {
       if (response.error) {
         console.log(errorMessage.error);
       } else {

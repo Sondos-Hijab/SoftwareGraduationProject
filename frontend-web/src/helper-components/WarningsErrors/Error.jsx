@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouteError } from "react-router-dom";
-import errorImage from "../assets/images/error.png";
+import errorImage from "../../assets/images/error.png";
 const Error = () => {
   const error = useRouteError();
 
@@ -17,7 +17,7 @@ const Error = () => {
   }
 
   return (
-    <div className="text-center mt-12">
+    <div className="text-center mt-12 ">
       <img
         src={errorImage}
         alt="error"

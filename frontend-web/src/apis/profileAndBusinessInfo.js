@@ -1,11 +1,11 @@
-export const fetchImage = async () => {
+export const fetchImage = async (accessToken) => {
   try {
-    const accessToken = localStorage.getItem("accessToken");
+    const accessTokenLocalStorage = localStorage.getItem("accessToken");
     const response = await fetch(
       "http://localhost:3000/RateRelay/user/getAdminProfilePicture",
       {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken || accessTokenLocalStorage}`,
         },
       }
     );
@@ -19,14 +19,14 @@ export const fetchImage = async () => {
   }
 };
 
-export const fetchInfo = async () => {
+export const fetchInfo = async (accessToken) => {
   try {
-    const accessToken = localStorage.getItem("accessToken");
+    const accessTokenLocalStorage = localStorage.getItem("accessToken");
     const response = await fetch(
       "http://localhost:3000/RateRelay/user/getAdminProfileInfo",
       {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken || accessTokenLocalStorage}`,
         },
       }
     );
@@ -40,15 +40,15 @@ export const fetchInfo = async () => {
   }
 };
 
-export async function updateInfo(updatedInfo) {
-  const accessToken = localStorage.getItem("accessToken");
+export async function updateInfo(accessToken, updatedInfo) {
+  const accessTokenLocalStorage = localStorage.getItem("accessToken");
   const response = await fetch(
     "http://localhost:3000/RateRelay/user/updateAdminProfile",
     {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${accessToken || accessTokenLocalStorage}`,
       },
       body: JSON.stringify(updatedInfo),
     }

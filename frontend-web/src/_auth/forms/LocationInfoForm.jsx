@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import logo from "../../../assets/images/logo.png";
+import logo from "../../assets/images/logo.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import LocationForm from "./LocationForm";
-import Modal from "@/helper-components/Modal";
-import styles from "../Form.module.css";
+import LocationForm from "@/helper-components/Location/LocationForm";
+import Modal from "@/helper-components/WarningsErrors/Modal";
+import styles from "./Form.module.css";
 import { signup } from "@/apis/authRequests";
 const LocationInfoForm = () => {
   //routing variables

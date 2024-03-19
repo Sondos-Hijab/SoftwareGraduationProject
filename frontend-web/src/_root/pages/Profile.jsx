@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-import LocationView from "@/helper-components/LocationView";
+import LocationView from "@/helper-components/Location/LocationView";
 import { useAppContext } from "@/Providers/AppPovider";
-import EditPhoneNumberModal from "@/helper-components/EditPhoneNumberModal";
-import EditBusinessDescriptionModal from "@/helper-components/EditBusinessDescriptionModel";
-import EditBusinessLocationModal from "@/helper-components/EditBusinessLocationModal";
-import { fetchImage, fetchInfo } from "@/apis/profileAndBusinessInfo";
+import EditPhoneNumberModal from "@/helper-components/EditBusinessInfo/EditPhoneNumberModal";
+import EditBusinessDescriptionModal from "@/helper-components/EditBusinessInfo/EditBusinessDescriptionModel";
+import EditBusinessLocationModal from "@/helper-components/EditBusinessInfo/EditBusinessLocationModal";
+import { fetchInfo } from "@/apis/profileAndBusinessInfo";
 
 const Profile = () => {
   const [businessPhoneNumber, setBusinessPhoneNumber] = useState(0);
@@ -15,7 +15,8 @@ const Profile = () => {
   const [businessCategory, setBusinessCategory] = useState("");
 
   //functionality
-  const { profileImage, handleImageChange, businessName } = useAppContext();
+  const { profileImage, handleImageChange, businessName, accessToken } =
+    useAppContext();
 
   const [showEditPhoneNumberModal, setShowPhoneNumberModal] = useState(false);
   const [
@@ -27,7 +28,7 @@ const Profile = () => {
     useState(false);
 
   useEffect(() => {
-    fetchInfo().then((businessInfo) => {
+    fetchInfo(accessToken).then((businessInfo) => {
       setBusinessDescription(businessInfo["description"]);
       setBusinessPhoneNumber(businessInfo["phoneNumber"]);
       setBusinessCategory(businessInfo["category"]);

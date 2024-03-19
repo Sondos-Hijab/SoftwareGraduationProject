@@ -4,7 +4,24 @@ import { appContext as AppContext } from "@/store/app-context";
 const AppPovider = ({ children }) => {
   const [profileImage, setProfileImage] = useState(null);
   const [businessName, setBusinessName] = useState("");
+  const [accessToken, setAccessToken] = useState("");
 
+  // function to handle business name change => when business name is fetched in root layout
+  function handleBusinessNameChange(name) {
+    setBusinessName(name);
+  }
+
+  // funstion to handle access token changes => after successful sign in
+  function setFetchedAccessToken(fetchedAccessToken) {
+    setAccessToken(fetchedAccessToken);
+  }
+  // funtions to handle image change
+  // when image is fetched in root layout
+  function setFetchedImage(image) {
+    setProfileImage(image);
+  }
+
+  // when image is changed from profile page
   async function handleImageChange(event) {
     const file = event.target.files[0];
 
@@ -38,17 +55,8 @@ const AppPovider = ({ children }) => {
       } catch (error) {
         console.error("Error updating profile picture:", error);
       }
-
       reader.readAsDataURL(file);
     }
-  }
-
-  function setFetchedImage(image) {
-    setProfileImage(image);
-  }
-  function handleBusinessNameChange(name) {
-    localStorage.setItem("businessName", name);
-    setBusinessName(name);
   }
 
   return (
@@ -59,6 +67,8 @@ const AppPovider = ({ children }) => {
         businessName,
         handleBusinessNameChange,
         setFetchedImage,
+        accessToken,
+        setFetchedAccessToken,
       }}
     >
       {children}

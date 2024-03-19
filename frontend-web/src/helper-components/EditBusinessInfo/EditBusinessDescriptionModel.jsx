@@ -1,31 +1,41 @@
+import { useAppContext } from "@/Providers/AppPovider";
 import { hasMinLength } from "@/_auth/utils/validation";
 import { updateInfo } from "@/apis/profileAndBusinessInfo";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 
-const EditPhoneNumberModal = ({
+const EditBusinessDescriptionModal = ({
   setShowModal,
-  businessPhoneNumber,
-  setBusinessPhoneNumber,
+  businessDescription,
+  setBusinessDescription,
 }) => {
-  const [canSubmit, setCanSubmit] = useState(false);
   const [error, setError] = useState("");
 
-  async function handlePhoneChange(event) {
+  const { accessToken } = useAppContext();
+
+  async function handleDescriptionChange(event) {
     event.preventDefault();
 
     const formData = new FormData(event.target);
 
-    const phoneNumberData = {
-      phoneNumber: formData.get("phoneNumber"),
+    if (
+      !formData.get("description") ||
+      !hasMinLength(formData.get("description"), 20)
+    ) {
+      setError("Description can't be less than 20 digits");
+      return;
+    }
+
+    const descriptionData = {
+      description: formData.get("description"),
     };
 
-    updateInfo(phoneNumberData).then((response) => {
+    updateInfo(accessToken, descriptionData).then((response) => {
       if (response.error) {
         console.log(errorMessage.error);
       } else {
-        setBusinessPhoneNumber(formData.get("phoneNumber"));
+        setBusinessDescription(formData.get("description"));
         setShowModal(false);
       }
     });
@@ -43,7 +53,7 @@ const EditPhoneNumberModal = ({
           />
 
           <h1 className="text-center text-xl font-bold text-[#13b6f5] sm:text-3xl">
-            Edit your phone number
+            Edit your Description
           </h1>
 
           <p className="mx-auto mt-4 max-w-md text-center text-gray-500">
@@ -52,7 +62,7 @@ const EditPhoneNumberModal = ({
           </p>
 
           <form
-            onSubmit={handlePhoneChange}
+            onSubmit={handleDescriptionChange}
             className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8 bg-white w-full"
           >
             <p className="text-center text-lg font-medium">
@@ -61,47 +71,33 @@ const EditPhoneNumberModal = ({
 
             <div>
               <label className="text-sm text-gray-400">
-                Current Phone Number
+                Current Description
               </label>
 
               <div>
-                <input
-                  type="number"
+                <textarea
                   className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                  placeholder={businessPhoneNumber}
+                  placeholder={businessDescription}
                   disabled
-                />
+                ></textarea>
               </div>
             </div>
 
             <div>
-              <label className="text-sm text-gray-400">New Phone Number</label>
+              <label className="text-sm text-gray-400">New Description</label>
 
               <div>
-                <input
-                  name="phoneNumber"
-                  type="number"
+                <textarea
+                  name="description"
                   className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                   placeholder="Enter new value"
-                  onChange={(event) => {
-                    if (event.target.value == "") {
-                      setError("");
-                      setCanSubmit(false);
-                    } else if (!hasMinLength(event.target.value, 7)) {
-                      setError("Phone number can't be less than 7 digits");
-                      setCanSubmit(false);
-                    } else {
-                      setError("");
-                      setCanSubmit(true);
-                    }
-                  }}
-                />
+                ></textarea>
               </div>
             </div>
             {error && <p className="text-[#d90429]">{error}</p>}
+
             <button
               type="submit"
-              disabled={!canSubmit}
               className="block w-full rounded-lg bg-[#13b6f5] px-5 py-3 text-sm font-medium text-white"
             >
               Submit changes
@@ -113,4 +109,4 @@ const EditPhoneNumberModal = ({
   );
 };
 
-export default EditPhoneNumberModal;
+export default EditBusinessDescriptionModal;

@@ -1,7 +1,7 @@
 import logo from "../../../assets/images/logo.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Modal from "@/helper-components/Modal";
+import Modal from "@/helper-components/WarningsErrors/Modal";
 import styles from "../Form.module.css";
 import { hasMinLength, isEqualsToOtherValue } from "@/_auth/utils/validation";
 import { resetPassword } from "@/apis/authRequests";

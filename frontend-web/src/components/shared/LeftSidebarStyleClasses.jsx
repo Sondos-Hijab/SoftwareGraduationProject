@@ -5,7 +5,7 @@ export const leftSidebarStyles = {
   profileAndLogoLinkStyle: "flex gap-3 items-center",
 
   linkStyle:
-    "group text-lg font-semibold tracking-wide text-slate-600 rounded-lg hover:bg-[#13b6f5] hover:text-white py-3 px-3",
+    "group text-lg font-semibold tracking-wide text-slate-600 rounded-lg hover:bg-[#13b6f5] hover:text-white py-3 px-3 cursor-pointer",
   iconStyle: "text-[#13b6f5] mr-3 group-hover:text-white",
 
   businessNameStyle: "text-[18px] font-bold leading-[140%] text-[#0db783]",

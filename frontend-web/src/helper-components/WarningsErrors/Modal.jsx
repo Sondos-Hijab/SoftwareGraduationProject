@@ -1,6 +1,5 @@
 import React from "react";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
-
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const Modal = ({ title, message, onClose }) => {
