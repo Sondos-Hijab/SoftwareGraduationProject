@@ -11,7 +11,7 @@ import {
   ResetPasswordForm,
   EmailConfirmationForm,
 } from "./_auth/forms";
-import { Profile, Home, CreatePost, PostPage } from "./_root/pages";
+import { Profile, Home, CreatePost, PostPage, Posts } from "./_root/pages";
 import Error from "./helper-components/WarningsErrors/Error";
 import AppPovider from "./Providers/AppPovider";
 
@@ -25,6 +25,7 @@ function App() {
         { path: "profile", element: <Profile /> },
         { path: "create-post", element: <CreatePost /> },
         { path: "post", element: <PostPage /> },
+        { path: "posts", element: <Posts /> },
       ],
     },
     {
