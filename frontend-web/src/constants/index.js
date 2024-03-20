@@ -21,7 +21,7 @@ export const leftSidebarLinks = [
   },
   {
     icon: faImage,
-    route: "/",
+    route: "/posts",
     label: "My Posts",
   },
   {
