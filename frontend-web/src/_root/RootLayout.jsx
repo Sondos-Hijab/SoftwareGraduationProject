@@ -17,6 +17,7 @@ const RootLayout = () => {
 
     fetchInfo(accessToken).then((businessInfo) => {
       handleBusinessNameChange(businessInfo["name"]);
+      localStorage.setItem("businessName",businessInfo["name"]);
     });
   }, []);
 
