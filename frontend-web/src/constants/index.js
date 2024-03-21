@@ -3,7 +3,7 @@ import {
   faComments,
   faHouse,
   faImage,
-  faRightFromBracket,
+  faUsers,
   faTableColumns,
   faUpload,
 } from "@fortawesome/free-solid-svg-icons";
@@ -28,6 +28,11 @@ export const leftSidebarLinks = [
     icon: faUpload,
     route: "/create-post",
     label: "Create post",
+  },
+  {
+    icon: faUsers,
+    route: "/",
+    label: "Followers",
   },
   {
     icon: faComments,
