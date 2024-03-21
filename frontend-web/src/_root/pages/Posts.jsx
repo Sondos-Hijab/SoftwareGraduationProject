@@ -34,23 +34,28 @@ const Posts = () => {
           My Posts
         </h2>
         {posts &&
-          posts.map((post) => {
-            let url;
-            if (post.picture) {
-              const byteArray = new Uint8Array(post.picture.data);
-              const blob = new Blob([byteArray], { type: "image/*" });
-              url = URL.createObjectURL(blob);
-            }
-            return (
-              <PostCard
-                key={post.postID}
-                description={post.description}
-                createdAt={post.created_at}
-                picture={url}
-                postID={post.postID}
-              />
-            );
-          })}
+          posts
+            .slice()
+            .sort((a, b) => {
+              return new Date(b.created_at) - new Date(a.created_at);
+            })
+            .map((post) => {
+              let url;
+              if (post.picture) {
+                const byteArray = new Uint8Array(post.picture.data);
+                const blob = new Blob([byteArray], { type: "image/*" });
+                url = URL.createObjectURL(blob);
+              }
+              return (
+                <PostCard
+                  key={post.postID}
+                  description={post.description}
+                  createdAt={post.created_at}
+                  picture={url}
+                  postID={post.postID}
+                />
+              );
+            })}
       </div>
       {showModal && (
         <Modal
