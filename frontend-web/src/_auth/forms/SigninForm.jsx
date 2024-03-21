@@ -31,6 +31,11 @@ export default function SigninForm({}) {
         setShowModal(true);
       } else {
         localStorage.setItem("accessToken", response.accessToken);
+        const currentDate = new Date();
+        // Add 24 hours to the current date
+        const expirationDate = new Date(currentDate);
+        expirationDate.setHours(expirationDate.getHours() + 24);
+        localStorage.setItem("expireDate", expirationDate);
         setFetchedAccessToken(response.accessToken);
         navigate("/");
       }
