@@ -1,4 +1,4 @@
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisVertical, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import userPicture from "@/assets/images/user.jpg";
 import React from "react";
@@ -6,10 +6,10 @@ import React from "react";
 const FeedbackCard = () => {
   return (
     <>
-      <div className="mb-4 block rounded-lg p-4 shadow-md shadow-gray-200">
+      <div className="mb-4 block rounded-lg p-4 shadow-md shadow-gray-200 ">
         <div className="mt-2">
           <dl>
-            <div>
+            <div className="flex justify-between">
               <dt className="sr-only">Username</dt>
               <dd className="flex font-medium text-customGreen">
                 <img
@@ -18,6 +18,12 @@ const FeedbackCard = () => {
                 />
                 <p className="flex flex-wrap content-center ml-2">Username</p>
               </dd>
+              <button
+                type="button"
+                className=" text-white self-center sm:font-semibold text-sm h-3/4 px-1 sm:px-4 rounded-3xl py-2 justify-self-end bg-customGreen inline-flex items-center justify-center cursor-pointer"
+              >
+                Send a message
+              </button>
             </div>
           </dl>
 
@@ -40,7 +46,7 @@ const FeedbackCard = () => {
             </div>
           </dl>
 
-          <div className="mt-6 flex items-center gap-8 text-xs">
+          <div className="mt-6 flex flex-wrap justify-start gap-8 text-xs flex-col sm:flex-row sm:justify-around ">
             <div className="sm:inline-flex sm:shrink-0 sm:items-center sm:gap-2">
               <FontAwesomeIcon
                 className="text-customYellow text-lg"

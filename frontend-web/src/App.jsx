@@ -15,7 +15,14 @@ import {
   ResetPasswordForm,
   EmailConfirmationForm,
 } from "./_auth/forms";
-import { Profile, Home, CreatePost, Posts } from "./_root/pages";
+import {
+  Profile,
+  Home,
+  CreatePost,
+  Posts,
+  FeedbackPage,
+  Chatting,
+} from "./_root/pages";
 import Error from "./helper-components/WarningsErrors/Error";
 import AppPovider from "./Providers/AppPovider";
 
@@ -29,7 +36,12 @@ function App() {
         { path: "profile", element: <Profile /> },
         { path: "create-post", element: <CreatePost /> },
         { path: "posts", element: <Posts /> },
+        { path: "feedback/:id", element: <FeedbackPage /> },
       ],
+    },
+    {
+      path: "chatting",
+      element: <Chatting />,
     },
     {
       path: "/auth",

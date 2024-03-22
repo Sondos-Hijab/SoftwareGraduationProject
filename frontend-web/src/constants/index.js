@@ -29,11 +29,7 @@ export const leftSidebarLinks = [
     route: "/create-post",
     label: "Create post",
   },
-  {
-    icon: faUsers,
-    route: "/",
-    label: "Followers",
-  },
+
   {
     icon: faComments,
     route: "/",

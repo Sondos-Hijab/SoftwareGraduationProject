@@ -1,6 +1,6 @@
 export const leftSidebarStyles = {
   navStyle:
-    "hidden sticky top-0 md:flex px-6 py-10 flex-col justify-between min-w-[270px] bg-slate-100 h-full",
+    "hidden bg-scroll sticky top-0 md:flex px-6 py-10 flex-col justify-between min-w-[270px] bg-slate-100 h-full",
 
   profileAndLogoLinkStyle: "flex gap-3 items-center",
 
