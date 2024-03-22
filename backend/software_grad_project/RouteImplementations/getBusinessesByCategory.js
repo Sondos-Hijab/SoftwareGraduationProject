@@ -18,13 +18,6 @@ const getBusinessesByCategory = async (req, res) => {
     // Select only required columns 'name' and 'picture'
     const businesses = await queryAsync('SELECT name, picture FROM business WHERE category = ?', [category]);
 
-    if (businesses.length === 0) {
-      return res.status(404).json({
-        error: `No businesses found for the specified category '${category}'`,
-        statusCode: '404',
-      });
-    }
-
     return res.status(200).json({
       businesses,
       message: 'Businesses retrieved successfully',
