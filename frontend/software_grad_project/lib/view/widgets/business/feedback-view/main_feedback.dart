@@ -1,19 +1,19 @@
-import 'dart:io';
-
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:software_grad_project/view/widgets/business/feedback-view/feedback-image.dart';
 import 'package:software_grad_project/view/widgets/business/feedback-view/feedback_info.dart';
 import 'package:software_grad_project/view/widgets/business/feedback-view/user_info.dart';
 
 class MainFeedbackWidget extends StatelessWidget {
-  final File? userImage;
+  final Uint8List? userImage;
   final String username;
-  final File? feedbackImage;
+  final Uint8List? feedbackImage;
   final String busineessName;
   final String feedbackText;
-  final int customerServiceRating;
-  final int valueOfMoneyRating;
-  final int productQualityRating;
+  final double customerServiceRating;
+  final double valueOfMoneyRating;
+  final double productQualityRating;
+  final String createdAt;
 
   const MainFeedbackWidget(
       {super.key,
@@ -24,7 +24,8 @@ class MainFeedbackWidget extends StatelessWidget {
       required this.customerServiceRating,
       required this.valueOfMoneyRating,
       required this.productQualityRating,
-      required this.feedbackText});
+      required this.feedbackText,
+      required this.createdAt});
 
   @override
   Widget build(BuildContext context) {
@@ -53,11 +54,13 @@ class MainFeedbackWidget extends StatelessWidget {
             UserInfo(userImage: userImage, username: username),
             FeedbackImage(feedbackImage: feedbackImage),
             FeedbackInfo(
-                busineessName: busineessName,
-                feedbackText: feedbackText,
-                customerServiceRating: customerServiceRating,
-                valueOfMoneyRating: valueOfMoneyRating,
-                productQualityRating: productQualityRating)
+              busineessName: busineessName,
+              feedbackText: feedbackText,
+              customerServiceRating: customerServiceRating,
+              valueOfMoneyRating: valueOfMoneyRating,
+              productQualityRating: productQualityRating,
+              createdAt: createdAt,
+            )
           ],
         ),
       ),

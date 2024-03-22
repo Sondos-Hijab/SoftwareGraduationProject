@@ -92,7 +92,9 @@ class BusinessPage extends StatelessWidget {
                     controller.goToAddFeedbackPage();
                   },
                 ),
-                const BusinessFeedback(),
+                BusinessFeedback(
+                  businessFeedback: controller.businessFeedback,
+                ),
                 BusinessPosts(
                   businessImage: controller.businessImage,
                   businessesPosts: controller.businessesPosts,

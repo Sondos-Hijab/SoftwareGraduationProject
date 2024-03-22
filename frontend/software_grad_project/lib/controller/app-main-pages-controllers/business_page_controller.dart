@@ -1,19 +1,21 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:software_grad_project/core/classes/status_request.dart';
 import 'package:software_grad_project/core/constants/routes_names.dart';
+import 'package:software_grad_project/core/functions/convert_data_to_file.dart';
 import 'package:software_grad_project/core/functions/handling_data_function.dart';
 import 'package:software_grad_project/core/services/service.dart';
+import 'package:software_grad_project/data/datasource/remote/business-page/business_feedback_datasource.dart';
 import 'package:software_grad_project/data/datasource/remote/business-page/posts_datasource.dart';
+import 'package:software_grad_project/data/model/fetched_feedback_model.dart';
 import 'package:software_grad_project/data/model/fetched_post_model.dart';
 
 abstract class BusinessPagesController extends GetxController {
   getPosts(String businessName);
+  getFeedback(String businessName);
   pressFollowUnfollow();
   goToAddFeedbackPage();
 }
@@ -28,14 +30,15 @@ class BusinessPagesControllerImp extends BusinessPagesController {
   final Completer<GoogleMapController> gmController =
       Completer<GoogleMapController>();
 
-  StatusRequest? statusRequest;
-
   final myServices = Get.find<MyServices>();
 
   BusinessPostsDataSource businessPostsDatasource =
       BusinessPostsDataSource(Get.find());
+  BusinessFeedbackDataSource businessFeedbackDatasource =
+      BusinessFeedbackDataSource(Get.find());
 
   List<FetchedPostModel>? businessesPosts = [];
+  List<FetchedFeedbackModel>? businessFeedback = [];
 
   List<Marker> markers = [
     const Marker(
@@ -55,6 +58,7 @@ class BusinessPagesControllerImp extends BusinessPagesController {
     businessName = arguments['businessName'];
     businessImage = arguments['businessImage'];
     getPosts(businessName!);
+    getFeedback(businessName!);
     super.onInit();
   }
 
@@ -65,7 +69,7 @@ class BusinessPagesControllerImp extends BusinessPagesController {
 
   @override
   getPosts(String businessName) async {
-    statusRequest = StatusRequest.loading;
+    StatusRequest? statusRequest = StatusRequest.loading;
     String? accessToken = myServices.sharedPreferences.getString("accessToken");
 
     var response = await businessPostsDatasource.getDataWithAuthorization(
@@ -82,10 +86,48 @@ class BusinessPagesControllerImp extends BusinessPagesController {
             post['admin_id'],
             post['name'],
             post['description'],
-            _convertDataToFile(post['picture']),
+            convertDataToFile(post['picture']),
             post['created_at'],
           );
         }).toList();
+      } else {
+        Get.defaultDialog(
+            title: "Error", middleText: "We are sorry, something went wrong");
+      }
+      update();
+    }
+  }
+
+  @override
+  getFeedback(String businessName) async {
+    StatusRequest? statusRequest = StatusRequest.loading;
+    String? accessToken = myServices.sharedPreferences.getString("accessToken");
+
+    var response = await businessFeedbackDatasource.getDataWithAuthorization(
+        accessToken!, businessName);
+
+    statusRequest = handlingData(response);
+    if (StatusRequest.success == statusRequest) {
+      if (response['statusCode'] == "200") {
+        List<dynamic> feedback = response['feedback'];
+        businessFeedback = feedback.map((feed) {
+          return FetchedFeedbackModel(
+            feed['feedbackID'],
+            feed['user_id'],
+            feed['admin_id'],
+            feed['businessName'],
+            feed['userName'],
+            feed['text'],
+            convertDataToFile(feed['picture']),
+            feed['rate1'].toDouble(),
+            feed['rate2'].toDouble(),
+            feed['rate3'].toDouble(),
+            feed['created_at'],
+            convertDataToFile(feed['userProfilePicture']),
+          );
+        }).toList();
+        print("/////////////////////////////////////////");
+        print(businessFeedback);
       } else {
         Get.defaultDialog(
             title: "Error", middleText: "We are sorry, something went wrong");
@@ -104,24 +146,4 @@ class BusinessPagesControllerImp extends BusinessPagesController {
   goToAddFeedbackPage() {
     Get.toNamed(AppRoutes.feedbackFormPage, arguments: businessName);
   }
-}
-
-Uint8List? _convertDataToFile(Map<String, dynamic>? pictureData) {
-  if (pictureData != null && pictureData.containsKey('data')) {
-    var data = pictureData['data'];
-    if (data is List<dynamic>) {
-      try {
-        Uint8List bytes = Uint8List.fromList(data.cast<int>());
-        // print(bytes);
-        return bytes;
-      } catch (e) {
-        print("Error creating file: $e");
-        return null;
-      }
-    } else {
-      print('Error: Picture data is not a list of integers');
-      return null;
-    }
-  }
-  return null;
 }
