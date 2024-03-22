@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
 
 class FeedbackDescriptionTextArea extends StatelessWidget {
-  const FeedbackDescriptionTextArea({super.key});
+  final TextEditingController feedbackTextEditingController;
+
+  const FeedbackDescriptionTextArea(
+      {super.key, required this.feedbackTextEditingController});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +14,7 @@ class FeedbackDescriptionTextArea extends StatelessWidget {
       child: TextFormField(
         maxLines: 5,
         // validator: valid,
-        // controller: mycontroller,
+        controller: feedbackTextEditingController,
         decoration: InputDecoration(
           hintText: "Write your feedback here",
           hintStyle: const TextStyle(fontSize: 16, color: AppColors.lightGrey),

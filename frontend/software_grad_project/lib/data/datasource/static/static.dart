@@ -2,6 +2,7 @@ import 'package:intl/intl.dart';
 import 'package:software_grad_project/core/constants/images_assets.dart';
 import 'package:software_grad_project/data/model/businesses_info_model.dart';
 import 'package:software_grad_project/data/model/feedback_model.dart';
+import 'package:software_grad_project/data/model/follower_model.dart';
 import 'package:software_grad_project/data/model/notification_item_model.dart';
 import 'package:software_grad_project/data/model/onboarding_screens_model.dart';
 import 'package:software_grad_project/data/model/posts_model.dart';
@@ -31,6 +32,14 @@ List categoriesPictures = [
   AppImageAssets.devicesCategory,
   AppImageAssets.restaurantCategory
 ];
+
+Map<int, String> categoriesMapping = {
+  0: "gym",
+  1: "beauty",
+  2: "clothes",
+  3: "devices",
+  4: "restaurants",
+};
 
 List<FeedbackModel> feedbackData = [
   FeedbackModel(
@@ -267,4 +276,22 @@ final List<NotificationItem> notifications = [
     username: 'business2',
     time: '1 hour ago',
   ),
+];
+
+List<FollowerViewModel> followers = [
+  FollowerViewModel("Follower 1", null),
+  FollowerViewModel("Follower 2", null),
+  FollowerViewModel("Follower 3", null),
+  FollowerViewModel("Follower 4", null),
+  FollowerViewModel("Follower 5", null),
+  FollowerViewModel("Follower 1", null),
+  FollowerViewModel("Follower 2", null),
+  FollowerViewModel("Follower 3", null),
+  FollowerViewModel("Follower 4", null),
+  FollowerViewModel("Follower 5", null),
+  FollowerViewModel("Follower 1", null),
+  FollowerViewModel("Follower 2", null),
+  FollowerViewModel("Follower 3", null),
+  FollowerViewModel("Follower 4", null),
+  FollowerViewModel("Follower 5", null)
 ];

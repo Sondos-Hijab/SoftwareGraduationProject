@@ -1,6 +1,6 @@
 class AppLink {
   //Server link
-  static const String server = "http://192.168.1.2:3000/RateRelay";
+  static const String server = "http://192.168.1.49:3000/RateRelay";
   //Authentication links
   static const String signupLink = "$server/user/signup";
   static const String loginLink = "$server/user/login";
@@ -18,11 +18,20 @@ class AppLink {
   static const String getUserPictureLink = "$server/user/getUserProfilePicture";
 
   //business page
+  static const String getBusinessBySearchLink =
+      "$server/user/getBusinessesBySearch";
+  static const String getBusinessesByCategoryLink =
+      "$server/user/getBusinessesByCategory";
+  static const String getBusinessByNameLink =
+      "$server/user/getBusinessesByName";
   static const String getBusinessPostsLink = "$server/user/getPost";
 
   //checking access token
   static const String checkAccessTokenLink =
       "$server/user/checkAuthenticateToken";
+
+  //feedback
+  static const String addFeedbackLink = "$server/user/addFeedback";
 
   //Test
   static const String test = "https://jsonplaceholder.typicode.com/posts/1";

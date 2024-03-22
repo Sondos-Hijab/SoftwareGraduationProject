@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/get_instance.dart';
 import 'package:software_grad_project/controller/app-main-pages-controllers/search_page_controller.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
-import 'package:software_grad_project/data/datasource/static/static.dart';
 import 'package:software_grad_project/view/widgets/home-page/business-view/business_view.dart';
 import 'package:software_grad_project/view/widgets/search-page/custome_app_bar.dart';
 
@@ -28,7 +25,7 @@ class SearchPage extends StatelessWidget {
         return ListView(
           children: [
             Container(
-              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               child: CustomAppBar(
                 titleappbar: "Search for a business",
                 searchController: controller.searchText,
@@ -41,23 +38,23 @@ class SearchPage extends StatelessWidget {
               ),
             ),
             controller.isSearch != null && controller.isSearch!
-                ? Container(
-                    child: Column(
-                      children: List.generate(
-                        businessViewList.length,
-                        (index) => BusinessViewItem(
-                          index: index,
-                          onTap: () {
-                            controller.goToBusinessPage(
-                                businessViewList[index].businessName!);
-                          },
-                        ),
+                ? Column(
+                    children: List.generate(
+                      controller.businessesList!.length,
+                      (index) => BusinessViewItem(
+                        businessName:
+                            controller.businessesList![index].businessName,
+                        picture: controller.businessesList![index].picture,
+                        onTap: () {
+                          controller.goToBusinessPage(
+                              controller.businessesList![index].businessName!);
+                        },
                       ),
                     ),
                   )
                 : Container(
-                    margin: EdgeInsets.all(20),
-                    child: Text(
+                    margin: const EdgeInsets.all(20),
+                    child: const Text(
                         "Results of your search will appear here when you click the search button above.")),
           ],
         );

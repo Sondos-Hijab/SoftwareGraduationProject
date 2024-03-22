@@ -62,3 +62,22 @@ CREATE TABLE `post` (
   KEY `admin_id` (`admin_id`),
   CONSTRAINT `post_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `business` (`adminID`)
 )
+
+CREATE TABLE `feedback` (
+  `feedbackID` int NOT NULL AUTO_INCREMENT,
+  `userName` varchar(800) NOT NULL,
+  `user_id` int NOT NULL,
+  `businessName` varchar(800) NOT NULL,
+  `admin_id` int NOT NULL,
+  `text` varchar(2000) NOT NULL,
+  `picture` blob,
+  `rate1` float DEFAULT NULL,
+  `rate2` float DEFAULT NULL,
+  `rate3` float DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`feedbackID`),
+  KEY `fk_user_id` (`user_id`),
+  KEY `fk_admin_id` (`admin_id`),
+  CONSTRAINT `fk_admin_id` FOREIGN KEY (`admin_id`) REFERENCES `business` (`adminID`) ON DELETE CASCADE,
+  CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`userID`) ON DELETE CASCADE
+) 

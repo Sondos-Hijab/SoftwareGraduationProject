@@ -1,7 +1,5 @@
 import 'package:get/get.dart';
 import 'package:software_grad_project/core/middleware/middleware.dart';
-import 'package:software_grad_project/test-widgets-screens-controllers/image_widget.dart';
-import 'package:software_grad_project/test-widgets-screens-controllers/testwidget.dart';
 import 'package:software_grad_project/view/screens/app-main-pages/business_page.dart';
 import 'package:software_grad_project/view/screens/app-main-pages/chatting-system-pages/specefic_chat_page.dart';
 import 'package:software_grad_project/view/screens/app-main-pages/feedback_form_page.dart';

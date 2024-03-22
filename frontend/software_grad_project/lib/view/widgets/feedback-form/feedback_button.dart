@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
 
 class FeedbackFormButton extends StatelessWidget {
-  const FeedbackFormButton({super.key});
+  final void Function() onPressed;
+  const FeedbackFormButton({super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,7 @@ class FeedbackFormButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 12),
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20))),
-        onPressed: () {},
+        onPressed: onPressed,
         color: AppColors.primaryBlue,
         textColor: Colors.white,
         child: const Text(

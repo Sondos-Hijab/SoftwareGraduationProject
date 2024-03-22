@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import logo from "../../assets/images/logo.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import LocationForm from "./LocationForm";
-import Modal from "@/helper-components/Modal";
-import styles from "./LocationInfoForm.module.css";
+import LocationForm from "@/helper-components/Location/LocationForm";
+import Modal from "@/helper-components/WarningsErrors/Modal";
+import styles from "./Form.module.css";
+import { signup } from "@/apis/authRequests";
 const LocationInfoForm = () => {
   //routing variables
   const location = useLocation();
@@ -18,8 +19,8 @@ const LocationInfoForm = () => {
 
   // Function to handle map click
   const handleMapClick = (lngLat) => {
-    console.log(lngLat.detail.latLng);
-    setSelectedMarker(lngLat.detail.latLng);
+    console.log(lngLat);
+    setSelectedMarker(lngLat);
   };
 
   //modal showing when an error occurs
@@ -37,31 +38,17 @@ const LocationInfoForm = () => {
       return;
     }
 
-    const dataToSubmit = {
+    const signupInfo = {
       ...userAndBusinessEnteredData,
       location: `lat: ${selectedMarker.lat}, lng:${selectedMarker.lng}`,
     };
-    fetch("http://localhost:3000/RateRelay/user/adminSignup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(dataToSubmit),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        if (data.statusCode == "409") {
-          throw new Error(data.error);
-        } else if (data.statusCode == "201") {
-          navigate("/sign-in");
-        }
-      })
-      .catch((error) => {
-        setModalMessage("There was a problem signing up: " + error.message);
+
+    signup(signupInfo).then((value) => {
+      if (value.error) {
+        setModalMessage("There was a problem signing up: " + value.error);
         setShowModal(true);
-      });
+      } else navigate("/auth/sign-in");
+    });
   };
 
   return (
@@ -69,7 +56,7 @@ const LocationInfoForm = () => {
       <div className={styles["form-container"]}>
         <div className={styles["header-info-container"]}>
           <img src={logo} alt="RateRelay" />
-          <h2>Enter you business's location</h2>
+          <h2>Enter your business location</h2>
         </div>
 
         <div className={styles["form-container"]}>
@@ -77,6 +64,7 @@ const LocationInfoForm = () => {
             <LocationForm
               handleMapClick={handleMapClick}
               selectedMarker={selectedMarker}
+              width={"500px"}
             />
 
             {error && <p className={styles.error}>{error}</p>}
@@ -91,15 +79,21 @@ const LocationInfoForm = () => {
           </form>
 
           <p className={styles["paragraph-text"]}>
-            Already have an account?
-            <Link to="/sign-in" className={styles["link-text"]}>
+            Already have an account?{" "}
+            <Link to="/auth/sign-in" className={styles["link-text"]}>
               Go to Sign in
             </Link>
           </p>
         </div>
       </div>
 
-      {showModal && <Modal message={modalMessage} onClose={closeModal} />}
+      {showModal && (
+        <Modal
+          title="Can't Sign Your Business Up"
+          message={modalMessage}
+          onClose={closeModal}
+        />
+      )}
     </>
   );
 };

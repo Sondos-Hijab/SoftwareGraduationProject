@@ -11,6 +11,8 @@ abstract class VerifyCodeController extends GetxController {
 }
 
 class VerifyCodeControllerImp extends VerifyCodeController {
+  String email = "";
+
   StatusRequest? statusRequest;
   VerifyCodeDataSource verifyCodeData = VerifyCodeDataSource(Get.find());
 
@@ -22,10 +24,11 @@ class VerifyCodeControllerImp extends VerifyCodeController {
     String? tempAccessToken =
         myServices.sharedPreferences.getString("tempAccessToken");
 
-    var response = await verifyCodeData.getDataWithAuthorization(
+    var response = await verifyCodeData.postDataWithAuthorization(
         tempAccessToken!, verifyCode);
 
     statusRequest = handlingData(response);
+
     if (StatusRequest.success == statusRequest) {
       if (response['statusCode'] == "200") {
         Get.offNamed(AppRoutes.resetPassword);
@@ -42,7 +45,7 @@ class VerifyCodeControllerImp extends VerifyCodeController {
             middleText: "We are sorry, something went wrong, try again later.");
       }
       update();
-    } 
+    }
   }
 
   @override
@@ -51,5 +54,7 @@ class VerifyCodeControllerImp extends VerifyCodeController {
   @override
   void onInit() {
     super.onInit();
+    final params = Get.parameters;
+    email = params['email']!;
   }
 }

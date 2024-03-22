@@ -28,7 +28,7 @@ class ForgotPasswordControllerImp extends ForgotPasswordController {
         if (response['statusCode'] == "200") {
           await myServices.sharedPreferences
               .setString("tempAccessToken", response['tempAccessToken']);
-          Get.offNamed(AppRoutes.verifyCode);
+          Get.offNamed(AppRoutes.verifyCode, parameters: {'email': email.text});
         } else if (response['statusCode'] == "404") {
           Get.defaultDialog(title: "Warning", middleText: response['error']);
         } else {
@@ -39,7 +39,7 @@ class ForgotPasswordControllerImp extends ForgotPasswordController {
         }
       }
       update();
-    } 
+    }
   }
 
   @override

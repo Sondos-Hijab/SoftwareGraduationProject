@@ -1,63 +1,46 @@
 import { useState } from "react";
 import logo from "../../assets/images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
-import Modal from "@/helper-components/Modal";
-import styles from "./SigninForm.module.css";
-export default function SigninForm() {
-  //routing variables
-  const navigate = useNavigate();
+import styles from "./Form.module.css";
+import { hasMinLength } from "@/_auth/utils/validation";
+import Modal from "@/helper-components/WarningsErrors/Modal";
+import { signin } from "@/apis/authRequests";
+import { useAppContext } from "@/Providers/AppPovider";
 
-  //state management
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+export default function SigninForm({}) {
+  const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+  //state management and validation
+  const [usernameError, setUsernameError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [canSubmit, setCanSubmit] = useState(false);
+
+  //app context
+  const { setFetchedAccessToken } = useAppContext();
 
   //modal showing when an error occurs
   const closeModal = () => {
     setShowModal(false);
   };
 
-  //handling when clicking the sign in button
-  const handleSigninData = (event) => {
-    event.preventDefault();
-
-    // Basic validation
-    if (!userName || !password) {
-      setError("Please fill all the fields.");
-      return;
-    }
-
-    const dataToSubmit = {
-      adminName: userName,
-      password: password,
-    };
-
-    fetch("http://localhost:3000/RateRelay/user/adminLogin", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(dataToSubmit),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        if (data.statusCode == "401" || data.statusCode == "404") {
-          throw new Error(data.error);
-        } else if (data.statusCode == "200") {
-          //i need to store access token data.accessToken , and username
-          console.log(data.accessToken);
-          navigate("/");
-        }
-      })
-      .catch((error) => {
-        setModalMessage("There was a problem signing up: " + error.message);
+  async function submitSigninData(event) {
+    signin(event).then((response) => {
+      if (response.error) {
+        setModalMessage("There was a problem signing in: " + response.error);
         setShowModal(true);
-      });
-  };
+      } else {
+        localStorage.setItem("accessToken", response.accessToken);
+        const currentDate = new Date();
+        // Add 24 hours to the current date
+        const expirationDate = new Date(currentDate);
+        expirationDate.setHours(expirationDate.getHours() + 24);
+        localStorage.setItem("expireDate", expirationDate);
+        setFetchedAccessToken(response.accessToken);
+        navigate("/");
+      }
+    });
+  }
 
   return (
     <>
@@ -68,7 +51,7 @@ export default function SigninForm() {
         </div>
 
         <div className={styles["form-container"]}>
-          <form className={styles.form} action="#" method="POST">
+          <form className={styles.form} onSubmit={submitSigninData}>
             <div className={styles["input-container"]}>
               <label htmlFor="username">Username</label>
               <div>
@@ -78,10 +61,22 @@ export default function SigninForm() {
                   type="text"
                   required
                   onChange={(event) => {
-                    setUserName(event.target.value);
+                    if (event.target.value == "") {
+                      setUsernameError("");
+                      setCanSubmit(false);
+                    } else if (!hasMinLength(event.target.value, 5)) {
+                      setUsernameError(
+                        "Username should be at least 5 characters"
+                      );
+                      setCanSubmit(false);
+                    } else {
+                      setUsernameError("");
+                      setCanSubmit(true);
+                    }
                   }}
                 />
               </div>
+              {usernameError && <p className={styles.error}>{usernameError}</p>}
             </div>
 
             <div className={styles["input-container"]}>
@@ -93,22 +88,33 @@ export default function SigninForm() {
                   type="password"
                   required
                   onChange={(event) => {
-                    setPassword(event.target.value);
+                    if (event.target.value == "") {
+                      setPasswordError("");
+                      setCanSubmit(false);
+                    } else if (!hasMinLength(event.target.value, 6)) {
+                      setPasswordError(
+                        "Password should be at least 6 characters"
+                      );
+                      setCanSubmit(false);
+                    } else {
+                      setPasswordError("");
+                      setCanSubmit(true);
+                    }
                   }}
                 />
               </div>
+              {passwordError && <p className={styles.error}>{passwordError}</p>}
             </div>
 
             <div className={styles["flex-end"]}>
-              <Link to="/confirm-email" className={styles["link-text"]}>
+              <Link to="/auth/confirm-email" className={styles["link-text"]}>
                 Forgot password?
               </Link>
             </div>
-            {error && <p className={styles.error}>{error}</p>}
 
             <button
+              disabled={!canSubmit}
               type="submit"
-              onClick={handleSigninData}
               className={styles.button}
             >
               Sign in
@@ -117,15 +123,24 @@ export default function SigninForm() {
 
           <p className={styles["paragraph-text"]}>
             Not a member?
-            <Link to="/sign-up" className={styles["link-text"]}>
+            <Link
+              to="/auth/sign-up"
+              relative="route"
+              className={styles["link-text"]}
+            >
               {" "}
               Go to Sign up
             </Link>
           </p>
         </div>
       </div>
-
-      {showModal && <Modal message={modalMessage} onClose={closeModal} />}
+      {showModal && (
+        <Modal
+          title="Can't Sign Your Business In"
+          message={modalMessage}
+          onClose={closeModal}
+        />
+      )}
     </>
   );
 }
