@@ -3,7 +3,7 @@ import 'package:software_grad_project/core/constants/colors.dart';
 
 class RatingColumnFeedback extends StatelessWidget {
   final String title;
-  final int rating;
+  final double rating;
   const RatingColumnFeedback(
       {super.key, required this.title, required this.rating});
 

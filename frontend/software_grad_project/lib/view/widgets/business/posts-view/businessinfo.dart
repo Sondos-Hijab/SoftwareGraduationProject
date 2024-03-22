@@ -1,10 +1,11 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
 
 class BusinessInfo extends StatelessWidget {
-  final File? businessImage;
+  final Uint8List? businessImage;
   final String businessName;
   const BusinessInfo(
       {super.key, required this.businessImage, required this.businessName});
@@ -15,8 +16,8 @@ class BusinessInfo extends StatelessWidget {
       children: [
         ClipOval(
           child: businessImage != null
-              ? Image.file(
-                  File(businessImage!.path),
+              ? Image.memory(
+                  businessImage!,
                   width: 50,
                   height: 50,
                   fit: BoxFit.cover,

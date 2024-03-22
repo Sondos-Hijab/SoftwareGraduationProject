@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
+import 'package:software_grad_project/core/constants/images_assets.dart';
 import 'package:software_grad_project/core/constants/routes_names.dart';
 import 'package:software_grad_project/view/widgets/business/business_location.dart';
 
@@ -13,10 +15,10 @@ class BusinessMainInfoWidget extends StatelessWidget {
   final bool isFollowing;
   final List<Marker> markers;
   final CameraPosition businessLocation;
-  final File? businessImage;
+  final Uint8List? businessImage;
   final void Function() onPressFollowing;
   final void Function() onTapAddFeedback;
-  
+
   const BusinessMainInfoWidget(
       {super.key,
       required this.businessImage,
@@ -25,25 +27,30 @@ class BusinessMainInfoWidget extends StatelessWidget {
       required this.businessLocation,
       required this.isFollowing,
       required this.onPressFollowing,
-      required this.businessName, required this.onTapAddFeedback});
+      required this.businessName,
+      required this.onTapAddFeedback});
 
   @override
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        CircleAvatar(
-          radius: 100,
-          backgroundColor: Colors.transparent,
-          backgroundImage:
-              businessImage != null ? FileImage(businessImage!) : null,
+        Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: AppColors.lightGrey,
+              width: 0.3, // Adjust border width as needed
+            ),
+            shape: BoxShape.circle,
+          ),
           child: businessImage == null
-              ? ClipOval(
-                  child: Image.asset(
-                    "assets/images/coffee_business.jpeg",
-                    fit: BoxFit.cover,
-                  ),
+              ? const CircleAvatar(
+                  radius: 100,
+                  backgroundImage: AssetImage(AppImageAssets.noUserImage),
                 )
-              : null,
+              : CircleAvatar(
+                  radius: 100,
+                  backgroundImage: MemoryImage(businessImage!),
+                ),
         ),
         Container(
           margin: const EdgeInsets.all(20),

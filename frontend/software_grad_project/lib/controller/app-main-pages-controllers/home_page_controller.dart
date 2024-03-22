@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:software_grad_project/core/classes/status_request.dart';
@@ -12,7 +14,7 @@ import 'package:software_grad_project/data/model/businesses_info_model.dart';
 abstract class HomePageController extends GetxController {
   nextPageSlider();
   previousPageSlider();
-  goToBusinessPage(String businessName);
+  goToBusinessPage(String businessName, Uint8List businessImage);
   getBusinessesByCategory(String category);
   setCatagory(String cat);
 }
@@ -48,8 +50,14 @@ class HomePageControllerImp extends HomePageController {
   }
 
   @override
-  goToBusinessPage(String businessName) {
-    Get.toNamed(AppRoutes.businessPage, arguments: businessName);
+  goToBusinessPage(String businessName, Uint8List businessImage) {
+    Get.toNamed(
+      AppRoutes.businessPage,
+      arguments: {
+        'businessName': businessName,
+        'businessImage': businessImage,
+      },
+    );
   }
 
   @override

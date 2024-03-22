@@ -56,7 +56,6 @@ class UserFeedbackControllerImp extends UserFeedbackController {
         accessToken!);
 
     statusRequest = handlingData(response);
-    print(statusRequest);
 
     if (StatusRequest.success == statusRequest) {
       if (response['statusCode'] == "200") {

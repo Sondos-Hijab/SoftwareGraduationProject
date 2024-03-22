@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:software_grad_project/core/classes/status_request.dart';
@@ -12,7 +14,7 @@ abstract class SearchPageController extends GetxController {
   late TextEditingController searchText;
   onSearch();
   checkSearch(value);
-  goToBusinessPage(String businessName);
+  goToBusinessPage(String businessName, Uint8List businessImage);
 }
 
 class SearchPageControllerImp extends SearchPageController {
@@ -86,7 +88,13 @@ class SearchPageControllerImp extends SearchPageController {
   }
 
   @override
-  goToBusinessPage(String businessName) {
-    Get.toNamed(AppRoutes.businessPage, arguments: businessName);
+  goToBusinessPage(String businessName, Uint8List businessImage) {
+    Get.toNamed(
+      AppRoutes.businessPage,
+      arguments: {
+        'businessName': businessName,
+        'businessImage': businessImage,
+      },
+    );
   }
 }

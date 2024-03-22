@@ -24,19 +24,19 @@ class UserFeedbackPage extends StatelessWidget {
         body: GetBuilder<UserFeedbackControllerImp>(builder: (controller) {
           return ListView(
             children: [
-              ...List.generate(
-                feedbackData.length,
-                (index) => MainFeedbackWidget(
-                  userImage: feedbackData[index].userProfileImage,
-                  username: feedbackData[index].username!,
-                  feedbackImage: feedbackData[index].feedbackImage,
-                  busineessName: feedbackData[index].businessName!,
-                  customerServiceRating: feedbackData[index].customerService!,
-                  valueOfMoneyRating: feedbackData[index].valueOfMoney!,
-                  productQualityRating: feedbackData[index].productQuality!,
-                  feedbackText: feedbackData[index].feedbackText!,
-                ),
-              ),
+              // ...List.generate(
+              //   feedbackData.length,
+              //   (index) => MainFeedbackWidget(
+              //     userImage: feedbackData[index].userProfileImage,
+              //     username: feedbackData[index].username!,
+              //     feedbackImage: feedbackData[index].feedbackImage,
+              //     busineessName: feedbackData[index].businessName!,
+              //     customerServiceRating: feedbackData[index].customerService!,
+              //     valueOfMoneyRating: feedbackData[index].valueOfMoney!,
+              //     productQualityRating: feedbackData[index].productQuality!,
+              //     feedbackText: feedbackData[index].feedbackText!,
+              //   ),
+              // ),
             ],
           );
         }));
