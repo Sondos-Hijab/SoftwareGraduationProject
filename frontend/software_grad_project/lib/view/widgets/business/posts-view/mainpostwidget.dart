@@ -8,7 +8,7 @@ import 'package:software_grad_project/view/widgets/business/posts-view/businessi
 import 'package:software_grad_project/view/widgets/business/posts-view/postimage.dart';
 
 class MainPostWidget extends StatelessWidget {
-  final File? businessProfileImage;
+  final Uint8List? businessProfileImage;
   final String? businessName;
   final String? description;
   final Uint8List? picture;

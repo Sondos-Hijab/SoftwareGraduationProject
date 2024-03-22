@@ -22,8 +22,8 @@ class BusinessPagesControllerImp extends BusinessPagesController {
   GlobalKey<ScaffoldState>? scaffoldKey;
   bool isFollowing = false;
 
-  File? businessImage;
   String? businessName;
+  Uint8List? businessImage;
 
   final Completer<GoogleMapController> gmController =
       Completer<GoogleMapController>();
@@ -51,7 +51,9 @@ class BusinessPagesControllerImp extends BusinessPagesController {
   @override
   void onInit() {
     scaffoldKey = GlobalKey();
-    businessName = Get.arguments;
+    var arguments = Get.arguments;
+    businessName = arguments['businessName'];
+    businessImage = arguments['businessImage'];
     getPosts(businessName!);
     super.onInit();
   }
