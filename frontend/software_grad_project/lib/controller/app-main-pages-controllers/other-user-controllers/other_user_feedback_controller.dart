@@ -23,7 +23,6 @@ class OtherUserFeedbackPageControllerImp
   @override
   void onInit() {
     username = Get.arguments['username'];
-    print(username);
     getUserFeedback(username!);
     super.onInit();
   }
@@ -69,4 +68,5 @@ class OtherUserFeedbackPageControllerImp
       update();
     }
   }
+
 }

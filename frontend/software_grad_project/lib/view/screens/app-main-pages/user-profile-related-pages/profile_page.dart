@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:software_grad_project/controller/app-main-pages-controllers/user-profile-realted-controllers/profile_page_controller.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
-import 'package:software_grad_project/core/services/service.dart';
 import 'package:software_grad_project/view/widgets/user-profile/bio_container.dart';
 import 'package:software_grad_project/view/widgets/user-profile/profile_image_container.dart';
 import 'package:software_grad_project/view/widgets/user-profile/profile_quick_link_button.dart';
@@ -12,9 +11,6 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final myServices = Get.find<MyServices>();
-    String? username = myServices.sharedPreferences.getString("username");
-
     Get.put(ProfilePageControllerImp());
     return GetBuilder<ProfilePageControllerImp>(builder: (controller) {
       return Scaffold(
@@ -64,7 +60,7 @@ class ProfilePage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: Text(
-                      username!,
+                      controller.username!,
                       style: const TextStyle(
                           fontSize: 20, color: AppColors.primaryDarkBlue),
                     ),
@@ -85,7 +81,9 @@ class ProfilePage extends StatelessWidget {
                       QuickLinkButton(
                         internalText: "Feedback",
                         iconData: Icons.feedback_outlined,
-                        onTap: () {},
+                        onTap: () {
+                          controller.goToFeedbackPage();
+                        },
                       ),
                       const SizedBox(
                         width: 10,
