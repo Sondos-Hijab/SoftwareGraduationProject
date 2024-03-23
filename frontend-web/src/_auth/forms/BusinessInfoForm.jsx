@@ -155,7 +155,7 @@ const BusinessInfoForm = () => {
           <div className={styles.category}>
             <label>Category</label>
             <div>
-              {["Gyms", "Beauty", "Clothes", "Devices", "Restaurants"].map(
+              {["Gym", "Beauty", "Clothes", "Devices", "Restaurants"].map(
                 (cat) => (
                   <div key={cat} className="flex items-center">
                     <input
