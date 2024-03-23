@@ -33,6 +33,7 @@ class ProfilePageControllerImp extends ProfilePageController {
 
   String? accessToken;
   String? refreshToken;
+  String? username;
 
   StatusRequest? statusRequest;
   LogoutDataSource logoutDataSource = LogoutDataSource(Get.find());
@@ -79,6 +80,7 @@ class ProfilePageControllerImp extends ProfilePageController {
     super.onInit();
     accessToken = myServices.sharedPreferences.getString("accessToken");
     refreshToken = myServices.sharedPreferences.getString("refreshToken");
+    username = myServices.sharedPreferences.getString("username");
     bioController = TextEditingController();
     getBio();
     getProfileImage();
@@ -172,7 +174,7 @@ class ProfilePageControllerImp extends ProfilePageController {
 
   @override
   goToFeedbackPage() {
-    Get.toNamed(AppRoutes.userFeedbackPage);
+    Get.toNamed(AppRoutes.userFeedbackPage, arguments: {'username': username!});
   }
 
   @override
