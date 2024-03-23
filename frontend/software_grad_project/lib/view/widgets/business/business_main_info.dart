@@ -14,7 +14,6 @@ class BusinessMainInfoWidget extends StatelessWidget {
   final Uint8List? businessImage;
 
   final List<Marker>? markers;
-  final CameraPosition? businessLocation;
   final int? phoneNumber;
   final String? category;
   final String? description;
@@ -31,7 +30,6 @@ class BusinessMainInfoWidget extends StatelessWidget {
       required this.businessImage,
       required this.gmController,
       required this.markers,
-      required this.businessLocation,
       required this.isFollowing,
       required this.onPressFollowing,
       required this.businessName,
@@ -179,10 +177,7 @@ class BusinessMainInfoWidget extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              BusinessLocation(
-                  markers: markers,
-                  businessLocation: businessLocation,
-                  gmController: gmController),
+              BusinessLocation(markers: markers!, gmController: gmController),
               const SizedBox(
                 height: 20,
               ),

@@ -74,8 +74,6 @@ class BusinessPage extends StatelessWidget {
                   businessName: controller.businessName!,
                   businessImage: controller.businessImage!,
                   gmController: controller.gmController,
-                  businessLocation:
-                      controller.fetchedBusinessInfo!.cameraPosition,
                   markers: controller.fetchedBusinessInfo!.markers,
                   category: controller.fetchedBusinessInfo!.category,
                   description: controller.fetchedBusinessInfo!.description,
