@@ -21,6 +21,12 @@ class ProfileImageContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(alignment: Alignment.bottomRight, children: [
+      (selectedImageFile == null && otherUserProfileImage == null)
+          ? const CircleAvatar(
+              radius: 120,
+              backgroundImage: AssetImage(AppImageAssets.noUserImage),
+            )
+          : const Text(""),
       (me == true && selectedImageFile != null)
           ? CircleAvatar(
               radius: 120,

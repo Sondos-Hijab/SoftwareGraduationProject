@@ -38,11 +38,14 @@ class FeedbackInfo extends StatelessWidget {
         const SizedBox(
           height: 5,
         ),
-        Row(children: [
-          Text(feedbackText,
-              textAlign: TextAlign.right,
-              style: Theme.of(context).textTheme.bodySmall),
-        ]),
+        Container(
+          child: Text(feedbackText,
+              textAlign: TextAlign.left,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodySmall!
+                  .copyWith(color: AppColors.grey, fontSize: 12)),
+        ),
         const SizedBox(
           height: 5,
         ),
@@ -62,8 +65,16 @@ class FeedbackInfo extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('Date: $date', style: Theme.of(context).textTheme.bodySmall),
-            Text('Time: $time', style: Theme.of(context).textTheme.bodySmall),
+            Text('Date: $date',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall!
+                    .copyWith(color: AppColors.grey, fontSize: 12)),
+            Text('Time: $time',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall!
+                    .copyWith(color: AppColors.grey, fontSize: 12)),
           ],
         ),
       ],
