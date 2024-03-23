@@ -88,6 +88,8 @@ class BusinessPagesControllerImp extends BusinessPagesController {
             post['created_at'],
           );
         }).toList();
+        businessesPosts!.sort((a, b) => DateTime.parse(b.createdAt!)
+            .compareTo(DateTime.parse(a.createdAt!)));
       } else {
         Get.defaultDialog(
             title: "Error", middleText: "We are sorry, something went wrong");
@@ -124,6 +126,9 @@ class BusinessPagesControllerImp extends BusinessPagesController {
             convertDataToFile(feed['userProfilePicture']),
           );
         }).toList();
+
+        businessFeedback!.sort((a, b) => DateTime.parse(b.createdAt!)
+            .compareTo(DateTime.parse(a.createdAt!)));
       } else {
         Get.defaultDialog(
             title: "Error", middleText: "We are sorry, something went wrong");
