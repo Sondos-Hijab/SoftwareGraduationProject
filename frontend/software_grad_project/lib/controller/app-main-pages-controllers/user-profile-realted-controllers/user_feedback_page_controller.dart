@@ -61,6 +61,8 @@ class UserFeedbackPageControllerImp extends UserFeedbackPageController {
             convertDataToFile(feed['userProfilePicture']),
           );
         }).toList();
+        userFeedback!.sort((a, b) => DateTime.parse(b.createdAt!)
+            .compareTo(DateTime.parse(a.createdAt!)));
       } else {
         Get.defaultDialog(
             title: "Error", middleText: "We are sorry, something went wrong");
