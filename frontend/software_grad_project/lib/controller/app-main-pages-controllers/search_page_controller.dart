@@ -8,7 +8,7 @@ import 'package:software_grad_project/core/functions/convert_data_to_file.dart';
 import 'package:software_grad_project/core/functions/handling_data_function.dart';
 import 'package:software_grad_project/core/services/service.dart';
 import 'package:software_grad_project/data/datasource/remote/business-page/business_datasource.dart';
-import 'package:software_grad_project/data/model/businesses_info_model.dart';
+import 'package:software_grad_project/data/model/businesses_name_image_model.dart';
 
 abstract class SearchPageController extends GetxController {
   late TextEditingController searchText;

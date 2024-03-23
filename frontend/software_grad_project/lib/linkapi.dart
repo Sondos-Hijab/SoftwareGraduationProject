@@ -27,6 +27,7 @@ class AppLink {
   static const String getBusinessPostsLink = "$server/user/getPost";
   static const String getBusinessFeedbackLink =
       "$server/user/getBusinessFeedback";
+  static const String getBusinessInfoLink = "$server/user/getBusinesseInfo";
 
   //checking access token
   static const String checkAccessTokenLink =

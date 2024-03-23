@@ -10,14 +10,21 @@ import 'package:software_grad_project/core/constants/routes_names.dart';
 import 'package:software_grad_project/view/widgets/business/business_location.dart';
 
 class BusinessMainInfoWidget extends StatelessWidget {
-  final String businessName;
-  final Completer<GoogleMapController> gmController;
-  final bool isFollowing;
-  final List<Marker> markers;
-  final CameraPosition businessLocation;
+  final String? businessName;
   final Uint8List? businessImage;
-  final void Function() onPressFollowing;
-  final void Function() onTapAddFeedback;
+
+  final List<Marker>? markers;
+  final CameraPosition? businessLocation;
+  final int? phoneNumber;
+  final String? category;
+  final String? description;
+  final String? email;
+
+  final Completer<GoogleMapController> gmController;
+  final bool? isFollowing;
+
+  final void Function()? onPressFollowing;
+  final void Function()? onTapAddFeedback;
 
   const BusinessMainInfoWidget(
       {super.key,
@@ -28,7 +35,11 @@ class BusinessMainInfoWidget extends StatelessWidget {
       required this.isFollowing,
       required this.onPressFollowing,
       required this.businessName,
-      required this.onTapAddFeedback});
+      required this.onTapAddFeedback,
+      required this.phoneNumber,
+      required this.category,
+      required this.description,
+      required this.email});
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +69,7 @@ class BusinessMainInfoWidget extends StatelessWidget {
             children: [
               Text(
                 textAlign: TextAlign.center,
-                businessName,
+                businessName!,
                 style: Theme.of(context)
                     .textTheme
                     .headlineSmall
@@ -67,12 +78,12 @@ class BusinessMainInfoWidget extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              const Row(
+              Row(
                 children: [
-                  Text("Phone number:"),
+                  const Text("Phone number:"),
                   Expanded(
                     child: Text(
-                      "0593907273",
+                      "$phoneNumber",
                       textAlign: TextAlign.right,
                     ),
                   )
@@ -81,12 +92,12 @@ class BusinessMainInfoWidget extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              const Row(
+              Row(
                 children: [
-                  Text("Category:"),
+                  const Text("Category:"),
                   Expanded(
                     child: Text(
-                      "Restaurants",
+                      "$category",
                       textAlign: TextAlign.right,
                     ),
                   )
@@ -95,12 +106,12 @@ class BusinessMainInfoWidget extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              const Row(
+              Row(
                 children: [
-                  Text("Number of followers:"),
+                  const Text("Admin email:"),
                   Expanded(
                     child: Text(
-                      "110",
+                      email!,
                       textAlign: TextAlign.right,
                     ),
                   )
@@ -115,7 +126,7 @@ class BusinessMainInfoWidget extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(
                       vertical: 15.0, horizontal: 100.0),
-                  backgroundColor: isFollowing
+                  backgroundColor: isFollowing!
                       ? AppColors.primaryYellow
                       : AppColors.primaryBlue,
                   shape: RoundedRectangleBorder(
@@ -123,7 +134,7 @@ class BusinessMainInfoWidget extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  isFollowing ? 'Unfollow' : 'Follow',
+                  isFollowing! ? 'Unfollow' : 'Follow',
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     color: AppColors.appWhite,
@@ -150,8 +161,7 @@ class BusinessMainInfoWidget extends StatelessWidget {
                   border: Border.all(color: Colors.grey.shade200),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Text(
-                    "Experience culinary delight at our restaurant, where every dish is crafted with passion and expertise.Experience culinary delight at our restaurant.",
+                child: Text(description!,
                     textAlign: TextAlign.justify,
                     style: Theme.of(context)
                         .textTheme

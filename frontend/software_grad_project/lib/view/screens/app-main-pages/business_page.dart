@@ -72,10 +72,15 @@ class BusinessPage extends StatelessWidget {
               children: [
                 BusinessMainInfoWidget(
                   businessName: controller.businessName!,
-                  businessImage: controller.businessImage,
+                  businessImage: controller.businessImage!,
                   gmController: controller.gmController,
-                  businessLocation: controller.businessLocation,
-                  markers: controller.markers,
+                  businessLocation:
+                      controller.fetchedBusinessInfo!.cameraPosition,
+                  markers: controller.fetchedBusinessInfo!.markers,
+                  category: controller.fetchedBusinessInfo!.category,
+                  description: controller.fetchedBusinessInfo!.description,
+                  phoneNumber: controller.fetchedBusinessInfo!.phoneNumber,
+                  email: controller.fetchedBusinessInfo!.email,
                   isFollowing: controller.isFollowing,
                   onPressFollowing: () {
                     controller.pressFollowUnfollow();
