@@ -38,6 +38,10 @@ class AppRoutes {
   //notifications page
   static const String notificationsPage = '/notificationsPage';
 
+  //other user profile page
+  static const String otherUserProfilePage = '/otehrUserProfilePage';
+  static const String otherUserFeedbackPage = '/otherUserFeedbackPage';
+
   //testing purposes
   static const String test = '/test';
 }

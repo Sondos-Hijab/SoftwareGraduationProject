@@ -36,6 +36,10 @@ class AppLink {
   //feedback
   static const String addFeedbackLink = "$server/user/addFeedback";
 
+  //get other user info
+  static const String getOtherUserInfoLink = "$server/user/getUserInfo";
+  static const String getOtherUserFeedback = "$server/user/getUserFeedback";
+
   //Test
   static const String test = "https://jsonplaceholder.typicode.com/posts/1";
 }
