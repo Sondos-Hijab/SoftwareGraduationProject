@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:software_grad_project/controller/app-main-pages-controllers/user-profile-realted-controllers/profile_page_controller.dart';
+import 'package:software_grad_project/controller/app-main-pages-controllers/other-user-controllers/other_user_profile_controller.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
 import 'package:software_grad_project/core/services/service.dart';
 import 'package:software_grad_project/view/widgets/user-profile/bio_container.dart';
 import 'package:software_grad_project/view/widgets/user-profile/profile_image_container.dart';
 import 'package:software_grad_project/view/widgets/user-profile/profile_quick_link_button.dart';
 
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+class OtherUserProfilePage extends StatelessWidget {
+  const OtherUserProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final myServices = Get.find<MyServices>();
-    String? username = myServices.sharedPreferences.getString("username");
-
-    Get.put(ProfilePageControllerImp());
-    return GetBuilder<ProfilePageControllerImp>(builder: (controller) {
+    Get.put(OtherUserProfilePageControllerImp());
+    return GetBuilder<OtherUserProfilePageControllerImp>(builder: (controller) {
       return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -26,26 +23,6 @@ class ProfilePage extends StatelessWidget {
             "My Profile",
             style: Theme.of(context).textTheme.headlineSmall,
           ),
-          actions: [
-            PopupMenuButton(
-                onSelected: (val) {
-                  if (val == "changePass") {
-                    controller.goToChangePassword();
-                  } else {
-                    controller.logout();
-                  }
-                },
-                itemBuilder: (context) => [
-                      const PopupMenuItem(
-                        value: "changePass",
-                        child: Text("Change my password"),
-                      ),
-                      const PopupMenuItem(
-                        value: "logout",
-                        child: Text("Logout"),
-                      ),
-                    ])
-          ],
         ),
         body: ListView(
           children: [
@@ -55,27 +32,19 @@ class ProfilePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   ProfileImageContainer(
-                    me: true,
-                    selectedImageFile: controller.selectedImage,
-                    onTap: () {
-                      controller.uploadImage();
-                    },
-                  ),
+                      me: false,
+                      otherUserProfileImage: controller.otherUserProfileImage),
                   Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: Text(
-                      username!,
+                      controller.username!,
                       style: const TextStyle(
                           fontSize: 20, color: AppColors.primaryDarkBlue),
                     ),
                   ),
                   BioContainer(
+                    me: false,
                     bioTextEditingController: controller.bioController!,
-                    isEditingBio: controller.isEditingBio,
-                    onPressed: () {
-                      controller.editMode();
-                    },
-                    me: true,
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(
@@ -85,7 +54,9 @@ class ProfilePage extends StatelessWidget {
                       QuickLinkButton(
                         internalText: "Feedback",
                         iconData: Icons.feedback_outlined,
-                        onTap: () {},
+                        onTap: () {
+                          controller.goToFeedbackPage();
+                        },
                       ),
                       const SizedBox(
                         width: 10,

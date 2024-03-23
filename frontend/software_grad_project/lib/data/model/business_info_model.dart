@@ -8,7 +8,6 @@ class BusinessInfoModel {
   final String? email; //email
   final String? businessName; //name
   final List<Marker>? markers; //goona get it from location
-  final CameraPosition? cameraPosition;
   final int? phoneNumber; //phoneNumber
   final String? category; //category
   final String? description; //description
@@ -20,7 +19,6 @@ class BusinessInfoModel {
     this.email,
     this.businessName,
     this.markers,
-    this.cameraPosition,
     this.phoneNumber,
     this.category,
     this.description,

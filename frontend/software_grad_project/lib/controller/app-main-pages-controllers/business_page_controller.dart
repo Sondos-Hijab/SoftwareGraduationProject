@@ -43,7 +43,7 @@ class BusinessPagesControllerImp extends BusinessPagesController {
   List<FetchedPostModel>? businessesPosts = [];
   List<FetchedFeedbackModel>? businessFeedback = [];
   BusinessInfoModel? fetchedBusinessInfo =
-      BusinessInfoModel(0, "", "", "", null, null, 0, "", "", null);
+      BusinessInfoModel(0, "", "", "", [], 0, "", "", null);
 
   final Completer<GoogleMapController> gmController =
       Completer<GoogleMapController>();
@@ -156,10 +156,6 @@ class BusinessPagesControllerImp extends BusinessPagesController {
 
         List<Marker> markers = [marker];
 
-        CameraPosition cameraPosition = CameraPosition(
-          target: LatLng(lat, lng),
-          zoom: 14.4746,
-        );
 
         fetchedBusinessInfo = BusinessInfoModel(
             info['adminID'],
@@ -167,7 +163,6 @@ class BusinessPagesControllerImp extends BusinessPagesController {
             info['email'],
             info['name'],
             markers,
-            cameraPosition,
             info['phoneNumber'],
             info['category'],
             info['description'],

@@ -4,6 +4,8 @@ import 'package:software_grad_project/view/screens/app-main-pages/business_page.
 import 'package:software_grad_project/view/screens/app-main-pages/chatting-system-pages/specefic_chat_page.dart';
 import 'package:software_grad_project/view/screens/app-main-pages/feedback_form_page.dart';
 import 'package:software_grad_project/view/screens/app-main-pages/notifications_page.dart';
+import 'package:software_grad_project/view/screens/app-main-pages/other-user-related-pages/other_user_feedback_page.dart';
+import 'package:software_grad_project/view/screens/app-main-pages/other-user-related-pages/other_user_profile.dart';
 import 'package:software_grad_project/view/screens/app-main-pages/user-profile-related-pages/change_password.dart';
 import 'package:software_grad_project/view/screens/app-main-pages/user-profile-related-pages/success_changing_password.dart';
 import 'package:software_grad_project/view/screens/app-main-pages/user-profile-related-pages/user_feedback.dart';
@@ -77,7 +79,15 @@ List<GetPage<dynamic>>? routes = [
       name: AppRoutes.speceficChatPage, page: () => const SpecificChatPage()),
 
   //notifications page
-  GetPage(name: AppRoutes.notificationsPage, page: () => NotificationsPage()),
+  GetPage(name: AppRoutes.notificationsPage, page: () => const NotificationsPage()),
+
+  //other user profile page
+  GetPage(
+      name: AppRoutes.otherUserProfilePage,
+      page: () => const OtherUserProfilePage()),
+  GetPage(
+      name: AppRoutes.otherUserFeedbackPage,
+      page: () => const OtherUserFeedbackPage()),
 
   //testing purposes
   // GetPage(
