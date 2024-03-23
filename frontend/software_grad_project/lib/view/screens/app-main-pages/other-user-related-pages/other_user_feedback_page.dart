@@ -27,6 +27,7 @@ class OtherUserFeedbackPage extends StatelessWidget {
               ...List.generate(
                 controller.userFeedback!.length,
                 (index) => MainFeedbackWidget(
+                  me: false,
                   userImage: controller.userFeedback![index].userProfilePicture,
                   username: controller.userFeedback![index].userName!,
                   feedbackImage: controller.userFeedback![index].feedbackImage,

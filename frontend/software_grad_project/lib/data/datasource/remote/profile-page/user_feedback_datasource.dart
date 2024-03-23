@@ -11,4 +11,10 @@ class UserFeedbackDataSource {
         AppLink.getOtherUserFeedback, {"userName": username}, authToken);
     return response.fold((l) => l, (r) => r);
   }
+
+  deleteDataWithAuthorization(String authToken, int feedbackID) async {
+    var response = await crud.deleteDataWithAuthorization(
+        AppLink.deleteFeedbackLink, {"feedbackID": feedbackID}, authToken);
+    return response.fold((l) => l, (r) => r);
+  }
 }

@@ -8,6 +8,7 @@ import 'package:software_grad_project/data/model/fetched_feedback_model.dart';
 
 abstract class UserFeedbackPageController extends GetxController {
   getUserFeedback(String username);
+  deleteUserFeedback(int feedbackID);
 }
 
 class UserFeedbackPageControllerImp extends UserFeedbackPageController {
@@ -60,6 +61,30 @@ class UserFeedbackPageControllerImp extends UserFeedbackPageController {
             convertDataToFile(feed['userProfilePicture']),
           );
         }).toList();
+      } else {
+        Get.defaultDialog(
+            title: "Error", middleText: "We are sorry, something went wrong");
+      }
+      update();
+    }
+  }
+
+  @override
+  deleteUserFeedback(int feedbackID) async {
+    print(feedbackID);
+    StatusRequest? statusRequest = StatusRequest.loading;
+    String? accessToken = myServices.sharedPreferences.getString("accessToken");
+
+    var response = await userFeedbackDataSource.deleteDataWithAuthorization(
+        accessToken!, feedbackID);
+
+    statusRequest = handlingData(response);
+
+    if (StatusRequest.success == statusRequest) {
+      if (response['statusCode'] == "200") {
+        Get.defaultDialog(
+            title: "Success!", middleText: "Feedback deleted successfully!");
+        getUserFeedback(username!);
       } else {
         Get.defaultDialog(
             title: "Error", middleText: "We are sorry, something went wrong");

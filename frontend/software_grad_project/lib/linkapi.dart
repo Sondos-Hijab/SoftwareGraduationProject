@@ -35,6 +35,7 @@ class AppLink {
 
   //feedback
   static const String addFeedbackLink = "$server/user/addFeedback";
+  static const String deleteFeedbackLink = "$server/user/deleteFeedback";
 
   //get other user info
   static const String getOtherUserInfoLink = "$server/user/getUserInfo";

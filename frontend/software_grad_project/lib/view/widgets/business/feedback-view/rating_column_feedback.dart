@@ -15,7 +15,10 @@ class RatingColumnFeedback extends StatelessWidget {
         children: [
           Text(
             title,
-            style: const TextStyle(color: AppColors.primaryGreen, fontSize: 11),
+            style: const TextStyle(
+                color: AppColors.primaryGreen,
+                fontSize: 11,
+                fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
           Row(
@@ -23,7 +26,7 @@ class RatingColumnFeedback extends StatelessWidget {
             children: [
               Text(
                 "$rating/5",
-                style: const TextStyle(color: AppColors.grey, fontSize: 12),
+                style: const TextStyle(color: AppColors.grey, fontSize: 14),
               ),
               const SizedBox(width: 4),
               const Icon(
