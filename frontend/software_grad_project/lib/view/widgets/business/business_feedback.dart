@@ -14,6 +14,7 @@ class BusinessFeedback extends StatelessWidget {
         ...List.generate(
           businessFeedback!.length,
           (index) => MainFeedbackWidget(
+            me: false,
             userImage: businessFeedback![index].userProfilePicture,
             username: businessFeedback![index].userName!,
             feedbackImage: businessFeedback![index].feedbackImage,

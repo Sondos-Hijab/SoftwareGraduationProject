@@ -26,6 +26,7 @@ class UserFeedbackPage extends StatelessWidget {
               ...List.generate(
                 controller.userFeedback!.length,
                 (index) => MainFeedbackWidget(
+                  me: true,
                   userImage: controller.userFeedback![index].userProfilePicture,
                   username: controller.userFeedback![index].userName!,
                   feedbackImage: controller.userFeedback![index].feedbackImage,
@@ -38,6 +39,10 @@ class UserFeedbackPage extends StatelessWidget {
                       controller.userFeedback![index].productQualityRate!,
                   feedbackText: controller.userFeedback![index].description!,
                   createdAt: controller.userFeedback![index].createdAt!,
+                  onDelete: () {
+                    controller.deleteUserFeedback(
+                        controller.userFeedback![index].feedbackID!);
+                  },
                 ),
               ),
             ],

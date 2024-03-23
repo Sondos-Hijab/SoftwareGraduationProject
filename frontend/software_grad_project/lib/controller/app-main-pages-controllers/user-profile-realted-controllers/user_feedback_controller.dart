@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,6 +19,8 @@ abstract class UserFeedbackController extends GetxController {
 
 class UserFeedbackControllerImp extends UserFeedbackController {
   String? businessName;
+  Uint8List? businessImage;
+
   TextEditingController feedbackTextEditingController = TextEditingController();
   String? customerServiceRate_1;
   String? valueOfMoneyRate_2;
@@ -33,7 +36,8 @@ class UserFeedbackControllerImp extends UserFeedbackController {
   void onInit() {
     super.onInit();
     accessToken = myServices.sharedPreferences.getString("accessToken");
-    businessName = Get.arguments;
+    businessName = Get.arguments['businessName'];
+    businessImage = Get.arguments['businessImage'];
   }
 
   @override
@@ -59,8 +63,10 @@ class UserFeedbackControllerImp extends UserFeedbackController {
 
     if (StatusRequest.success == statusRequest) {
       if (response['statusCode'] == "200") {
-        update();
         Get.defaultDialog(title: "Success", middleText: response['message']);
+        feedbackTextEditingController.text = "";
+        selectedImage = null;
+
       } else if (response['statusCode'] == "400") {
         Get.defaultDialog(title: "Error", middleText: response['error']);
       } else {

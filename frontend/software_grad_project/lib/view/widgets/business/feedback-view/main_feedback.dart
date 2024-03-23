@@ -1,10 +1,12 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:software_grad_project/core/constants/colors.dart';
 import 'package:software_grad_project/view/widgets/business/feedback-view/feedback-image.dart';
 import 'package:software_grad_project/view/widgets/business/feedback-view/feedback_info.dart';
 import 'package:software_grad_project/view/widgets/business/feedback-view/user_info.dart';
 
 class MainFeedbackWidget extends StatelessWidget {
+  final bool? me;
   final Uint8List? userImage;
   final String username;
   final Uint8List? feedbackImage;
@@ -14,56 +16,76 @@ class MainFeedbackWidget extends StatelessWidget {
   final double valueOfMoneyRating;
   final double productQualityRating;
   final String createdAt;
+  final void Function()? onDelete;
 
-  const MainFeedbackWidget(
-      {super.key,
-      required this.userImage,
-      required this.username,
-      required this.feedbackImage,
-      required this.busineessName,
-      required this.customerServiceRating,
-      required this.valueOfMoneyRating,
-      required this.productQualityRating,
-      required this.feedbackText,
-      required this.createdAt});
+  const MainFeedbackWidget({
+    super.key,
+    required this.userImage,
+    required this.username,
+    required this.feedbackImage,
+    required this.busineessName,
+    required this.customerServiceRating,
+    required this.valueOfMoneyRating,
+    required this.productQualityRating,
+    required this.feedbackText,
+    required this.createdAt,
+    required this.me,
+    this.onDelete,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.0),
-        border: Border.all(
-          color: Colors.white,
-          width: 1.0,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            spreadRadius: 1,
-            blurRadius: 4,
-            offset: const Offset(0, 2),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.0),
+          border: Border.all(
+            color: Colors.white,
+            width: 1.0,
           ),
-        ],
-      ),
-      margin: const EdgeInsets.only(top: 10, left: 20, right: 20),
-      child: Container(
-        margin: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            UserInfo(userImage: userImage, username: username),
-            FeedbackImage(feedbackImage: feedbackImage),
-            FeedbackInfo(
-              busineessName: busineessName,
-              feedbackText: feedbackText,
-              customerServiceRating: customerServiceRating,
-              valueOfMoneyRating: valueOfMoneyRating,
-              productQualityRating: productQualityRating,
-              createdAt: createdAt,
-            )
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.1),
+              spreadRadius: 1,
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
           ],
         ),
-      ),
-    );
+        margin: const EdgeInsets.only(top: 10, left: 20, right: 20),
+        child: Stack(
+          children: [
+            Container(
+              margin: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  UserInfo(userImage: userImage, username: username),
+                  FeedbackImage(feedbackImage: feedbackImage),
+                  FeedbackInfo(
+                    busineessName: busineessName,
+                    feedbackText: feedbackText,
+                    customerServiceRating: customerServiceRating,
+                    valueOfMoneyRating: valueOfMoneyRating,
+                    productQualityRating: productQualityRating,
+                    createdAt: createdAt,
+                  )
+                ],
+              ),
+            ),
+            me == true
+                ? Positioned(
+                    top: 20,
+                    right: 20,
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.delete,
+                        color: AppColors.primaryDarkBlue,
+                      ),
+                      onPressed: onDelete!,
+                    ),
+                  )
+                : const Text(""),
+          ],
+        ));
   }
 }

@@ -156,7 +156,6 @@ class BusinessPagesControllerImp extends BusinessPagesController {
 
         List<Marker> markers = [marker];
 
-
         fetchedBusinessInfo = BusinessInfoModel(
             info['adminID'],
             info['adminName'],
@@ -183,6 +182,9 @@ class BusinessPagesControllerImp extends BusinessPagesController {
 
   @override
   goToAddFeedbackPage() {
-    Get.toNamed(AppRoutes.feedbackFormPage, arguments: businessName);
+    Get.toNamed(AppRoutes.feedbackFormPage, arguments: {
+      'businessName': businessName,
+      'businessImage': businessImage
+    });
   }
 }
