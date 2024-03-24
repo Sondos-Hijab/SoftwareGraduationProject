@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:software_grad_project/core/classes/status_request.dart';
 import 'package:software_grad_project/core/functions/convert_data_to_file.dart';
@@ -73,25 +74,40 @@ class UserFeedbackPageControllerImp extends UserFeedbackPageController {
 
   @override
   deleteUserFeedback(int feedbackID) async {
-    print(feedbackID);
     StatusRequest? statusRequest = StatusRequest.loading;
     String? accessToken = myServices.sharedPreferences.getString("accessToken");
 
-    var response = await userFeedbackDataSource.deleteDataWithAuthorization(
-        accessToken!, feedbackID);
+    // Show confirmation dialog
+    bool confirmDelete = await Get.defaultDialog(
+      title: "Confirmation",
+      middleText: "Are you sure you want to delete this feedback?",
+      confirm: TextButton(
+        onPressed: () => Get.back(result: true), // Return true if confirmed
+        child: const Text('Yes'),
+      ),
+      cancel: TextButton(
+        onPressed: () => Get.back(result: false), // Return false if canceled
+        child: const Text('No'),
+      ),
+    );
 
-    statusRequest = handlingData(response);
+    if (confirmDelete == true) {
+      var response = await userFeedbackDataSource.deleteDataWithAuthorization(
+          accessToken!, feedbackID);
 
-    if (StatusRequest.success == statusRequest) {
-      if (response['statusCode'] == "200") {
-        Get.defaultDialog(
-            title: "Success!", middleText: "Feedback deleted successfully!");
-        getUserFeedback(username!);
-      } else {
-        Get.defaultDialog(
-            title: "Error", middleText: "We are sorry, something went wrong");
+      statusRequest = handlingData(response);
+
+      if (StatusRequest.success == statusRequest) {
+        if (response['statusCode'] == "200") {
+          Get.defaultDialog(
+              title: "Success!", middleText: "Feedback deleted successfully!");
+          getUserFeedback(username!);
+        } else {
+          Get.defaultDialog(
+              title: "Error", middleText: "We are sorry, something went wrong");
+        }
+        update();
       }
-      update();
     }
   }
 }

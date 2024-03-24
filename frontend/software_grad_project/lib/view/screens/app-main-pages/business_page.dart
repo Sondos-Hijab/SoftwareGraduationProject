@@ -20,44 +20,53 @@ class BusinessPage extends StatelessWidget {
         child: Scaffold(
           key: controller.scaffoldKey,
           appBar: AppBar(
-            bottom: TabBar(tabs: [
-              Tab(
-                child: Text(
-                  "Profile",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(color: Colors.black, fontSize: 14),
+            bottom: TabBar(
+              tabs: [
+                Tab(
+                  child: Text(
+                    "Profile",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(color: Colors.black, fontSize: 14),
+                  ),
                 ),
-              ),
-              Tab(
-                child: Text(
-                  "Feedback",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(color: Colors.black, fontSize: 14),
+                Tab(
+                  child: Text(
+                    "Feedback",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(color: Colors.black, fontSize: 14),
+                  ),
                 ),
-              ),
-              Tab(
-                child: Text(
-                  "Posts",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(color: Colors.black, fontSize: 14),
+                Tab(
+                  child: Text(
+                    "Posts",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(color: Colors.black, fontSize: 14),
+                  ),
                 ),
-              ),
-              Tab(
-                child: Text(
-                  "Followers",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(color: Colors.black, fontSize: 14),
+                Tab(
+                  child: Text(
+                    "Followers",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(color: Colors.black, fontSize: 14),
+                  ),
                 ),
-              )
-            ]),
+              ],
+              onTap: (index) {
+                if (index == 1) {
+                  controller.getFeedback(controller.businessName!);
+                } else if (index == 2) {
+                  controller.getPosts(controller.businessName!);
+                }
+              },
+            ),
             centerTitle: true,
             backgroundColor: AppColors.appWhite,
             elevation: 0.0,

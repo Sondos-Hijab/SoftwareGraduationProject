@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:software_grad_project/core/classes/status_request.dart';
+import 'package:software_grad_project/core/constants/routes_names.dart';
 import 'package:software_grad_project/core/functions/handling_data_function.dart';
 import 'package:software_grad_project/core/services/service.dart';
 import 'package:software_grad_project/data/datasource/remote/feedback/feedback_datasource.dart';
@@ -19,7 +20,6 @@ abstract class UserFeedbackController extends GetxController {
 
 class UserFeedbackControllerImp extends UserFeedbackController {
   String? businessName;
-  Uint8List? businessImage;
 
   TextEditingController feedbackTextEditingController = TextEditingController();
   String? customerServiceRate_1;
@@ -37,7 +37,6 @@ class UserFeedbackControllerImp extends UserFeedbackController {
     super.onInit();
     accessToken = myServices.sharedPreferences.getString("accessToken");
     businessName = Get.arguments['businessName'];
-    businessImage = Get.arguments['businessImage'];
   }
 
   @override
@@ -63,10 +62,27 @@ class UserFeedbackControllerImp extends UserFeedbackController {
 
     if (StatusRequest.success == statusRequest) {
       if (response['statusCode'] == "200") {
-        Get.defaultDialog(title: "Success", middleText: response['message']);
-        feedbackTextEditingController.text = "";
-        selectedImage = null;
-
+        Get.dialog(
+          AlertDialog(
+            title: const Text("Success"),
+            content: Text(response['message']),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Get.back();
+                  feedbackTextEditingController.text = "";
+                  selectedImage = null;
+                  Get.offAndToNamed(AppRoutes.feedbackFormPage, arguments: {
+                    'businessName': businessName,
+                  });
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+          barrierDismissible:
+              false, // Set to false to prevent dismissing by tapping outside
+        );
       } else if (response['statusCode'] == "400") {
         Get.defaultDialog(title: "Error", middleText: response['error']);
       } else {
