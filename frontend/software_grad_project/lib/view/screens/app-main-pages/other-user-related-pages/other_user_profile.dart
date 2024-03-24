@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:software_grad_project/controller/app-main-pages-controllers/other-user-controllers/other_user_profile_controller.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
-import 'package:software_grad_project/core/services/service.dart';
 import 'package:software_grad_project/view/widgets/user-profile/bio_container.dart';
 import 'package:software_grad_project/view/widgets/user-profile/profile_image_container.dart';
 import 'package:software_grad_project/view/widgets/user-profile/profile_quick_link_button.dart';
@@ -20,7 +19,7 @@ class OtherUserProfilePage extends StatelessWidget {
           backgroundColor: AppColors.appWhite,
           elevation: 0.0,
           title: Text(
-            "My Profile",
+            "User Profile",
             style: Theme.of(context).textTheme.headlineSmall,
           ),
         ),

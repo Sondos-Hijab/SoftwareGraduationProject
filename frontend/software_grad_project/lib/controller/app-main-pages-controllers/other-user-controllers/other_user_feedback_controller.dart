@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:software_grad_project/core/classes/status_request.dart';
+import 'package:software_grad_project/core/constants/routes_names.dart';
 import 'package:software_grad_project/core/functions/convert_data_to_file.dart';
 import 'package:software_grad_project/core/functions/handling_data_function.dart';
 import 'package:software_grad_project/core/services/service.dart';
@@ -8,6 +9,7 @@ import 'package:software_grad_project/data/model/fetched_feedback_model.dart';
 
 abstract class OtherUserFeedbackPageController extends GetxController {
   getUserFeedback(String username);
+  goToUserPage(String username);
 }
 
 class OtherUserFeedbackPageControllerImp
@@ -70,5 +72,11 @@ class OtherUserFeedbackPageControllerImp
       }
       update();
     }
+  }
+
+  @override
+  goToUserPage(String username) {
+     Get.toNamed(AppRoutes.otherUserProfilePage,
+        arguments: {'username': username});
   }
 }

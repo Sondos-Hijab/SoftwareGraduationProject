@@ -4,8 +4,9 @@ import 'package:software_grad_project/view/widgets/business/feedback-view/main_f
 
 class BusinessFeedback extends StatelessWidget {
   final List<FetchedFeedbackModel>? businessFeedback;
-
-  const BusinessFeedback({super.key, required this.businessFeedback});
+  final void Function(String username) goToUserPage;
+  const BusinessFeedback(
+      {super.key, required this.businessFeedback, required this.goToUserPage});
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +25,7 @@ class BusinessFeedback extends StatelessWidget {
             productQualityRating: businessFeedback![index].productQualityRate!,
             feedbackText: businessFeedback![index].description!,
             createdAt: businessFeedback![index].createdAt!,
+            goToUserPage: goToUserPage,
           ),
         ),
       ],

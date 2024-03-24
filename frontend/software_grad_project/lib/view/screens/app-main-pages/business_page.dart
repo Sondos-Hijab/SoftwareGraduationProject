@@ -106,6 +106,7 @@ class BusinessPage extends StatelessWidget {
                 ),
                 BusinessFeedback(
                   businessFeedback: controller.businessFeedback,
+                  goToUserPage : controller.goToUserPage,
                 ),
                 BusinessPosts(
                   businessImage: controller.businessImage,

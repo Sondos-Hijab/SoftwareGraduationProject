@@ -31,7 +31,7 @@ class OtherUserProfilePageControllerImp extends OtherUserProfilePageController {
   void onInit() {
     bioController = TextEditingController();
     otherUserProfileImage = null;
-    username = "sondoshijab";
+    username = Get.arguments['username'];
     getOtherUserInfo(username!);
     super.onInit();
   }

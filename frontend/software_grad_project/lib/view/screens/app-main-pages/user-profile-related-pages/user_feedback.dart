@@ -26,24 +26,27 @@ class UserFeedbackPage extends StatelessWidget {
               ...List.generate(
                 controller.userFeedback!.length,
                 (index) => MainFeedbackWidget(
-                  me: true,
-                  userImage: controller.userFeedback![index].userProfilePicture,
-                  username: controller.userFeedback![index].userName!,
-                  feedbackImage: controller.userFeedback![index].feedbackImage,
-                  busineessName: controller.userFeedback![index].businessName!,
-                  customerServiceRating:
-                      controller.userFeedback![index].customeServiceRate!,
-                  valueOfMoneyRating:
-                      controller.userFeedback![index].valueOfMoneyRate!,
-                  productQualityRating:
-                      controller.userFeedback![index].productQualityRate!,
-                  feedbackText: controller.userFeedback![index].description!,
-                  createdAt: controller.userFeedback![index].createdAt!,
-                  onDelete: () {
-                    controller.deleteUserFeedback(
-                        controller.userFeedback![index].feedbackID!);
-                  },
-                ),
+                    me: true,
+                    userImage:
+                        controller.userFeedback![index].userProfilePicture,
+                    username: controller.userFeedback![index].userName!,
+                    feedbackImage:
+                        controller.userFeedback![index].feedbackImage,
+                    busineessName:
+                        controller.userFeedback![index].businessName!,
+                    customerServiceRating:
+                        controller.userFeedback![index].customeServiceRate!,
+                    valueOfMoneyRating:
+                        controller.userFeedback![index].valueOfMoneyRate!,
+                    productQualityRating:
+                        controller.userFeedback![index].productQualityRate!,
+                    feedbackText: controller.userFeedback![index].description!,
+                    createdAt: controller.userFeedback![index].createdAt!,
+                    onDelete: () {
+                      controller.deleteUserFeedback(
+                          controller.userFeedback![index].feedbackID!);
+                    },
+                    goToUserPage: controller.goToUserPage),
               ),
             ],
           );

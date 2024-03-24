@@ -40,6 +40,7 @@ class OtherUserFeedbackPage extends StatelessWidget {
                       controller.userFeedback![index].productQualityRate!,
                   feedbackText: controller.userFeedback![index].description!,
                   createdAt: controller.userFeedback![index].createdAt!,
+                  goToUserPage: controller.goToUserPage,
                 ),
               ),
             ],
