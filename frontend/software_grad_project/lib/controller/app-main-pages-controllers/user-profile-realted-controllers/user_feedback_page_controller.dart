@@ -115,7 +115,6 @@ class UserFeedbackPageControllerImp extends UserFeedbackPageController {
 
   @override
   goToUserPage(String username) {
-    Get.toNamed(AppRoutes.otherUserProfilePage,
-        arguments: {'username': username});
+    Get.back();
   }
 }

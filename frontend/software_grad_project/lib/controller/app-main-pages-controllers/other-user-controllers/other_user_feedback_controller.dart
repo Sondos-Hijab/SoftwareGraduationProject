@@ -76,7 +76,7 @@ class OtherUserFeedbackPageControllerImp
 
   @override
   goToUserPage(String username) {
-     Get.toNamed(AppRoutes.otherUserProfilePage,
+    Get.toNamed(AppRoutes.otherUserProfilePage,
         arguments: {'username': username});
   }
 }
