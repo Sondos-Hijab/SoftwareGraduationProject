@@ -119,6 +119,9 @@ export async function logout(accessToken) {
         accessToken || localStorage.getItem("accessToken")
       }`,
     },
+    body: JSON.stringify({
+      token: localStorage.getItem("refreshToken"),
+    }),
   });
   if (!response.ok) {
     const errorMessage = await response.json();
@@ -128,5 +131,3 @@ export async function logout(accessToken) {
     return data;
   }
 }
-
-

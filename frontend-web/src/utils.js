@@ -17,5 +17,13 @@ export function getDatTimeFromString(createdAt) {
   };
   const formattedTime = currentDate.toLocaleTimeString("en-US", optionsTime);
 
-  return {formattedDate, formattedTime};
+  return { formattedDate, formattedTime };
+}
+
+export function getExpireDate() {
+  const currentDate = new Date();
+  // Add 24 hours to the current date
+  const expirationDate = new Date(currentDate);
+  expirationDate.setHours(expirationDate.getHours() + 24);
+  return expirationDate;
 }

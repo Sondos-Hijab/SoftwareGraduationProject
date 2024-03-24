@@ -21,6 +21,10 @@ const LeftSidebar = ({ showNavbar, setShowNavbar }) => {
       if (value.error) {
         console.log(value.error);
       } else {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("businessName");
+        localStorage.removeItem("expireDate");
         navigate("/auth/sign-in");
       }
     });

@@ -6,6 +6,7 @@ import { hasMinLength } from "@/_auth/utils/validation";
 import Modal from "@/helper-components/WarningsErrors/Modal";
 import { signin } from "@/apis/authRequests";
 import { useAppContext } from "@/Providers/AppPovider";
+import { getExpireDate } from "@/utils";
 
 export default function SigninForm({}) {
   const navigate = useNavigate();
@@ -31,11 +32,8 @@ export default function SigninForm({}) {
         setShowModal(true);
       } else {
         localStorage.setItem("accessToken", response.accessToken);
-        const currentDate = new Date();
-        // Add 24 hours to the current date
-        const expirationDate = new Date(currentDate);
-        expirationDate.setHours(expirationDate.getHours() + 24);
-        localStorage.setItem("expireDate", expirationDate);
+        localStorage.setItem("refreshToken", response.refreshToken);
+        localStorage.setItem("expireDate", getExpireDate());
         setFetchedAccessToken(response.accessToken);
         navigate("/");
       }
