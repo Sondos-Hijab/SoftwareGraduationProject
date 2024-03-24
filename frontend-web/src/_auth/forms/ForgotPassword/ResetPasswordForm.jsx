@@ -1,10 +1,26 @@
 import logo from "../../../assets/images/logo.png";
-import { useState } from "react";
+import { useState, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "@/helper-components/WarningsErrors/Modal";
 import styles from "../Form.module.css";
 import { hasMinLength, isEqualsToOtherValue } from "@/utils/validation";
 import { resetPassword } from "@/apis/authRequests";
+
+const initialModalState = {
+  showModal: false,
+  modalMessage: "",
+};
+
+const modalReducer = (state, action) => {
+  switch (action.type) {
+    case "SHOW_MODAL":
+      return { ...state, showModal: true, modalMessage: action.payload };
+    case "HIDE_MODAL":
+      return { ...state, showModal: false };
+    default:
+      return state;
+  }
+};
 
 const ResetPasswordForm = () => {
   const navigate = useNavigate();
@@ -17,13 +33,10 @@ const ResetPasswordForm = () => {
 
   const [canSubmit, setCanSubmit] = useState(false);
 
-  const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
-
-  //modal showing when an error occurs
-  const closeModal = () => {
-    setShowModal(false);
-  };
+  const [modalState, modalDispatch] = useReducer(
+    modalReducer,
+    initialModalState
+  );
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -41,11 +54,12 @@ const ResetPasswordForm = () => {
     };
 
     resetPassword(resetPasswordInfo).then((value) => {
-      if (value.error) {
-        setModalMessage(
-          "There was a problem resetting password: " + value.error
-        );
-        setShowModal(true);
+      if (value.token == "Forbidden") {
+        modalDispatch({
+          type: "SHOW_MODAL",
+          payload:
+            "There was a problem resetting password: Temporary access token isn't valid anymore",
+        });
       } else {
         navigate("/auth/sign-in");
       }
@@ -129,11 +143,13 @@ const ResetPasswordForm = () => {
         </div>
       </div>
 
-      {showModal && (
+      {modalState.showModal && (
         <Modal
           title="Can't continue the process of resetting password"
-          message={modalMessage}
-          onClose={closeModal}
+          message={modalState.modalMessage}
+          onClose={() => {
+            modalDispatch({ type: "HIDE_MODAL" });
+          }}
         />
       )}
     </>

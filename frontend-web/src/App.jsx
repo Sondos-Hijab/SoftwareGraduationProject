@@ -4,7 +4,6 @@ import RootLayout from "./_root/RootLayout";
 import {
   createBrowserRouter,
   RouterProvider,
-  useNavigate,
 } from "react-router-dom";
 import {
   SignupForm,

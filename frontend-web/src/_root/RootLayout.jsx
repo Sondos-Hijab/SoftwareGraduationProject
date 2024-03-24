@@ -4,36 +4,32 @@ import { Outlet, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { useAppContext } from "@/Providers/AppPovider";
 import { fetchImage, fetchInfo } from "@/apis/profileAndBusinessInfo";
+import { isExpired } from "@/utils/utils";
 
 const RootLayout = () => {
   const { handleBusinessNameChange, setFetchedImage, accessToken } =
     useAppContext();
-
   const [showNavbar, setShowNavbar] = useState(false);
-
   const navigate = useNavigate();
 
   useEffect(() => {
-    function isExpired(dateToCheck) {
-      const currentDate = new Date();
-      return currentDate > dateToCheck;
-    }
+    //checking if the user should be directed to sign in page
     if (
       !localStorage.getItem("accessToken") ||
       !localStorage.getItem("expireDate") ||
       isExpired(localStorage.getItem("expireDate"))
     )
       navigate("/auth/sign-in");
-    else console.log("not expired");
+    else {
+      fetchImage(accessToken).then((value) => {
+        setFetchedImage(`data:image/*;base64,${value}`);
+      });
 
-    fetchImage(accessToken).then((value) => {
-      setFetchedImage(`data:image/*;base64,${value}`);
-    });
-
-    fetchInfo(accessToken).then((businessInfo) => {
-      handleBusinessNameChange(businessInfo["name"]);
-      localStorage.setItem("businessName", businessInfo["name"]);
-    });
+      fetchInfo(accessToken).then((businessInfo) => {
+        handleBusinessNameChange(businessInfo["name"]);
+        localStorage.setItem("businessName", businessInfo["name"]);
+      });
+    }
   }, []);
 
   return (

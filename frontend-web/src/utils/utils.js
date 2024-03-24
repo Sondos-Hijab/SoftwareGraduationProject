@@ -39,3 +39,8 @@ export function stringToLocationMarker(location) {
   };
   return locationMarker;
 }
+
+export function isExpired(dateToCheck) {
+  const currentDate = new Date();
+  return currentDate > dateToCheck;
+}

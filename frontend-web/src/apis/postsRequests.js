@@ -39,7 +39,6 @@ export async function fetchPosts(name, accessToken) {
     );
     return response.data;
   } catch (error) {
-    console.error("Error fetching data:", error);
     if (error.response) return error.response.data;
   }
 }
