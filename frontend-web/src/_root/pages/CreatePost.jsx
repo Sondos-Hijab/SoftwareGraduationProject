@@ -13,12 +13,10 @@ const CreatePost = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
 
-  
   //modal showing when an error occurs
   const closeModal = () => {
     setShowModal(false);
   };
-
 
   async function handlePostSubmission(event) {
     event.preventDefault();
@@ -39,7 +37,6 @@ const CreatePost = () => {
         setShowModal(true);
       } else {
         handleReset();
-        console.log(value);
       }
     });
   }

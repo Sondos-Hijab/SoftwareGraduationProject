@@ -17,6 +17,7 @@ class MainFeedbackWidget extends StatelessWidget {
   final double productQualityRating;
   final String createdAt;
   final void Function()? onDelete;
+  final void Function(String username) goToUserPage;
 
   const MainFeedbackWidget({
     super.key,
@@ -31,6 +32,7 @@ class MainFeedbackWidget extends StatelessWidget {
     required this.createdAt,
     required this.me,
     this.onDelete,
+    required this.goToUserPage,
   });
 
   @override
@@ -59,7 +61,11 @@ class MainFeedbackWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  UserInfo(userImage: userImage, username: username),
+                  UserInfo(
+                    userImage: userImage,
+                    username: username,
+                    goToUserPage: goToUserPage,
+                  ),
                   FeedbackImage(feedbackImage: feedbackImage),
                   FeedbackInfo(
                     busineessName: busineessName,

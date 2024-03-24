@@ -22,6 +22,7 @@ abstract class BusinessPagesController extends GetxController {
   getBusinessInfo(String businessName);
   pressFollowUnfollow();
   goToAddFeedbackPage();
+  goToUserPage(String username);
 }
 
 class BusinessPagesControllerImp extends BusinessPagesController {
@@ -188,5 +189,17 @@ class BusinessPagesControllerImp extends BusinessPagesController {
     Get.toNamed(AppRoutes.feedbackFormPage, arguments: {
       'businessName': businessName,
     });
+  }
+
+  @override
+  goToUserPage(String username) {
+    String? myUsername = myServices.sharedPreferences.getString("username");
+
+    if (myUsername == username) {
+      Get.toNamed(AppRoutes.profilePage);
+    } else {
+      Get.toNamed(AppRoutes.otherUserProfilePage,
+          arguments: {'username': username});
+    }
   }
 }

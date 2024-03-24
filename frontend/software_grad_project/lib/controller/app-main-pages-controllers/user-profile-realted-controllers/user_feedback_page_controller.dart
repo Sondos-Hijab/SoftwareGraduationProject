@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:software_grad_project/core/classes/status_request.dart';
+import 'package:software_grad_project/core/constants/routes_names.dart';
 import 'package:software_grad_project/core/functions/convert_data_to_file.dart';
 import 'package:software_grad_project/core/functions/handling_data_function.dart';
 import 'package:software_grad_project/core/services/service.dart';
@@ -10,6 +11,7 @@ import 'package:software_grad_project/data/model/fetched_feedback_model.dart';
 abstract class UserFeedbackPageController extends GetxController {
   getUserFeedback(String username);
   deleteUserFeedback(int feedbackID);
+  goToUserPage(String username);
 }
 
 class UserFeedbackPageControllerImp extends UserFeedbackPageController {
@@ -109,5 +111,10 @@ class UserFeedbackPageControllerImp extends UserFeedbackPageController {
         update();
       }
     }
+  }
+
+  @override
+  goToUserPage(String username) {
+    Get.back();
   }
 }
