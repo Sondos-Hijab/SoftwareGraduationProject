@@ -69,6 +69,9 @@ module.exports = {
           DEFAULT: "#fac100",
           foreground: "#654321",
         },
+        customRed: {
+          DEFAULT: "#d90429",
+        },
       },
 
       keyframes: {
