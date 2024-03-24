@@ -1,29 +1,60 @@
-import React, { useState } from "react";
-import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
+import React, { useState, useReducer } from "react";
+import { PhotoIcon } from "@heroicons/react/24/solid";
 import { createPost } from "@/apis/postsRequests";
 import { useAppContext } from "@/Providers/AppPovider";
 import Modal from "@/helper-components/WarningsErrors/Modal";
 
+const initialState = {
+  picture: null,
+  imageView: null,
+  description: "",
+  showModal: false,
+  modalMessage: "",
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "SET_DESCRIPTION":
+      return { ...state, description: action.payload };
+    case "SET_PICTURE":
+      return { ...state, picture: action.payload };
+    case "SET_IMAGE_VIEW":
+      return { ...state, imageView: action.payload };
+    case "SET_MODAL_MESSAGE":
+      return { ...state, modalMessage: action.payload };
+    case "SHOW_MODAL":
+      return { ...state, showModal: true };
+    case "HIDE_MODAL":
+      return { ...state, showModal: false };
+    case "RESET":
+      return { ...initialState };
+    default:
+      return state;
+  }
+};
+
 const CreatePost = () => {
-  const [picture, setPicture] = useState(null);
-  const [imageView, setImageView] = useState(null);
-  const [description, setDescription] = useState("");
-
+  const [state, dispatch] = useReducer(reducer, initialState);
   const { accessToken } = useAppContext();
-  const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
 
-  //modal showing when an error occurs
   const closeModal = () => {
-    setShowModal(false);
+    dispatch({ type: "HIDE_MODAL" });
+  };
+
+  const handleReset = () => {
+    dispatch({ type: "RESET" });
   };
 
   async function handlePostSubmission(event) {
     event.preventDefault();
 
+    const { picture, description } = state;
     if (!picture || !description) {
-      setModalMessage("Both description and picture fields should be filled");
-      setShowModal(true);
+      dispatch({
+        type: "SET_MODAL_MESSAGE",
+        payload: "Both description and picture fields should be filled",
+      });
+      dispatch({ type: "SHOW_MODAL" });
       return;
     }
 
@@ -33,18 +64,15 @@ const CreatePost = () => {
 
     createPost(accessToken, postInfo).then((value) => {
       if (value.error) {
-        setModalMessage(value.error);
-        setShowModal(true);
+        dispatch({ type: "SET_MODAL_MESSAGE", payload: value.error });
+        dispatch({ type: "SHOW_MODAL" });
       } else {
-        handleReset();
+        //SUCCESS
+        dispatch({ type: "RESET" });
       }
     });
   }
 
-  function handleReset() {
-    setDescription("");
-    setPicture(null);
-  }
   return (
     <>
       <form
@@ -76,8 +104,12 @@ const CreatePost = () => {
                     rows={4}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-customBlue sm:text-sm sm:leading-6"
                     onChange={(event) => {
-                      setDescription(event.target.value);
+                      dispatch({
+                        type: "SET_DESCRIPTION",
+                        payload: event.target.value,
+                      });
                     }}
+                    value={state.description}
                   />
                 </div>
               </div>
@@ -91,12 +123,16 @@ const CreatePost = () => {
                 </label>
 
                 <div className="mt-2 flex flex-col justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-12">
-                  {picture && (
-                    <img src={imageView} width={500} className="mx-auto" />
+                  {state.picture && (
+                    <img
+                      src={state.imageView}
+                      width={500}
+                      className="mx-auto"
+                    />
                   )}
 
                   <div className="text-center">
-                    {!picture && (
+                    {!state.picture && (
                       <PhotoIcon
                         className="mx-auto h-12 w-12 text-gray-300"
                         aria-hidden="true"
@@ -118,8 +154,14 @@ const CreatePost = () => {
                             if (file) {
                               const reader = new FileReader();
                               reader.onloadend = () => {
-                                setPicture(file);
-                                setImageView(reader.result);
+                                dispatch({
+                                  type: "SET_PICTURE",
+                                  payload: file,
+                                });
+                                dispatch({
+                                  type: "SET_IMAGE_VIEW",
+                                  payload: reader.result,
+                                });
                               };
                               reader.readAsDataURL(file);
                             }
@@ -151,10 +193,10 @@ const CreatePost = () => {
           </button>
         </div>
       </form>
-      {showModal && (
+      {state.showModal && (
         <Modal
           title={"Can't create post"}
-          message={modalMessage}
+          message={state.modalMessage}
           onClose={closeModal}
         />
       )}

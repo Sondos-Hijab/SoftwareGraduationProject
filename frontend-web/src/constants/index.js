@@ -32,7 +32,7 @@ export const leftSidebarLinks = [
 
   {
     icon: faComments,
-    route: "/",
+    route: "/chatting",
     label: "Messages",
   },
   {

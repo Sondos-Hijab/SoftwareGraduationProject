@@ -1,58 +1,66 @@
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import emptyPostPicture from "@/assets/images/empty-post.png";
-import React, { useState } from "react";
+import emptyPostPicture from "@/assets/images/empty.png";
+import React, { useReducer } from "react";
 import { useAppContext } from "@/Providers/AppPovider";
 import { deletePost } from "@/apis/postsRequests";
 import Modal from "@/helper-components/WarningsErrors/Modal";
+import { getDatTimeFromString } from "@/_auth/utils/utils";
+
+const initialState = {
+  showModal: false,
+  modalMessage: "",
+  showPost: true,
+  showConfirmDeleteModal: false,
+  showEditDeleteList: false,
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "SHOW_MODAL":
+      return { ...state, showModal: true, modalMessage: action.payload };
+    case "HIDE_MODAL":
+      return { ...state, showModal: false };
+    case "SHOW_CONFIRM_DELETE_MODAL":
+      return { ...state, showConfirmDeleteModal: true };
+    case "HIDE_CONFIRM_DELETE_MODAL":
+      return { ...state, showConfirmDeleteModal: false };
+    case "TOGGLE_EDIT_DELETE_LIST":
+      return { ...state, showEditDeleteList: !state.showEditDeleteList };
+    case "DELETE_POST":
+      return { ...state, showPost: false };
+    default:
+      return state;
+  }
+};
 
 const PostCard = ({ description, picture, createdAt, postID }) => {
+  const { formattedDate, formattedTime } = getDatTimeFromString(createdAt);
   const { accessToken } = useAppContext();
 
-  const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
-  const [showPost, setShowPost] = useState(true);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-  function handleDeletePost() {
+  const handleDeletePost = () => {
     deletePost(postID, accessToken).then((value) => {
       if (value.error) {
-        setModalMessage(value.error);
-        setShowModal(true);
+        dispatch({ type: "SHOW_MODAL", payload: value.error });
       } else {
-        console.log("Deleted successfully!");
-        setShowPost(false);
+        dispatch({ type: "DELETE_POST" });
       }
     });
-  }
-  //modal showing when an error occurs
+  };
+
   const closeModal = () => {
-    setShowModal(false);
+    dispatch({ type: "HIDE_MODAL" });
   };
-  const [showEditDeleteList, setShowEditDeleteList] = useState(false);
-  // Get current date and time
-  const currentDate = new Date(createdAt);
 
-  // Format date as "dd-mmm-yyyy"
-  const optionsDate = { day: "2-digit", month: "short", year: "numeric" };
-  const formattedDate = currentDate
-    .toLocaleDateString("en-US", optionsDate)
-    .replace(/,/g, "");
-
-  // Format time as "hh:mm:ss"
-  const optionsTime = {
-    hour12: false,
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  };
-  const formattedTime = currentDate.toLocaleTimeString("en-US", optionsTime);
   return (
     <>
-      {showPost && (
+      {state.showPost && (
         <article className="relative overflow-hidden rounded-lg border border-gray-100 bg-white shadow-sm mb-5">
           <a
             onClick={() => {
-              setShowEditDeleteList(!showEditDeleteList);
+              dispatch({ type: "TOGGLE_EDIT_DELETE_LIST" });
             }}
             className="absolute right-4 top-4 bg-customYellow inline-flex items-center justify-center w-8 h-8 rounded-full cursor-pointer"
           >
@@ -63,12 +71,14 @@ const PostCard = ({ description, picture, createdAt, postID }) => {
           </a>
           <ul
             className={`${
-              showEditDeleteList ? "block " : "hidden "
+              state.showEditDeleteList ? "block " : "hidden "
             } absolute bg-white py-2 px-6 rounded-md top-8 right-8 shadow-md`}
           >
             <li
               className="border-b-2 p-2 cursor-pointer"
-              onClick={handleDeletePost}
+              onClick={() => {
+                dispatch({ type: "SHOW_CONFIRM_DELETE_MODAL" });
+              }}
             >
               Delete Post
             </li>
@@ -92,12 +102,37 @@ const PostCard = ({ description, picture, createdAt, postID }) => {
           </div>
         </article>
       )}
-      {showModal && (
+      {state.showModal && (
         <Modal
           title={"Can't delete post"}
-          message={modalMessage}
+          message={state.modalMessage}
           onClose={closeModal}
         />
+      )}
+
+      {state.showConfirmDeleteModal && (
+        <div class="flex justify-center items-center absolute top-0 right-0 bottom-0 left-0">
+          <div class="bg-white px-16 py-14 rounded-md text-center">
+            <h1 class="text-xl mb-4 font-bold text-slate-500">
+              Are you sure you want to delete this post?
+            </h1>
+            <button
+              class="bg-customRed px-4 py-2 rounded-md text-md text-white"
+              onClick={() => {
+                dispatch({ type: "HIDE_CONFIRM_DELETE_MODAL" });
+                dispatch({ type: "TOGGLE_EDIT_DELETE_LIST" });
+              }}
+            >
+              Cancel
+            </button>
+            <button
+              class="bg-customBlue px-7 py-2 ml-2 rounded-md text-md text-white font-semibold"
+              onClick={handleDeletePost}
+            >
+              Yes
+            </button>
+          </div>
+        </div>
       )}
     </>
   );
