@@ -1,13 +1,12 @@
 import { useState, useReducer } from "react";
 import logo from "../../assets/images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
-import styles from "./Form.module.css";
 import { hasMinLength } from "@/utils/validation";
 import Modal from "@/helper-components/WarningsErrors/Modal";
 import { signin } from "@/apis/authRequests";
 import { useAppContext } from "@/Providers/AppPovider";
 import { getExpireDate } from "@/utils/utils";
-
+import { styles } from "./FormStyles";
 const initialModalState = {
   showModal: false,
   modalMessage: "",
@@ -24,16 +23,17 @@ const modalReducer = (state, action) => {
   }
 };
 
-
 export default function SigninForm() {
   const { setFetchedAccessToken } = useAppContext();
   const navigate = useNavigate();
-  const [modalState, modalDispatch] = useReducer(modalReducer, initialModalState);
+  const [modalState, modalDispatch] = useReducer(
+    modalReducer,
+    initialModalState
+  );
 
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [canSubmit, setCanSubmit] = useState(false);
-
 
   async function submitSigninData(event) {
     signin(event).then((response) => {
@@ -54,18 +54,19 @@ export default function SigninForm() {
 
   return (
     <>
-      <div className={styles["form-container"]}>
-        <div className={styles["header-info-container"]}>
+      <div className={styles.formContainer}>
+        <div className={styles.headerInfoContainer}>
           <img src={logo} alt="RateRelay" />
-          <h2>Sign in to your account</h2>
+          <h2 className={styles.title}>Sign in to your account</h2>
         </div>
 
-        <div className={styles["form-container"]}>
+        <div className={styles.formContainer}>
           <form className={styles.form} onSubmit={submitSigninData}>
-            <div className={styles["input-container"]}>
+            <div className={styles.inputContainer}>
               <label htmlFor="username">Username</label>
-              <div>
+              <div className={styles.inputContainer}>
                 <input
+                  className={styles.input}
                   id="username"
                   name="username"
                   type="text"
@@ -89,10 +90,11 @@ export default function SigninForm() {
               {usernameError && <p className={styles.error}>{usernameError}</p>}
             </div>
 
-            <div className={styles["input-container"]}>
+            <div className={styles.inputContainer}>
               <label htmlFor="password">Password</label>
               <div>
                 <input
+                  className={styles.input}
                   id="password"
                   name="password"
                   type="password"
@@ -116,8 +118,8 @@ export default function SigninForm() {
               {passwordError && <p className={styles.error}>{passwordError}</p>}
             </div>
 
-            <div className={styles["flex-end"]}>
-              <Link to="/auth/confirm-email" className={styles["link-text"]}>
+            <div className={styles.flexEnd}>
+              <Link to="/auth/confirm-email" className={styles.linkText}>
                 Forgot password?
               </Link>
             </div>
@@ -136,7 +138,7 @@ export default function SigninForm() {
             <Link
               to="/auth/sign-up"
               relative="route"
-              className={styles["link-text"]}
+              className={styles.linkText}
             >
               {" "}
               Go to Sign up

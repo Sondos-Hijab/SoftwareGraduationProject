@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import logo from "../../assets/images/logo.png";
-import styles from "./Form.module.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { hasMinLength } from "@/utils/validation";
+import { styles } from "./FormStyles";
 const BusinessInfoForm = () => {
   //routing variables
   const location = useLocation();
@@ -54,18 +54,19 @@ const BusinessInfoForm = () => {
   }
 
   return (
-    <div className={styles["form-container"]}>
-      <div className={styles["header-info-container"]}>
+    <div className={styles.formContainer}>
+      <div className={styles.headerInfoContainer}>
         <img src={logo} alt="RateRelay" />
-        <h2>Enter your business Information</h2>
+        <h2 className={styles.title}>Enter your business Information</h2>
       </div>
 
-      <div className={styles["form-container"]}>
-        <form className={styles.form} action="#" method="POST">
-          <div className={styles["input-container"]}>
+      <div className={styles.formContainer}>
+        <form className={styles.form} method="POST">
+          <div className={styles.inputContainer}>
             <label htmlFor="businessName">Business name</label>
             <div>
               <input
+                className={styles.input}
                 id="businessName"
                 name="businessName"
                 type="text"
@@ -86,14 +87,15 @@ const BusinessInfoForm = () => {
               />
             </div>
             {businessNameError && (
-              <p className={styles["error"]}>{businessNameError}</p>
+              <p className={styles.error}>{businessNameError}</p>
             )}
           </div>
 
-          <div className={styles["input-container"]}>
+          <div className={styles.inputContainer}>
             <label htmlFor="phoneNumber">Phone number</label>
             <div>
               <input
+                className={styles.input}
                 id="phoneNumber"
                 name="phoneNumber"
                 type="number"
@@ -117,14 +119,15 @@ const BusinessInfoForm = () => {
               />
             </div>
             {phoneNumberError && (
-              <p className={styles["error"]}>{phoneNumberError}</p>
+              <p className={styles.error}>{phoneNumberError}</p>
             )}
           </div>
 
-          <div className={styles["input-container"]}>
+          <div className={styles.inputContainer}>
             <label htmlFor="description">Description</label>
             <div>
               <textarea
+                className={styles.input}
                 id="description"
                 name="description"
                 type="text"
@@ -148,7 +151,7 @@ const BusinessInfoForm = () => {
               />
             </div>
             {descriptionError && (
-              <p className={styles["error"]}>{descriptionError}</p>
+              <p className={styles.error}>{descriptionError}</p>
             )}
           </div>
 
@@ -168,14 +171,14 @@ const BusinessInfoForm = () => {
                         setCategory(event.target.value);
                       }}
                     />
-                    <label htmlFor={cat}>{cat}</label>
+                    <label className={styles.categoryLabel} htmlFor={cat}>
+                      {cat}
+                    </label>
                   </div>
                 )
               )}
             </div>
-            {categoryError && (
-              <p className={styles["error"]}>{categoryError}</p>
-            )}
+            {categoryError && <p className={styles.error}>{categoryError}</p>}
           </div>
 
           <button
@@ -187,9 +190,9 @@ const BusinessInfoForm = () => {
           </button>
         </form>
 
-        <p className={styles["paragraph-text"]}>
+        <p>
           Already have an account?{" "}
-          <Link to="/auth/sign-in" className={styles["link-text"]}>
+          <Link to="/auth/sign-in" className={styles.linkText}>
             Go to Sign in
           </Link>
         </p>

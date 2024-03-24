@@ -1,10 +1,9 @@
 "use client";
 import logo from "../../../assets/images/logo.png";
-import styles from "../Form.module.css";
 import { useState } from "react";
 import Modal from "@/helper-components/WarningsErrors/Modal";
 import { useNavigate } from "react-router-dom";
-
+import { styles } from "../FormStyles";
 import {
   InputOTP,
   InputOTPGroup,
@@ -48,14 +47,16 @@ export default function InputOTPControlled() {
 
   return (
     <>
-      <div className={styles["form-container-otp"]}>
-        <div className={styles["header-info-container"]}>
+      <div className={styles.formContainerOTP}>
+        <div className={styles.headerInfoContainer}>
           <img src={logo} alt="RateRelay" />
-          <h2>Type the OTP code that we sent you through the email</h2>
+          <h2 className={styles.title}>
+            Type the OTP code that we sent you through the email
+          </h2>
         </div>
 
-        <div className={styles["inner-form-container"]}>
-          <div className={styles["form"]}>
+        <div className={styles.innerFormContainer}>
+          <div className={styles.form}>
             <InputOTP
               className="my-5"
               maxLength={5}
@@ -77,15 +78,14 @@ export default function InputOTPControlled() {
               <>You entered: {value}</>
             )}
           </div>
-
-          <button
-            type="submit"
-            className={styles["button"]}
-            onClick={handleSubmitOTP}
-          >
-            Submit
-          </button>
         </div>
+        <button
+          type="submit"
+          className={styles.otpButton}
+          onClick={handleSubmitOTP}
+        >
+          Submit
+        </button>
       </div>
       {showModal && (
         <Modal
