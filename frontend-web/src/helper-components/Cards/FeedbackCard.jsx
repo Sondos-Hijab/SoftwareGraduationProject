@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import placeholderUserPicture from "@/assets/images/placeholder.png";
 import emptyFeedbackPicture from "@/assets/images/empty.png";
 import React from "react";
-import { createBlobUrl, getDatTimeFromString } from "@/_auth/utils/utils";
+import { createBlobUrl, getDatTimeFromString } from "@/utils/utils";
 
 const FeedbackCard = ({ feedInfo }) => {
   const { formattedDate, formattedTime } = getDatTimeFromString(

@@ -6,7 +6,7 @@ import {
   hasMinLength,
   isEmail,
   isEqualsToOtherValue,
-} from "@/_auth/utils/validation";
+} from "@/utils/validation";
 export default function SignupForm() {
   //routing variables
   const navigate = useNavigate();

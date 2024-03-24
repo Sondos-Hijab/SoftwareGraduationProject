@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "@/helper-components/WarningsErrors/Modal";
 import styles from "../Form.module.css";
-import { hasMinLength, isEqualsToOtherValue } from "@/_auth/utils/validation";
+import { hasMinLength, isEqualsToOtherValue } from "@/utils/validation";
 import { resetPassword } from "@/apis/authRequests";
 
 const ResetPasswordForm = () => {

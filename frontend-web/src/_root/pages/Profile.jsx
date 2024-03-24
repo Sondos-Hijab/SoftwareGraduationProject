@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import LocationView from "@/helper-components/Location/LocationView";
@@ -7,6 +7,7 @@ import EditPhoneNumberModal from "@/helper-components/EditBusinessInfo/EditPhone
 import EditBusinessDescriptionModal from "@/helper-components/EditBusinessInfo/EditBusinessDescriptionModel";
 import EditBusinessLocationModal from "@/helper-components/EditBusinessInfo/EditBusinessLocationModal";
 import { fetchInfo } from "@/apis/profileAndBusinessInfo";
+import { stringToLocationMarker } from "@/utils/utils";
 
 const Profile = () => {
   const [businessPhoneNumber, setBusinessPhoneNumber] = useState(0);
@@ -32,16 +33,7 @@ const Profile = () => {
       setBusinessDescription(businessInfo["description"]);
       setBusinessPhoneNumber(businessInfo["phoneNumber"]);
       setBusinessCategory(businessInfo["category"]);
-
-      //handling location to set a marker
-      const locationParts = businessInfo["location"]
-        .split(/[,:]/)
-        .map((part) => part.trim());
-      const locationMarker = {
-        lat: parseFloat(locationParts[1]),
-        lng: parseFloat(locationParts[3]),
-      };
-      setBusinessLocation(locationMarker);
+      setBusinessLocation(stringToLocationMarker(businessInfo["location"]));
     });
   }, []);
 

@@ -5,7 +5,7 @@ import React, { useReducer } from "react";
 import { useAppContext } from "@/Providers/AppPovider";
 import { deletePost } from "@/apis/postsRequests";
 import Modal from "@/helper-components/WarningsErrors/Modal";
-import { getDatTimeFromString } from "@/_auth/utils/utils";
+import { getDatTimeFromString } from "@/utils/utils";
 
 const initialState = {
   showModal: false,

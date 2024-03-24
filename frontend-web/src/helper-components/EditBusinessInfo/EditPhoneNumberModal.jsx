@@ -1,5 +1,5 @@
 import { useAppContext } from "@/Providers/AppPovider";
-import { hasMinLength } from "@/_auth/utils/validation";
+import { hasMinLength } from "@/utils/validation";
 import { updateInfo } from "@/apis/profileAndBusinessInfo";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,7 +11,7 @@ const EditPhoneNumberModal = ({
   setBusinessPhoneNumber,
 }) => {
   const [canSubmit, setCanSubmit] = useState(false);
-  
+
   const [error, setError] = useState("");
 
   const { accessToken } = useAppContext();

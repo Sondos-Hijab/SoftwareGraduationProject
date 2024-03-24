@@ -2,11 +2,11 @@ import { useState } from "react";
 import logo from "../../assets/images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./Form.module.css";
-import { hasMinLength } from "@/_auth/utils/validation";
+import { hasMinLength } from "@/utils/validation";
 import Modal from "@/helper-components/WarningsErrors/Modal";
 import { signin } from "@/apis/authRequests";
 import { useAppContext } from "@/Providers/AppPovider";
-import { getExpireDate } from "@/_auth/utils/utils";
+import { getExpireDate } from "@/utils/utils";
 
 export default function SigninForm({}) {
   const navigate = useNavigate();

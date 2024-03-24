@@ -22,6 +22,7 @@ import {
   Posts,
   FeedbackPage,
   Chatting,
+  Notifications,
 } from "./_root/pages";
 import Error from "./helper-components/WarningsErrors/Error";
 import AppPovider from "./Providers/AppPovider";
@@ -37,6 +38,7 @@ function App() {
         { path: "create-post", element: <CreatePost /> },
         { path: "posts", element: <Posts /> },
         { path: "feedback/:id", element: <FeedbackPage /> },
+        { path: "notifications", element: <Notifications /> },
       ],
     },
     {
