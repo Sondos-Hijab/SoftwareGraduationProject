@@ -2,10 +2,9 @@ import logo from "../../../assets/images/logo.png";
 import { useState, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "@/helper-components/WarningsErrors/Modal";
-import styles from "../Form.module.css";
 import { hasMinLength, isEqualsToOtherValue } from "@/utils/validation";
 import { resetPassword } from "@/apis/authRequests";
-
+import { styles } from "../FormStyles";
 const initialModalState = {
   showModal: false,
   modalMessage: "",
@@ -68,18 +67,19 @@ const ResetPasswordForm = () => {
 
   return (
     <>
-      <div className={styles["form-container"]}>
-        <div className={styles["header-info-container"]}>
+      <div className={styles.formContainer}>
+        <div className={styles.headerInfoContainer}>
           <img src={logo} alt="RateRelay" />
           <h2>Reset your password</h2>
         </div>
 
-        <div className={styles["form-container"]}>
+        <div className={styles.formContainer}>
           <form className={styles.form} method="POST" onSubmit={handleSubmit}>
-            <div className={styles["input-container"]}>
+            <div className={styles.inputContainer}>
               <label htmlFor="password">Password</label>
               <div>
                 <input
+                  className={styles.input}
                   id="password"
                   name="password"
                   type="password"
@@ -105,10 +105,11 @@ const ResetPasswordForm = () => {
               {passwordError && <p className={styles.error}>{passwordError}</p>}
             </div>
 
-            <div className={styles["input-container"]}>
+            <div className={styles.inputContainer}>
               <label htmlFor="confirmPassword">Confirm Password</label>
               <div>
                 <input
+                  className={styles.input}
                   id="confirmPassword"
                   name="confirmPassword"
                   type="password"

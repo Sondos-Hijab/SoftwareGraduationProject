@@ -3,8 +3,8 @@ import logo from "../../assets/images/logo.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import LocationForm from "@/helper-components/Location/LocationForm";
 import Modal from "@/helper-components/WarningsErrors/Modal";
-import styles from "./Form.module.css";
 import { signup } from "@/apis/authRequests";
+import { styles } from "./FormStyles";
 
 const initialModalState = {
   showModal: false,
@@ -69,14 +69,14 @@ const LocationInfoForm = () => {
 
   return (
     <>
-      <div className={styles["form-container"]}>
+      <div className={styles.formContainer}>
         <div className={styles["header-info-container"]}>
           <img src={logo} alt="RateRelay" />
           <h2>Enter your business location</h2>
         </div>
 
-        <div className={styles["form-container"]}>
-          <form className={styles.form} action="#" method="POST">
+        <div className={styles.formContainer}>
+          <form className={styles.form} method="POST">
             <LocationForm
               handleMapClick={handleMapClick}
               selectedMarker={selectedMarker}
@@ -96,7 +96,7 @@ const LocationInfoForm = () => {
 
           <p className={styles["paragraph-text"]}>
             Already have an account?{" "}
-            <Link to="/auth/sign-in" className={styles["link-text"]}>
+            <Link to="/auth/sign-in" className={styles.linkText}>
               Go to Sign in
             </Link>
           </p>

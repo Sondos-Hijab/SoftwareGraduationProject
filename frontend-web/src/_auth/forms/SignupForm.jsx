@@ -1,7 +1,8 @@
 import { useState } from "react";
 import logo from "../../assets/images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
-import styles from "./Form.module.css";
+// import styles from "./Form.module.css";
+import { styles } from "./FormStyles";
 import {
   hasMinLength,
   isEmail,
@@ -45,18 +46,19 @@ export default function SignupForm() {
   }
 
   return (
-    <div className={styles["form-container"]}>
-      <div className={styles["header-info-container"]}>
+    <div className={styles.formContainer}>
+      <div className={styles.headerInfoContainer}>
         <img src={logo} alt="RateRelay" />
-        <h2>Sign up your business</h2>
+        <h2 className={styles.title}>Sign up your business</h2>
       </div>
 
-      <div className={styles["form-container"]}>
-        <form className={styles.form} action="#" method="POST">
-          <div className={styles["input-container"]}>
+      <div className={styles.formContainer}>
+        <form className={styles.form} method="POST">
+          <div className={styles.inputContainer}>
             <label htmlFor="email">Email address</label>
             <div>
               <input
+                className={styles.input}
                 id="email"
                 name="email"
                 type="email"
@@ -79,10 +81,11 @@ export default function SignupForm() {
             </div>
             {emailError && <p className={styles.error}>{emailError}</p>}
           </div>
-          <div className={styles["input-container"]}>
+          <div className={styles.inputContainer}>
             <label htmlFor="username">Username</label>
             <div className="mt-2">
               <input
+                className={styles.input}
                 id="username"
                 name="username"
                 type="text"
@@ -107,10 +110,11 @@ export default function SignupForm() {
             {usernameError && <p className={styles.error}>{usernameError}</p>}
           </div>
 
-          <div className={styles["input-container"]}>
+          <div className={styles.inputContainer}>
             <label htmlFor="password">Password</label>
             <div className="mt-2">
               <input
+                className={styles.input}
                 id="password"
                 name="password"
                 type="password"
@@ -135,10 +139,11 @@ export default function SignupForm() {
             {passwordError && <p className={styles.error}>{passwordError}</p>}
           </div>
 
-          <div className={styles["input-container"]}>
+          <div className={styles.inputContainer}>
             <label htmlFor="confirmPassword">Confirm Password</label>
             <div className="mt-2">
               <input
+                className={styles.input}
                 id="confirmPassword"
                 name="confirmPassword"
                 type="password"
@@ -175,7 +180,7 @@ export default function SignupForm() {
 
         <p className={styles["paragraph-text"]}>
           Already have an account?
-          <Link className={styles["link-text"]} to="/auth/sign-in">
+          <Link className={styles.linkText} to="/auth/sign-in">
             {" "}
             Go to Sign in
           </Link>

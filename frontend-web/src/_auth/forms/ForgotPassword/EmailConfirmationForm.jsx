@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import logo from "../../../assets/images/logo.png";
-import styles from "../Form.module.css";
+import { styles } from "../FormStyles";
 import { isEmail } from "@/utils/validation";
 import Modal from "@/helper-components/WarningsErrors/Modal";
 import { useNavigate } from "react-router-dom";
@@ -41,18 +41,21 @@ const EmailConfirmationForm = () => {
   };
   return (
     <>
-      <div className={styles["form-container"]}>
-        <div className={styles["header-info-container"]}>
+      <div className={styles.formContainer}>
+        <div className={styles.headerInfoContainer}>
           <img src={logo} alt="RateRelay" />
-          <h2>Type your email so we can send you an OTP code</h2>
+          <h2 className={styles.title}>
+            Type your email so we can send you an OTP code
+          </h2>
         </div>
 
-        <div className={styles["form-container"]}>
+        <div className={styles.formContainer}>
           <form className={styles.form} method="POST" onSubmit={handleSubmit}>
-            <div className={styles["input-container"]}>
+            <div className={styles.inputContainer}>
               <label htmlFor="email">Email address</label>
               <div>
                 <input
+                  className={styles.input}
                   id="email"
                   name="email"
                   type="email"
