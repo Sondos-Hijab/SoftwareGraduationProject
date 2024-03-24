@@ -31,6 +31,15 @@ class FeedbackFormPage extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                "Write a feedback for ${controller.businessName}",
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                    color: AppColors.primaryDarkBlue, fontSize: 18),
+              ),
+            ),
             FeedbackDescriptionTextArea(
               feedbackTextEditingController:
                   controller.feedbackTextEditingController,

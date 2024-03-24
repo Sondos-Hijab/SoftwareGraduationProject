@@ -25,7 +25,7 @@ class RatingColumnFeedback extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "$rating/5",
+                "$rating/5.0",
                 style: const TextStyle(color: AppColors.grey, fontSize: 14),
               ),
               const SizedBox(width: 4),

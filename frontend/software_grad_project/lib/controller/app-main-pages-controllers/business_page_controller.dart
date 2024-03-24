@@ -55,8 +55,6 @@ class BusinessPagesControllerImp extends BusinessPagesController {
     businessName = arguments['businessName'];
     businessImage = arguments['businessImage'];
     getBusinessInfo(businessName!);
-    getPosts(businessName!);
-    getFeedback(businessName!);
     super.onInit();
   }
 
@@ -189,7 +187,6 @@ class BusinessPagesControllerImp extends BusinessPagesController {
   goToAddFeedbackPage() {
     Get.toNamed(AppRoutes.feedbackFormPage, arguments: {
       'businessName': businessName,
-      'businessImage': businessImage
     });
   }
 }
