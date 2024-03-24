@@ -27,3 +27,9 @@ export function getExpireDate() {
   expirationDate.setHours(expirationDate.getHours() + 24);
   return expirationDate;
 }
+
+export function createBlobUrl(data) {
+  const uint8Array = new Uint8Array(data);
+  const blob = new Blob([uint8Array], { type: "image/*" });
+  return URL.createObjectURL(blob);
+}

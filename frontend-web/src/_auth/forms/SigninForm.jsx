@@ -6,7 +6,7 @@ import { hasMinLength } from "@/_auth/utils/validation";
 import Modal from "@/helper-components/WarningsErrors/Modal";
 import { signin } from "@/apis/authRequests";
 import { useAppContext } from "@/Providers/AppPovider";
-import { getExpireDate } from "@/utils";
+import { getExpireDate } from "@/_auth/utils/utils";
 
 export default function SigninForm({}) {
   const navigate = useNavigate();

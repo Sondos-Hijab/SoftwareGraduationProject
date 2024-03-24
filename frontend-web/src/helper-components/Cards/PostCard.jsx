@@ -1,11 +1,11 @@
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import emptyPostPicture from "@/assets/images/empty-post.png";
+import emptyPostPicture from "@/assets/images/empty.png";
 import React, { useReducer } from "react";
 import { useAppContext } from "@/Providers/AppPovider";
 import { deletePost } from "@/apis/postsRequests";
 import Modal from "@/helper-components/WarningsErrors/Modal";
-import { getDatTimeFromString } from "@/utils";
+import { getDatTimeFromString } from "@/_auth/utils/utils";
 
 const initialState = {
   showModal: false,

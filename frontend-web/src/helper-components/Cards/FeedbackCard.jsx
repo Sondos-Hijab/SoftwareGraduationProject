@@ -1,9 +1,23 @@
-import { faEllipsisVertical, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import userPicture from "@/assets/images/user.jpg";
+import placeholderUserPicture from "@/assets/images/placeholder.png";
+import emptyFeedbackPicture from "@/assets/images/empty.png";
 import React from "react";
+import { createBlobUrl, getDatTimeFromString } from "@/_auth/utils/utils";
 
-const FeedbackCard = () => {
+const FeedbackCard = ({ feedInfo }) => {
+  const { formattedDate, formattedTime } = getDatTimeFromString(
+    feedInfo["created_at"]
+  );
+
+  const userProfilePicture = feedInfo.userProfilePicture
+    ? createBlobUrl(feedInfo.userProfilePicture.data)
+    : placeholderUserPicture;
+
+  const feedbackPicture = feedInfo.picture
+    ? createBlobUrl(feedInfo.picture.data)
+    : emptyFeedbackPicture;
+
   return (
     <>
       <div className="mb-4 block rounded-lg p-4 shadow-md shadow-gray-200 ">
@@ -14,9 +28,11 @@ const FeedbackCard = () => {
               <dd className="flex font-medium text-customGreen">
                 <img
                   className="w-12 h-12 object-cover rounded-full"
-                  src={userPicture}
+                  src={userProfilePicture}
                 />
-                <p className="flex flex-wrap content-center ml-2">Username</p>
+                <p className="flex flex-wrap content-center ml-2">
+                  {feedInfo["userName"]}
+                </p>
               </dd>
               <button
                 type="button"
@@ -29,65 +45,43 @@ const FeedbackCard = () => {
 
           <img
             alt=""
-            src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            src={feedbackPicture}
             className="mt-2 h-96 w-full rounded-md object-cover"
           />
-
+          <div className="flex flex-1 justify-between mt-5">
+            <p className="text-customBlue">Date: {formattedDate}</p>
+            <p className="text-customBlue">Time: {formattedTime}</p>
+          </div>
           <dl className="mt-2">
             <div>
               <dt className="sr-only">Description</dt>
 
-              <dd className="text-sm text-gray-500">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Laboriosam, hic in esse placeat quis modi reiciendis nobis,
-                voluptatum sed animi, ducimus ipsum! Dolorum voluptates
-                asperiores, eligendi quas eos exercitationem animi!
-              </dd>
+              <dd className="text-sm text-gray-500">{feedInfo["text"]}</dd>
             </div>
           </dl>
 
           <div className="mt-6 flex flex-wrap justify-start gap-8 text-xs flex-col sm:flex-row sm:justify-around ">
-            <div className="sm:inline-flex sm:shrink-0 sm:items-center sm:gap-2">
-              <FontAwesomeIcon
-                className="text-customYellow text-lg"
-                icon={faStar}
-              />
+            {[
+              "Customer Service Rate",
+              "Value Of Money Rate",
+              "Product/Service Quality Rate",
+            ].map((item, index) => {
+              return (
+                <div className="sm:inline-flex sm:shrink-0 sm:items-center sm:gap-2">
+                  <FontAwesomeIcon
+                    className="text-customYellow text-lg"
+                    icon={faStar}
+                  />
 
-              <div className="mt-1.5 sm:mt-0">
-                <p className="text-customPurple font-semibold">
-                  Customer Service Rate
-                </p>
-                <p className="font-medium">2/5</p>
-              </div>
-            </div>
-
-            <div className="sm:inline-flex sm:shrink-0 sm:items-center sm:gap-2">
-              <FontAwesomeIcon
-                className="text-customYellow text-lg"
-                icon={faStar}
-              />
-
-              <div className="mt-1.5 sm:mt-0">
-                <p className="text-customPurple font-semibold">
-                  Value Of Money Rate
-                </p>
-                <p className="font-medium">4/5</p>
-              </div>
-            </div>
-
-            <div className="sm:inline-flex sm:shrink-0 sm:items-center sm:gap-2">
-              <FontAwesomeIcon
-                className="text-customYellow text-lg"
-                icon={faStar}
-              />
-
-              <div className="mt-1.5 sm:mt-0">
-                <p className="text-customPurple font-semibold">
-                  Product/Service Quality Rate
-                </p>
-                <p className="font-medium">5/5</p>
-              </div>
-            </div>
+                  <div className="mt-1.5 sm:mt-0">
+                    <p className="text-customPurple font-semibold">{item}</p>
+                    <p className="font-medium">{`${parseFloat(
+                      feedInfo[`rate${index + 1}`]
+                    )} / 5.0`}</p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
