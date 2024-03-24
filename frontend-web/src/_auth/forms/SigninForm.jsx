@@ -1,35 +1,47 @@
-import { useState } from "react";
+import { useState, useReducer } from "react";
 import logo from "../../assets/images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./Form.module.css";
-import { hasMinLength } from "@/_auth/utils/validation";
+import { hasMinLength } from "@/utils/validation";
 import Modal from "@/helper-components/WarningsErrors/Modal";
 import { signin } from "@/apis/authRequests";
 import { useAppContext } from "@/Providers/AppPovider";
-import { getExpireDate } from "@/_auth/utils/utils";
+import { getExpireDate } from "@/utils/utils";
 
-export default function SigninForm({}) {
+const initialModalState = {
+  showModal: false,
+  modalMessage: "",
+};
+
+const modalReducer = (state, action) => {
+  switch (action.type) {
+    case "SHOW_MODAL":
+      return { ...state, showModal: true, modalMessage: action.payload };
+    case "HIDE_MODAL":
+      return { ...state, showModal: false };
+    default:
+      return state;
+  }
+};
+
+
+export default function SigninForm() {
+  const { setFetchedAccessToken } = useAppContext();
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
-  //state management and validation
+  const [modalState, modalDispatch] = useReducer(modalReducer, initialModalState);
+
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [canSubmit, setCanSubmit] = useState(false);
 
-  //app context
-  const { setFetchedAccessToken } = useAppContext();
-
-  //modal showing when an error occurs
-  const closeModal = () => {
-    setShowModal(false);
-  };
 
   async function submitSigninData(event) {
     signin(event).then((response) => {
       if (response.error) {
-        setModalMessage("There was a problem signing in: " + response.error);
-        setShowModal(true);
+        modalDispatch({
+          type: "SHOW_MODAL",
+          payload: "There was a problem signing in: " + response.error,
+        });
       } else {
         localStorage.setItem("accessToken", response.accessToken);
         localStorage.setItem("refreshToken", response.refreshToken);
@@ -132,11 +144,13 @@ export default function SigninForm({}) {
           </p>
         </div>
       </div>
-      {showModal && (
+      {modalState.showModal && (
         <Modal
           title="Can't Sign Your Business In"
-          message={modalMessage}
-          onClose={closeModal}
+          message={modalState.modalMessage}
+          onClose={() => {
+            modalDispatch({ type: "HIDE_MODAL" });
+          }}
         />
       )}
     </>

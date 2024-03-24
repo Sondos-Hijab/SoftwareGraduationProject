@@ -1,13 +1,10 @@
 export function getDatTimeFromString(createdAt) {
-  // Get current date and time
   const currentDate = new Date(createdAt);
-
   // Format date as "dd-mmm-yyyy"
   const optionsDate = { day: "2-digit", month: "short", year: "numeric" };
   const formattedDate = currentDate
     .toLocaleDateString("en-US", optionsDate)
     .replace(/,/g, "");
-
   // Format time as "hh:mm:ss"
   const optionsTime = {
     hour12: false,
@@ -16,7 +13,6 @@ export function getDatTimeFromString(createdAt) {
     second: "2-digit",
   };
   const formattedTime = currentDate.toLocaleTimeString("en-US", optionsTime);
-
   return { formattedDate, formattedTime };
 }
 
@@ -32,4 +28,19 @@ export function createBlobUrl(data) {
   const uint8Array = new Uint8Array(data);
   const blob = new Blob([uint8Array], { type: "image/*" });
   return URL.createObjectURL(blob);
+}
+
+export function stringToLocationMarker(location) {
+  //handling location to set a marker
+  const locationParts = location.split(/[,:]/).map((part) => part.trim());
+  const locationMarker = {
+    lat: parseFloat(locationParts[1]),
+    lng: parseFloat(locationParts[3]),
+  };
+  return locationMarker;
+}
+
+export function isExpired(dateToCheck) {
+  const currentDate = new Date();
+  return currentDate > dateToCheck;
 }

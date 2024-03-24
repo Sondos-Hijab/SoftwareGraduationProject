@@ -1,31 +1,42 @@
 import { fetchFeedback } from "@/apis/feedbackRequests";
 import FeedbackCard from "@/helper-components/Cards/FeedbackCard";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import Modal from "@/helper-components/WarningsErrors/Modal";
 import { useAppContext } from "@/Providers/AppPovider";
 
-const Home = () => {
-  const [feedback, setFeedback] = useState([]);
-  const { accessToken, businessName } = useAppContext();
+const initialModalState = {
+  showModal: false,
+  modalMessage: "",
+};
 
-  const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
+const modalReducer = (state, action) => {
+  switch (action.type) {
+    case "SHOW_MODAL":
+      return { ...state, showModal: true, modalMessage: action.payload };
+    case "HIDE_MODAL":
+      return { ...state, showModal: false };
+    default:
+      return state;
+  }
+};
+
+const Home = () => {
+  const { accessToken, businessName } = useAppContext();
+  const [feedback, setFeedback] = useState([]);
+  const [modalState, modalDispatch] = useReducer(
+    modalReducer,
+    initialModalState
+  );
 
   useEffect(() => {
     fetchFeedback(businessName, accessToken).then((value) => {
       if (value?.error) {
-        setModalMessage(value.error);
-        setShowModal(true);
+        modalDispatch({ type: "SHOW_MODAL", payload: value.error });
       } else {
         setFeedback(value.feedback);
-        console.log(feedback);
       }
     });
   }, [feedback]);
-
-  const closeModal = () => {
-    setShowModal(false);
-  };
 
   return (
     <>
@@ -38,11 +49,13 @@ const Home = () => {
         })}
       </div>
 
-      {showModal && (
+      {modalState.showModal && (
         <Modal
           title={"Can't get feedback"}
-          message={modalMessage}
-          onClose={closeModal}
+          message={modalState.modalMessage}
+          onClose={() => {
+            modalDispatch({ type: "HIDE_MODAL" });
+          }}
         />
       )}
     </>

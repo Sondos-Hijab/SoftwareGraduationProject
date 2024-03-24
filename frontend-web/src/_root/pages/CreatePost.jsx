@@ -76,12 +76,12 @@ const CreatePost = () => {
   return (
     <>
       <form
-        className="flex flex-1 flex-col px-36 py-14"
+        className="flex flex-1 flex-col px-10 md:px-20 lg:px-44 py-12"
         onSubmit={handlePostSubmission}
       >
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-xl font-bold leading-7 text-customBlue">
+            <h2 className="text-2xl font-bold leading-7 text-customPurple mb-5">
               Create Post
             </h2>
             <p className="mt-1 text-sm leading-6 text-gray-600">

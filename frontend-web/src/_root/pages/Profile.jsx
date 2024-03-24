@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import LocationView from "@/helper-components/Location/LocationView";
@@ -7,41 +7,96 @@ import EditPhoneNumberModal from "@/helper-components/EditBusinessInfo/EditPhone
 import EditBusinessDescriptionModal from "@/helper-components/EditBusinessInfo/EditBusinessDescriptionModel";
 import EditBusinessLocationModal from "@/helper-components/EditBusinessInfo/EditBusinessLocationModal";
 import { fetchInfo } from "@/apis/profileAndBusinessInfo";
+import { stringToLocationMarker } from "@/utils/utils";
+
+const modalReducer = (state, action) => {
+  switch (action.type) {
+    case "TOGGLE_PHONE_MODAL":
+      return { ...state, showEditPhoneNumberModal: action.payload };
+    case "TOGGLE_DESCRIPTION_MODAL":
+      return { ...state, showEditBusinessDescriptionModal: action.payload };
+    case "TOGGLE_LOCATION_MODAL":
+      return { ...state, showEditBusinessLocationModal: action.payload };
+    default:
+      return state;
+  }
+};
+
+const initialModalState = {
+  showEditPhoneNumberModal: false,
+  showEditBusinessDescriptionModal: false,
+  showEditBusinessLocationModal: false,
+};
+
+const formReducer = (state, action) => {
+  switch (action.type) {
+    case "SET_PHONE_NUMBER":
+      return { ...state, businessPhoneNumber: action.payload };
+    case "SET_DESCRIPTION":
+      return { ...state, businessDescription: action.payload };
+    case "SET_CATEGORY":
+      return { ...state, businessCategory: action.payload };
+    case "SET_LOCATION":
+      return { ...state, businessLocation: action.payload };
+    default:
+      return state;
+  }
+};
+
+const initialFormState = {
+  businessPhoneNumber: 0,
+  businessDescription: "",
+  businessLocation: "",
+  businessCategory: "",
+};
 
 const Profile = () => {
-  const [businessPhoneNumber, setBusinessPhoneNumber] = useState(0);
-  const [businessDescription, setBusinessDescription] = useState("");
-  const [businessLocation, setBusinessLocation] = useState("");
-  const [businessCategory, setBusinessCategory] = useState("");
-
-  //functionality
   const { profileImage, handleImageChange, businessName, accessToken } =
     useAppContext();
 
-  const [showEditPhoneNumberModal, setShowPhoneNumberModal] = useState(false);
-  const [
-    showEditBusinessDescriptionModal,
-    setShowEditBusinessDescriptionModal,
-  ] = useState(false);
+  const [modalState, modalDispatch] = useReducer(
+    modalReducer,
+    initialModalState
+  );
 
-  const [showEditBusinessLocationModal, setShowEditBusinessLocationModal] =
-    useState(false);
+  const [formState, formDispatch] = useReducer(formReducer, initialFormState);
+
+  const togglePhoneModal = () => {
+    modalDispatch({
+      type: "TOGGLE_PHONE_MODAL",
+      payload: !modalState.showEditPhoneNumberModal,
+    });
+  };
+
+  const toggleDescriptionModal = () => {
+    modalDispatch({
+      type: "TOGGLE_DESCRIPTION_MODAL",
+      payload: !modalState.showEditBusinessDescriptionModal,
+    });
+  };
+
+  const toggleLocationModal = () => {
+    modalDispatch({
+      type: "TOGGLE_LOCATION_MODAL",
+      payload: !modalState.showEditBusinessLocationModal,
+    });
+  };
 
   useEffect(() => {
     fetchInfo(accessToken).then((businessInfo) => {
-      setBusinessDescription(businessInfo["description"]);
-      setBusinessPhoneNumber(businessInfo["phoneNumber"]);
-      setBusinessCategory(businessInfo["category"]);
-
-      //handling location to set a marker
-      const locationParts = businessInfo["location"]
-        .split(/[,:]/)
-        .map((part) => part.trim());
-      const locationMarker = {
-        lat: parseFloat(locationParts[1]),
-        lng: parseFloat(locationParts[3]),
-      };
-      setBusinessLocation(locationMarker);
+      formDispatch({
+        type: "SET_DESCRIPTION",
+        payload: businessInfo.description,
+      });
+      formDispatch({
+        type: "SET_PHONE_NUMBER",
+        payload: businessInfo.phoneNumber,
+      });
+      formDispatch({ type: "SET_CATEGORY", payload: businessInfo.category });
+      formDispatch({
+        type: "SET_LOCATION",
+        payload: stringToLocationMarker(businessInfo.location),
+      });
     });
   }, []);
 
@@ -94,11 +149,9 @@ const Profile = () => {
                   Business Phone Number
                 </dt>
                 <dd className="flex justify-between mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                  <p>{businessPhoneNumber}</p>
+                  <p>{formState.businessPhoneNumber}</p>
                   <FontAwesomeIcon
-                    onClick={() => {
-                      setShowPhoneNumberModal(true);
-                    }}
+                    onClick={togglePhoneModal}
                     className="cursor-pointer text-[#fac100]"
                     icon={faPen}
                   />
@@ -110,7 +163,7 @@ const Profile = () => {
                   Business Category
                 </dt>
                 <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                  {businessCategory}
+                  {formState.businessCategory}
                 </dd>
               </div>
 
@@ -119,11 +172,9 @@ const Profile = () => {
                   Business Description
                 </dt>
                 <dd className="flex justify-between mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                  <p>{businessDescription}</p>
+                  <p>{formState.businessDescription}</p>
                   <FontAwesomeIcon
-                    onClick={() => {
-                      setShowEditBusinessDescriptionModal(true);
-                    }}
+                    onClick={toggleDescriptionModal}
                     className="cursor-pointer text-[#fac100]"
                     icon={faPen}
                   />
@@ -140,40 +191,44 @@ const Profile = () => {
             <FontAwesomeIcon
               className="cursor-pointer text-[#fac100]"
               icon={faPen}
-              onClick={() => {
-                setShowEditBusinessLocationModal(true);
-              }}
+              onClick={toggleLocationModal}
             />
           </div>
 
           <div className="px-4 py-4 sm:px-0">
-            <LocationView position={businessLocation} />
+            <LocationView position={formState.businessLocation} />
           </div>
         </div>
       </div>
 
-      {showEditPhoneNumberModal ? (
+      {modalState.showEditPhoneNumberModal ? (
         <EditPhoneNumberModal
-          businessPhoneNumber={businessPhoneNumber}
-          setBusinessPhoneNumber={setBusinessPhoneNumber}
-          setShowModal={setShowPhoneNumberModal}
+          businessPhoneNumber={formState.businessPhoneNumber}
+          setBusinessPhoneNumber={(phoneNumber) =>
+            formDispatch({ type: "SET_PHONE_NUMBER", payload: phoneNumber })
+          }
+          setShowModal={togglePhoneModal}
         />
       ) : (
         ""
       )}
-      {showEditBusinessDescriptionModal ? (
+      {modalState.showEditBusinessDescriptionModal ? (
         <EditBusinessDescriptionModal
-          businessDescription={businessDescription}
-          setBusinessDescription={setBusinessDescription}
-          setShowModal={setShowEditBusinessDescriptionModal}
+          businessDescription={formState.businessDescription}
+          setBusinessDescription={(description) =>
+            formDispatch({ type: "SET_DESCRIPTION", payload: description })
+          }
+          setShowModal={toggleDescriptionModal}
         />
       ) : (
         ""
       )}
-      {showEditBusinessLocationModal ? (
+      {modalState.showEditBusinessLocationModal ? (
         <EditBusinessLocationModal
-          setBusinessLocation={setBusinessLocation}
-          setShowModal={setShowEditBusinessLocationModal}
+          setBusinessLocation={(location) =>
+            formDispatch({ type: "SET_LOCATION", payload: location })
+          }
+          setShowModal={toggleLocationModal}
         />
       ) : (
         ""

@@ -37,7 +37,7 @@ export const leftSidebarLinks = [
   },
   {
     icon: faBell,
-    route: "/",
+    route: "/notifications",
     label: "Notifications",
   },
 ];

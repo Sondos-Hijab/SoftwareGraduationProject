@@ -2,30 +2,43 @@ import { useAppContext } from "@/Providers/AppPovider";
 import { fetchPosts } from "@/apis/postsRequests";
 import PostCard from "@/helper-components/Cards/PostCard";
 import Modal from "@/helper-components/WarningsErrors/Modal";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useReducer } from "react";
+
+const initialModalState = {
+  showModal: false,
+  modalMessage: "",
+};
+
+const modalReducer = (state, action) => {
+  switch (action.type) {
+    case "SHOW_MODAL":
+      return { ...state, showModal: true, modalMessage: action.payload };
+    case "HIDE_MODAL":
+      return { ...state, showModal: false };
+    default:
+      return state;
+  }
+};
 
 const Posts = () => {
   const [posts, setPosts] = useState();
   const { accessToken, businessName } = useAppContext();
 
-  const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
+  const [modalState, modalDispatch] = useReducer(
+    modalReducer,
+    initialModalState
+  );
 
   useEffect(() => {
     fetchPosts(businessName, accessToken).then((value) => {
       if (value.error) {
-        setModalMessage(value.error);
-        setShowModal(true);
+        modalDispatch({ type: "SHOW_MODAL", payload: value.error });
       } else {
         setPosts(value.posts);
       }
     });
-  }, []);
+  }, [posts]);
 
-  //modal showing when an error occurs
-  const closeModal = () => {
-    setShowModal(false);
-  };
   return (
     <>
       <div className="flex flex-col flex-1 justify-center px-10 md:px-20 lg:px-44 py-12">
@@ -56,11 +69,13 @@ const Posts = () => {
               );
             })}
       </div>
-      {showModal && (
+      {modalState.showModal && (
         <Modal
           title={"Can't get posts"}
-          message={modalMessage}
-          onClose={closeModal}
+          message={modalState.modalMessage}
+          onClose={() => {
+            modalDispatch({ type: "HIDE_MODAL" });
+          }}
         />
       )}
     </>
