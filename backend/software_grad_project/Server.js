@@ -38,6 +38,11 @@ const getBusinessesBySearch = require('./Routes/getBusinessesBySearch');
 const getBusinesseInfo = require('./Routes/getBusinesseInfo'); 
 const getUserInfo = require('./Routes/getUserInfo'); 
 const editPost = require('./Routes/editPost'); 
+const follow = require('./Routes/follow'); 
+const unfollow = require('./Routes/unfollow'); 
+const followers = require('./Routes/followers'); 
+const following = require('./Routes/following'); 
+const followersNumber = require('./Routes/followersNumber'); 
 
 
 app.use(express.json());
@@ -78,6 +83,11 @@ app.use('/RateRelay', getBusinessesBySearch);
 app.use('/RateRelay', getBusinesseInfo); 
 app.use('/RateRelay', getUserInfo); 
 app.use('/RateRelay', editPost); 
+app.use('/RateRelay', follow); 
+app.use('/RateRelay', unfollow); 
+app.use('/RateRelay', followers); 
+app.use('/RateRelay', following); 
+app.use('/RateRelay', followersNumber); 
 
 
 
