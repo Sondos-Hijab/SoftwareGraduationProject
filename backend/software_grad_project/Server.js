@@ -37,6 +37,7 @@ const getBusinessesByName = require('./Routes/getBusinessesByName');
 const getBusinessesBySearch = require('./Routes/getBusinessesBySearch'); 
 const getBusinesseInfo = require('./Routes/getBusinesseInfo'); 
 const getUserInfo = require('./Routes/getUserInfo'); 
+const editPost = require('./Routes/editPost'); 
 
 
 app.use(express.json());
@@ -76,6 +77,8 @@ app.use('/RateRelay', getBusinessesByName);
 app.use('/RateRelay', getBusinessesBySearch); 
 app.use('/RateRelay', getBusinesseInfo); 
 app.use('/RateRelay', getUserInfo); 
+app.use('/RateRelay', editPost); 
+
 
 
 app.listen(PORT, (err) => {
