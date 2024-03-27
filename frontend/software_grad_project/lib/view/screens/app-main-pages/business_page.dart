@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:software_grad_project/controller/app-main-pages-controllers/business_page_controller.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
-import 'package:software_grad_project/data/datasource/static/static.dart';
 import 'package:software_grad_project/view/widgets/business/business_feedback.dart';
 import 'package:software_grad_project/view/widgets/business/business_main_info.dart';
 import 'package:software_grad_project/view/widgets/business/business_posts.dart';
@@ -64,6 +63,9 @@ class BusinessPage extends StatelessWidget {
                   controller.getFeedback(controller.businessName!);
                 } else if (index == 2) {
                   controller.getPosts(controller.businessName!);
+                } else if (index == 3) {
+                  controller.getNumberOfFollowers(controller.businessName!);
+                  controller.getFollowers(controller.businessName!);
                 }
               },
             ),
@@ -93,7 +95,7 @@ class BusinessPage extends StatelessWidget {
                     controller.pressFollowUnfollow();
                     Get.snackbar(
                       'Notification',
-                      controller.isFollowing
+                      !controller.isFollowing
                           ? 'You followed this business!'
                           : 'You unfollowed this business!',
                       snackPosition: SnackPosition.BOTTOM,
@@ -106,15 +108,16 @@ class BusinessPage extends StatelessWidget {
                 ),
                 BusinessFeedback(
                   businessFeedback: controller.businessFeedback,
-                  goToUserPage : controller.goToUserPage,
+                  goToUserPage: controller.goToUserPage,
                 ),
                 BusinessPosts(
                   businessImage: controller.businessImage,
                   businessesPosts: controller.businessesPosts,
                 ),
                 BusinessFollowers(
-                  followers: followers,
-                )
+                    businessFollowers: controller.businessFollowers,
+                    numberOfFollowers: controller.followersNumber,
+                    goToFollowerPage: controller.goToUserPage)
               ],
             ),
           ),

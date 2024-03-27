@@ -169,7 +169,8 @@ class ProfilePageControllerImp extends ProfilePageController {
 
   @override
   goToBusinessesPage() {
-    Get.toNamed(AppRoutes.followedBusinessesPage);
+    Get.toNamed(AppRoutes.followedBusinessesPage,
+        arguments: {'username': username});
   }
 
   @override

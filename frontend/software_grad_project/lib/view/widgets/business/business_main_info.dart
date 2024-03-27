@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,7 +36,8 @@ class BusinessMainInfoWidget extends StatelessWidget {
       required this.phoneNumber,
       required this.category,
       required this.description,
-      required this.email});
+      required this.email,
+});
 
   @override
   Widget build(BuildContext context) {
@@ -101,6 +101,7 @@ class BusinessMainInfoWidget extends StatelessWidget {
                   )
                 ],
               ),
+              
               const SizedBox(
                 height: 20,
               ),

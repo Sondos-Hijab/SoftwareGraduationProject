@@ -43,9 +43,6 @@ class OtherUserProfilePageControllerImp extends OtherUserProfilePageController {
   }
 
   @override
-  goToBusinessesPage() {}
-
-  @override
   goToFeedbackPage() {
     Get.toNamed(AppRoutes.otherUserFeedbackPage,
         arguments: {'username': username!});
@@ -79,5 +76,11 @@ class OtherUserProfilePageControllerImp extends OtherUserProfilePageController {
       }
       update();
     }
+  }
+
+  @override
+  goToBusinessesPage() {
+    Get.toNamed(AppRoutes.followedBusinessesPage,
+        arguments: {'username': username});
   }
 }
