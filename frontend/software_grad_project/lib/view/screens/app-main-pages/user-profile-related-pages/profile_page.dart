@@ -91,7 +91,9 @@ class ProfilePage extends StatelessWidget {
                       QuickLinkButton(
                         internalText: "Businesses",
                         iconData: Icons.business_outlined,
-                        onTap: () {},
+                        onTap: () {
+                          controller.goToBusinessesPage();
+                        },
                       ),
                     ]),
                   ),
