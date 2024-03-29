@@ -7,10 +7,13 @@ import EditPhoneNumberModal from "@/helper-components/EditBusinessInfo/EditPhone
 import EditBusinessDescriptionModal from "@/helper-components/EditBusinessInfo/EditBusinessDescriptionModel";
 import EditBusinessLocationModal from "@/helper-components/EditBusinessInfo/EditBusinessLocationModal";
 import { fetchInfo } from "@/apis/profileAndBusinessInfo";
-import { sortByDate, stringToLocationMarker } from "@/utils/utils";
+import {
+  createBlobUrl,
+  sortByDate,
+  stringToLocationMarker,
+} from "@/utils/utils";
 import { Link } from "react-router-dom";
 import FeedbackCard from "@/helper-components/Cards/FeedbackCard";
-import BusinessPostCard from "@/helper-components/Cards/BusinessPostCard";
 import FollowCard from "@/helper-components/Cards/FollowCard";
 import {
   fetchBusinessFeedback,
@@ -18,6 +21,7 @@ import {
   fetchBusinessPosts,
   getNumberOfFollowers,
 } from "@/apis/businessPageRequests";
+import PostCard from "@/helper-components/Cards/PostCard";
 
 const modalReducer = (state, action) => {
   switch (action.type) {
@@ -324,10 +328,11 @@ const Profile = () => {
           {/* posts */}
           {activeTab === "posts" &&
             sortByDate(posts).map((post) => (
-              <BusinessPostCard
-                key={post.postID}
-                postInfo={post}
-                businessPicture={profileImage}
+              <PostCard
+                description={post.description}
+                picture={createBlobUrl(post.picture.data)}
+                createdAt={post.created_at}
+                postID={post.postID}
               />
             ))}
           {/* followers*/}

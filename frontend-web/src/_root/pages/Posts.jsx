@@ -3,7 +3,7 @@ import { fetchPosts } from "@/apis/postsRequests";
 import BusinessPostCard from "@/helper-components/Cards/BusinessPostCard";
 import PostCard from "@/helper-components/Cards/PostCard";
 import Modal from "@/helper-components/WarningsErrors/Modal";
-import { sortByDate } from "@/utils/utils";
+import { createBlobUrl, sortByDate } from "@/utils/utils";
 import React, { useEffect, useState, useReducer } from "react";
 
 const initialModalState = {
@@ -49,10 +49,11 @@ const Posts = () => {
         </h2>
         {posts &&
           sortByDate(posts).map((post) => (
-            <BusinessPostCard
-              key={post.postID}
-              postInfo={post}
-              businessPicture={profileImage}
+            <PostCard
+              description={post.description}
+              picture={createBlobUrl(post.picture.data)}
+              createdAt={post.created_at}
+              postID={post.postID}
             />
           ))}
       </div>

@@ -1,11 +1,13 @@
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import placeHolderBusinessPicture from "@/assets/images/placeholder.png";
 import emptyPostPicture from "@/assets/images/empty.png";
 import React, { useReducer } from "react";
 import { useAppContext } from "@/Providers/AppPovider";
 import { deletePost } from "@/apis/postsRequests";
 import Modal from "@/helper-components/WarningsErrors/Modal";
 import { getDatTimeFromString } from "@/utils/utils";
+import { Link } from "react-router-dom";
 
 const initialState = {
   showModal: false,
@@ -36,7 +38,7 @@ const reducer = (state, action) => {
 
 const PostCard = ({ description, picture, createdAt, postID }) => {
   const { formattedDate, formattedTime } = getDatTimeFromString(createdAt);
-  const { accessToken } = useAppContext();
+  const { accessToken, profileImage } = useAppContext();
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -48,6 +50,7 @@ const PostCard = ({ description, picture, createdAt, postID }) => {
         dispatch({ type: "DELETE_POST" });
       }
     });
+    dispatch({ type: "HIDE_CONFIRM_DELETE_MODAL" });
   };
 
   const closeModal = () => {
@@ -57,15 +60,15 @@ const PostCard = ({ description, picture, createdAt, postID }) => {
   return (
     <>
       {state.showPost && (
-        <article className="relative overflow-hidden rounded-lg border border-gray-100 bg-white shadow-sm mb-5">
+        <article className="relative overflow-hidden rounded-lg border border-gray-100 bg-white shadow-sm mb-5 px-4">
           <a
             onClick={() => {
               dispatch({ type: "TOGGLE_EDIT_DELETE_LIST" });
             }}
-            className="absolute right-4 top-4 bg-customYellow inline-flex items-center justify-center w-8 h-8 rounded-full cursor-pointer"
+            className="absolute right-4 top-4 bg-customYellow inline-flex items-center justify-center w-6 h-6 rounded-full cursor-pointer"
           >
             <FontAwesomeIcon
-              className="text-white w-5 h-5"
+              className="text-white w-4 h-4"
               icon={faEllipsisVertical}
             />
           </a>
@@ -84,10 +87,28 @@ const PostCard = ({ description, picture, createdAt, postID }) => {
             </li>
             <li className="p-2 cursor-pointer">Edit Post</li>
           </ul>
+
+          <dl className="cursor-pointer my-4">
+            <div className="flex justify-between">
+              <Link to={"/profile"}>
+                <dt className="sr-only">Business Name</dt>
+                <dd className="flex font-medium text-customGreen">
+                  <img
+                    className="w-12 h-12 object-cover rounded-full shadow-md"
+                    src={profileImage || placeHolderBusinessPicture}
+                  />
+                  <p className="flex flex-wrap content-center ml-2">
+                    {localStorage.getItem("businessName")}
+                  </p>
+                </dd>
+              </Link>
+            </div>
+          </dl>
+
           <img
             alt=""
             src={picture || emptyPostPicture}
-            className="h-96 w-full object-cover"
+            className="mt-2 h-96 w-full rounded-md object-cover"
           />
 
           <div className="p-4 sm:p-6">
@@ -111,7 +132,7 @@ const PostCard = ({ description, picture, createdAt, postID }) => {
       )}
 
       {state.showConfirmDeleteModal && (
-        <div class="flex justify-center items-center absolute top-0 right-0 bottom-0 left-0">
+        <div class="flex justify-center items-center fixed top-0 right-0 bottom-0 left-0">
           <div class="bg-white px-16 py-14 rounded-md text-center">
             <h1 class="text-xl mb-4 font-bold text-slate-500">
               Are you sure you want to delete this post?
