@@ -3,6 +3,7 @@ import FeedbackCard from "@/helper-components/Cards/FeedbackCard";
 import React, { useState, useEffect, useReducer } from "react";
 import Modal from "@/helper-components/WarningsErrors/Modal";
 import { useAppContext } from "@/Providers/AppPovider";
+import { sortByDate } from "@/utils/utils";
 
 const initialModalState = {
   showModal: false,
@@ -44,8 +45,8 @@ const Home = () => {
         <h2 className="text-2xl font-bold leading-7 text-customPurple mb-5">
           Recent Feedback
         </h2>
-        {feedback.map((value) => {
-          return <FeedbackCard feedInfo={value} />;
+        {sortByDate(feedback).map((value) => {
+          return <FeedbackCard key={value.feedbackID} feedInfo={value} />;
         })}
       </div>
 
