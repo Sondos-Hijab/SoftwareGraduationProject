@@ -64,3 +64,27 @@ export async function deletePost(postId, accessToken) {
     if (error.response) return error.response.data;
   }
 }
+
+export async function editPost(postId, description, accessToken) {
+  const accessTokenLocalStorage = localStorage.getItem("accessToken");
+  try {
+    const response = await axios.put(
+      "http://localhost:3000/RateRelay/user/editPost",
+      {
+        postID: postId,
+        description: description,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken || accessTokenLocalStorage}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error editing post:", error);
+    if (error.response) return error.response.data;
+  }
+}

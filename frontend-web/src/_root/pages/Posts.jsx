@@ -50,6 +50,7 @@ const Posts = () => {
         {posts &&
           sortByDate(posts).map((post) => (
             <PostCard
+              key={post.postID}
               description={post.description}
               picture={createBlobUrl(post.picture.data)}
               createdAt={post.created_at}

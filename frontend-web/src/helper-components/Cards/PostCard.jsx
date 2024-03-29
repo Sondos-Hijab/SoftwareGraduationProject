@@ -2,12 +2,13 @@ import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import placeHolderBusinessPicture from "@/assets/images/placeholder.png";
 import emptyPostPicture from "@/assets/images/empty.png";
-import React, { useReducer } from "react";
+import React, { useReducer, useState } from "react";
 import { useAppContext } from "@/Providers/AppPovider";
 import { deletePost } from "@/apis/postsRequests";
 import Modal from "@/helper-components/WarningsErrors/Modal";
 import { getDatTimeFromString } from "@/utils/utils";
 import { Link } from "react-router-dom";
+import EditPostModal from "../EditBusinessInfo/EditPostModal";
 
 const initialState = {
   showModal: false,
@@ -15,6 +16,7 @@ const initialState = {
   showPost: true,
   showConfirmDeleteModal: false,
   showEditDeleteList: false,
+  showEditPostModal: false,
 };
 
 const reducer = (state, action) => {
@@ -27,6 +29,10 @@ const reducer = (state, action) => {
       return { ...state, showConfirmDeleteModal: true };
     case "HIDE_CONFIRM_DELETE_MODAL":
       return { ...state, showConfirmDeleteModal: false };
+    case "SHOW_EDIT_MODAL":
+      return { ...state, showEditPostModal: true };
+    case "HIDE_EDIT_MODAL":
+      return { ...state, showEditPostModal: false };
     case "TOGGLE_EDIT_DELETE_LIST":
       return { ...state, showEditDeleteList: !state.showEditDeleteList };
     case "DELETE_POST":
@@ -36,11 +42,17 @@ const reducer = (state, action) => {
   }
 };
 
-const PostCard = ({ description, picture, createdAt, postID }) => {
+const PostCard = ({
+  description: initialDescription,
+  picture,
+  createdAt,
+  postID,
+}) => {
   const { formattedDate, formattedTime } = getDatTimeFromString(createdAt);
   const { accessToken, profileImage } = useAppContext();
 
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [description, setPostDescription] = useState(initialDescription);
 
   const handleDeletePost = () => {
     deletePost(postID, accessToken).then((value) => {
@@ -85,7 +97,14 @@ const PostCard = ({ description, picture, createdAt, postID }) => {
             >
               Delete Post
             </li>
-            <li className="p-2 cursor-pointer">Edit Post</li>
+            <li
+              className="p-2 cursor-pointer"
+              onClick={() => {
+                dispatch({ type: "SHOW_EDIT_MODAL" });
+              }}
+            >
+              Edit Post
+            </li>
           </ul>
 
           <dl className="cursor-pointer my-4">
@@ -154,6 +173,18 @@ const PostCard = ({ description, picture, createdAt, postID }) => {
             </button>
           </div>
         </div>
+      )}
+
+      {state.showEditPostModal && (
+        <EditPostModal
+          hideModal={() => {
+            dispatch({ type: "HIDE_EDIT_MODAL" });
+            dispatch({ type: "TOGGLE_EDIT_DELETE_LIST" });
+          }}
+          postID={postID}
+          postDescription={description}
+          setPostDescription={setPostDescription}
+        />
       )}
     </>
   );
