@@ -1,138 +1,62 @@
-import React, { useState, useEffect, useReducer } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
+import React, { useState, useEffect } from "react";
 import LocationView from "@/helper-components/Location/LocationView";
+import { Link, useParams } from "react-router-dom";
 import { useAppContext } from "@/Providers/AppPovider";
-import EditPhoneNumberModal from "@/helper-components/EditBusinessInfo/EditPhoneNumberModal";
-import EditBusinessDescriptionModal from "@/helper-components/EditBusinessInfo/EditBusinessDescriptionModel";
-import EditBusinessLocationModal from "@/helper-components/EditBusinessInfo/EditBusinessLocationModal";
-import { fetchInfo } from "@/apis/profileAndBusinessInfo";
+import {
+  fetchBusinessFeedback,
+  fetchBusinessFollowers,
+  fetchBusinessInfo,
+  fetchBusinessPosts,
+  getNumberOfFollowers,
+} from "@/apis/businessPageRequests";
 import {
   createBlobUrl,
   sortByDate,
   stringToLocationMarker,
 } from "@/utils/utils";
-import { Link } from "react-router-dom";
+import placeholderBusinessPicture from "@/assets/images/placeholder.png";
 import FeedbackCard from "@/helper-components/Cards/FeedbackCard";
 import FollowCard from "@/helper-components/Cards/FollowCard";
-import {
-  fetchBusinessFeedback,
-  fetchBusinessFollowers,
-  fetchBusinessPosts,
-  getNumberOfFollowers,
-} from "@/apis/businessPageRequests";
-import PostCard from "@/helper-components/Cards/PostCard";
+import BusinessPostCard from "@/helper-components/Cards/BusinessPostCard";
 
-const modalReducer = (state, action) => {
-  switch (action.type) {
-    case "TOGGLE_PHONE_MODAL":
-      return { ...state, showEditPhoneNumberModal: action.payload };
-    case "TOGGLE_DESCRIPTION_MODAL":
-      return { ...state, showEditBusinessDescriptionModal: action.payload };
-    case "TOGGLE_LOCATION_MODAL":
-      return { ...state, showEditBusinessLocationModal: action.payload };
-    default:
-      return state;
-  }
-};
-
-const initialModalState = {
-  showEditPhoneNumberModal: false,
-  showEditBusinessDescriptionModal: false,
-  showEditBusinessLocationModal: false,
-};
-
-const formReducer = (state, action) => {
-  switch (action.type) {
-    case "SET_PHONE_NUMBER":
-      return { ...state, businessPhoneNumber: action.payload };
-    case "SET_DESCRIPTION":
-      return { ...state, businessDescription: action.payload };
-    case "SET_CATEGORY":
-      return { ...state, businessCategory: action.payload };
-    case "SET_LOCATION":
-      return { ...state, businessLocation: action.payload };
-    default:
-      return state;
-  }
-};
-
-const initialFormState = {
-  businessPhoneNumber: 0,
-  businessDescription: "",
-  businessLocation: "",
-  businessCategory: "",
-};
-
-const Profile = () => {
-  const { profileImage, handleImageChange, businessName, accessToken } =
-    useAppContext();
-
+const BusinessPage = () => {
+  const { businessname } = useParams();
   const [activeTab, setActiveTab] = useState("feedback");
+  const { accessToken } = useAppContext();
+
   const [feedback, setFeedback] = useState([]);
   const [posts, setPosts] = useState([]);
   const [followers, setFollowers] = useState([]);
+  const [businessInfo, setBusinessInfo] = useState({});
   const [followersNumber, setFollowersNumber] = useState(0);
 
-  const [modalState, modalDispatch] = useReducer(
-    modalReducer,
-    initialModalState
-  );
-
-  const [formState, formDispatch] = useReducer(formReducer, initialFormState);
-
-  const togglePhoneModal = () => {
-    modalDispatch({
-      type: "TOGGLE_PHONE_MODAL",
-      payload: !modalState.showEditPhoneNumberModal,
-    });
-  };
-
-  const toggleDescriptionModal = () => {
-    modalDispatch({
-      type: "TOGGLE_DESCRIPTION_MODAL",
-      payload: !modalState.showEditBusinessDescriptionModal,
-    });
-  };
-
-  const toggleLocationModal = () => {
-    modalDispatch({
-      type: "TOGGLE_LOCATION_MODAL",
-      payload: !modalState.showEditBusinessLocationModal,
-    });
-  };
-
   useEffect(() => {
-    fetchInfo(accessToken).then((businessInfo) => {
-      formDispatch({
-        type: "SET_DESCRIPTION",
-        payload: businessInfo.description,
-      });
-      formDispatch({
-        type: "SET_PHONE_NUMBER",
-        payload: businessInfo.phoneNumber,
-      });
-      formDispatch({ type: "SET_CATEGORY", payload: businessInfo.category });
-      formDispatch({
-        type: "SET_LOCATION",
-        payload: stringToLocationMarker(businessInfo.location),
-      });
-    });
-
     const fetchData = async () => {
       try {
+        const businessInfoData = await fetchBusinessInfo(
+          businessname,
+          accessToken
+        );
+        if (businessInfoData.error) {
+          console.error("Error fetching business info");
+        } else {
+          setBusinessInfo({
+            ...businessInfoData.business,
+            picture: createBlobUrl(businessInfoData.business.picture.data),
+          });
+        }
+
         const feedbackData = await fetchBusinessFeedback(
-          businessName,
+          businessname,
           accessToken
         );
         if (feedbackData.error) {
           console.error("Error fetching business feedback");
         } else {
           setFeedback(feedbackData.feedback);
-          console.log(feedbackData.feedback);
         }
 
-        const postsData = await fetchBusinessPosts(businessName, accessToken);
+        const postsData = await fetchBusinessPosts(businessname, accessToken);
         if (postsData.error) {
           console.error("Error fetching business posts");
         } else {
@@ -140,7 +64,7 @@ const Profile = () => {
         }
 
         const followersData = await fetchBusinessFollowers(
-          businessName,
+          businessname,
           accessToken
         );
         if (followersData.error) {
@@ -150,7 +74,7 @@ const Profile = () => {
         }
 
         const numberOfFollowersData = await getNumberOfFollowers(
-          businessName,
+          businessname,
           accessToken
         );
         if (numberOfFollowersData.error) {
@@ -165,7 +89,6 @@ const Profile = () => {
 
     fetchData();
   }, []);
-
   return (
     <>
       <div className=" mt-8 h-full w-full flex flex-col justify-center items-center">
@@ -173,22 +96,8 @@ const Profile = () => {
         <div className="relative">
           <img
             className="inline-block h-52 w-52 rounded-full border border-gray-300 ring-2 ring-white mx-auto"
-            src={profileImage}
+            src={businessInfo.picture || placeholderBusinessPicture}
             alt="business logo"
-          />
-          <label
-            htmlFor="fileInput"
-            className="cursor-pointer absolute bottom-2 right-6 bg-[#13b6f5] w-10 h-10 rounded-full flex justify-center items-center hover:bg-[#fac100]"
-          >
-            <FontAwesomeIcon className="text-white" icon={faPen} />
-          </label>
-
-          <input
-            id="fileInput"
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={handleImageChange}
           />
         </div>
 
@@ -206,7 +115,7 @@ const Profile = () => {
                   Business Name
                 </dt>
                 <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                  {businessName}
+                  {businessInfo.name}
                 </dd>
               </div>
 
@@ -215,12 +124,7 @@ const Profile = () => {
                   Business Phone Number
                 </dt>
                 <dd className="flex justify-between mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                  <p>{formState.businessPhoneNumber}</p>
-                  <FontAwesomeIcon
-                    onClick={togglePhoneModal}
-                    className="cursor-pointer text-[#fac100]"
-                    icon={faPen}
-                  />
+                  <p>{businessInfo.phoneNumber}</p>
                 </dd>
               </div>
 
@@ -229,7 +133,7 @@ const Profile = () => {
                   Business Category
                 </dt>
                 <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                  {formState.businessCategory}
+                  {businessInfo.category}
                 </dd>
               </div>
 
@@ -247,12 +151,7 @@ const Profile = () => {
                   Business Description
                 </dt>
                 <dd className="flex justify-between mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                  <p>{formState.businessDescription}</p>
-                  <FontAwesomeIcon
-                    onClick={toggleDescriptionModal}
-                    className="cursor-pointer text-[#fac100]"
-                    icon={faPen}
-                  />
+                  <p>{businessInfo.description}</p>
                 </dd>
               </div>
             </dl>
@@ -263,15 +162,12 @@ const Profile = () => {
             <h3 className="text-base font-semibold leading-7 text-[#2f47c6]  ">
               Business Location
             </h3>
-            <FontAwesomeIcon
-              className="cursor-pointer text-[#fac100]"
-              icon={faPen}
-              onClick={toggleLocationModal}
-            />
           </div>
 
           <div className="px-4 py-4 sm:px-0">
-            <LocationView position={formState.businessLocation} />
+            <LocationView
+              position={stringToLocationMarker(businessInfo.location)}
+            />
           </div>
         </div>
 
@@ -328,11 +224,10 @@ const Profile = () => {
           {/* posts */}
           {activeTab === "posts" &&
             sortByDate(posts).map((post) => (
-              <PostCard
-                description={post.description}
-                picture={createBlobUrl(post.picture.data)}
-                createdAt={post.created_at}
-                postID={post.postID}
+              <BusinessPostCard
+                key={post.postID}
+                postInfo={post}
+                businessPicture={businessInfo.picture}
               />
             ))}
           {/* followers*/}
@@ -342,41 +237,8 @@ const Profile = () => {
             })}
         </div>
       </div>
-
-      {modalState.showEditPhoneNumberModal ? (
-        <EditPhoneNumberModal
-          businessPhoneNumber={formState.businessPhoneNumber}
-          setBusinessPhoneNumber={(phoneNumber) =>
-            formDispatch({ type: "SET_PHONE_NUMBER", payload: phoneNumber })
-          }
-          setShowModal={togglePhoneModal}
-        />
-      ) : (
-        ""
-      )}
-      {modalState.showEditBusinessDescriptionModal ? (
-        <EditBusinessDescriptionModal
-          businessDescription={formState.businessDescription}
-          setBusinessDescription={(description) =>
-            formDispatch({ type: "SET_DESCRIPTION", payload: description })
-          }
-          setShowModal={toggleDescriptionModal}
-        />
-      ) : (
-        ""
-      )}
-      {modalState.showEditBusinessLocationModal ? (
-        <EditBusinessLocationModal
-          setBusinessLocation={(location) =>
-            formDispatch({ type: "SET_LOCATION", payload: location })
-          }
-          setShowModal={toggleLocationModal}
-        />
-      ) : (
-        ""
-      )}
     </>
   );
 };
 
-export default Profile;
+export default BusinessPage;
