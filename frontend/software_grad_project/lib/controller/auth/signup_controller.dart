@@ -12,24 +12,54 @@ abstract class SignUpController extends GetxController {
 }
 
 class SignUpControllerImp extends SignUpController {
+  //key
+  GlobalKey<FormState> formState = GlobalKey<FormState>();
+
+  //datasource
+  SignUpDataSource signupData = SignUpDataSource(Get.find());
+
+  //variables
   late TextEditingController username;
   late TextEditingController password;
   late TextEditingController email;
   late TextEditingController confirmPassword;
   late TextEditingController age;
   late StatusRequest statusRequest;
-  SignUpDataSource signupData = SignUpDataSource(Get.find());
-
-  List data = [];
-
-  GlobalKey<FormState> formState = GlobalKey<FormState>();
-
-  //radio button for selecting male or female
   String? selectedGender;
+  List data = [];
+  bool showPassword = true;
+  bool showConfirmPassword = true;
+
+  @override
+  void onInit() {
+    email = TextEditingController();
+    password = TextEditingController();
+    confirmPassword = TextEditingController();
+    username = TextEditingController();
+    age = TextEditingController();
+    selectedGender = "Male";
+    super.onInit();
+  }
+
   @override
   setSelectedGender(String gender) {
     selectedGender = gender;
     update();
+  }
+
+  showPasswordFunction() {
+    showPassword = (showPassword == true ? false : true);
+    update();
+  }
+
+  showConfirmPasswordFunction() {
+    showConfirmPassword = (showConfirmPassword == true ? false : true);
+    update();
+  }
+
+  @override
+  goToLogin() {
+    Get.offNamed(AppRoutes.login);
   }
 
   @override
@@ -57,34 +87,6 @@ class SignUpControllerImp extends SignUpController {
 
       update();
     }
-  }
-
-  bool showPassword = true;
-  showPasswordFunction() {
-    showPassword = (showPassword == true ? false : true);
-    update();
-  }
-
-  bool showConfirmPassword = true;
-  showConfirmPasswordFunction() {
-    showConfirmPassword = (showConfirmPassword == true ? false : true);
-    update();
-  }
-
-  @override
-  goToLogin() {
-    Get.offNamed(AppRoutes.login);
-  }
-
-  @override
-  void onInit() {
-    email = TextEditingController();
-    password = TextEditingController();
-    confirmPassword = TextEditingController();
-    username = TextEditingController();
-    age = TextEditingController();
-    selectedGender = "Male";
-    super.onInit();
   }
 
   @override

@@ -32,15 +32,15 @@ abstract class BusinessPagesController extends GetxController {
 }
 
 class BusinessPagesControllerImp extends BusinessPagesController {
+  //keys and controllers
   GlobalKey<ScaffoldState>? scaffoldKey;
-  bool isFollowing = false;
-  int followersNumber = 0;
+  final Completer<GoogleMapController> gmController =
+      Completer<GoogleMapController>();
 
-  String? businessName;
-  Uint8List? businessImage;
-
+  //myServices
   final myServices = Get.find<MyServices>();
 
+  //datasources
   BusinessPostsDataSource businessPostsDatasource =
       BusinessPostsDataSource(Get.find());
   BusinessFeedbackDataSource businessFeedbackDatasource =
@@ -50,15 +50,16 @@ class BusinessPagesControllerImp extends BusinessPagesController {
   BusinessFollowDataSource businessFollowDataSource =
       BusinessFollowDataSource(Get.find());
 
+  //variables
+  bool isFollowing = false;
+  int followersNumber = 0;
+  String? businessName;
+  Uint8List? businessImage;
+  BusinessInfoModel? fetchedBusinessInfo =
+      BusinessInfoModel(0, "", "", "", [], 0, "", "", null);
   List<FetchedPostModel>? businessesPosts = [];
   List<FetchedFeedbackModel>? businessFeedback = [];
   List<FollowerModel>? businessFollowers = [];
-
-  BusinessInfoModel? fetchedBusinessInfo =
-      BusinessInfoModel(0, "", "", "", [], 0, "", "", null);
-
-  final Completer<GoogleMapController> gmController =
-      Completer<GoogleMapController>();
 
   @override
   void onInit() {
@@ -72,8 +73,10 @@ class BusinessPagesControllerImp extends BusinessPagesController {
   }
 
   @override
-  void dispose() {
-    super.dispose();
+  goToAddFeedbackPage() {
+    Get.toNamed(AppRoutes.feedbackFormPage, arguments: {
+      'businessName': businessName,
+    });
   }
 
   @override
@@ -191,25 +194,6 @@ class BusinessPagesControllerImp extends BusinessPagesController {
   }
 
   @override
-  pressFollowUnfollow() {
-    if (isFollowing == false) {
-      //follow request
-      follow();
-    } else {
-      // unfollow request
-      unfollow();
-    }
-    update();
-  }
-
-  @override
-  goToAddFeedbackPage() {
-    Get.toNamed(AppRoutes.feedbackFormPage, arguments: {
-      'businessName': businessName,
-    });
-  }
-
-  @override
   goToUserPage(String username) {
     String? myUsername = myServices.sharedPreferences.getString("username");
 
@@ -219,6 +203,18 @@ class BusinessPagesControllerImp extends BusinessPagesController {
       Get.offAndToNamed(AppRoutes.otherUserProfilePage,
           arguments: {'username': username});
     }
+  }
+
+  @override
+  pressFollowUnfollow() {
+    if (isFollowing == false) {
+      //follow request
+      follow();
+    } else {
+      // unfollow request
+      unfollow();
+    }
+    update();
   }
 
   @override
@@ -308,6 +304,11 @@ class BusinessPagesControllerImp extends BusinessPagesController {
       }
       update();
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }
 

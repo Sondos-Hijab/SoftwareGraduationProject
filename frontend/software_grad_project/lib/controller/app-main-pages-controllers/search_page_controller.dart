@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:software_grad_project/core/classes/status_request.dart';
@@ -11,19 +10,25 @@ import 'package:software_grad_project/data/datasource/remote/business-page/busin
 import 'package:software_grad_project/data/model/businesses_name_image_model.dart';
 
 abstract class SearchPageController extends GetxController {
-  late TextEditingController searchText;
   onSearch();
   checkSearch(value);
   goToBusinessPage(String businessName, Uint8List businessImage);
 }
 
 class SearchPageControllerImp extends SearchPageController {
-  bool? isSearch = false;
-
-  late List<BusinessViewModel>? businessesList = [];
-  StatusRequest? statusRequest;
+  //myServices to get accessToken
   final myServices = Get.find<MyServices>();
+
+  //datasource
   BusinessDataSource businessDatasource = BusinessDataSource(Get.find());
+
+  //variables
+  late TextEditingController searchText;
+  bool? isSearch = false;
+  late List<BusinessViewModel>? businessesList = [];
+
+  //request variables
+  StatusRequest? statusRequest;
 
   @override
   void onInit() {
@@ -32,9 +37,23 @@ class SearchPageControllerImp extends SearchPageController {
   }
 
   @override
-  void dispose() {
-    searchText.dispose();
-    super.dispose();
+  checkSearch(value) {
+    if (value == "") {
+      isSearch = false;
+      businessesList = [];
+    }
+    update();
+  }
+
+  @override
+  goToBusinessPage(String businessName, Uint8List businessImage) {
+    Get.toNamed(
+      AppRoutes.businessPage,
+      arguments: {
+        'businessName': businessName,
+        'businessImage': businessImage,
+      },
+    );
   }
 
   @override
@@ -58,8 +77,6 @@ class SearchPageControllerImp extends SearchPageController {
 
     if (StatusRequest.success == statusRequest) {
       if (response['statusCode'] == "200") {
-        print("200");
-
         List<dynamic> businesses = response['businesses'];
 
         businessesList = businesses.map((business) {
@@ -79,22 +96,8 @@ class SearchPageControllerImp extends SearchPageController {
   }
 
   @override
-  checkSearch(value) {
-    if (value == "") {
-      isSearch = false;
-      businessesList = [];
-    }
-    update();
-  }
-
-  @override
-  goToBusinessPage(String businessName, Uint8List businessImage) {
-    Get.toNamed(
-      AppRoutes.businessPage,
-      arguments: {
-        'businessName': businessName,
-        'businessImage': businessImage,
-      },
-    );
+  void dispose() {
+    searchText.dispose();
+    super.dispose();
   }
 }

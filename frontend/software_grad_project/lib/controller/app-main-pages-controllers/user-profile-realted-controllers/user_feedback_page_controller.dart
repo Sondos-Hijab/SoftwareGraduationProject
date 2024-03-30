@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:software_grad_project/core/classes/status_request.dart';
-import 'package:software_grad_project/core/constants/routes_names.dart';
 import 'package:software_grad_project/core/functions/convert_data_to_file.dart';
 import 'package:software_grad_project/core/functions/handling_data_function.dart';
 import 'package:software_grad_project/core/services/service.dart';
@@ -15,13 +14,16 @@ abstract class UserFeedbackPageController extends GetxController {
 }
 
 class UserFeedbackPageControllerImp extends UserFeedbackPageController {
+  //myServices to get accessToken
   final myServices = Get.find<MyServices>();
-  String? username = "";
 
+  //datasource
   UserFeedbackDataSource userFeedbackDataSource =
       UserFeedbackDataSource(Get.find());
 
+  //variables
   List<FetchedFeedbackModel>? userFeedback = [];
+  String? username = "";
 
   @override
   void onInit() {
@@ -31,8 +33,8 @@ class UserFeedbackPageControllerImp extends UserFeedbackPageController {
   }
 
   @override
-  void dispose() {
-    super.dispose();
+  goToUserPage(String username) {
+    Get.back();
   }
 
   @override
@@ -114,7 +116,7 @@ class UserFeedbackPageControllerImp extends UserFeedbackPageController {
   }
 
   @override
-  goToUserPage(String username) {
-    Get.back();
+  void dispose() {
+    super.dispose();
   }
 }
