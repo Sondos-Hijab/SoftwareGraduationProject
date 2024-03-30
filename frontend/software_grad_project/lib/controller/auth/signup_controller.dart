@@ -8,6 +8,7 @@ import 'package:software_grad_project/data/datasource/remote/authentication/sign
 abstract class SignUpController extends GetxController {
   signup();
   goToLogin();
+  setSelectedGender(String gender);
 }
 
 class SignUpControllerImp extends SignUpController {
@@ -15,12 +16,21 @@ class SignUpControllerImp extends SignUpController {
   late TextEditingController password;
   late TextEditingController email;
   late TextEditingController confirmPassword;
+  late TextEditingController age;
   late StatusRequest statusRequest;
   SignUpDataSource signupData = SignUpDataSource(Get.find());
 
   List data = [];
 
   GlobalKey<FormState> formState = GlobalKey<FormState>();
+
+  //radio button for selecting male or female
+  String? selectedGender;
+  @override
+  setSelectedGender(String gender) {
+    selectedGender = gender;
+    update();
+  }
 
   @override
   signup() async {
@@ -46,7 +56,7 @@ class SignUpControllerImp extends SignUpController {
       }
 
       update();
-    } 
+    }
   }
 
   bool showPassword = true;
@@ -72,6 +82,8 @@ class SignUpControllerImp extends SignUpController {
     password = TextEditingController();
     confirmPassword = TextEditingController();
     username = TextEditingController();
+    age = TextEditingController();
+    selectedGender = "Male";
     super.onInit();
   }
 
@@ -81,6 +93,7 @@ class SignUpControllerImp extends SignUpController {
     password.dispose();
     username.dispose();
     confirmPassword.dispose();
+    age.dispose();
     super.dispose();
   }
 }

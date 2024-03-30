@@ -7,6 +7,7 @@ import 'package:software_grad_project/core/functions/valid_confirm_pass.dart';
 import 'package:software_grad_project/core/functions/valid_input.dart';
 import 'package:software_grad_project/view/widgets/auth/custom_description_text_auth.dart';
 import 'package:software_grad_project/view/widgets/auth/custom_button_auth.dart';
+import 'package:software_grad_project/view/widgets/auth/custom_radio_button_auth.dart';
 import 'package:software_grad_project/view/widgets/auth/custom_text_title_auth.dart';
 import 'package:software_grad_project/view/widgets/auth/custom_text_form_auth.dart';
 import 'package:software_grad_project/view/widgets/auth/text_signup_login.dart';
@@ -33,7 +34,7 @@ class SignUp extends StatelessWidget {
             child: GetBuilder<SignUpControllerImp>(
               builder: (controller) => Container(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
-                  margin: const EdgeInsets.symmetric(vertical: 40),
+                  margin: const EdgeInsets.symmetric(vertical: 20),
                   child: Form(
                     key: controller.formState,
                     child: ListView(
@@ -86,6 +87,19 @@ class SignUp extends StatelessWidget {
                           valid: (val) {
                             return validPass(controller.password.text, val!);
                           },
+                        ),
+                        CustomeTextFormAuth(
+                          hintText: "Age",
+                          labelText: "Age",
+                          iconData: Icons.date_range_rounded,
+                          mycontroller: controller.age,
+                          valid: (val) {
+                            return validInput(val!, 1, 3, "age");
+                          },
+                        ),
+                        CustomRadioButton(
+                          gender: controller.selectedGender,
+                          setSelectedValue: controller.setSelectedGender,
                         ),
                         CustomButtonAuth(
                           text: "Sign Up",
