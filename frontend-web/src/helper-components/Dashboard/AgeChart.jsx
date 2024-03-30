@@ -34,6 +34,12 @@ export const options = {
     title: {
       display: true,
       text: "Age Chart",
+      font: {
+        size: 18,
+        weight: "bold",
+      },
+      color: "#696969",
+      padding: 20,
     },
   },
 };
@@ -46,14 +52,14 @@ export const data = {
     {
       label: "# of followers",
       data: [15, 89, 61, 100],
-      borderColor: "#0db783",
-      backgroundColor: "#0db783",
+      borderColor: "#fcf6bd",
+      backgroundColor: "#fcf6bd",
     },
     {
       label: "# of people who wrote feedback",
       data: [80, 10, 30, 100],
-      borderColor: "#fac100",
-      backgroundColor: "#fac100",
+      borderColor: "#ffbf69",
+      backgroundColor: "#ffbf69",
     },
   ],
 };

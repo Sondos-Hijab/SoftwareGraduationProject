@@ -11,3 +11,4 @@ const MaleFemaleChartSection = () => {
 };
 
 export default MaleFemaleChartSection;
+

@@ -19,11 +19,21 @@ ChartJS.register(
   Legend
 );
 
-export const options = {
+const options = {
   responsive: true,
   plugins: {
     legend: {
       position: "top",
+    },
+    title: {
+      display: true,
+      text: "Average Rates Chart",
+      font: {
+        size: 18,
+        weight: "bold",
+      },
+      color: "#696969",
+      padding: 20,
     },
   },
 };
@@ -34,14 +44,13 @@ const labels = [
   "Product/Service rate",
 ];
 
-// Manually specifying data values
 const data = {
   labels: labels,
   datasets: [
     {
-      label: "Average rates",
+      label: "Average rate",
       data: [100, 200, 500, 600, 700, 800, 900, 1000],
-      backgroundColor: "#fac100",
+      backgroundColor: "#d0f4de",
     },
   ],
 };

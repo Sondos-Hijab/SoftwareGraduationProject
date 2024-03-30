@@ -9,8 +9,8 @@ export const data = {
   datasets: [
     {
       data: [12, 19],
-      backgroundColor: ["#fac100", "#0db783"],
-      borderColor: ["#fac100", "#0db783"],
+      backgroundColor: ["#a9def9", "#ffe5ec"],
+      borderColor: ["#a9def9", "#ffe5ec"],
       borderWidth: 1,
     },
   ],
@@ -23,8 +23,10 @@ export const options = {
 export default function MaleFemalePieChart({ title }) {
   return (
     <div className="w-full md:w-1/2 p-12 ">
-      <h2 className="text-center mb-4 text-gray-600 text-lg">{title} </h2>
+      <h2 className="text-center mb-4 text-[#696969] text-base font-bold">
+      </h2>
       <Pie data={data} options={options} />
     </div>
   );
 }
+
