@@ -16,7 +16,7 @@ export const leftSidebarLinks = [
   },
   {
     icon: faTableColumns,
-    route: "/",
+    route: "/dashboard",
     label: "Dashboard",
   },
   {
