@@ -14,12 +14,13 @@ abstract class OtherUserFeedbackPageController extends GetxController {
 
 class OtherUserFeedbackPageControllerImp
     extends OtherUserFeedbackPageController {
+  //myServices for getting accessToken
   final myServices = Get.find<MyServices>();
-  String? username = "";
-
+  //datasource
   OtherUserInfoDataSource otherUserInfoDataSource =
       OtherUserInfoDataSource(Get.find());
-
+  //variables
+  String? username = "";
   List<FetchedFeedbackModel>? userFeedback = [];
 
   @override
@@ -30,8 +31,9 @@ class OtherUserFeedbackPageControllerImp
   }
 
   @override
-  void dispose() {
-    super.dispose();
+  goToUserPage(String username) {
+    Get.toNamed(AppRoutes.otherUserProfilePage,
+        arguments: {'username': username});
   }
 
   @override
@@ -75,8 +77,7 @@ class OtherUserFeedbackPageControllerImp
   }
 
   @override
-  goToUserPage(String username) {
-    Get.toNamed(AppRoutes.otherUserProfilePage,
-        arguments: {'username': username});
+  void dispose() {
+    super.dispose();
   }
 }

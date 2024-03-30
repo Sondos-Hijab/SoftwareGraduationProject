@@ -6,17 +6,28 @@ import 'package:software_grad_project/core/services/service.dart';
 import 'package:software_grad_project/data/datasource/remote/authentication/forgotPassword/verify_code_datasource.dart';
 
 abstract class VerifyCodeController extends GetxController {
-  checkCode();
   goToResetPassword(String verifyCode);
 }
 
 class VerifyCodeControllerImp extends VerifyCodeController {
-  String email = "";
+  //myServices to get temp access token
+  final myServices = Get.find<MyServices>();
 
-  StatusRequest? statusRequest;
+  //datasource
   VerifyCodeDataSource verifyCodeData = VerifyCodeDataSource(Get.find());
 
-  final myServices = Get.find<MyServices>();
+  //variables
+  String email = "";
+
+  //request variables
+  StatusRequest? statusRequest;
+
+  @override
+  void onInit() {
+    super.onInit();
+    final params = Get.parameters;
+    email = params['email']!;
+  }
 
   @override
   goToResetPassword(verifyCode) async {
@@ -46,15 +57,5 @@ class VerifyCodeControllerImp extends VerifyCodeController {
       }
       update();
     }
-  }
-
-  @override
-  checkCode() {}
-
-  @override
-  void onInit() {
-    super.onInit();
-    final params = Get.parameters;
-    email = params['email']!;
   }
 }

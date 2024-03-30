@@ -11,12 +11,26 @@ abstract class ForgotPasswordController extends GetxController {
 }
 
 class ForgotPasswordControllerImp extends ForgotPasswordController {
+  //keys and controllers
+  GlobalKey<FormState> formState = GlobalKey<FormState>();
+
+  //myServices to get accessToken
+  final myServices = Get.find<MyServices>();
+
+  //datasource
   CheckEmailDataSource checkEmailData = CheckEmailDataSource(Get.find());
+
+  //request variables
   StatusRequest? statusRequest;
 
+  //variables
   late TextEditingController email;
-  GlobalKey<FormState> formState = GlobalKey<FormState>();
-  final myServices = Get.find<MyServices>();
+
+  @override
+  void onInit() {
+    email = TextEditingController();
+    super.onInit();
+  }
 
   @override
   checkEmailandGoToVerifyCode() async {
@@ -40,12 +54,6 @@ class ForgotPasswordControllerImp extends ForgotPasswordController {
       }
       update();
     }
-  }
-
-  @override
-  void onInit() {
-    email = TextEditingController();
-    super.onInit();
   }
 
   @override

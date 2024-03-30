@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:get/get.dart';
 import 'package:software_grad_project/core/classes/status_request.dart';
 import 'package:software_grad_project/core/constants/routes_names.dart';
@@ -16,10 +15,14 @@ abstract class FollowedbusinessesPageController extends GetxController {
 
 class FollowedbusinessesPageControllerImp
     extends FollowedbusinessesPageController {
-  BusinessFollowDataSource businessFollowDataSource =
-      BusinessFollowDataSource(Get.find());
+  //myServices to get accessToken
   final myServices = Get.find<MyServices>();
 
+  //datasource
+  BusinessFollowDataSource businessFollowDataSource =
+      BusinessFollowDataSource(Get.find());
+
+  //variables
   List<FollowingModel>? followingBusinesses = [];
   String? username;
 
@@ -30,12 +33,6 @@ class FollowedbusinessesPageControllerImp
     getFollowing(username!);
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   @override
   goToBusinessPage(String businessName, Uint8List businessImage) {
     Get.toNamed(
@@ -72,5 +69,10 @@ class FollowedbusinessesPageControllerImp
       }
       update();
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

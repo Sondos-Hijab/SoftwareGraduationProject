@@ -16,16 +16,17 @@ abstract class OtherUserProfilePageController extends GetxController {
 }
 
 class OtherUserProfilePageControllerImp extends OtherUserProfilePageController {
+  //myServices for getting accessToken
   final myServices = Get.find<MyServices>();
+  //datasources
+  OtherUserInfoDataSource otherUserInfoDataSource =
+      OtherUserInfoDataSource(Get.find());
+  //variables
+  OtherUserInfoModel fetchedOtherUserInfo =
+      OtherUserInfoModel(0, 0, "", "", null);
   Uint8List? otherUserProfileImage;
   TextEditingController? bioController;
   String? username;
-
-  OtherUserInfoDataSource otherUserInfoDataSource =
-      OtherUserInfoDataSource(Get.find());
-
-  OtherUserInfoModel fetchedOtherUserInfo =
-      OtherUserInfoModel(0, 0, "", "", null);
 
   @override
   void onInit() {
@@ -37,15 +38,15 @@ class OtherUserProfilePageControllerImp extends OtherUserProfilePageController {
   }
 
   @override
-  void dispose() {
-    bioController?.dispose();
-    super.dispose();
-  }
-
-  @override
   goToFeedbackPage() {
     Get.toNamed(AppRoutes.otherUserFeedbackPage,
         arguments: {'username': username!});
+  }
+
+  @override
+  goToBusinessesPage() {
+    Get.toNamed(AppRoutes.followedBusinessesPage,
+        arguments: {'username': username});
   }
 
   @override
@@ -79,8 +80,8 @@ class OtherUserProfilePageControllerImp extends OtherUserProfilePageController {
   }
 
   @override
-  goToBusinessesPage() {
-    Get.toNamed(AppRoutes.followedBusinessesPage,
-        arguments: {'username': username});
+  void dispose() {
+    bioController?.dispose();
+    super.dispose();
   }
 }

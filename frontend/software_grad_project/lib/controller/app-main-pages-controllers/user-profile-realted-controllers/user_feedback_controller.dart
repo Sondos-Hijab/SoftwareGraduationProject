@@ -17,18 +17,23 @@ abstract class UserFeedbackController extends GetxController {
 }
 
 class UserFeedbackControllerImp extends UserFeedbackController {
-  String? businessName;
+  //myServices to get accessToken
+  final myServices = Get.find<MyServices>();
+  String? accessToken;
 
+  //datasources
+  FeedbackDatasource feedbackDatasource = FeedbackDatasource(Get.find());
+
+  //variables
   TextEditingController feedbackTextEditingController = TextEditingController();
+  String? businessName;
   String? customerServiceRate_1;
   String? valueOfMoneyRate_2;
   String? productQualityRate_3;
   File? selectedImage;
 
-  final myServices = Get.find<MyServices>();
+  //request variables
   StatusRequest? statusRequest;
-  FeedbackDatasource feedbackDatasource = FeedbackDatasource(Get.find());
-  String? accessToken;
 
   @override
   void onInit() {
@@ -38,9 +43,31 @@ class UserFeedbackControllerImp extends UserFeedbackController {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-    feedbackTextEditingController.dispose();
+  updateCustomerServiceRate(String rate) {
+    customerServiceRate_1 = rate;
+    update();
+  }
+
+  @override
+  updateValueOfMoneyRate(String rate) {
+    valueOfMoneyRate_2 = rate;
+    update();
+  }
+
+  @override
+  updateProductQualityRate(String rate) {
+    productQualityRate_3 = rate;
+    update();
+  }
+
+  @override
+  uploadImage() async {
+    final pickedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
+      selectedImage = File(pickedImage.path);
+    }
+    update();
   }
 
   @override
@@ -93,31 +120,8 @@ class UserFeedbackControllerImp extends UserFeedbackController {
   }
 
   @override
-  updateCustomerServiceRate(String rate) {
-    customerServiceRate_1 = rate;
-    update();
+  void dispose() {
+    super.dispose();
+    feedbackTextEditingController.dispose();
   }
-
-  @override
-  updateValueOfMoneyRate(String rate) {
-    valueOfMoneyRate_2 = rate;
-    update();
-  }
-
-  @override
-  updateProductQualityRate(String rate) {
-    productQualityRate_3 = rate;
-    update();
-  }
-
-  @override
-  uploadImage() async {
-    final pickedImage =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (pickedImage != null) {
-      selectedImage = File(pickedImage.path);
-    }
-    update();
-  }
-
 }
