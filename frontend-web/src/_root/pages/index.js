@@ -7,3 +7,4 @@ export { default as Chatting } from "./Chatting";
 export { default as Notifications } from "./Notifications";
 export { default as User } from "./User";
 export { default as BusinessPage } from "./BusinessPage";
+export { default as Dashboard } from "./Dashboard";

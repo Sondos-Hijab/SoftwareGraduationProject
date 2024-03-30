@@ -21,6 +21,7 @@ import {
   Notifications,
   User,
   BusinessPage,
+  Dashboard,
 } from "./_root/pages";
 import Error from "./helper-components/WarningsErrors/Error";
 import AppPovider from "./Providers/AppPovider";
@@ -39,6 +40,7 @@ function App() {
         { path: "notifications", element: <Notifications /> },
         { path: "user/:username", element: <User /> },
         { path: "business/:businessname", element: <BusinessPage /> },
+        { path: "dashboard", element: <Dashboard /> },
       ],
     },
     {
