@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CircleDollarSign, ShoppingBagIcon, Star, Users } from "lucide-react";
 const NumbersCards = () => {
+  const [followersNumber, setFollowersNumber] = useState();
+  const [valueOfMoneyRateAverage, setValueOfMoneyRateAverage] = useState();
+  const [productServiceRateAverage, setProductServiceRateAverage] = useState();
+  const [customerServiceRateAverage, setCustomerServiceRateAverage] =
+    useState();
+
+  useEffect(() => {
+    //fetch numbers and set them in the cards
+  }, []);
+
   return (
     <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
       <Card>
@@ -13,9 +23,6 @@ const NumbersCards = () => {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold text-customYellow">75</div>
-          <p className="text-xs text-muted-foreground">
-            +20.1% from last month
-          </p>
         </CardContent>
       </Card>
       <Card>
@@ -27,9 +34,6 @@ const NumbersCards = () => {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold text-customYellow">85%</div>
-          <p className="text-xs text-muted-foreground">
-            +180.1% from last month
-          </p>
         </CardContent>
       </Card>
       <Card>
@@ -41,7 +45,6 @@ const NumbersCards = () => {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold text-customYellow">23%</div>
-          <p className="text-xs text-muted-foreground">+19% from last month</p>
         </CardContent>
       </Card>
       <Card>
@@ -53,7 +56,6 @@ const NumbersCards = () => {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold text-customYellow">52%</div>
-          <p className="text-xs text-muted-foreground">+20% since last month</p>
         </CardContent>
       </Card>
     </div>
