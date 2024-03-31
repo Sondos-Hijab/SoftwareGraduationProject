@@ -47,7 +47,4 @@ class AppLink {
   static const String followersNumberLink = "$server/user/followersNumber";
   static const String followersLink = "$server/user/followers";
   static const String followingLink = "$server/user/following";
-
-  //Test
-  static const String test = "https://jsonplaceholder.typicode.com/posts/1";
 }

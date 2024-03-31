@@ -45,7 +45,7 @@ class OtherUserProfilePageControllerImp extends OtherUserProfilePageController {
 
   @override
   goToBusinessesPage() {
-    Get.toNamed(AppRoutes.followedBusinessesPage,
+    Get.offAndToNamed(AppRoutes.otherUserFollowedBusinessesPage,
         arguments: {'username': username});
   }
 

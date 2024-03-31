@@ -7,13 +7,13 @@ class BusinessDataSource {
   BusinessDataSource(this.crud);
 
   getDataWithParams(String authToken, String category) async {
-    var response = await crud.getDataWithParams(
+    var response = await crud.getDataWithAuthorizationParams(
         AppLink.getBusinessesByCategoryLink, {"category": category}, authToken);
     return response.fold((l) => l, (r) => r);
   }
 
   searchDataWithParams(String authToken, String name) async {
-    var response = await crud.getDataWithParams(
+    var response = await crud.getDataWithAuthorizationParams(
         AppLink.getBusinessByNameLink, {"name": name}, authToken);
     return response.fold((l) => l, (r) => r);
   }
