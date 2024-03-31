@@ -46,7 +46,7 @@ const EditBusinessLocationModal = ({ setShowModal, setBusinessLocation }) => {
       <div className="mx-auto py-16 max-w-screen-xl sm:px-6 lg:px-8 mt-10 sm:mt-0">
         <div className="mx-auto max-w-lg bg-white relative rounded-lg p-10">
           <FontAwesomeIcon
-            className="text-gray-600 w-6 h-6 sm:w-7 sm:h-7 cursor-pointer absolute top-2 right-2"
+            className="text-gray-600 w-6 h-6 sm:w-7 sm:h-7 cursor-pointer absolute top-4 right-4"
             icon={faXmark}
             onClick={() => {
               setShowModal(false);
