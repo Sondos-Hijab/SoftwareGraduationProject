@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import { appContext as AppContext } from "@/store/app-context";
+import { updateImage } from "@/apis/profileAndBusinessInfo";
 
 const AppPovider = ({ children }) => {
   const [profileImage, setProfileImage] = useState(null);
@@ -11,11 +12,12 @@ const AppPovider = ({ children }) => {
     setBusinessName(name);
   }
 
-  // funstion to handle access token changes => after successful sign in
+  // function to handle access token changes => after successful sign in
   function setFetchedAccessToken(fetchedAccessToken) {
     setAccessToken(fetchedAccessToken);
   }
   // funtions to handle image change
+  
   // when image is fetched in root layout
   function setFetchedImage(image) {
     setProfileImage(image);
@@ -27,35 +29,15 @@ const AppPovider = ({ children }) => {
 
     if (file) {
       const reader = new FileReader();
-      //update in backend
-      try {
-        const authToken = localStorage.getItem("accessToken");
-        const formData = new FormData();
-        formData.append("profilePicture", file);
-        console.log(formData.get("profilePicture"));
-        const response = await fetch(
-          "http://localhost:3000/RateRelay/user/addAdminProfilePicture",
-          {
-            method: "PUT",
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-            },
-            body: formData,
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to update profile picture");
+      updateImage(accessToken, file).then((value) => {
+        if (value.error) console.log("Failed to update profile picture");
+        else {
+          reader.onloadend = () => {
+            setProfileImage(reader.result);
+          };
+          reader.readAsDataURL(file);
         }
-
-        //update in ui
-        reader.onloadend = () => {
-          setProfileImage(reader.result);
-        };
-      } catch (error) {
-        console.error("Error updating profile picture:", error);
-      }
-      reader.readAsDataURL(file);
+      });
     }
   }
 

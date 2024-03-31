@@ -1,6 +1,5 @@
 import { useAppContext } from "@/Providers/AppPovider";
 import { fetchPosts } from "@/apis/postsRequests";
-import BusinessPostCard from "@/helper-components/Cards/BusinessPostCard";
 import PostCard from "@/helper-components/Cards/PostCard";
 import Modal from "@/helper-components/WarningsErrors/Modal";
 import { createBlobUrl, sortByDate } from "@/utils/utils";
@@ -23,13 +22,16 @@ const modalReducer = (state, action) => {
 };
 
 const Posts = () => {
-  const [posts, setPosts] = useState();
-  const { accessToken, businessName, profileImage } = useAppContext();
+  const { accessToken, businessName } = useAppContext();
 
+  //state management useReducer
   const [modalState, modalDispatch] = useReducer(
     modalReducer,
     initialModalState
   );
+
+  //state management useState
+  const [posts, setPosts] = useState();
 
   useEffect(() => {
     fetchPosts(businessName, accessToken).then((value) => {

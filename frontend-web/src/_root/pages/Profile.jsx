@@ -68,18 +68,19 @@ const Profile = () => {
   const { profileImage, handleImageChange, businessName, accessToken } =
     useAppContext();
 
+  //state management useState
   const [activeTab, setActiveTab] = useState("feedback");
   const [feedback, setFeedback] = useState([]);
   const [posts, setPosts] = useState([]);
   const [followers, setFollowers] = useState([]);
   const [followersNumber, setFollowersNumber] = useState(0);
 
+  //state management useReducer
+  const [formState, formDispatch] = useReducer(formReducer, initialFormState);
   const [modalState, modalDispatch] = useReducer(
     modalReducer,
     initialModalState
   );
-
-  const [formState, formDispatch] = useReducer(formReducer, initialFormState);
 
   const togglePhoneModal = () => {
     modalDispatch({
@@ -121,6 +122,7 @@ const Profile = () => {
 
     const fetchData = async () => {
       try {
+        //fetch business feedback
         const feedbackData = await fetchBusinessFeedback(
           businessName,
           accessToken
@@ -129,9 +131,9 @@ const Profile = () => {
           console.error("Error fetching business feedback");
         } else {
           setFeedback(feedbackData.feedback);
-          console.log(feedbackData.feedback);
         }
 
+        //fetch business posts
         const postsData = await fetchBusinessPosts(businessName, accessToken);
         if (postsData.error) {
           console.error("Error fetching business posts");
@@ -139,6 +141,7 @@ const Profile = () => {
           setPosts(postsData.posts);
         }
 
+        //fetch business followers
         const followersData = await fetchBusinessFollowers(
           businessName,
           accessToken
@@ -149,6 +152,7 @@ const Profile = () => {
           setFollowers(followersData.followers);
         }
 
+        //fetch number of business followers
         const numberOfFollowersData = await getNumberOfFollowers(
           businessName,
           accessToken
@@ -329,6 +333,7 @@ const Profile = () => {
           {activeTab === "posts" &&
             sortByDate(posts).map((post) => (
               <PostCard
+                key={post.postID}
                 description={post.description}
                 picture={createBlobUrl(post.picture.data)}
                 createdAt={post.created_at}

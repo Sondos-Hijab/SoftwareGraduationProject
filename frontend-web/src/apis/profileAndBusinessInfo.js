@@ -19,6 +19,29 @@ export const fetchImage = async (accessToken) => {
   }
 };
 
+export async function updateImage(accessToken, file) {
+  const accessTokenLocalStorage = localStorage.getItem("accessToken");
+  const formData = new FormData();
+  formData.append("profilePicture", file);
+  const response = await fetch(
+    "http://localhost:3000/RateRelay/user/addAdminProfilePicture",
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${accessToken || accessTokenLocalStorage}`,
+      },
+      body: formData,
+    }
+  );
+  if (!response.ok) {
+    const errorMessage = await response.json();
+    return errorMessage;
+  } else {
+    const data = await response.json();
+    return data;
+  }
+}
+
 export const fetchInfo = async (accessToken) => {
   try {
     const accessTokenLocalStorage = localStorage.getItem("accessToken");
@@ -61,4 +84,3 @@ export async function updateInfo(accessToken, updatedInfo) {
     return data;
   }
 }
-
