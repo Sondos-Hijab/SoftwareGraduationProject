@@ -42,31 +42,62 @@ export const options = {
       padding: 20,
     },
   },
+  scales: {
+    x: {
+      title: {
+        display: true,
+        text: "Number of people",
+        color: "#696969",
+        font: {
+          size: 14,
+        },
+      },
+      suggestedMin: 0,
+      suggestedMax: 100,
+    },
+    y: {
+      title: {
+        display: true,
+        text: "Ages",
+        color: "#696969",
+        font: {
+          size: 14,
+        },
+      },
+    },
+  },
 };
 
 const labels = ["< 18", "18 - 30", "> 30"];
 
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: "# of followers",
-      data: [15, 89, 61, 100],
-      borderColor: "#fcf6bd",
-      backgroundColor: "#fcf6bd",
-    },
-    {
-      label: "# of people who wrote feedback",
-      data: [80, 10, 30, 100],
-      borderColor: "#ffbf69",
-      backgroundColor: "#ffbf69",
-    },
-  ],
-};
-
-export default function AgeChart() {
+export default function AgeChart({ lessThan18, between18and30, moreThan30 }) {
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: "# of followers",
+        data: [
+          lessThan18.followers,
+          between18and30.followers,
+          moreThan30.followers,
+        ],
+        borderColor: "#fcf6bd",
+        backgroundColor: "#fcf6bd",
+      },
+      {
+        label: "# of people who wrote feedback",
+        data: [
+          lessThan18.writtenFeed,
+          between18and30.writtenFeed,
+          moreThan30.writtenFeed,
+        ],
+        borderColor: "#ffbf69",
+        backgroundColor: "#ffbf69",
+      },
+    ],
+  };
   return (
-    <div className="w-4/5 pb-8">
+    <div className="w-full md:w-4/5 pb-8">
       <Bar className="mt-8" options={options} data={data} />
     </div>
   );

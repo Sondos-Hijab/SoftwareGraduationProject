@@ -36,6 +36,32 @@ const options = {
       padding: 20,
     },
   },
+  scales: {
+    x: {
+      display: true,
+      title: {
+        display: true,
+        text: "Rates",
+        color: "#696969",
+        font: {
+          size: 14,
+        },
+      },
+    },
+    y: {
+      display: true,
+      title: {
+        display: true,
+        text: "Average",
+        color: "#696969",
+        font: {
+          size: 14,
+        },
+      },
+      suggestedMin: 0,
+      suggestedMax: 100,
+    },
+  },
 };
 
 const labels = [
@@ -44,20 +70,23 @@ const labels = [
   "Product/Service rate",
 ];
 
-const data = {
-  labels: labels,
-  datasets: [
-    {
-      label: "Average rate",
-      data: [100, 200, 500, 600, 700, 800, 900, 1000],
-      backgroundColor: "#d0f4de",
-    },
-  ],
-};
-
-export default function AverageRatesChart() {
+export default function AverageRatesChart({ rates }) {
+  const data = {
+    labels: labels,
+    datasets: [
+      {
+        label: "Average rate",
+        data: [
+          rates.customerService,
+          rates.valueOfMoney,
+          rates.productServiceRate,
+        ],
+        backgroundColor: "#d0f4de",
+      },
+    ],
+  };
   return (
-    <div className="w-4/5 pb-8">
+    <div className="pb-8 w-full md:w-4/5">
       <Bar className="mt-8" options={options} data={data} />
     </div>
   );
