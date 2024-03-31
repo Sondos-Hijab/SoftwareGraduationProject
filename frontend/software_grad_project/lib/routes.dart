@@ -93,4 +93,5 @@ List<GetPage<dynamic>>? routes = [
   GetPage(
       name: AppRoutes.otherUserFollowedBusinessesPage,
       page: () => const OtherUserFollowedBusinessesPage()),
+
 ];
