@@ -23,11 +23,15 @@ const modalReducer = (state, action) => {
 
 const Home = () => {
   const { accessToken, businessName } = useAppContext();
-  const [feedback, setFeedback] = useState([]);
+
+  //state management useReducer
   const [modalState, modalDispatch] = useReducer(
     modalReducer,
     initialModalState
   );
+
+  //state management useState
+  const [feedback, setFeedback] = useState([]);
 
   useEffect(() => {
     fetchFeedback(businessName, accessToken).then((value) => {

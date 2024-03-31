@@ -3,7 +3,6 @@ import {
   faComments,
   faHouse,
   faImage,
-  faUsers,
   faTableColumns,
   faUpload,
 } from "@fortawesome/free-solid-svg-icons";

@@ -13,12 +13,13 @@ import { createBlobUrl, sortByDate } from "@/utils/utils";
 
 const User = () => {
   const { username } = useParams();
-  const [activeTab, setActiveTab] = useState("feedback");
   const { accessToken } = useAppContext();
 
+  //state management
   const [feedback, setFeedback] = useState([]);
   const [following, setFollowing] = useState([]);
   const [userBio, setUserBio] = useState("");
+  const [activeTab, setActiveTab] = useState("feedback");
   const [userProfilePicture, setUserProfilePicture] = useState(
     placeholderUserPicture
   );

@@ -21,18 +21,20 @@ import BusinessPostCard from "@/helper-components/Cards/BusinessPostCard";
 
 const BusinessPage = () => {
   const { businessname } = useParams();
-  const [activeTab, setActiveTab] = useState("feedback");
   const { accessToken } = useAppContext();
 
+  //state manaegement
   const [feedback, setFeedback] = useState([]);
   const [posts, setPosts] = useState([]);
   const [followers, setFollowers] = useState([]);
   const [businessInfo, setBusinessInfo] = useState({});
   const [followersNumber, setFollowersNumber] = useState(0);
+  const [activeTab, setActiveTab] = useState("feedback");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        //fetch business info
         const businessInfoData = await fetchBusinessInfo(
           businessname,
           accessToken
@@ -46,6 +48,7 @@ const BusinessPage = () => {
           });
         }
 
+        //fetch business feedback
         const feedbackData = await fetchBusinessFeedback(
           businessname,
           accessToken
@@ -56,6 +59,7 @@ const BusinessPage = () => {
           setFeedback(feedbackData.feedback);
         }
 
+        //fetch business posts
         const postsData = await fetchBusinessPosts(businessname, accessToken);
         if (postsData.error) {
           console.error("Error fetching business posts");
@@ -63,6 +67,7 @@ const BusinessPage = () => {
           setPosts(postsData.posts);
         }
 
+        //fetch business followers
         const followersData = await fetchBusinessFollowers(
           businessname,
           accessToken
@@ -73,6 +78,7 @@ const BusinessPage = () => {
           setFollowers(followersData.followers);
         }
 
+        //fetch  number of business followers
         const numberOfFollowersData = await getNumberOfFollowers(
           businessname,
           accessToken
