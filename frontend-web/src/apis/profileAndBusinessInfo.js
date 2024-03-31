@@ -84,3 +84,5 @@ export async function updateInfo(accessToken, updatedInfo) {
     return data;
   }
 }
+
+

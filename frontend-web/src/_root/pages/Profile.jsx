@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useReducer } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisVertical, faPen } from "@fortawesome/free-solid-svg-icons";
 import LocationView from "@/helper-components/Location/LocationView";
 import { useAppContext } from "@/Providers/AppPovider";
 import EditPhoneNumberModal from "@/helper-components/EditBusinessInfo/EditPhoneNumberModal";
@@ -12,7 +12,7 @@ import {
   sortByDate,
   stringToLocationMarker,
 } from "@/utils/utils";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FeedbackCard from "@/helper-components/Cards/FeedbackCard";
 import FollowCard from "@/helper-components/Cards/FollowCard";
 import {
@@ -22,6 +22,8 @@ import {
   getNumberOfFollowers,
 } from "@/apis/businessPageRequests";
 import PostCard from "@/helper-components/Cards/PostCard";
+import ResetPasswordModal from "@/helper-components/EditBusinessInfo/ResetPasswordModal";
+import { logout } from "@/apis/authRequests";
 
 const modalReducer = (state, action) => {
   switch (action.type) {
@@ -31,6 +33,10 @@ const modalReducer = (state, action) => {
       return { ...state, showEditBusinessDescriptionModal: action.payload };
     case "TOGGLE_LOCATION_MODAL":
       return { ...state, showEditBusinessLocationModal: action.payload };
+    case "TOGGLE_RESET_PASSWORD_LOGOUT_UL":
+      return { ...state, showResetPasswordLogoutUl: action.payload };
+    case "TOGGLE_RESET_PASSWORD_MODAL":
+      return { ...state, showResetPasswordModal: action.payload };
     default:
       return state;
   }
@@ -40,6 +46,8 @@ const initialModalState = {
   showEditPhoneNumberModal: false,
   showEditBusinessDescriptionModal: false,
   showEditBusinessLocationModal: false,
+  showResetPasswordLogoutUl: false,
+  showResetPasswordModal: false,
 };
 
 const formReducer = (state, action) => {
@@ -67,6 +75,7 @@ const initialFormState = {
 const Profile = () => {
   const { profileImage, handleImageChange, businessName, accessToken } =
     useAppContext();
+  const navigate = useNavigate();
 
   //state management useState
   const [activeTab, setActiveTab] = useState("feedback");
@@ -103,6 +112,20 @@ const Profile = () => {
     });
   };
 
+  const toggleResetPasswordLogoutUL = () => {
+    modalDispatch({
+      type: "TOGGLE_RESET_PASSWORD_LOGOUT_UL",
+      payload: !modalState.showResetPasswordLogoutUl,
+    });
+  };
+
+  const toggleResetPasswordModal = () => {
+    modalDispatch({
+      type: "TOGGLE_RESET_PASSWORD_MODAL",
+      payload: !modalState.showResetPasswordModal,
+    });
+  };
+
   useEffect(() => {
     fetchInfo(accessToken).then((businessInfo) => {
       formDispatch({
@@ -124,7 +147,7 @@ const Profile = () => {
       try {
         //fetch business feedback
         const feedbackData = await fetchBusinessFeedback(
-          businessName,
+          localStorage.getItem("businessName"),
           accessToken
         );
         if (feedbackData.error) {
@@ -134,7 +157,10 @@ const Profile = () => {
         }
 
         //fetch business posts
-        const postsData = await fetchBusinessPosts(businessName, accessToken);
+        const postsData = await fetchBusinessPosts(
+          localStorage.getItem("businessName"),
+          accessToken
+        );
         if (postsData.error) {
           console.error("Error fetching business posts");
         } else {
@@ -143,7 +169,7 @@ const Profile = () => {
 
         //fetch business followers
         const followersData = await fetchBusinessFollowers(
-          businessName,
+          localStorage.getItem("businessName"),
           accessToken
         );
         if (followersData.error) {
@@ -154,7 +180,7 @@ const Profile = () => {
 
         //fetch number of business followers
         const numberOfFollowersData = await getNumberOfFollowers(
-          businessName,
+          localStorage.getItem("businessName"),
           accessToken
         );
         if (numberOfFollowersData.error) {
@@ -169,6 +195,21 @@ const Profile = () => {
 
     fetchData();
   }, []);
+
+  //handling logout
+  function handleLogout() {
+    logout(accessToken).then((value) => {
+      if (value.error) {
+        console.log(value.error);
+      } else {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("businessName");
+        localStorage.removeItem("expireDate");
+        navigate("/auth/sign-in");
+      }
+    });
+  }
 
   return (
     <>
@@ -198,11 +239,33 @@ const Profile = () => {
 
         {/* info */}
         <div className="mt-12 w-3/5">
-          <div className="px-4 sm:px-0">
-            <h3 className="text-base font-semibold leading-7 text-[#2f47c6] ">
-              Business Information
+          <div className="px-4 sm:px-0 relative">
+            <h3 className="text-base font-semibold leading-7 text-customPurple flex justify-between">
+              Business Information{" "}
+              <FontAwesomeIcon
+                className="cursor-pointer"
+                icon={faEllipsisVertical}
+                onClick={toggleResetPasswordLogoutUL}
+              />
             </h3>
+
+            <ul
+              className={`${
+                !modalState.showResetPasswordLogoutUl ? "hidden" : "absolute"
+              } bg-white py-2 px-6 rounded-md top-2 right-2 shadow-md`}
+            >
+              <li
+                className="border-b-2 p-2 cursor-pointer"
+                onClick={toggleResetPasswordModal}
+              >
+                Reset password
+              </li>
+              <li className=" p-2 cursor-pointer" onClick={handleLogout}>
+                Logout
+              </li>
+            </ul>
           </div>
+
           <div className="mt-6 border-t border-gray-100">
             <dl className="divide-y divide-gray-100">
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -376,6 +439,16 @@ const Profile = () => {
             formDispatch({ type: "SET_LOCATION", payload: location })
           }
           setShowModal={toggleLocationModal}
+        />
+      ) : (
+        ""
+      )}
+      {modalState.showResetPasswordModal ? (
+        <ResetPasswordModal
+          setShowModal={() => {
+            toggleResetPasswordModal();
+            toggleResetPasswordLogoutUL();
+          }}
         />
       ) : (
         ""
