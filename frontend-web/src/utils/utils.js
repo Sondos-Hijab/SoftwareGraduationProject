@@ -46,12 +46,19 @@ export function isExpired(dateToCheck) {
   return currentDate > dateToCheck;
 }
 
-export function sortByDate(array) {
+export function sortByDate(array, type) {
   let newArray = [];
-  if (array)
-    newArray = array.slice().sort((a, b) => {
-      return new Date(b.created_at) - new Date(a.created_at);
-    });
+  if (array) {
+    if (!type || type == "newToOld")
+      newArray = array.slice().sort((a, b) => {
+        return new Date(b.created_at) - new Date(a.created_at);
+      });
+    else {
+      newArray = array.slice().sort((a, b) => {
+        return new Date(a.created_at) - new Date(b.created_at);
+      });
+    }
+  }
 
   return newArray;
 }

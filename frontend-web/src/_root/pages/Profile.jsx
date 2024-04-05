@@ -83,6 +83,9 @@ const Profile = () => {
   const [posts, setPosts] = useState([]);
   const [followers, setFollowers] = useState([]);
   const [followersNumber, setFollowersNumber] = useState(0);
+  const [selectedFeedbackSorting, setSelectedFeedbackSorting] =
+    useState("newToOld");
+  const [selectedPostsSorting, setSelectedPostsSorting] = useState("newToOld");
 
   //state management useReducer
   const [formState, formDispatch] = useReducer(formReducer, initialFormState);
@@ -387,22 +390,78 @@ const Profile = () => {
 
         <div className="w-3/5 mb-8">
           {/* feedback */}
-          {activeTab === "feedback" &&
-            sortByDate(feedback).map((value) => {
-              return <FeedbackCard key={value.feedbackID} feedInfo={value} />;
-            })}
+          {activeTab === "feedback" && (
+            <>
+              <div className="flex gap-4 flex-col md:flex-row justify-end my-4 ">
+                <select
+                  defaultValue="choose"
+                  name="selectedSorting"
+                  id="sorting"
+                  className="rounded-md border border-gray-200 focus:ring-white w-1/3"
+                  onChange={(e) => {
+                    setSelectedFeedbackSorting(e.target.value);
+                  }}
+                >
+                  <option value="choose" disabled>
+                    Sort by
+                  </option>
+                  <option value="oldToNew">Oldest to newest</option>
+                  <option value="newToOld">Newest to oldest</option>
+                </select>
+              </div>
+
+              {selectedFeedbackSorting == "oldToNew"
+                ? sortByDate(feedback, "oldToNew").map((value) => (
+                    <FeedbackCard key={value.feedbackID} feedInfo={value} />
+                  ))
+                : sortByDate(feedback, "newToOld").map((value) => (
+                    <FeedbackCard key={value.feedbackID} feedInfo={value} />
+                  ))}
+            </>
+          )}
 
           {/* posts */}
-          {activeTab === "posts" &&
-            sortByDate(posts).map((post) => (
-              <PostCard
-                key={post.postID}
-                description={post.description}
-                picture={createBlobUrl(post.picture.data)}
-                createdAt={post.created_at}
-                postID={post.postID}
-              />
-            ))}
+          {activeTab === "posts" && (
+            <>
+              <div className="flex gap-4 flex-col md:flex-row justify-end my-4 ">
+                <select
+                  defaultValue="choose"
+                  name="selectedSorting"
+                  id="sorting"
+                  className="rounded-md border border-gray-200 focus:ring-white w-1/3"
+                  onChange={(e) => {
+                    setSelectedPostsSorting(e.target.value);
+                  }}
+                >
+                  <option value="choose" disabled>
+                    Sort by
+                  </option>
+                  <option value="oldToNew">Oldest to newest</option>
+                  <option value="newToOld">Newest to oldest</option>
+                </select>
+              </div>
+
+              {selectedPostsSorting == "oldToNew"
+                ? sortByDate(posts, "oldToNew").map((post) => (
+                    <PostCard
+                      key={post.postID}
+                      description={post.description}
+                      picture={createBlobUrl(post.picture.data)}
+                      createdAt={post.created_at}
+                      postID={post.postID}
+                    />
+                  ))
+                : sortByDate(posts, "newToOld").map((post) => (
+                    <PostCard
+                      key={post.postID}
+                      description={post.description}
+                      picture={createBlobUrl(post.picture.data)}
+                      createdAt={post.created_at}
+                      postID={post.postID}
+                    />
+                  ))}
+            </>
+          )}
           {/* followers*/}
           {activeTab === "followers" &&
             followers.map((follower, index) => {

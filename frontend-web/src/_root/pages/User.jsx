@@ -23,6 +23,8 @@ const User = () => {
   const [userProfilePicture, setUserProfilePicture] = useState(
     placeholderUserPicture
   );
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedSorting, setSelectedSorting] = useState("newToOld");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -132,10 +134,55 @@ const User = () => {
         {/* displaying values depending on tab menu selected value*/}
         <div className="w-3/5 mb-8">
           {/* feedback */}
-          {activeTab === "feedback" &&
-            sortByDate(feedback).map((value) => {
-              return <FeedbackCard key={value.feedbackID} feedInfo={value} />;
-            })}
+          {activeTab === "feedback" && (
+            <>
+              <div className="flex gap-4 flex-col md:flex-row justify-center my-4">
+                <select
+                  defaultValue="choose"
+                  name="selectedSorting"
+                  id="sorting"
+                  className="rounded-md border border-gray-200 focus:ring-white w-1/2"
+                  onChange={(e) => {
+                    setSelectedSorting(e.target.value);
+                  }}
+                >
+                  <option value="choose" disabled>
+                    Sort by
+                  </option>
+                  <option value="oldToNew">Oldest to newest</option>
+                  <option value="newToOld">Newest to oldest</option>
+                </select>
+
+                <select
+                  defaultValue="choose"
+                  name="selectedCategory"
+                  id="category"
+                  className="rounded-md border border-gray-200 focus:ring-white w-1/2"
+                  onChange={(e) => {
+                    setSelectedCategory(e.target.value);
+                    console.log(e.target.value);
+                  }}
+                >
+                  <option value="choose" disabled>
+                    Select a category
+                  </option>
+                  <option value="Gym">Gyms</option>
+                  <option value="Beauty">Beauty</option>
+                  <option value="Clothes">Clothes</option>
+                  <option value="Devices">Devices</option>
+                  <option value="Restaurants">Restaurants</option>
+                </select>
+              </div>
+
+              {selectedSorting == "oldToNew"
+                ? sortByDate(feedback, "oldToNew").map((value) => (
+                    <FeedbackCard key={value.feedbackID} feedInfo={value} />
+                  ))
+                : sortByDate(feedback, "newToOld").map((value) => (
+                    <FeedbackCard key={value.feedbackID} feedInfo={value} />
+                  ))}
+            </>
+          )}
 
           {/* following */}
           {activeTab === "following" &&
