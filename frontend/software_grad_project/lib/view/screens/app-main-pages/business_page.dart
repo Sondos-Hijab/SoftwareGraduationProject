@@ -107,13 +107,15 @@ class BusinessPage extends StatelessWidget {
                   },
                 ),
                 BusinessFeedback(
-                  businessFeedback: controller.businessFeedback,
-                  goToUserPage: controller.goToUserPage,
-                ),
+                    businessFeedback: controller.businessFeedback,
+                    goToUserPage: controller.goToUserPage,
+                    setFeedbackSortType: controller.setFeedbackSortType,
+                    selectedFeedbackSortType: controller.feedbackSortType!),
                 BusinessPosts(
-                  businessImage: controller.businessImage,
-                  businessesPosts: controller.businessesPosts,
-                ),
+                    businessImage: controller.businessImage,
+                    businessesPosts: controller.businessesPosts,
+                    setPostsSortType: controller.setPostsSortType,
+                    selectedPostsSortType: controller.postsSortType!),
                 BusinessFollowers(
                     businessFollowers: controller.businessFollowers,
                     numberOfFollowers: controller.followersNumber,
@@ -126,5 +128,3 @@ class BusinessPage extends StatelessWidget {
     });
   }
 }
-
-

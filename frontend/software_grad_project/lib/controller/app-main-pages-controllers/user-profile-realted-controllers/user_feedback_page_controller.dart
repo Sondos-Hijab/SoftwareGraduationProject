@@ -11,6 +11,8 @@ abstract class UserFeedbackPageController extends GetxController {
   getUserFeedback(String username);
   deleteUserFeedback(int feedbackID);
   goToUserPage(String username);
+  setFeedbackSortType(String sortType);
+  setSelectedCategory(String category);
 }
 
 class UserFeedbackPageControllerImp extends UserFeedbackPageController {
@@ -24,6 +26,8 @@ class UserFeedbackPageControllerImp extends UserFeedbackPageController {
   //variables
   List<FetchedFeedbackModel>? userFeedback = [];
   String? username = "";
+  String feedbackSortType = "Newest to oldest";
+  String selectedCategory = "Choose a category";
 
   @override
   void onInit() {
@@ -35,6 +39,30 @@ class UserFeedbackPageControllerImp extends UserFeedbackPageController {
   @override
   goToUserPage(String username) {
     Get.back();
+  }
+
+  @override
+  setSelectedCategory(String category) {
+    selectedCategory = category;
+    if (selectedCategory == "Choose a category") {
+      //show the full array
+    } else {
+      //make a request and get the businesses from that category
+    }
+    update();
+  }
+
+  @override
+  setFeedbackSortType(String sortType) {
+    feedbackSortType = sortType;
+    if (feedbackSortType == "Newest to oldest") {
+      userFeedback!.sort((a, b) =>
+          DateTime.parse(b.createdAt!).compareTo(DateTime.parse(a.createdAt!)));
+    } else {
+      userFeedback!.sort((a, b) =>
+          DateTime.parse(a.createdAt!).compareTo(DateTime.parse(b.createdAt!)));
+    }
+    update();
   }
 
   @override
