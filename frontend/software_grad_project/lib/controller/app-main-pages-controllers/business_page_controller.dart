@@ -29,6 +29,8 @@ abstract class BusinessPagesController extends GetxController {
   unfollow();
   getNumberOfFollowers(String businessName);
   getFollowers(String businessName);
+  setFeedbackSortType(String sortType);
+  setPostsSortType(String sortType);
 }
 
 class BusinessPagesControllerImp extends BusinessPagesController {
@@ -60,6 +62,8 @@ class BusinessPagesControllerImp extends BusinessPagesController {
   List<FetchedPostModel>? businessesPosts = [];
   List<FetchedFeedbackModel>? businessFeedback = [];
   List<FollowerModel>? businessFollowers = [];
+  String? feedbackSortType = "Newest to oldest";
+  String? postsSortType = "Newest to oldest";
 
   @override
   void onInit() {
@@ -77,6 +81,32 @@ class BusinessPagesControllerImp extends BusinessPagesController {
     Get.toNamed(AppRoutes.feedbackFormPage, arguments: {
       'businessName': businessName,
     });
+  }
+
+  @override
+  setPostsSortType(String sortType) {
+    postsSortType = sortType;
+    if (postsSortType == "Newest to oldest") {
+      businessesPosts!.sort((a, b) =>
+          DateTime.parse(b.createdAt!).compareTo(DateTime.parse(a.createdAt!)));
+    } else {
+      businessesPosts!.sort((a, b) =>
+          DateTime.parse(a.createdAt!).compareTo(DateTime.parse(b.createdAt!)));
+    }
+    update();
+  }
+
+  @override
+  setFeedbackSortType(String sortType) {
+    feedbackSortType = sortType;
+    if (feedbackSortType == "Newest to oldest") {
+      businessFeedback!.sort((a, b) =>
+          DateTime.parse(b.createdAt!).compareTo(DateTime.parse(a.createdAt!)));
+    } else {
+      businessFeedback!.sort((a, b) =>
+          DateTime.parse(a.createdAt!).compareTo(DateTime.parse(b.createdAt!)));
+    }
+    update();
   }
 
   @override
@@ -102,8 +132,13 @@ class BusinessPagesControllerImp extends BusinessPagesController {
             post['created_at'],
           );
         }).toList();
-        businessesPosts!.sort((a, b) => DateTime.parse(b.createdAt!)
-            .compareTo(DateTime.parse(a.createdAt!)));
+        if (feedbackSortType == "Newest to oldest") {
+          businessesPosts!.sort((a, b) => DateTime.parse(b.createdAt!)
+              .compareTo(DateTime.parse(a.createdAt!)));
+        } else {
+          businessesPosts!.sort((a, b) => DateTime.parse(a.createdAt!)
+              .compareTo(DateTime.parse(b.createdAt!)));
+        }
       } else {
         Get.defaultDialog(
             title: "Error", middleText: "We are sorry, something went wrong");
