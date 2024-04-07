@@ -1,0 +1,32 @@
+[
+  {
+    "author": {
+      "id": "82091008-a484-4a89-ae75-a22bf8d6f3ac",
+      "name": "User One"
+    },
+    "createdAt": 1617701228000,
+    "id": "1",
+    "type": "text",
+    "text": "Hello, how are you?"
+  },
+  {
+    "author": {
+      "id": "user2",
+      "name": "User Two"
+    },
+    "createdAt": 1617701245000,
+    "id": "2",
+    "type": "text",
+    "text": "I'm fine, thank you!"
+  },
+  {
+    "author": {
+      "id": "82091008-a484-4a89-ae75-a22bf8d6f3ac",
+      "name": "User One"
+    },
+    "createdAt": 1617701263000,
+    "id": "3",
+    "type": "text",
+    "text": "That's great to hear!"
+  }
+]

@@ -9,7 +9,7 @@ class MessageCardView extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Get.toNamed(AppRoutes.speceficChatPage);
+        Get.toNamed(AppRoutes.chatPage);
       },
       child: Card(
         margin: const EdgeInsets.symmetric(vertical: 1),
