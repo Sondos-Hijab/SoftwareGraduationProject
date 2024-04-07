@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:software_grad_project/core/middleware/middleware.dart';
 import 'package:software_grad_project/view/screens/app-main-pages/business_page.dart';
+import 'package:software_grad_project/view/screens/app-main-pages/chatting-system-pages/ChatPage.dart';
 import 'package:software_grad_project/view/screens/app-main-pages/chatting-system-pages/specefic_chat_page.dart';
 import 'package:software_grad_project/view/screens/app-main-pages/feedback_form_page.dart';
 import 'package:software_grad_project/view/screens/app-main-pages/notifications_page.dart';
@@ -78,6 +79,7 @@ List<GetPage<dynamic>>? routes = [
   //chatting system pages
   GetPage(
       name: AppRoutes.speceficChatPage, page: () => const SpecificChatPage()),
+  GetPage(name: AppRoutes.chatPage, page: () => const ChatPage()),
 
   //notifications page
   GetPage(
@@ -93,5 +95,4 @@ List<GetPage<dynamic>>? routes = [
   GetPage(
       name: AppRoutes.otherUserFollowedBusinessesPage,
       page: () => const OtherUserFollowedBusinessesPage()),
-
 ];

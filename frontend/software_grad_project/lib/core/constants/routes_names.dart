@@ -43,4 +43,6 @@ class AppRoutes {
   static const String otherUserFeedbackPage = '/otherUserFeedbackPage';
   static const String otherUserFollowedBusinessesPage =
       '/otherUserFollowedBusinessesPage';
+
+  static const String chatPage = '/chatPage';
 }
