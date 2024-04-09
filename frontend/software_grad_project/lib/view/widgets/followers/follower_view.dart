@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:software_grad_project/core/constants/images_assets.dart';
+import 'package:software_grad_project/data/model/followers_model.dart';
 
 class FollowerView extends StatelessWidget {
-  final followers;
-  final int index;
+  final FollowerModel follower;
   final Function()? onTap;
 
-  const FollowerView({super.key, required this.index, required this.onTap, this.followers});
+  const FollowerView({
+    super.key,
+    required this.follower,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +23,10 @@ class FollowerView extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           child: Row(
             children: [
-              followers[index].followerImage != null
+              follower.followerImage != null
                   ? CircleAvatar(
                       radius: 30,
-                      backgroundImage:
-                          FileImage(followers[index].followerImage!),
+                      backgroundImage: MemoryImage(follower.followerImage!),
                     )
                   : const CircleAvatar(
                       radius: 30,
@@ -32,7 +35,7 @@ class FollowerView extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: Text(
-                  followers[index].followerName!,
+                  follower.followerName!,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               )

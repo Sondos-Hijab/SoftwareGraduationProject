@@ -10,17 +10,23 @@ import 'package:software_grad_project/data/model/fetched_feedback_model.dart';
 abstract class OtherUserFeedbackPageController extends GetxController {
   getUserFeedback(String username);
   goToUserPage(String username);
+  setFeedbackSortType(String sortType);
+    setSelectedCategory(String category);
 }
 
 class OtherUserFeedbackPageControllerImp
     extends OtherUserFeedbackPageController {
+  //myServices for getting accessToken
   final myServices = Get.find<MyServices>();
-  String? username = "";
-
+  //datasource
   OtherUserInfoDataSource otherUserInfoDataSource =
       OtherUserInfoDataSource(Get.find());
-
+  //variables
+  String? username = "";
   List<FetchedFeedbackModel>? userFeedback = [];
+  String feedbackSortType = "Newest to oldest";
+    String selectedCategory = "Choose a category";
+
 
   @override
   void onInit() {
@@ -29,9 +35,34 @@ class OtherUserFeedbackPageControllerImp
     super.onInit();
   }
 
+@override
+  setSelectedCategory(String category) {
+    selectedCategory = category;
+    if (selectedCategory == "Choose a category") {
+      //show the full array
+    } else {
+      //make a request and get the businesses from that category
+    }
+    update();
+  }
+  
+ @override
+  setFeedbackSortType(String sortType) {
+    feedbackSortType = sortType;
+    if (feedbackSortType == "Newest to oldest") {
+      userFeedback!.sort((a, b) =>
+          DateTime.parse(b.createdAt!).compareTo(DateTime.parse(a.createdAt!)));
+    } else {
+      userFeedback!.sort((a, b) =>
+          DateTime.parse(a.createdAt!).compareTo(DateTime.parse(b.createdAt!)));
+    }
+    update();
+  }
+
   @override
-  void dispose() {
-    super.dispose();
+  goToUserPage(String username) {
+    Get.toNamed(AppRoutes.otherUserProfilePage,
+        arguments: {'username': username});
   }
 
   @override
@@ -75,8 +106,7 @@ class OtherUserFeedbackPageControllerImp
   }
 
   @override
-  goToUserPage(String username) {
-    Get.toNamed(AppRoutes.otherUserProfilePage,
-        arguments: {'username': username});
+  void dispose() {
+    super.dispose();
   }
 }

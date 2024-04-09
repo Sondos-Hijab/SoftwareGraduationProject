@@ -14,20 +14,44 @@ abstract class LoginController extends GetxController {
 }
 
 class LoginControllerImp extends LoginController {
-  late TextEditingController username;
-  late TextEditingController password;
+  //key
+  GlobalKey<FormState> formState = GlobalKey<FormState>();
 
-  late StatusRequest statusRequest;
-  LoginDataSource loginData = LoginDataSource(Get.find());
+  //myServices to get access Token
   final myServices = Get.find<MyServices>();
 
+  //datasources
+  LoginDataSource loginData = LoginDataSource(Get.find());
+
+  //variables
+  late TextEditingController username;
+  late TextEditingController password;
   bool showPassword = true;
+
+  //request variables
+  late StatusRequest statusRequest;
+
+  @override
+  void onInit() {
+    username = TextEditingController();
+    password = TextEditingController();
+    super.onInit();
+  }
+
+  @override
+  goToSignUp() {
+    Get.offNamed(AppRoutes.signup);
+  }
+
+  @override
+  goToForgotPassword() {
+    Get.toNamed(AppRoutes.forgotPassword);
+  }
+
   showPasswordFunction() {
     showPassword = (showPassword == true ? false : true);
     update();
   }
-
-  GlobalKey<FormState> formState = GlobalKey<FormState>();
 
   @override
   login() async {
@@ -67,23 +91,6 @@ class LoginControllerImp extends LoginController {
       }
       update();
     }
-  }
-
-  @override
-  goToSignUp() {
-    Get.offNamed(AppRoutes.signup);
-  }
-
-  @override
-  goToForgotPassword() {
-    Get.toNamed(AppRoutes.forgotPassword);
-  }
-
-  @override
-  void onInit() {
-    username = TextEditingController();
-    password = TextEditingController();
-    super.onInit();
   }
 
   @override

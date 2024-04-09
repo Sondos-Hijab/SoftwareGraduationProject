@@ -43,6 +43,11 @@ const unfollow = require('./Routes/unfollow');
 const followers = require('./Routes/followers'); 
 const following = require('./Routes/following'); 
 const followersNumber = require('./Routes/followersNumber'); 
+const avgRate = require('./Routes/avgRate'); 
+const feedbackGenderRatio = require('./Routes/feedbackGenderRatio'); 
+const followGenderRatio = require('./Routes/followGenderRatio'); 
+const followAgeRatio = require('./Routes/followAgeRatio'); 
+const feedbackAgeRatio = require('./Routes/feedbackAgeRatio'); 
 
 
 app.use(express.json());
@@ -88,7 +93,11 @@ app.use('/RateRelay', unfollow);
 app.use('/RateRelay', followers); 
 app.use('/RateRelay', following); 
 app.use('/RateRelay', followersNumber); 
-
+app.use('/RateRelay', avgRate); 
+app.use('/RateRelay', feedbackGenderRatio); 
+app.use('/RateRelay', followGenderRatio); 
+app.use('/RateRelay', followAgeRatio); 
+app.use('/RateRelay', feedbackAgeRatio); 
 
 
 app.listen(PORT, (err) => {

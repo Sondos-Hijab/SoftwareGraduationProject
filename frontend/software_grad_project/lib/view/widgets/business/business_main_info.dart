@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:software_grad_project/view/widgets/business/average_rates_summary_widget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
 import 'package:software_grad_project/core/constants/images_assets.dart';
@@ -25,19 +25,20 @@ class BusinessMainInfoWidget extends StatelessWidget {
   final void Function()? onPressFollowing;
   final void Function()? onTapAddFeedback;
 
-  const BusinessMainInfoWidget(
-      {super.key,
-      required this.businessImage,
-      required this.gmController,
-      required this.markers,
-      required this.isFollowing,
-      required this.onPressFollowing,
-      required this.businessName,
-      required this.onTapAddFeedback,
-      required this.phoneNumber,
-      required this.category,
-      required this.description,
-      required this.email});
+  const BusinessMainInfoWidget({
+    super.key,
+    required this.businessImage,
+    required this.gmController,
+    required this.markers,
+    required this.isFollowing,
+    required this.onPressFollowing,
+    required this.businessName,
+    required this.onTapAddFeedback,
+    required this.phoneNumber,
+    required this.category,
+    required this.description,
+    required this.email,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -101,6 +102,7 @@ class BusinessMainInfoWidget extends StatelessWidget {
                   )
                 ],
               ),
+
               const SizedBox(
                 height: 20,
               ),
@@ -166,6 +168,8 @@ class BusinessMainInfoWidget extends StatelessWidget {
                         .bodyMedium!
                         .copyWith(fontSize: 16)),
               ),
+              const AverageRatesSummaryWidget(),
+
               Text(
                 textAlign: TextAlign.center,
                 "Location",
@@ -181,6 +185,7 @@ class BusinessMainInfoWidget extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
+
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),

@@ -45,7 +45,7 @@ const EditBusinessDescriptionModal = ({
       <div className="mx-auto py-16 max-w-screen-xl sm:px-6 lg:px-8 mt-10 sm:mt-0">
         <div className="mx-auto max-w-lg bg-white relative rounded-lg p-10">
           <FontAwesomeIcon
-            className="text-gray-600 w-6 h-6 sm:w-7 sm:h-7 cursor-pointer absolute top-2 right-2"
+            className="text-gray-600 w-6 h-6 sm:w-7 sm:h-7 cursor-pointer absolute top-4 right-4"
             icon={faXmark}
             onClick={() => {
               setShowModal(false);
@@ -63,7 +63,7 @@ const EditBusinessDescriptionModal = ({
 
           <form
             onSubmit={handleDescriptionChange}
-            className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8 bg-white w-full"
+            className="mb-0 space-y-4 rounded-lg p-4  sm:p-6 lg:p-8 bg-white w-full"
           >
             <p className="text-center text-lg font-medium">
               Enter your updated information
@@ -78,6 +78,7 @@ const EditBusinessDescriptionModal = ({
                 <textarea
                   className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                   placeholder={businessDescription}
+                  rows={3}
                   disabled
                 ></textarea>
               </div>

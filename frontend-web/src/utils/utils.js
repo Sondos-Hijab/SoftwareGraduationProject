@@ -31,6 +31,7 @@ export function createBlobUrl(data) {
 }
 
 export function stringToLocationMarker(location) {
+  if (!location) return null;
   //handling location to set a marker
   const locationParts = location.split(/[,:]/).map((part) => part.trim());
   const locationMarker = {
@@ -43,4 +44,21 @@ export function stringToLocationMarker(location) {
 export function isExpired(dateToCheck) {
   const currentDate = new Date();
   return currentDate > dateToCheck;
+}
+
+export function sortByDate(array, type) {
+  let newArray = [];
+  if (array) {
+    if (!type || type == "newToOld")
+      newArray = array.slice().sort((a, b) => {
+        return new Date(b.created_at) - new Date(a.created_at);
+      });
+    else {
+      newArray = array.slice().sort((a, b) => {
+        return new Date(a.created_at) - new Date(b.created_at);
+      });
+    }
+  }
+
+  return newArray;
 }

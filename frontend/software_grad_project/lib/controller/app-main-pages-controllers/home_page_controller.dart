@@ -1,12 +1,10 @@
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:software_grad_project/core/classes/status_request.dart';
 import 'package:software_grad_project/core/constants/routes_names.dart';
 import 'package:software_grad_project/core/functions/handling_data_function.dart';
 import 'package:software_grad_project/core/functions/convert_data_to_file.dart';
-
 import 'package:software_grad_project/core/services/service.dart';
 import 'package:software_grad_project/data/datasource/remote/business-page/business_datasource.dart';
 import 'package:software_grad_project/data/model/businesses_name_image_model.dart';
@@ -20,14 +18,17 @@ abstract class HomePageController extends GetxController {
 }
 
 class HomePageControllerImp extends HomePageController {
+  //controllers
   late PageController pageController;
-  late List<BusinessViewModel>? businessesList = [];
-
-  String? category;
-
-  StatusRequest? statusRequest;
+  //myServices to get accessToken
   final myServices = Get.find<MyServices>();
+  //datasource
   BusinessDataSource businessDatasource = BusinessDataSource(Get.find());
+  //variables
+  String? category;
+  late List<BusinessViewModel>? businessesList = [];
+  //request variables
+  StatusRequest? statusRequest;
 
   @override
   void onInit() {
@@ -61,6 +62,13 @@ class HomePageControllerImp extends HomePageController {
   }
 
   @override
+  setCatagory(String cat) {
+    category = cat;
+    getBusinessesByCategory(category!);
+    update();
+  }
+
+  @override
   getBusinessesByCategory(String category) async {
     statusRequest = StatusRequest.loading;
     String? accessToken = myServices.sharedPreferences.getString("accessToken");
@@ -89,9 +97,7 @@ class HomePageControllerImp extends HomePageController {
   }
 
   @override
-  setCatagory(String cat) {
-    category = cat;
-    getBusinessesByCategory(category!);
-    update();
+  void dispose() {
+    super.dispose();
   }
 }

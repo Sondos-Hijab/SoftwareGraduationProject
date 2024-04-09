@@ -41,6 +41,10 @@ class AppLink {
   static const String getOtherUserInfoLink = "$server/user/getUserInfo";
   static const String getOtherUserFeedback = "$server/user/getUserFeedback";
 
-  //Test
-  static const String test = "https://jsonplaceholder.typicode.com/posts/1";
+  // follow , unfollow
+  static const String followLink = "$server/user/follow";
+  static const String unfollowLink = "$server/user/unfollow";
+  static const String followersNumberLink = "$server/user/followersNumber";
+  static const String followersLink = "$server/user/followers";
+  static const String followingLink = "$server/user/following";
 }

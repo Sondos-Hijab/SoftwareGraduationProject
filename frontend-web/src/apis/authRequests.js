@@ -131,3 +131,26 @@ export async function logout(accessToken) {
     return data;
   }
 }
+
+export async function resetPasswordProfile(accessToken, resetPasswordInfo) {
+  const response = await fetch(
+    "http://localhost:3000/RateRelay/user/resetAdminPassword",
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${
+          accessToken || localStorage.getItem("accessToken")
+        }`,
+      },
+      body: JSON.stringify(resetPasswordInfo),
+    }
+  );
+  if (!response.ok) {
+    const errorMessage = await response.json();
+    return errorMessage;
+  } else {
+    const data = await response.json();
+    return data;
+  }
+}

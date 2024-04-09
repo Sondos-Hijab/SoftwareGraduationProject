@@ -10,10 +10,26 @@ abstract class OnBoardingController extends GetxController {
 }
 
 class OnBoardingControllerImp extends OnBoardingController {
+  //controllers
   late PageController pageController;
+
+  //myServices to get step
+  MyServices myServices = Get.find();
+
+  //variables
   int currentPage = 0;
 
-  MyServices myServices = Get.find() ; 
+  @override
+  void onInit() {
+    pageController = PageController();
+    super.onInit();
+  }
+
+  @override
+  onPageChanged(int index) {
+    currentPage = index;
+    update();
+  }
 
   @override
   next() {
@@ -25,17 +41,5 @@ class OnBoardingControllerImp extends OnBoardingController {
       pageController.animateToPage(currentPage,
           duration: const Duration(milliseconds: 800), curve: Curves.easeInOut);
     }
-  }
-
-  @override
-  onPageChanged(int index) {
-    currentPage = index;
-    update();
-  }
-
-  @override
-  void onInit() {
-    pageController = PageController();
-    super.onInit();
   }
 }

@@ -1,10 +1,7 @@
 import "./index.css";
 import AuthLayout from "./_auth/AuthLayout";
 import RootLayout from "./_root/RootLayout";
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import {
   SignupForm,
   SigninForm,
@@ -22,6 +19,9 @@ import {
   FeedbackPage,
   Chatting,
   Notifications,
+  User,
+  BusinessPage,
+  Dashboard,
 } from "./_root/pages";
 import Error from "./helper-components/WarningsErrors/Error";
 import AppPovider from "./Providers/AppPovider";
@@ -38,6 +38,9 @@ function App() {
         { path: "posts", element: <Posts /> },
         { path: "feedback/:id", element: <FeedbackPage /> },
         { path: "notifications", element: <Notifications /> },
+        { path: "user/:username", element: <User /> },
+        { path: "business/:businessname", element: <BusinessPage /> },
+        { path: "dashboard", element: <Dashboard /> },
       ],
     },
     {

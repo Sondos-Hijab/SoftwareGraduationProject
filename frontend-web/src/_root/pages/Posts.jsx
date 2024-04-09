@@ -2,6 +2,7 @@ import { useAppContext } from "@/Providers/AppPovider";
 import { fetchPosts } from "@/apis/postsRequests";
 import PostCard from "@/helper-components/Cards/PostCard";
 import Modal from "@/helper-components/WarningsErrors/Modal";
+import { createBlobUrl, sortByDate } from "@/utils/utils";
 import React, { useEffect, useState, useReducer } from "react";
 
 const initialModalState = {
@@ -21,13 +22,16 @@ const modalReducer = (state, action) => {
 };
 
 const Posts = () => {
-  const [posts, setPosts] = useState();
   const { accessToken, businessName } = useAppContext();
 
+  //state management useReducer
   const [modalState, modalDispatch] = useReducer(
     modalReducer,
     initialModalState
   );
+
+  //state management useState
+  const [posts, setPosts] = useState();
 
   useEffect(() => {
     fetchPosts(businessName, accessToken).then((value) => {
@@ -37,7 +41,7 @@ const Posts = () => {
         setPosts(value.posts);
       }
     });
-  }, [posts]);
+  }, []);
 
   return (
     <>
@@ -46,28 +50,15 @@ const Posts = () => {
           My Posts
         </h2>
         {posts &&
-          posts
-            .slice()
-            .sort((a, b) => {
-              return new Date(b.created_at) - new Date(a.created_at);
-            })
-            .map((post) => {
-              let url;
-              if (post.picture) {
-                const byteArray = new Uint8Array(post.picture.data);
-                const blob = new Blob([byteArray], { type: "image/*" });
-                url = URL.createObjectURL(blob);
-              }
-              return (
-                <PostCard
-                  key={post.postID}
-                  description={post.description}
-                  createdAt={post.created_at}
-                  picture={url}
-                  postID={post.postID}
-                />
-              );
-            })}
+          sortByDate(posts).map((post) => (
+            <PostCard
+              key={post.postID}
+              description={post.description}
+              picture={createBlobUrl(post.picture.data)}
+              createdAt={post.created_at}
+              postID={post.postID}
+            />
+          ))}
       </div>
       {modalState.showModal && (
         <Modal

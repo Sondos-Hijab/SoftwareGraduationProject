@@ -10,11 +10,13 @@ import 'package:software_grad_project/core/functions/extract_coordinates.dart';
 import 'package:software_grad_project/core/functions/handling_data_function.dart';
 import 'package:software_grad_project/core/services/service.dart';
 import 'package:software_grad_project/data/datasource/remote/business-page/business_feedback_datasource.dart';
+import 'package:software_grad_project/data/datasource/remote/business-page/business_follow_datasource.dart';
 import 'package:software_grad_project/data/datasource/remote/business-page/business_info_datasource.dart';
 import 'package:software_grad_project/data/datasource/remote/business-page/posts_datasource.dart';
 import 'package:software_grad_project/data/model/business_info_model.dart';
 import 'package:software_grad_project/data/model/fetched_feedback_model.dart';
 import 'package:software_grad_project/data/model/fetched_post_model.dart';
+import 'package:software_grad_project/data/model/followers_model.dart';
 
 abstract class BusinessPagesController extends GetxController {
   getPosts(String businessName);
@@ -23,31 +25,45 @@ abstract class BusinessPagesController extends GetxController {
   pressFollowUnfollow();
   goToAddFeedbackPage();
   goToUserPage(String username);
+  follow();
+  unfollow();
+  getNumberOfFollowers(String businessName);
+  getFollowers(String businessName);
+  setFeedbackSortType(String sortType);
+  setPostsSortType(String sortType);
 }
 
 class BusinessPagesControllerImp extends BusinessPagesController {
+  //keys and controllers
   GlobalKey<ScaffoldState>? scaffoldKey;
-  bool isFollowing = false;
+  final Completer<GoogleMapController> gmController =
+      Completer<GoogleMapController>();
 
-  String? businessName;
-  Uint8List? businessImage;
-
+  //myServices
   final myServices = Get.find<MyServices>();
 
+  //datasources
   BusinessPostsDataSource businessPostsDatasource =
       BusinessPostsDataSource(Get.find());
   BusinessFeedbackDataSource businessFeedbackDatasource =
       BusinessFeedbackDataSource(Get.find());
   BusinessInfoDataSource businessInfoDatasource =
       BusinessInfoDataSource(Get.find());
+  BusinessFollowDataSource businessFollowDataSource =
+      BusinessFollowDataSource(Get.find());
 
-  List<FetchedPostModel>? businessesPosts = [];
-  List<FetchedFeedbackModel>? businessFeedback = [];
+  //variables
+  bool isFollowing = false;
+  int followersNumber = 0;
+  String? businessName;
+  Uint8List? businessImage;
   BusinessInfoModel? fetchedBusinessInfo =
       BusinessInfoModel(0, "", "", "", [], 0, "", "", null);
-
-  final Completer<GoogleMapController> gmController =
-      Completer<GoogleMapController>();
+  List<FetchedPostModel>? businessesPosts = [];
+  List<FetchedFeedbackModel>? businessFeedback = [];
+  List<FollowerModel>? businessFollowers = [];
+  String? feedbackSortType = "Newest to oldest";
+  String? postsSortType = "Newest to oldest";
 
   @override
   void onInit() {
@@ -56,12 +72,41 @@ class BusinessPagesControllerImp extends BusinessPagesController {
     businessName = arguments['businessName'];
     businessImage = arguments['businessImage'];
     getBusinessInfo(businessName!);
+    getFollowers(businessName!);
     super.onInit();
   }
 
   @override
-  void dispose() {
-    super.dispose();
+  goToAddFeedbackPage() {
+    Get.toNamed(AppRoutes.feedbackFormPage, arguments: {
+      'businessName': businessName,
+    });
+  }
+
+  @override
+  setPostsSortType(String sortType) {
+    postsSortType = sortType;
+    if (postsSortType == "Newest to oldest") {
+      businessesPosts!.sort((a, b) =>
+          DateTime.parse(b.createdAt!).compareTo(DateTime.parse(a.createdAt!)));
+    } else {
+      businessesPosts!.sort((a, b) =>
+          DateTime.parse(a.createdAt!).compareTo(DateTime.parse(b.createdAt!)));
+    }
+    update();
+  }
+
+  @override
+  setFeedbackSortType(String sortType) {
+    feedbackSortType = sortType;
+    if (feedbackSortType == "Newest to oldest") {
+      businessFeedback!.sort((a, b) =>
+          DateTime.parse(b.createdAt!).compareTo(DateTime.parse(a.createdAt!)));
+    } else {
+      businessFeedback!.sort((a, b) =>
+          DateTime.parse(a.createdAt!).compareTo(DateTime.parse(b.createdAt!)));
+    }
+    update();
   }
 
   @override
@@ -87,8 +132,13 @@ class BusinessPagesControllerImp extends BusinessPagesController {
             post['created_at'],
           );
         }).toList();
-        businessesPosts!.sort((a, b) => DateTime.parse(b.createdAt!)
-            .compareTo(DateTime.parse(a.createdAt!)));
+        if (feedbackSortType == "Newest to oldest") {
+          businessesPosts!.sort((a, b) => DateTime.parse(b.createdAt!)
+              .compareTo(DateTime.parse(a.createdAt!)));
+        } else {
+          businessesPosts!.sort((a, b) => DateTime.parse(a.createdAt!)
+              .compareTo(DateTime.parse(b.createdAt!)));
+        }
       } else {
         Get.defaultDialog(
             title: "Error", middleText: "We are sorry, something went wrong");
@@ -179,27 +229,130 @@ class BusinessPagesControllerImp extends BusinessPagesController {
   }
 
   @override
-  pressFollowUnfollow() {
-    isFollowing = !isFollowing;
-    update();
-  }
-
-  @override
-  goToAddFeedbackPage() {
-    Get.toNamed(AppRoutes.feedbackFormPage, arguments: {
-      'businessName': businessName,
-    });
-  }
-
-  @override
   goToUserPage(String username) {
     String? myUsername = myServices.sharedPreferences.getString("username");
 
     if (myUsername == username) {
-      Get.toNamed(AppRoutes.profilePage);
+      Get.offAndToNamed(AppRoutes.profilePage);
     } else {
-      Get.toNamed(AppRoutes.otherUserProfilePage,
+      Get.offAndToNamed(AppRoutes.otherUserProfilePage,
           arguments: {'username': username});
     }
   }
+
+  @override
+  pressFollowUnfollow() {
+    if (isFollowing == false) {
+      //follow request
+      follow();
+    } else {
+      // unfollow request
+      unfollow();
+    }
+    update();
+  }
+
+  @override
+  follow() async {
+    StatusRequest? statusRequest = StatusRequest.loading;
+    String? accessToken = myServices.sharedPreferences.getString("accessToken");
+    var response =
+        await businessFollowDataSource.follow(accessToken!, businessName!);
+
+    statusRequest = handlingData(response);
+    if (StatusRequest.success == statusRequest) {
+      if (response['statusCode'] == "200") {
+        isFollowing = true;
+      } else {
+        Get.defaultDialog(
+            title: "Error", middleText: "We are sorry, something went wrong");
+      }
+      update();
+    }
+  }
+
+  @override
+  unfollow() async {
+    StatusRequest? statusRequest = StatusRequest.loading;
+    String? accessToken = myServices.sharedPreferences.getString("accessToken");
+    var response =
+        await businessFollowDataSource.unfollow(accessToken!, businessName!);
+
+    statusRequest = handlingData(response);
+    if (StatusRequest.success == statusRequest) {
+      if (response['statusCode'] == "200") {
+        isFollowing = false;
+      } else {
+        Get.defaultDialog(
+            title: "Error", middleText: "We are sorry, something went wrong");
+      }
+      update();
+    }
+  }
+
+  @override
+  getNumberOfFollowers(String businessName) async {
+    StatusRequest? statusRequest = StatusRequest.loading;
+    String? accessToken = myServices.sharedPreferences.getString("accessToken");
+
+    var response = await businessFollowDataSource.getFollowersNumber(
+        accessToken!, businessName);
+
+    statusRequest = handlingData(response);
+    if (StatusRequest.success == statusRequest) {
+      if (response['statusCode'] == "200") {
+        followersNumber = response['followerCount'];
+      } else {
+        Get.defaultDialog(
+            title: "Error", middleText: "We are sorry, something went wrong");
+      }
+      update();
+    }
+  }
+
+  @override
+  getFollowers(String businessName) async {
+    StatusRequest? statusRequest = StatusRequest.loading;
+    String? accessToken = myServices.sharedPreferences.getString("accessToken");
+
+    var response =
+        await businessFollowDataSource.getFollowers(accessToken!, businessName);
+
+    statusRequest = handlingData(response);
+    if (StatusRequest.success == statusRequest) {
+      if (response['statusCode'] == "200") {
+        var followers = response['followers'];
+
+        businessFollowers = followers.map<FollowerModel>((follower) {
+          return FollowerModel(
+            follower['userName'],
+            follower['user_id'],
+            convertDataToFile(follower['picture']),
+          );
+        }).toList();
+        String? myUsername = myServices.sharedPreferences.getString("username");
+        isFollowing =
+            isUsernameInBusinessFollowers(myUsername!, businessFollowers!);
+      } else {
+        Get.defaultDialog(
+            title: "Error", middleText: "We are sorry, something went wrong");
+      }
+      update();
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+}
+
+bool isUsernameInBusinessFollowers(
+    String username, List<FollowerModel> businessFollowers) {
+  for (var follower in businessFollowers) {
+    if (follower.followerName == username) {
+      return true; // Username found
+    }
+  }
+  return false; // Username not found
 }

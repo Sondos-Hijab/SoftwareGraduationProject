@@ -8,19 +8,59 @@ import 'package:software_grad_project/data/datasource/remote/authentication/sign
 abstract class SignUpController extends GetxController {
   signup();
   goToLogin();
+  setSelectedGender(String gender);
 }
 
 class SignUpControllerImp extends SignUpController {
+  //key
+  GlobalKey<FormState> formState = GlobalKey<FormState>();
+
+  //datasource
+  SignUpDataSource signupData = SignUpDataSource(Get.find());
+
+  //variables
   late TextEditingController username;
   late TextEditingController password;
   late TextEditingController email;
   late TextEditingController confirmPassword;
+  late TextEditingController age;
   late StatusRequest statusRequest;
-  SignUpDataSource signupData = SignUpDataSource(Get.find());
-
+  String? selectedGender;
   List data = [];
+  bool showPassword = true;
+  bool showConfirmPassword = true;
 
-  GlobalKey<FormState> formState = GlobalKey<FormState>();
+  @override
+  void onInit() {
+    email = TextEditingController();
+    password = TextEditingController();
+    confirmPassword = TextEditingController();
+    username = TextEditingController();
+    age = TextEditingController();
+    selectedGender = "Male";
+    super.onInit();
+  }
+
+  @override
+  setSelectedGender(String gender) {
+    selectedGender = gender;
+    update();
+  }
+
+  showPasswordFunction() {
+    showPassword = (showPassword == true ? false : true);
+    update();
+  }
+
+  showConfirmPasswordFunction() {
+    showConfirmPassword = (showConfirmPassword == true ? false : true);
+    update();
+  }
+
+  @override
+  goToLogin() {
+    Get.offNamed(AppRoutes.login);
+  }
 
   @override
   signup() async {
@@ -46,33 +86,7 @@ class SignUpControllerImp extends SignUpController {
       }
 
       update();
-    } 
-  }
-
-  bool showPassword = true;
-  showPasswordFunction() {
-    showPassword = (showPassword == true ? false : true);
-    update();
-  }
-
-  bool showConfirmPassword = true;
-  showConfirmPasswordFunction() {
-    showConfirmPassword = (showConfirmPassword == true ? false : true);
-    update();
-  }
-
-  @override
-  goToLogin() {
-    Get.offNamed(AppRoutes.login);
-  }
-
-  @override
-  void onInit() {
-    email = TextEditingController();
-    password = TextEditingController();
-    confirmPassword = TextEditingController();
-    username = TextEditingController();
-    super.onInit();
+    }
   }
 
   @override
@@ -81,6 +95,7 @@ class SignUpControllerImp extends SignUpController {
     password.dispose();
     username.dispose();
     confirmPassword.dispose();
+    age.dispose();
     super.dispose();
   }
 }

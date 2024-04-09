@@ -1,8 +1,6 @@
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:software_grad_project/core/constants/images_assets.dart';
-import 'package:software_grad_project/data/datasource/static/static.dart';
 
 class BusinessViewItem extends StatelessWidget {
   final String? businessName;
