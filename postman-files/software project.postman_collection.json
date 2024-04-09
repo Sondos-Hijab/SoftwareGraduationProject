@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\":\"raghad\",\r\n    \"password\":\"123456\",\r\n    \"confirmPassword\":\"123456\",\r\n    \"email\":\"8bce419e4c@emailabox.pro\"\r\n}",
+					"raw": "{\r\n    \"name\":\"jood\",\r\n    \"password\":\"123456\",\r\n    \"confirmPassword\":\"123456\",\r\n    \"email\":\"1df5b5f162@emailbbox.pro\",\r\n    \"age\":38,\r\n    \"gender\":0\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -106,7 +106,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"alma\",\r\n    \"password\":\"123456\",\r\n    \"confirmPassword\":\"123456\",\r\n    \"email\":\"8e7b38fd65@emailabox.pro\"\r\n}",
+							"raw": "{\r\n    \"name\":\"alia\",\r\n    \"password\":\"123456\",\r\n    \"confirmPassword\":\"123456\",\r\n    \"email\":\"e1d99fe5cc@emailbbox.pro\",\r\n    \"age\":40,\r\n    \"gender\":0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -136,68 +136,8 @@
 							"value": "Express"
 						},
 						{
-							"key": "Content-Type",
-							"value": "application/json; charset=utf-8"
-						},
-						{
-							"key": "Content-Length",
-							"value": "60"
-						},
-						{
-							"key": "ETag",
-							"value": "W/\"3c-FOykx21AOn2At6EDN8e501GpvJA\""
-						},
-						{
-							"key": "Date",
-							"value": "Fri, 23 Feb 2024 20:12:06 GMT"
-						},
-						{
-							"key": "Connection",
-							"value": "keep-alive"
-						},
-						{
-							"key": "Keep-Alive",
-							"value": "timeout=5"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"error\": \"This user name already exists\",\n    \"statusCode\": \"409\"\n}"
-				},
-				{
-					"name": "signup",
-					"originalRequest": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"sondoe\",\r\n    \"password\":\"123456\",\r\n    \"confirmPassword\":\"123456\",\r\n    \"email\":\"8e7b38fd65@emailabox.pro\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/RateRelay/user/signup",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"RateRelay",
-								"user",
-								"signup"
-							]
-						}
-					},
-					"status": "Conflict",
-					"code": 409,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "X-Powered-By",
-							"value": "Express"
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
 						},
 						{
 							"key": "Content-Type",
@@ -213,7 +153,7 @@
 						},
 						{
 							"key": "Date",
-							"value": "Fri, 23 Feb 2024 20:13:16 GMT"
+							"value": "Mon, 08 Apr 2024 15:37:07 GMT"
 						},
 						{
 							"key": "Connection",
@@ -234,7 +174,75 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"sondoe\",\r\n    \"password\":\"123456\",\r\n    \"confirmPassword\":\"1234566\",\r\n    \"email\":\"b3228c4882@emailabox.pro\"\r\n}",
+							"raw": "{\r\n    \"name\":\"raghad\",\r\n    \"password\":\"123456\",\r\n    \"confirmPassword\":\"123456\",\r\n    \"email\":\"3a9a259fc3@emailbbox.pro\",\r\n    \"age\":10,\r\n    \"gender\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/RateRelay/user/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RateRelay",
+								"user",
+								"signup"
+							]
+						}
+					},
+					"status": "Conflict",
+					"code": 409,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "60"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"3c-FOykx21AOn2At6EDN8e501GpvJA\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 08 Apr 2024 15:56:19 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"This user name already exists\",\n    \"statusCode\": \"409\"\n}"
+				},
+				{
+					"name": "signup",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"reema\",\r\n    \"password\":\"1234567\",\r\n    \"confirmPassword\":\"123456\",\r\n    \"email\":\"3a9a259fc3@emailbboxx.pro\",\r\n    \"age\":10,\r\n    \"gender\":1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -264,6 +272,10 @@
 							"value": "Express"
 						},
 						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
 							"key": "Content-Type",
 							"value": "application/json; charset=utf-8"
 						},
@@ -277,7 +289,7 @@
 						},
 						{
 							"key": "Date",
-							"value": "Fri, 23 Feb 2024 20:14:18 GMT"
+							"value": "Mon, 08 Apr 2024 16:00:01 GMT"
 						},
 						{
 							"key": "Connection",
@@ -8395,6 +8407,1479 @@
 					],
 					"cookie": [],
 					"body": "{\n    \"error\": \"Business name is required in query parameters\",\n    \"statusCode\": \"400\"\n}"
+				}
+			]
+		},
+		{
+			"name": "avg Rate",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoic3BvcnRzIiwiaWF0IjoxNzEyNTg2MzQ1LCJleHAiOjE3MTI2NzI3NDV9.FQCFCBBgbh5vVM8T1wFOOUT8sD_WP-U1iCbZ3ND093I",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/RateRelay/user/avgRate?businessName=sport&rateType=rate1&startDate=2024-03-01&endDate=2024-03-10\n",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"RateRelay",
+						"user",
+						"avgRate"
+					],
+					"query": [
+						{
+							"key": "businessName",
+							"value": "sport"
+						},
+						{
+							"key": "rateType",
+							"value": "rate1"
+						},
+						{
+							"key": "startDate",
+							"value": "2024-03-01"
+						},
+						{
+							"key": "endDate",
+							"value": "2024-03-10\n"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "avg Rate",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/RateRelay/user/avgRate?businessName=sport&rateType=rate1&startDate=2024-03-01&endDate=2024-03-10\n",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RateRelay",
+								"user",
+								"avgRate"
+							],
+							"query": [
+								{
+									"key": "businessName",
+									"value": "sport"
+								},
+								{
+									"key": "rateType",
+									"value": "rate1"
+								},
+								{
+									"key": "startDate",
+									"value": "2024-03-01"
+								},
+								{
+									"key": "endDate",
+									"value": "2024-03-10\n"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "87"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"57-WMJBbWdgxDg8fC9RaFZpiu5Gr68\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 08 Apr 2024 14:53:32 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"averageRate\": 3.25,\n    \"message\": \"Average rate retrieved successfully\",\n    \"statusCode\": \"200\"\n}"
+				},
+				{
+					"name": "avg Rate",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/RateRelay/user/avgRate?businessName=sportss&rateType=rate1&startDate=2024-03-01&endDate=2024-03-10\n",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RateRelay",
+								"user",
+								"avgRate"
+							],
+							"query": [
+								{
+									"key": "businessName",
+									"value": "sportss"
+								},
+								{
+									"key": "rateType",
+									"value": "rate1"
+								},
+								{
+									"key": "startDate",
+									"value": "2024-03-01"
+								},
+								{
+									"key": "endDate",
+									"value": "2024-03-10\n"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "84"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"54-4N+fFQkpk9jywWUthgCbI/qUwGw\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 08 Apr 2024 14:55:28 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"averageRate\": 0,\n    \"message\": \"Average rate retrieved successfully\",\n    \"statusCode\": \"200\"\n}"
+				},
+				{
+					"name": "avg Rate",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/RateRelay/user/avgRate?businessName=sport&rateType=&startDate=2024-03-01&endDate=2024-03-10\n",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RateRelay",
+								"user",
+								"avgRate"
+							],
+							"query": [
+								{
+									"key": "businessName",
+									"value": "sport"
+								},
+								{
+									"key": "rateType",
+									"value": ""
+								},
+								{
+									"key": "startDate",
+									"value": "2024-03-01"
+								},
+								{
+									"key": "endDate",
+									"value": "2024-03-10\n"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "118"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"76-XA5/31dIoIAtPVaTi302+t7JEc0\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 08 Apr 2024 14:56:33 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"Business name, rate type, start date, and end date are required in the URL query string\",\n    \"statusCode\": \"400\"\n}"
+				}
+			]
+		},
+		{
+			"name": "feedback Gender Ratio",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoic3BvcnRzIiwiaWF0IjoxNzEyNjE1OTY3LCJleHAiOjE3MTI3MDIzNjd9.QhXjE5_530um1Zryt-QxmunK_-vhcAnEXLw5trJe5RU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/RateRelay/user/feedbackGenderRatio?businessName=sport",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"RateRelay",
+						"user",
+						"feedbackGenderRatio"
+					],
+					"query": [
+						{
+							"key": "businessName",
+							"value": "sport"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "feedback Gender Ratio",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/RateRelay/user/feedbackGenderRatio?businessName=sports",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RateRelay",
+								"user",
+								"feedbackGenderRatio"
+							],
+							"query": [
+								{
+									"key": "businessName",
+									"value": "sports"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "136"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"88-/aHUCRosSv1Ui/sn90Yh/k94fME\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 08 Apr 2024 23:43:50 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"totalFeedback\": 1,\n    \"malePercentage\": 0,\n    \"femalePercentage\": 100,\n    \"message\": \"Feedback percentages retrieved successfully\",\n    \"statusCode\": \"200\"\n}"
+				},
+				{
+					"name": "feedback Gender Ratio",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/RateRelay/user/feedbackGenderRatio?businessName=sportss",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RateRelay",
+								"user",
+								"feedbackGenderRatio"
+							],
+							"query": [
+								{
+									"key": "businessName",
+									"value": "sportss"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "134"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"86-0MCT7zkH9DVHqX8bS0NzE0z/umA\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 08 Apr 2024 23:44:21 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"totalFeedback\": 0,\n    \"malePercentage\": 0,\n    \"femalePercentage\": 0,\n    \"message\": \"Feedback percentages retrieved successfully\",\n    \"statusCode\": \"200\"\n}"
+				},
+				{
+					"name": "feedback Gender Ratio",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/RateRelay/user/feedbackGenderRatio?businessName=sport",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RateRelay",
+								"user",
+								"feedbackGenderRatio"
+							],
+							"query": [
+								{
+									"key": "businessName",
+									"value": "sport"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "136"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"88-A3KQ63lc9NPX3k8gIQysmldW6LY\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 08 Apr 2024 23:44:50 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"totalFeedback\": 6,\n    \"malePercentage\": 50,\n    \"femalePercentage\": 50,\n    \"message\": \"Feedback percentages retrieved successfully\",\n    \"statusCode\": \"200\"\n}"
+				},
+				{
+					"name": "feedback Gender Ratio",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/RateRelay/user/feedbackGenderRatio?businessName=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RateRelay",
+								"user",
+								"feedbackGenderRatio"
+							],
+							"query": [
+								{
+									"key": "businessName",
+									"value": ""
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "80"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"50-XHQCmMIJN5NWdyIq3AHarJyocS4\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 08 Apr 2024 23:45:29 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"Business name is required in the URL query string\",\n    \"statusCode\": \"400\"\n}"
+				}
+			]
+		},
+		{
+			"name": "follow Gender Ratio",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoic3BvcnRzIiwiaWF0IjoxNzEyNjE1OTY3LCJleHAiOjE3MTI3MDIzNjd9.QhXjE5_530um1Zryt-QxmunK_-vhcAnEXLw5trJe5RU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/RateRelay/user/followGenderRatio?businessName=sports",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"RateRelay",
+						"user",
+						"followGenderRatio"
+					],
+					"query": [
+						{
+							"key": "businessName",
+							"value": "sports"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "follow Gender Ratio",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/RateRelay/user/followGenderRatio?businessName=sport",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RateRelay",
+								"user",
+								"followGenderRatio"
+							],
+							"query": [
+								{
+									"key": "businessName",
+									"value": "sport"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "120"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"78-YmKkqwM1Z7AuBpa0Ui0vYBHXM3M\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 08 Apr 2024 23:31:30 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"malePercentage\": 75,\n    \"femalePercentage\": 25,\n    \"message\": \"Followers gender ratio retrieved successfully\",\n    \"statusCode\": \"200\"\n}"
+				},
+				{
+					"name": "follow Gender Ratio",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/RateRelay/user/followGenderRatio?businessName=sports",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RateRelay",
+								"user",
+								"followGenderRatio"
+							],
+							"query": [
+								{
+									"key": "businessName",
+									"value": "sports"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "120"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"78-Qv+DNnCnKCwj/WXhHuxjGt63GnM\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 08 Apr 2024 23:32:01 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"malePercentage\": 0,\n    \"femalePercentage\": 100,\n    \"message\": \"Followers gender ratio retrieved successfully\",\n    \"statusCode\": \"200\"\n}"
+				},
+				{
+					"name": "follow Gender Ratio",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/RateRelay/user/followGenderRatio?businessName=spor",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RateRelay",
+								"user",
+								"followGenderRatio"
+							],
+							"query": [
+								{
+									"key": "businessName",
+									"value": "spor"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "118"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"76-3LhqhWZdMokQfe/e6wMUrqAR4II\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 08 Apr 2024 23:37:19 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"malePercentage\": 0,\n    \"femalePercentage\": 0,\n    \"message\": \"Followers gender ratio retrieved successfully\",\n    \"statusCode\": \"200\"\n}"
+				},
+				{
+					"name": "follow Gender Ratio",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/RateRelay/user/followGenderRatio?businessName=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RateRelay",
+								"user",
+								"followGenderRatio"
+							],
+							"query": [
+								{
+									"key": "businessName",
+									"value": ""
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "80"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"50-XHQCmMIJN5NWdyIq3AHarJyocS4\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 08 Apr 2024 23:37:45 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"Business name is required in the URL query string\",\n    \"statusCode\": \"400\"\n}"
+				}
+			]
+		},
+		{
+			"name": "follow Age Ratio",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoic3BvcnRzIiwiaWF0IjoxNzEyNjE1OTY3LCJleHAiOjE3MTI3MDIzNjd9.QhXjE5_530um1Zryt-QxmunK_-vhcAnEXLw5trJe5RU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/RateRelay/user/followAgeRatio?businessName=sport",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"RateRelay",
+						"user",
+						"followAgeRatio"
+					],
+					"query": [
+						{
+							"key": "businessName",
+							"value": "sport"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "follow Age Ratio",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/RateRelay/user/followAgeRatio?businessName=sport",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RateRelay",
+								"user",
+								"followAgeRatio"
+							],
+							"query": [
+								{
+									"key": "businessName",
+									"value": "sport"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "184"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"b8-BDkKt8TzneWu+3C4+FJBzATlL+U\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 09 Apr 2024 00:12:04 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"below18\": 1,\n    \"age18to30\": 2,\n    \"above30\": 1,\n    \"below18Percentage\": 25,\n    \"age18to30Percentage\": 50,\n    \"above30Percentage\": 25,\n    \"message\": \"Followers age ratio retrieved successfully\",\n    \"statusCode\": \"200\"\n}"
+				},
+				{
+					"name": "follow Age Ratio",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/RateRelay/user/followAgeRatio?businessName=sports",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RateRelay",
+								"user",
+								"followAgeRatio"
+							],
+							"query": [
+								{
+									"key": "businessName",
+									"value": "sports"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "183"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"b7-hqVyZGSOnSoEVBUx/nf4vIETYMY\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 09 Apr 2024 00:14:46 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"below18\": 0,\n    \"age18to30\": 1,\n    \"above30\": 0,\n    \"below18Percentage\": 0,\n    \"age18to30Percentage\": 100,\n    \"above30Percentage\": 0,\n    \"message\": \"Followers age ratio retrieved successfully\",\n    \"statusCode\": \"200\"\n}"
+				},
+				{
+					"name": "follow Age Ratio",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/RateRelay/user/followAgeRatio?businessName=sportss",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RateRelay",
+								"user",
+								"followAgeRatio"
+							],
+							"query": [
+								{
+									"key": "businessName",
+									"value": "sportss"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "181"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"b5-LiXkPOXU1XN4+A/OvrVVk6Zjao8\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 09 Apr 2024 00:21:10 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"below18\": 0,\n    \"age18to30\": 0,\n    \"above30\": 0,\n    \"below18Percentage\": 0,\n    \"age18to30Percentage\": 0,\n    \"above30Percentage\": 0,\n    \"message\": \"Followers age ratio retrieved successfully\",\n    \"statusCode\": \"200\"\n}"
+				},
+				{
+					"name": "follow Age Ratio",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/RateRelay/user/followAgeRatio?businessName=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RateRelay",
+								"user",
+								"followAgeRatio"
+							],
+							"query": [
+								{
+									"key": "businessName",
+									"value": ""
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "80"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"50-XHQCmMIJN5NWdyIq3AHarJyocS4\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 09 Apr 2024 00:22:03 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"Business name is required in the URL query string\",\n    \"statusCode\": \"400\"\n}"
+				}
+			]
+		},
+		{
+			"name": "feedback Age Ratio",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoic3BvcnRzIiwiaWF0IjoxNzEyNjE1OTY3LCJleHAiOjE3MTI3MDIzNjd9.QhXjE5_530um1Zryt-QxmunK_-vhcAnEXLw5trJe5RU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/RateRelay/user/feedbackAgeRatio?businessName=sport",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"RateRelay",
+						"user",
+						"feedbackAgeRatio"
+					],
+					"query": [
+						{
+							"key": "businessName",
+							"value": "sport"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "feedback Age Ratio",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/RateRelay/user/feedbackAgeRatio?businessName=sport",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RateRelay",
+								"user",
+								"feedbackAgeRatio"
+							],
+							"query": [
+								{
+									"key": "businessName",
+									"value": "sport"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "214"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"d6-ZrpO8VXAgWugWER08M+Xs7TqmOk\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 09 Apr 2024 00:29:25 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"below18\": 3,\n    \"age18to30\": 2,\n    \"above30\": 1,\n    \"below18Percentage\": 50,\n    \"age18to30Percentage\": 33.33333333333333,\n    \"above30Percentage\": 16.666666666666664,\n    \"message\": \"Feedback age ratio retrieved successfully\",\n    \"statusCode\": \"200\"\n}"
+				},
+				{
+					"name": "feedback Age Ratio",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/RateRelay/user/feedbackAgeRatio?businessName=sports",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RateRelay",
+								"user",
+								"feedbackAgeRatio"
+							],
+							"query": [
+								{
+									"key": "businessName",
+									"value": "sports"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "182"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"b6-wxAWmbKa+p/xROPCdz52vDsktb8\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 09 Apr 2024 00:31:06 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"below18\": 1,\n    \"age18to30\": 0,\n    \"above30\": 0,\n    \"below18Percentage\": 100,\n    \"age18to30Percentage\": 0,\n    \"above30Percentage\": 0,\n    \"message\": \"Feedback age ratio retrieved successfully\",\n    \"statusCode\": \"200\"\n}"
+				},
+				{
+					"name": "feedback Age Ratio",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/RateRelay/user/feedbackAgeRatio?businessName=sportss",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RateRelay",
+								"user",
+								"feedbackAgeRatio"
+							],
+							"query": [
+								{
+									"key": "businessName",
+									"value": "sportss"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "180"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"b4-maA3XPnxubQjoZhsXiQPv6SN6Ek\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 09 Apr 2024 00:33:30 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"below18\": 0,\n    \"age18to30\": 0,\n    \"above30\": 0,\n    \"below18Percentage\": 0,\n    \"age18to30Percentage\": 0,\n    \"above30Percentage\": 0,\n    \"message\": \"Feedback age ratio retrieved successfully\",\n    \"statusCode\": \"200\"\n}"
+				},
+				{
+					"name": "feedback Age Ratio",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/RateRelay/user/feedbackAgeRatio?businessName=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RateRelay",
+								"user",
+								"feedbackAgeRatio"
+							],
+							"query": [
+								{
+									"key": "businessName",
+									"value": ""
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "80"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"50-XHQCmMIJN5NWdyIq3AHarJyocS4\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 09 Apr 2024 00:34:52 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"Business name is required in the URL query string\",\n    \"statusCode\": \"400\"\n}"
 				}
 			]
 		}
