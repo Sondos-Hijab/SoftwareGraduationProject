@@ -5,8 +5,10 @@ CREATE TABLE `user` (
   `name` varchar(800) NOT NULL,
   `password` varchar(1000) NOT NULL,
   `email` varchar(800) NOT NULL,
+  `age` int NOT NULL,
+  `gender` tinyint NOT NULL,
   PRIMARY KEY (`userID`)
-)
+) 
 
 CREATE TABLE `userprofile` (
   `userProfileID` int NOT NULL AUTO_INCREMENT,
