@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -23,26 +22,56 @@ abstract class ProfilePageController extends GetxController {
   goToChangePassword();
   Future uploadImage();
   getProfileImage();
-  checkAuthentication();
 }
 
 class ProfilePageControllerImp extends ProfilePageController {
-  bool isEditingBio = false;
-  TextEditingController? bioController;
-  File? selectedImage;
+  //myServices for getting accessToken
   final myServices = Get.find<MyServices>();
-
-  String? accessToken;
-  String? refreshToken;
-
-  StatusRequest? statusRequest;
+  //datasources
   LogoutDataSource logoutDataSource = LogoutDataSource(Get.find());
   BioDataSource bioDataSource = BioDataSource(Get.find());
   ProfileImageDataSource profileImageDataSource =
       ProfileImageDataSource(Get.find());
-
   CheckAuthenticationDataSource checkAuthenticationDataSource =
       CheckAuthenticationDataSource(Get.find());
+  //variables
+  bool isEditingBio = false;
+  TextEditingController? bioController;
+  File? selectedImage;
+  //variables to get from myServices
+  String? accessToken;
+  String? refreshToken;
+  String? username;
+  //request variables
+  StatusRequest? statusRequest;
+
+  @override
+  void onInit() {
+    super.onInit();
+    accessToken = myServices.sharedPreferences.getString("accessToken");
+    refreshToken = myServices.sharedPreferences.getString("refreshToken");
+    username = myServices.sharedPreferences.getString("username");
+    bioController = TextEditingController();
+    getBio();
+    getProfileImage();
+  }
+
+  @override
+  goToBusinessesPage() {
+    Get.toNamed(AppRoutes.followedBusinessesPage,
+        arguments: {'username': username});
+  }
+
+  @override
+  goToFeedbackPage() {
+    Get.toNamed(AppRoutes.userFeedbackPage, arguments: {'username': username!});
+  }
+
+  @override
+  goToChangePassword() {
+    Get.toNamed(AppRoutes.changePassword);
+  }
+
   @override
   editMode() async {
     isEditingBio = !isEditingBio;
@@ -73,23 +102,6 @@ class ProfilePageControllerImp extends ProfilePageController {
       }
     }
     update();
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-    accessToken = myServices.sharedPreferences.getString("accessToken");
-    refreshToken = myServices.sharedPreferences.getString("refreshToken");
-    bioController = TextEditingController();
-    getBio();
-    getProfileImage();
-  }
-
-  @override
-  void dispose() {
-    bioController!.dispose();
-    selectedImage!.delete();
-    super.dispose();
   }
 
   @override
@@ -167,21 +179,6 @@ class ProfilePageControllerImp extends ProfilePageController {
   }
 
   @override
-  goToBusinessesPage() {
-    Get.toNamed(AppRoutes.followedBusinessesPage);
-  }
-
-  @override
-  goToFeedbackPage() {
-    Get.toNamed(AppRoutes.userFeedbackPage);
-  }
-
-  @override
-  goToChangePassword() {
-    Get.toNamed(AppRoutes.changePassword);
-  }
-
-  @override
   logout() async {
     await removeProfileImage();
 
@@ -248,19 +245,9 @@ class ProfilePageControllerImp extends ProfilePageController {
   }
 
   @override
-  checkAuthentication() async {
-    statusRequest = StatusRequest.loading;
-    accessToken = myServices.sharedPreferences.getString("accessToken");
-    var response = await checkAuthenticationDataSource
-        .getDataWithOnlyAuthorization(accessToken!);
-    statusRequest = handlingData(response);
-
-    if (StatusRequest.success == statusRequest) {
-      if (response['statusCode'] == "200") {
-        myServices.sharedPreferences.setBool("isLoggedIn", true);
-      } else {
-        myServices.sharedPreferences.setBool("isLoggedIn", false);
-      }
-    }
+  void dispose() {
+    bioController!.dispose();
+    selectedImage!.delete();
+    super.dispose();
   }
 }

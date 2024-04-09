@@ -1,114 +1,132 @@
-import { useState } from "react";
+import { useState, useReducer } from "react";
 import logo from "../../assets/images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
-import Modal from "@/helper-components/Modal";
-import styles from "./SigninForm.module.css";
+import { hasMinLength } from "@/utils/validation";
+import Modal from "@/helper-components/WarningsErrors/Modal";
+import { signin } from "@/apis/authRequests";
+import { useAppContext } from "@/Providers/AppPovider";
+import { getExpireDate } from "@/utils/utils";
+import { styles } from "./FormStyles";
+const initialModalState = {
+  showModal: false,
+  modalMessage: "",
+};
+
+const modalReducer = (state, action) => {
+  switch (action.type) {
+    case "SHOW_MODAL":
+      return { ...state, showModal: true, modalMessage: action.payload };
+    case "HIDE_MODAL":
+      return { ...state, showModal: false };
+    default:
+      return state;
+  }
+};
+
 export default function SigninForm() {
-  //routing variables
+  const { setFetchedAccessToken } = useAppContext();
   const navigate = useNavigate();
+  const [modalState, modalDispatch] = useReducer(
+    modalReducer,
+    initialModalState
+  );
 
-  //state management
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
+  const [usernameError, setUsernameError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [canSubmit, setCanSubmit] = useState(false);
 
-  //modal showing when an error occurs
-  const closeModal = () => {
-    setShowModal(false);
-  };
-
-  //handling when clicking the sign in button
-  const handleSigninData = (event) => {
-    event.preventDefault();
-
-    // Basic validation
-    if (!userName || !password) {
-      setError("Please fill all the fields.");
-      return;
-    }
-
-    const dataToSubmit = {
-      adminName: userName,
-      password: password,
-    };
-
-    fetch("http://localhost:3000/RateRelay/user/adminLogin", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(dataToSubmit),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        if (data.statusCode == "401" || data.statusCode == "404") {
-          throw new Error(data.error);
-        } else if (data.statusCode == "200") {
-          //i need to store access token data.accessToken , and username
-          console.log(data.accessToken);
-          navigate("/");
-        }
-      })
-      .catch((error) => {
-        setModalMessage("There was a problem signing up: " + error.message);
-        setShowModal(true);
-      });
-  };
+  async function submitSigninData(event) {
+    signin(event).then((response) => {
+      if (response.error) {
+        modalDispatch({
+          type: "SHOW_MODAL",
+          payload: "There was a problem signing in: " + response.error,
+        });
+      } else {
+        localStorage.setItem("accessToken", response.accessToken);
+        localStorage.setItem("refreshToken", response.refreshToken);
+        localStorage.setItem("expireDate", getExpireDate());
+        setFetchedAccessToken(response.accessToken);
+        navigate("/");
+      }
+    });
+  }
 
   return (
     <>
-      <div className={styles["form-container"]}>
-        <div className={styles["header-info-container"]}>
+      <div className={styles.formContainer}>
+        <div className={styles.headerInfoContainer}>
           <img src={logo} alt="RateRelay" />
-          <h2>Sign in to your account</h2>
+          <h2 className={styles.title}>Sign in to your account</h2>
         </div>
 
-        <div className={styles["form-container"]}>
-          <form className={styles.form} action="#" method="POST">
-            <div className={styles["input-container"]}>
+        <div className={styles.formContainer}>
+          <form className={styles.form} onSubmit={submitSigninData}>
+            <div className={styles.inputContainer}>
               <label htmlFor="username">Username</label>
-              <div>
+              <div className={styles.inputContainer}>
                 <input
+                  className={styles.input}
                   id="username"
                   name="username"
                   type="text"
                   required
                   onChange={(event) => {
-                    setUserName(event.target.value);
+                    if (event.target.value == "") {
+                      setUsernameError("");
+                      setCanSubmit(false);
+                    } else if (!hasMinLength(event.target.value, 5)) {
+                      setUsernameError(
+                        "Username should be at least 5 characters"
+                      );
+                      setCanSubmit(false);
+                    } else {
+                      setUsernameError("");
+                      setCanSubmit(true);
+                    }
                   }}
                 />
               </div>
+              {usernameError && <p className={styles.error}>{usernameError}</p>}
             </div>
 
-            <div className={styles["input-container"]}>
+            <div className={styles.inputContainer}>
               <label htmlFor="password">Password</label>
               <div>
                 <input
+                  className={styles.input}
                   id="password"
                   name="password"
                   type="password"
                   required
                   onChange={(event) => {
-                    setPassword(event.target.value);
+                    if (event.target.value == "") {
+                      setPasswordError("");
+                      setCanSubmit(false);
+                    } else if (!hasMinLength(event.target.value, 6)) {
+                      setPasswordError(
+                        "Password should be at least 6 characters"
+                      );
+                      setCanSubmit(false);
+                    } else {
+                      setPasswordError("");
+                      setCanSubmit(true);
+                    }
                   }}
                 />
               </div>
+              {passwordError && <p className={styles.error}>{passwordError}</p>}
             </div>
 
-            <div className={styles["flex-end"]}>
-              <Link to="/confirm-email" className={styles["link-text"]}>
+            <div className={styles.flexEnd}>
+              <Link to="/auth/confirm-email" className={styles.linkText}>
                 Forgot password?
               </Link>
             </div>
-            {error && <p className={styles.error}>{error}</p>}
 
             <button
+              disabled={!canSubmit}
               type="submit"
-              onClick={handleSigninData}
               className={styles.button}
             >
               Sign in
@@ -117,15 +135,26 @@ export default function SigninForm() {
 
           <p className={styles["paragraph-text"]}>
             Not a member?
-            <Link to="/sign-up" className={styles["link-text"]}>
+            <Link
+              to="/auth/sign-up"
+              relative="route"
+              className={styles.linkText}
+            >
               {" "}
               Go to Sign up
             </Link>
           </p>
         </div>
       </div>
-
-      {showModal && <Modal message={modalMessage} onClose={closeModal} />}
+      {modalState.showModal && (
+        <Modal
+          title="Can't Sign Your Business In"
+          message={modalState.modalMessage}
+          onClose={() => {
+            modalDispatch({ type: "HIDE_MODAL" });
+          }}
+        />
+      )}
     </>
   );
 }

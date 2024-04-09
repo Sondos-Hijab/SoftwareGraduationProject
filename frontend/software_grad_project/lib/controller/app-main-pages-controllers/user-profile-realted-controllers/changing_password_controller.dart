@@ -11,16 +11,36 @@ abstract class ChangePasswordController extends GetxController {
 }
 
 class ChangePasswordControllerImp extends ChangePasswordController {
-  late TextEditingController password;
-  late TextEditingController confirmPassword;
-
-  StatusRequest? statusRequest;
+  //myServices for getting accessToken
+  final myServices = Get.find<MyServices>();
+  //datasource
   ResetPasswordDataSource resetPasswordData =
       ResetPasswordDataSource(Get.find());
-
-  final myServices = Get.find<MyServices>();
-
+  //variables
+  late TextEditingController password;
+  late TextEditingController confirmPassword;
   GlobalKey<FormState> formState = GlobalKey<FormState>();
+  //request variables
+  StatusRequest? statusRequest;
+
+  @override
+  void onInit() {
+    password = TextEditingController();
+    confirmPassword = TextEditingController();
+    super.onInit();
+  }
+
+  bool showPassword = true;
+  showPasswordFunction() {
+    showPassword = (showPassword == true ? false : true);
+    update();
+  }
+
+  bool showConfirmPassword = true;
+  showConfirmPasswordFunction() {
+    showConfirmPassword = (showConfirmPassword == true ? false : true);
+    update();
+  }
 
   @override
   resetPassword() async {
@@ -45,25 +65,6 @@ class ChangePasswordControllerImp extends ChangePasswordController {
         update();
       }
     }
-  }
-
-  bool showPassword = true;
-  showPasswordFunction() {
-    showPassword = (showPassword == true ? false : true);
-    update();
-  }
-
-  bool showConfirmPassword = true;
-  showConfirmPasswordFunction() {
-    showConfirmPassword = (showConfirmPassword == true ? false : true);
-    update();
-  }
-
-  @override
-  void onInit() {
-    password = TextEditingController();
-    confirmPassword = TextEditingController();
-    super.onInit();
   }
 
   @override

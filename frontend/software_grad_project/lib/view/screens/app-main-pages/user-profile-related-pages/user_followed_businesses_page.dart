@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:software_grad_project/controller/app-main-pages-controllers/user-profile-realted-controllers/user_followed_businesses_page_controller.dart';
+import 'package:software_grad_project/controller/app-main-pages-controllers/other-user-controllers/other_user_followed_businesses_controller.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
-import 'package:software_grad_project/data/datasource/static/static.dart';
 import 'package:software_grad_project/view/widgets/home-page/business-view/business_view.dart';
 
 class FollowedBusinessesPage extends StatelessWidget {
@@ -10,7 +9,7 @@ class FollowedBusinessesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(FollowedbusinessesPageControllerImp());
+    Get.put(OtherUserFollowedbusinessesPageControllerImp());
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -21,17 +20,23 @@ class FollowedBusinessesPage extends StatelessWidget {
             style: Theme.of(context).textTheme.headlineSmall,
           ),
         ),
-        body: GetBuilder<FollowedbusinessesPageControllerImp>(
+        body: GetBuilder<OtherUserFollowedbusinessesPageControllerImp>(
             builder: (controller) {
           return ListView(
             children: [
               ...List.generate(
-                  businessViewList.length,
+                  controller.followingBusinesses!.length,
                   (index) => BusinessViewItem(
-                        index: index,
+                        businessName:
+                            controller.followingBusinesses![index].businessName,
+                        picture: controller
+                            .followingBusinesses![index].businessImage,
                         onTap: () {
                           controller.goToBusinessPage(
-                              businessViewList[index].businessName!);
+                              controller
+                                  .followingBusinesses![index].businessName!,
+                              controller
+                                  .followingBusinesses![index].businessImage!);
                         },
                       ))
             ],

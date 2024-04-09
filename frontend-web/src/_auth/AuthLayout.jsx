@@ -1,15 +1,14 @@
-import { Outlet, Navigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import onBoarding from "../assets/images/onboarding.png";
-import styles from "./AuthLayout.module.css";
 
 const AuthLayout = () => {
   return (
-    <div className={styles.container}>
-      <div className={styles["form-container"]}>
-        <Outlet className={styles.outlet} />
+    <div className="w-screen h-screen flex justify-center items-center">
+      <div className="w-[100vw] lg:w-[50vw] flex justify-center items-center">
+        <Outlet />
       </div>
-      <div className={styles["image-container"]}>
-        <img src={onBoarding} className={styles.image} />
+      <div className="hidden lg:block w-[50vw]">
+        <img src={onBoarding} className="h-screen" />
       </div>
     </div>
   );

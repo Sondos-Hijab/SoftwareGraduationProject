@@ -7,7 +7,7 @@ class BusinessPostsDataSource {
   BusinessPostsDataSource(this.crud);
 
   getDataWithAuthorization(String authToken, String businessName) async {
-    var response = await crud.getDataWithAuthorization(
+    var response = await crud.getDataWithAuthorizationParams(
         AppLink.getBusinessPostsLink, {"name": businessName}, authToken);
     return response.fold((l) => l, (r) => r);
   }

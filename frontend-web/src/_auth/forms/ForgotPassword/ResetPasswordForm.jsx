@@ -1,0 +1,160 @@
+import logo from "../../../assets/images/logo.png";
+import { useState, useReducer } from "react";
+import { useNavigate } from "react-router-dom";
+import Modal from "@/helper-components/WarningsErrors/Modal";
+import { hasMinLength, isEqualsToOtherValue } from "@/utils/validation";
+import { resetPassword } from "@/apis/authRequests";
+import { styles } from "../FormStyles";
+const initialModalState = {
+  showModal: false,
+  modalMessage: "",
+};
+
+const modalReducer = (state, action) => {
+  switch (action.type) {
+    case "SHOW_MODAL":
+      return { ...state, showModal: true, modalMessage: action.payload };
+    case "HIDE_MODAL":
+      return { ...state, showModal: false };
+    default:
+      return state;
+  }
+};
+
+const ResetPasswordForm = () => {
+  const navigate = useNavigate();
+
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [passwordError, setPasswordError] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
+
+  const [canSubmit, setCanSubmit] = useState(false);
+
+  const [modalState, modalDispatch] = useReducer(
+    modalReducer,
+    initialModalState
+  );
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // Basic validation
+    if (!password || !confirmPassword || !canSubmit) {
+      return;
+    }
+
+    const formData = new FormData(event.target);
+
+    const resetPasswordInfo = {
+      password: formData.get("password"),
+      confirmPassword: formData.get("confirmPassword"),
+    };
+
+    resetPassword(resetPasswordInfo).then((value) => {
+      if (value.token == "Forbidden") {
+        modalDispatch({
+          type: "SHOW_MODAL",
+          payload:
+            "There was a problem resetting password: Temporary access token isn't valid anymore",
+        });
+      } else {
+        navigate("/auth/sign-in");
+      }
+    });
+  };
+
+  return (
+    <>
+      <div className={styles.formContainer}>
+        <div className={styles.headerInfoContainer}>
+          <img src={logo} alt="RateRelay" />
+          <h2>Reset your password</h2>
+        </div>
+
+        <div className={styles.formContainer}>
+          <form className={styles.form} method="POST" onSubmit={handleSubmit}>
+            <div className={styles.inputContainer}>
+              <label htmlFor="password">Password</label>
+              <div>
+                <input
+                  className={styles.input}
+                  id="password"
+                  name="password"
+                  type="password"
+                  required
+                  onChange={(event) => {
+                    setPassword(event.target.value);
+
+                    if (event.target.value == "") {
+                      setPasswordError("");
+                      setCanSubmit(false);
+                    } else if (!hasMinLength(event.target.value, 6)) {
+                      setPasswordError(
+                        "Password should be at least 6 characters"
+                      );
+                      setCanSubmit(false);
+                    } else {
+                      setPasswordError("");
+                      setCanSubmit(true);
+                    }
+                  }}
+                />
+              </div>
+              {passwordError && <p className={styles.error}>{passwordError}</p>}
+            </div>
+
+            <div className={styles.inputContainer}>
+              <label htmlFor="confirmPassword">Confirm Password</label>
+              <div>
+                <input
+                  className={styles.input}
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type="password"
+                  required
+                  onChange={(event) => {
+                    setConfirmPassword(event.target.value);
+
+                    if (event.target.value == "") {
+                      setConfirmPasswordError("");
+                      setCanSubmit(false);
+                    } else if (
+                      !isEqualsToOtherValue(event.target.value, password)
+                    ) {
+                      setConfirmPasswordError("Passwords don't match");
+                      setCanSubmit(false);
+                    } else {
+                      setConfirmPasswordError("");
+                      setCanSubmit(true);
+                    }
+                  }}
+                />
+              </div>
+              {confirmPasswordError && (
+                <p className={styles.error}>{confirmPasswordError}</p>
+              )}
+            </div>
+
+            <button type="submit" className={styles.button}>
+              Reset password
+            </button>
+          </form>
+        </div>
+      </div>
+
+      {modalState.showModal && (
+        <Modal
+          title="Can't continue the process of resetting password"
+          message={modalState.modalMessage}
+          onClose={() => {
+            modalDispatch({ type: "HIDE_MODAL" });
+          }}
+        />
+      )}
+    </>
+  );
+};
+
+export default ResetPasswordForm;

@@ -81,3 +81,15 @@ CREATE TABLE `feedback` (
   CONSTRAINT `fk_admin_id` FOREIGN KEY (`admin_id`) REFERENCES `business` (`adminID`) ON DELETE CASCADE,
   CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`userID`) ON DELETE CASCADE
 ) 
+
+CREATE TABLE `follow` (
+  `userName` varchar(200) NOT NULL,
+  `user_id` int NOT NULL,
+  `businessName` varchar(200) NOT NULL,
+  `admin_id` int NOT NULL,
+  PRIMARY KEY (`userName`,`user_id`,`businessName`,`admin_id`),
+  KEY `user_id` (`user_id`),
+  KEY `admin_id` (`admin_id`),
+  CONSTRAINT `follow_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`userID`),
+  CONSTRAINT `follow_ibfk_2` FOREIGN KEY (`admin_id`) REFERENCES `business` (`adminID`)
+)

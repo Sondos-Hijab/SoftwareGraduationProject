@@ -1,9 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import logo from "../../assets/images/logo.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import LocationForm from "./LocationForm";
-import Modal from "@/helper-components/Modal";
-import styles from "./LocationInfoForm.module.css";
+import LocationForm from "@/helper-components/Location/LocationForm";
+import Modal from "@/helper-components/WarningsErrors/Modal";
+import { signup } from "@/apis/authRequests";
+import { styles } from "./FormStyles";
+
+const initialModalState = {
+  showModal: false,
+  modalMessage: "",
+};
+
+const modalReducer = (state, action) => {
+  switch (action.type) {
+    case "SHOW_MODAL":
+      return { ...state, showModal: true, modalMessage: action.payload };
+    case "HIDE_MODAL":
+      return { ...state, showModal: false };
+    default:
+      return state;
+  }
+};
+
 const LocationInfoForm = () => {
   //routing variables
   const location = useLocation();
@@ -13,18 +31,15 @@ const LocationInfoForm = () => {
   //state management
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [error, setError] = useState("");
-  const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
+  const [modalState, modalDispatch] = useReducer(
+    modalReducer,
+    initialModalState
+  );
 
   // Function to handle map click
   const handleMapClick = (lngLat) => {
-    console.log(lngLat.detail.latLng);
-    setSelectedMarker(lngLat.detail.latLng);
-  };
-
-  //modal showing when an error occurs
-  const closeModal = () => {
-    setShowModal(false);
+    console.log(lngLat);
+    setSelectedMarker(lngLat);
   };
 
   //handling when clicking the submit button
@@ -37,46 +52,35 @@ const LocationInfoForm = () => {
       return;
     }
 
-    const dataToSubmit = {
+    const signupInfo = {
       ...userAndBusinessEnteredData,
       location: `lat: ${selectedMarker.lat}, lng:${selectedMarker.lng}`,
     };
-    fetch("http://localhost:3000/RateRelay/user/adminSignup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(dataToSubmit),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        if (data.statusCode == "409") {
-          throw new Error(data.error);
-        } else if (data.statusCode == "201") {
-          navigate("/sign-in");
-        }
-      })
-      .catch((error) => {
-        setModalMessage("There was a problem signing up: " + error.message);
-        setShowModal(true);
-      });
+
+    signup(signupInfo).then((value) => {
+      if (value.error) {
+        modalDispatch({
+          type: "SHOW_MODAL",
+          payload: "There was a problem signing up: " + value.error,
+        });
+      } else navigate("/auth/sign-in");
+    });
   };
 
   return (
     <>
-      <div className={styles["form-container"]}>
+      <div className={styles.formContainer}>
         <div className={styles["header-info-container"]}>
           <img src={logo} alt="RateRelay" />
-          <h2>Enter you business's location</h2>
+          <h2>Enter your business location</h2>
         </div>
 
-        <div className={styles["form-container"]}>
-          <form className={styles.form} action="#" method="POST">
+        <div className={styles.formContainer}>
+          <form className={styles.form} method="POST">
             <LocationForm
               handleMapClick={handleMapClick}
               selectedMarker={selectedMarker}
+              width={"500px"}
             />
 
             {error && <p className={styles.error}>{error}</p>}
@@ -91,15 +95,23 @@ const LocationInfoForm = () => {
           </form>
 
           <p className={styles["paragraph-text"]}>
-            Already have an account?
-            <Link to="/sign-in" className={styles["link-text"]}>
+            Already have an account?{" "}
+            <Link to="/auth/sign-in" className={styles.linkText}>
               Go to Sign in
             </Link>
           </p>
         </div>
       </div>
 
-      {showModal && <Modal message={modalMessage} onClose={closeModal} />}
+      {modalState.showModal && (
+        <Modal
+          title="Can't Sign Your Business Up"
+          message={modalState.modalMessage}
+          onClose={() => {
+            modalDispatch({ type: "HIDE_MODAL" });
+          }}
+        />
+      )}
     </>
   );
 };

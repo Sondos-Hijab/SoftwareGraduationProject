@@ -5,6 +5,7 @@ import 'package:software_grad_project/core/constants/colors.dart';
 import 'package:software_grad_project/view/widgets/business/business_feedback.dart';
 import 'package:software_grad_project/view/widgets/business/business_main_info.dart';
 import 'package:software_grad_project/view/widgets/business/business_posts.dart';
+import 'package:software_grad_project/view/widgets/followers/business_followers.dart';
 
 class BusinessPage extends StatelessWidget {
   const BusinessPage({super.key});
@@ -14,44 +15,65 @@ class BusinessPage extends StatelessWidget {
     Get.put(BusinessPagesControllerImp());
     return GetBuilder<BusinessPagesControllerImp>(builder: (controller) {
       return DefaultTabController(
-        length: 3,
+        length: 4,
         child: Scaffold(
           key: controller.scaffoldKey,
           appBar: AppBar(
-            bottom: TabBar(tabs: [
-              Tab(
-                child: Text(
-                  "Profile Page",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(color: Colors.black),
+            bottom: TabBar(
+              tabs: [
+                Tab(
+                  child: Text(
+                    "Profile",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(color: Colors.black, fontSize: 14),
+                  ),
                 ),
-              ),
-              Tab(
-                child: Text(
-                  "Feedback",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(color: Colors.black),
+                Tab(
+                  child: Text(
+                    "Feedback",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(color: Colors.black, fontSize: 14),
+                  ),
                 ),
-              ),
-              Tab(
-                child: Text(
-                  "Posts",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(color: Colors.black),
+                Tab(
+                  child: Text(
+                    "Posts",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(color: Colors.black, fontSize: 14),
+                  ),
                 ),
-              )
-            ]),
+                Tab(
+                  child: Text(
+                    "Followers",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(color: Colors.black, fontSize: 14),
+                  ),
+                ),
+              ],
+              onTap: (index) {
+                if (index == 1) {
+                  controller.getFeedback(controller.businessName!);
+                } else if (index == 2) {
+                  controller.getPosts(controller.businessName!);
+                } else if (index == 3) {
+                  controller.getNumberOfFollowers(controller.businessName!);
+                  controller.getFollowers(controller.businessName!);
+                }
+              },
+            ),
             centerTitle: true,
             backgroundColor: AppColors.appWhite,
             elevation: 0.0,
             title: Text(
-              "Business Page",
+              controller.businessName!,
               style: Theme.of(context).textTheme.headlineSmall,
             ),
           ),
@@ -60,15 +82,44 @@ class BusinessPage extends StatelessWidget {
             child: TabBarView(
               children: [
                 BusinessMainInfoWidget(
-                  businessImage: controller.businessImage,
+                  businessName: controller.businessName!,
+                  businessImage: controller.businessImage!,
                   gmController: controller.gmController,
-                  businessLocation: controller.businessLocation,
-                  markers: controller.markers,
+                  markers: controller.fetchedBusinessInfo!.markers,
+                  category: controller.fetchedBusinessInfo!.category,
+                  description: controller.fetchedBusinessInfo!.description,
+                  phoneNumber: controller.fetchedBusinessInfo!.phoneNumber,
+                  email: controller.fetchedBusinessInfo!.email,
+                  isFollowing: controller.isFollowing,
+                  onPressFollowing: () {
+                    controller.pressFollowUnfollow();
+                    Get.snackbar(
+                      'Notification',
+                      !controller.isFollowing
+                          ? 'You followed this business!'
+                          : 'You unfollowed this business!',
+                      snackPosition: SnackPosition.BOTTOM,
+                      duration: const Duration(seconds: 2),
+                    );
+                  },
+                  onTapAddFeedback: () {
+                    controller.goToAddFeedbackPage();
+                  },
                 ),
-                const BusinessFeedback(),
+                BusinessFeedback(
+                    businessFeedback: controller.businessFeedback,
+                    goToUserPage: controller.goToUserPage,
+                    setFeedbackSortType: controller.setFeedbackSortType,
+                    selectedFeedbackSortType: controller.feedbackSortType!),
                 BusinessPosts(
-                  businessesPosts: controller.businessesPosts,
-                )
+                    businessImage: controller.businessImage,
+                    businessesPosts: controller.businessesPosts,
+                    setPostsSortType: controller.setPostsSortType,
+                    selectedPostsSortType: controller.postsSortType!),
+                BusinessFollowers(
+                    businessFollowers: controller.businessFollowers,
+                    numberOfFollowers: controller.followersNumber,
+                    goToFollowerPage: controller.goToUserPage)
               ],
             ),
           ),
@@ -77,6 +128,3 @@ class BusinessPage extends StatelessWidget {
     });
   }
 }
-
-
-//recieve the images as controller.businessesPosts[2].picture!

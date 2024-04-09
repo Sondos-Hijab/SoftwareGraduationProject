@@ -1,7 +1,13 @@
 import { useState } from "react";
 import logo from "../../assets/images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
-import styles from "./SignupForm.module.css";
+// import styles from "./Form.module.css";
+import { styles } from "./FormStyles";
+import {
+  hasMinLength,
+  isEmail,
+  isEqualsToOtherValue,
+} from "@/utils/validation";
 export default function SignupForm() {
   //routing variables
   const navigate = useNavigate();
@@ -11,20 +17,21 @@ export default function SignupForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
+
+  //validation values
+  const [usernameError, setUsernameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
+
+  const [canSubmit, setCanSubmit] = useState(false);
 
   //handling when clicking the continue button
   function handleUserData(event) {
     event.preventDefault();
 
     // Basic validation
-    if (!username || !email || !password || !confirmPassword) {
-      setError("Please fill in all fields.");
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      setError("Passwords do not match.");
+    if (!username || !email || !password || !confirmPassword || !canSubmit) {
       return;
     }
 
@@ -35,79 +42,133 @@ export default function SignupForm() {
       confirmPassword: confirmPassword,
     };
 
-    navigate("/business-info", { state: userEnteredData });
+    navigate("/auth/business-info", { state: userEnteredData });
   }
 
   return (
-    <div className={styles["form-container"]}>
-      <div className={styles["header-info-container"]}>
+    <div className={styles.formContainer}>
+      <div className={styles.headerInfoContainer}>
         <img src={logo} alt="RateRelay" />
-        <h2>Sign up your business</h2>
+        <h2 className={styles.title}>Sign up your business</h2>
       </div>
 
-      <div className={styles["form-container"]}>
-        <form className={styles.form} action="#" method="POST">
-          <div className={styles["input-container"]}>
+      <div className={styles.formContainer}>
+        <form className={styles.form} method="POST">
+          <div className={styles.inputContainer}>
             <label htmlFor="email">Email address</label>
             <div>
               <input
+                className={styles.input}
                 id="email"
                 name="email"
                 type="email"
                 autoComplete="email"
-                required
                 onChange={(event) => {
                   setEmail(event.target.value);
+
+                  if (event.target.value == "") {
+                    setEmailError("");
+                    setCanSubmit(false);
+                  } else if (!isEmail(event.target.value)) {
+                    setEmailError("Please enter a valid email");
+                    setCanSubmit(false);
+                  } else {
+                    setEmailError("");
+                    setCanSubmit(true);
+                  }
                 }}
               />
             </div>
+            {emailError && <p className={styles.error}>{emailError}</p>}
           </div>
-          <div className={styles["input-container"]}>
+          <div className={styles.inputContainer}>
             <label htmlFor="username">Username</label>
             <div className="mt-2">
               <input
+                className={styles.input}
                 id="username"
                 name="username"
                 type="text"
-                required
                 onChange={(event) => {
                   setUsername(event.target.value);
+
+                  if (event.target.value == "") {
+                    setUsernameError("");
+                    setCanSubmit(false);
+                  } else if (!hasMinLength(event.target.value, 5)) {
+                    setUsernameError(
+                      "Username should be at least 5 characters"
+                    );
+                    setCanSubmit(false);
+                  } else {
+                    setUsernameError("");
+                    setCanSubmit(true);
+                  }
                 }}
               />
             </div>
+            {usernameError && <p className={styles.error}>{usernameError}</p>}
           </div>
 
-          <div className={styles["input-container"]}>
+          <div className={styles.inputContainer}>
             <label htmlFor="password">Password</label>
             <div className="mt-2">
               <input
+                className={styles.input}
                 id="password"
                 name="password"
                 type="password"
-                required
                 onChange={(event) => {
                   setPassword(event.target.value);
+
+                  if (event.target.value == "") {
+                    setPasswordError("");
+                    setCanSubmit(false);
+                  } else if (!hasMinLength(event.target.value, 6)) {
+                    setPasswordError(
+                      "Password should be at least 6 characters"
+                    );
+                    setCanSubmit(false);
+                  } else {
+                    setPasswordError("");
+                    setCanSubmit(true);
+                  }
                 }}
               />
             </div>
+            {passwordError && <p className={styles.error}>{passwordError}</p>}
           </div>
 
-          <div className={styles["input-container"]}>
+          <div className={styles.inputContainer}>
             <label htmlFor="confirmPassword">Confirm Password</label>
             <div className="mt-2">
               <input
+                className={styles.input}
                 id="confirmPassword"
                 name="confirmPassword"
                 type="password"
-                required
                 onChange={(event) => {
                   setConfirmPassword(event.target.value);
+
+                  if (event.target.value == "") {
+                    setConfirmPasswordError("");
+                    setCanSubmit(false);
+                  } else if (
+                    !isEqualsToOtherValue(event.target.value, password)
+                  ) {
+                    setConfirmPasswordError("Passwords don't match");
+                    setCanSubmit(false);
+                  } else {
+                    setConfirmPasswordError("");
+                    setCanSubmit(true);
+                  }
                 }}
               />
             </div>
+            {confirmPasswordError && (
+              <p className={styles.error}>{confirmPasswordError}</p>
+            )}
           </div>
-          {error && <p className={styles.error}>{error}</p>}
-
           <button
             className={styles.button}
             type="submit"
@@ -119,7 +180,7 @@ export default function SignupForm() {
 
         <p className={styles["paragraph-text"]}>
           Already have an account?
-          <Link className={styles["link-text"]} to="/sign-in">
+          <Link className={styles.linkText} to="/auth/sign-in">
             {" "}
             Go to Sign in
           </Link>

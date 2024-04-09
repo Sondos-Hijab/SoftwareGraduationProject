@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
 
 class BioContainer extends StatelessWidget {
+  final bool me;
   final TextEditingController bioTextEditingController;
   final void Function()? onPressed;
-  final bool isEditingBio;
+  final bool? isEditingBio;
 
   const BioContainer(
       {super.key,
       required this.bioTextEditingController,
-      required this.onPressed,
-      required this.isEditingBio});
+      this.onPressed,
+      this.isEditingBio,
+      required this.me});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,9 @@ class BioContainer extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextFormField(
-              readOnly: !isEditingBio,
+              readOnly: (me == true && isEditingBio != null)
+                  ? !(isEditingBio!)
+                  : false,
               maxLines: 2,
               textAlign: TextAlign.center,
               controller: bioTextEditingController,
@@ -39,17 +43,19 @@ class BioContainer extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: onPressed,
-              style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all<Color>(AppColors.primaryDarkBlue),
-              ),
-              child: Text(
-                isEditingBio ? "Save Bio" : "Edit Bio",
-                style: const TextStyle(color: Colors.white),
-              ),
-            ),
+            (me == true && isEditingBio != null)
+                ? ElevatedButton(
+                    onPressed: onPressed,
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          AppColors.primaryDarkBlue),
+                    ),
+                    child: Text(
+                      isEditingBio! ? "Save Bio" : "Edit Bio",
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  )
+                : const Text(""),
           ],
         ),
       ),

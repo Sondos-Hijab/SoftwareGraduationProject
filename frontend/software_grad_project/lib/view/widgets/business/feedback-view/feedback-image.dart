@@ -1,9 +1,8 @@
-import 'dart:io';
-
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 
 class FeedbackImage extends StatelessWidget {
-  final File? feedbackImage;
+  final Uint8List? feedbackImage;
   const FeedbackImage({super.key, required this.feedbackImage});
 
   @override
@@ -16,8 +15,8 @@ class FeedbackImage extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10.0),
           child: feedbackImage != null
-              ? Image.file(
-                  File(feedbackImage!.path),
+              ? Image.memory(
+                  feedbackImage!,
                   width: double.infinity,
                   fit: BoxFit.cover,
                 )

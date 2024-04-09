@@ -1,36 +1,72 @@
 import "./index.css";
 import AuthLayout from "./_auth/AuthLayout";
-import SigninForm from "./_auth/forms/SigninForm";
-import SignupForm from "./_auth/forms/SignupForm";
 import RootLayout from "./_root/RootLayout";
-import BusinessInfoForm from "./_auth/forms/BusinessInfoForm";
-import LocationInfoForm from "./_auth/forms/LocationInfoForm";
-import { Home } from "./_root/pages";
-import { Routes, Route } from "react-router-dom";
-import ResetPasswordForm from "./_auth/forms/forgot-password/ResetPasswordForm";
-import EmailConfirmationForm from "./_auth/forms/forgot-password/EmailConfirmationForm";
-import OTPcodeForm from "./_auth/forms/forgot-password/OTPcodeForm";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  SignupForm,
+  SigninForm,
+  BusinessInfoForm,
+  LocationInfoForm,
+  OTPcodeForm,
+  ResetPasswordForm,
+  EmailConfirmationForm,
+} from "./_auth/forms";
+import {
+  Profile,
+  Home,
+  CreatePost,
+  Posts,
+  FeedbackPage,
+  Chatting,
+  Notifications,
+  User,
+  BusinessPage,
+  Dashboard,
+} from "./_root/pages";
+import Error from "./helper-components/WarningsErrors/Error";
+import AppPovider from "./Providers/AppPovider";
 
 function App() {
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <RootLayout />,
+      children: [
+        { path: "", element: <Home /> },
+        { path: "profile", element: <Profile /> },
+        { path: "create-post", element: <CreatePost /> },
+        { path: "posts", element: <Posts /> },
+        { path: "feedback/:id", element: <FeedbackPage /> },
+        { path: "notifications", element: <Notifications /> },
+        { path: "user/:username", element: <User /> },
+        { path: "business/:businessname", element: <BusinessPage /> },
+        { path: "dashboard", element: <Dashboard /> },
+      ],
+    },
+    {
+      path: "chatting",
+      element: <Chatting />,
+    },
+    {
+      path: "/auth",
+      element: <AuthLayout />,
+      children: [
+        { path: "sign-in", element: <SigninForm /> },
+        { path: "sign-up", element: <SignupForm /> },
+        { path: "business-info", element: <BusinessInfoForm /> },
+        { path: "location-info", element: <LocationInfoForm /> },
+        { path: "confirm-email", element: <EmailConfirmationForm /> },
+        { path: "otp-code-form", element: <OTPcodeForm /> },
+        { path: "reset-password", element: <ResetPasswordForm /> },
+      ],
+    },
+    { path: "*", element: <Error /> },
+  ]);
+
   return (
-    <main>
-      <Routes>
-        {/* public routes */}
-        <Route element={<AuthLayout />}>
-          <Route path="/sign-in" element={<SigninForm />} />
-          <Route path="/sign-up" element={<SignupForm />} />
-          <Route path="/business-info" element={<BusinessInfoForm />} />
-          <Route path="/location-info" element={<LocationInfoForm />} />
-          <Route path="/reset-password" element={<ResetPasswordForm />} />
-          <Route path="/confirm-email" element={<EmailConfirmationForm />} />
-          <Route path="/otp-code-form" element={<OTPcodeForm />} />
-        </Route>
-        {/* private routes */}
-        <Route element={<RootLayout />}>
-          <Route index element={<Home />} />
-        </Route>
-      </Routes>
-    </main>
+    <AppPovider>
+      <RouterProvider router={router} />
+    </AppPovider>
   );
 }
 

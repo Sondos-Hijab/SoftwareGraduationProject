@@ -11,12 +11,12 @@ Future<bool> alertExitApp() {
             onPressed: () {
               exit(0);
             },
-            child: Text("Confirm")),
+            child: const Text("Confirm")),
         ElevatedButton(
             onPressed: () {
               Get.back();
             },
-            child: Text("Cancel")),
+            child: const Text("Cancel")),
       ]);
   return Future.value(true);
 }

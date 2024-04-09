@@ -1,42 +1,66 @@
 import 'dart:async';
-import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:software_grad_project/view/widgets/business/average_rates_summary_widget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
+import 'package:software_grad_project/core/constants/images_assets.dart';
 import 'package:software_grad_project/core/constants/routes_names.dart';
 import 'package:software_grad_project/view/widgets/business/business_location.dart';
 
 class BusinessMainInfoWidget extends StatelessWidget {
-  final Completer<GoogleMapController> gmController;
+  final String? businessName;
+  final Uint8List? businessImage;
 
-  final List<Marker> markers;
-  final CameraPosition businessLocation;
-  final File? businessImage;
-  const BusinessMainInfoWidget(
-      {super.key,
-      required this.businessImage,
-      required this.gmController,
-      required this.markers,
-      required this.businessLocation});
+  final List<Marker>? markers;
+  final int? phoneNumber;
+  final String? category;
+  final String? description;
+  final String? email;
+
+  final Completer<GoogleMapController> gmController;
+  final bool? isFollowing;
+
+  final void Function()? onPressFollowing;
+  final void Function()? onTapAddFeedback;
+
+  const BusinessMainInfoWidget({
+    super.key,
+    required this.businessImage,
+    required this.gmController,
+    required this.markers,
+    required this.isFollowing,
+    required this.onPressFollowing,
+    required this.businessName,
+    required this.onTapAddFeedback,
+    required this.phoneNumber,
+    required this.category,
+    required this.description,
+    required this.email,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        CircleAvatar(
-          radius: 100,
-          backgroundColor: Colors.transparent,
-          backgroundImage:
-              businessImage != null ? FileImage(businessImage!) : null,
+        Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: AppColors.lightGrey,
+              width: 0.3, // Adjust border width as needed
+            ),
+            shape: BoxShape.circle,
+          ),
           child: businessImage == null
-              ? ClipOval(
-                  child: Image.asset(
-                    "assets/images/coffee_business.jpeg",
-                    fit: BoxFit.cover,
-                  ),
+              ? const CircleAvatar(
+                  radius: 100,
+                  backgroundImage: AssetImage(AppImageAssets.noUserImage),
                 )
-              : null,
+              : CircleAvatar(
+                  radius: 100,
+                  backgroundImage: MemoryImage(businessImage!),
+                ),
         ),
         Container(
           margin: const EdgeInsets.all(20),
@@ -44,7 +68,7 @@ class BusinessMainInfoWidget extends StatelessWidget {
             children: [
               Text(
                 textAlign: TextAlign.center,
-                "Business Name",
+                businessName!,
                 style: Theme.of(context)
                     .textTheme
                     .headlineSmall
@@ -53,12 +77,12 @@ class BusinessMainInfoWidget extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              const Row(
+              Row(
                 children: [
-                  Text("Phone number:"),
+                  const Text("Phone number:"),
                   Expanded(
                     child: Text(
-                      "0593907273",
+                      "$phoneNumber",
                       textAlign: TextAlign.right,
                     ),
                   )
@@ -67,12 +91,27 @@ class BusinessMainInfoWidget extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              const Row(
+              Row(
                 children: [
-                  Text("Category:"),
+                  const Text("Category:"),
                   Expanded(
                     child: Text(
-                      "Restaurants",
+                      "$category",
+                      textAlign: TextAlign.right,
+                    ),
+                  )
+                ],
+              ),
+
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: [
+                  const Text("Admin email:"),
+                  Expanded(
+                    child: Text(
+                      email!,
                       textAlign: TextAlign.right,
                     ),
                   )
@@ -81,17 +120,29 @@ class BusinessMainInfoWidget extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              const Row(
-                children: [
-                  Text("Number of followers:"),
-                  Expanded(
-                    child: Text(
-                      "110",
-                      textAlign: TextAlign.right,
-                    ),
-                  )
-                ],
+              // Follow/Unfollow Button
+              ElevatedButton(
+                onPressed: onPressFollowing,
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 15.0, horizontal: 100.0),
+                  backgroundColor: isFollowing!
+                      ? AppColors.primaryYellow
+                      : AppColors.primaryBlue,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+                child: Text(
+                  isFollowing! ? 'Unfollow' : 'Follow',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: AppColors.appWhite,
+                    fontSize: 16,
+                  ),
+                ),
               ),
+
               const SizedBox(
                 height: 20,
               ),
@@ -110,14 +161,15 @@ class BusinessMainInfoWidget extends StatelessWidget {
                   border: Border.all(color: Colors.grey.shade200),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Text(
-                    "Experience culinary delight at our restaurant, where every dish is crafted with passion and expertise.Experience culinary delight at our restaurant.",
+                child: Text(description!,
                     textAlign: TextAlign.justify,
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium!
                         .copyWith(fontSize: 16)),
               ),
+              const AverageRatesSummaryWidget(),
+
               Text(
                 textAlign: TextAlign.center,
                 "Location",
@@ -129,13 +181,11 @@ class BusinessMainInfoWidget extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              BusinessLocation(
-                  markers: markers,
-                  businessLocation: businessLocation,
-                  gmController: gmController),
+              BusinessLocation(markers: markers!, gmController: gmController),
               const SizedBox(
                 height: 20,
               ),
+
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -144,9 +194,7 @@ class BusinessMainInfoWidget extends StatelessWidget {
                   children: [
                     Expanded(
                       child: InkWell(
-                        onTap: () {
-                          Get.toNamed(AppRoutes.feedbackFormPage);
-                        },
+                        onTap: onTapAddFeedback,
                         child: Container(
                           decoration: BoxDecoration(
                             color: AppColors.primaryBlue,
