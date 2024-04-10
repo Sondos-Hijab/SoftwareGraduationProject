@@ -1,16 +1,44 @@
 import React, { useEffect, useState } from "react";
 import AverageRatesChart from "./AverageRatesChart";
+import { getFormattedDate } from "@/utils/utils";
+import { getAvgRate } from "@/apis/dashboardRequests";
 
 const AverageRatesSection = () => {
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
+  // For 1/1/current year
+  const firstDayOfYear = new Date(new Date().getFullYear(), 0, 1);
+  // For 31/12/current year
+  var lastDayOfYear = new Date(new Date().getFullYear() + 1, 0, 0);
+  const [startDate, setStartDate] = useState(getFormattedDate(firstDayOfYear));
+  const [endDate, setEndDate] = useState(getFormattedDate(lastDayOfYear));
 
-  const [rates, setRates] = useState({});
+  const [customerServiceRate, setCustomerServiceRate] = useState(0);
+  const [valueOfMoneyRate, setValueOfMoneyRate] = useState(0);
+  const [productServiceQualityRate, setProductServiceQualityRate] = useState(0);
 
-  const generateChart = () => {};
-  useEffect(() => {
-    //get rates depending in the selected dates
-  }, []);
+  const generateChart = () => {
+    //get customer service rate
+    getAvgRate("rate1", startDate, endDate).then((value) => {
+      if (value?.error) {
+        console.log("An error fetching customer service avergae rate");
+      }
+      setCustomerServiceRate(value.averageRate);
+    });
+    //get value of money rate
+    getAvgRate("rate2", startDate, endDate).then((value) => {
+      if (value?.error) {
+        console.log("An error fetching value of money rate occured");
+      }
+      setValueOfMoneyRate(value.averageRate);
+    });
+
+    //get product/service quality rate
+    getAvgRate("rate3", startDate, endDate).then((value) => {
+      if (value?.error) {
+        console.log("An error fetching product/service quality rate occured");
+      }
+      setProductServiceQualityRate(value.averageRate);
+    });
+  };
 
   return (
     <div className="mt-4 shadow-lg rounded-xl md:p-4 flex justify-center flex-col content-center flex-wrap">
@@ -21,7 +49,7 @@ const AverageRatesSection = () => {
             type="date"
             className="py-2 px-6 rounded-lg"
             onChange={(e) => {
-              setStartDate(e.target.value);
+              setStartDate(getFormattedDate(new Date(e.target.value)));
             }}
           />
         </div>
@@ -31,7 +59,7 @@ const AverageRatesSection = () => {
             type="date"
             className="py-2 px-6 rounded-lg "
             onChange={(e) => {
-              setEndDate(e.target.value);
+              setEndDate(getFormattedDate(new Date(e.target.value)));
             }}
           />
         </div>
@@ -45,9 +73,9 @@ const AverageRatesSection = () => {
       </div>
       <AverageRatesChart
         rates={{
-          customerService: 25,
-          valueOfMoney: 41,
-          productServiceRate: 88,
+          customerService: customerServiceRate,
+          valueOfMoney: valueOfMoneyRate,
+          productServiceRate: productServiceQualityRate,
         }}
       />
     </div>
