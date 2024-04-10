@@ -40,12 +40,17 @@ const AverageRatesSection = () => {
     });
   };
 
+  useEffect(() => {
+    generateChart();
+  }, []);
+
   return (
     <div className="mt-4 shadow-lg rounded-xl md:p-4 flex justify-center flex-col content-center flex-wrap">
       <div className="grid  md:grid-cols-2 lg:grid-cols-5 gap-4 justify-center content-center">
         <div className="flex gap-4 content-center col-span-2 mx-auto lg:mx-0">
           <p className="flex content-center flex-wrap">Pick the start date:</p>
           <input
+            defaultValue={getFormattedDate(firstDayOfYear)}
             type="date"
             className="py-2 px-6 rounded-lg"
             onChange={(e) => {
@@ -56,6 +61,7 @@ const AverageRatesSection = () => {
         <div className="flex gap-4 content-center col-span-2 mx-auto lg:mx-0">
           <p className="flex content-center flex-wrap">Pick the end date:</p>
           <input
+            defaultValue={getFormattedDate(lastDayOfYear)}
             type="date"
             className="py-2 px-6 rounded-lg "
             onChange={(e) => {
