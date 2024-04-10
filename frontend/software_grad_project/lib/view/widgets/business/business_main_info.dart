@@ -19,6 +19,10 @@ class BusinessMainInfoWidget extends StatelessWidget {
   final String? description;
   final String? email;
 
+  final double rate1;
+  final double rate2;
+  final double rate3;
+
   final Completer<GoogleMapController> gmController;
   final bool? isFollowing;
 
@@ -38,6 +42,9 @@ class BusinessMainInfoWidget extends StatelessWidget {
     required this.category,
     required this.description,
     required this.email,
+    required this.rate1,
+    required this.rate2,
+    required this.rate3,
   });
 
   @override
@@ -168,7 +175,11 @@ class BusinessMainInfoWidget extends StatelessWidget {
                         .bodyMedium!
                         .copyWith(fontSize: 16)),
               ),
-              const AverageRatesSummaryWidget(),
+              AverageRatesSummaryWidget(
+                rate1: rate1,
+                rate2: rate2,
+                rate3: rate3,
+              ),
 
               Text(
                 textAlign: TextAlign.center,

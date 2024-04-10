@@ -68,6 +68,8 @@ class SignUpControllerImp extends SignUpController {
       statusRequest = StatusRequest.loading;
       var response = await signupData.postData(
           username.text, email.text, password.text, confirmPassword.text);
+      // int.parse(age.text),
+      // selectedGender == "male" ? 0 : 1);
 
       statusRequest = handlingData(response);
       if (StatusRequest.success == statusRequest) {
