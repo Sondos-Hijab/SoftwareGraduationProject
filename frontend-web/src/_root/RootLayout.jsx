@@ -18,9 +18,13 @@ const RootLayout = () => {
       !localStorage.getItem("accessToken") ||
       !localStorage.getItem("expireDate") ||
       isExpired(localStorage.getItem("expireDate"))
-    )
+    ) {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("expireDate");
+      localStorage.removeItem("businessName");
       navigate("/auth/sign-in");
-    else {
+    } else {
       fetchImage(accessToken).then((value) => {
         setFetchedImage(`data:image/*;base64,${value}`);
       });
