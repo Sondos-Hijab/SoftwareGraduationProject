@@ -23,47 +23,72 @@ class UserFeedbackPage extends StatelessWidget {
         body: GetBuilder<UserFeedbackPageControllerImp>(builder: (controller) {
           return ListView(
             children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: RadioListTile<String>(
-                      title: const Text(
-                        'Oldest to newest',
-                        style: TextStyle(fontSize: 11),
+              Container(
+                margin: const EdgeInsets.only(
+                    left: 20, right: 20, top: 10, bottom: 5),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    hintText: "Search",
+                    hintStyle: const TextStyle(
+                        fontSize: 14, color: AppColors.lightGrey),
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                    label: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 10),
+                      child: const Text(
+                        "Enter a business name",
+                        style: TextStyle(color: AppColors.lightGrey),
                       ),
-                      value: "Oldest to newest",
-                      groupValue: controller.feedbackSortType,
-                      onChanged: (String? value) {
-                        controller.setFeedbackSortType(value!);
-                      },
-                      controlAffinity: ListTileControlAffinity.leading,
-                      activeColor: AppColors.primaryGreen,
+                    ),
+                    suffixIcon: InkWell(
+                      onTap: () {},
+                      child: const Icon(Icons.search_rounded),
+                    ),
+                    suffixIconColor: AppColors.lightGrey,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
                     ),
                   ),
-                  Expanded(
-                    child: RadioListTile<String>(
-                      title: const Text(
-                        'Newest to oldest',
-                        style: TextStyle(fontSize: 11),
-                      ),
-                      value: 'Newest to oldest',
-                      groupValue: controller.feedbackSortType,
-                      onChanged: (String? value) {
-                        controller.setFeedbackSortType(value!);
-                      },
-                      controlAffinity: ListTileControlAffinity.leading,
-                      activeColor: AppColors.primaryGreen,
-                    ),
-                  ),
-                ],
+                ),
               ),
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 30),
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: AppColors.lightGrey,
                   ),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: DropdownButton<String>(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  value: "Newest to oldest",
+                  onChanged: (String? value) {
+                    controller.setFeedbackSortType(value!);
+                  },
+                  isExpanded: true, // Make the dropdown button full width
+                  items: <String>['Newest to oldest', 'Oldest to newest']
+                      .map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(
+                        value,
+                        style: const TextStyle(
+                            color: AppColors.grey, fontSize: 16),
+                      ),
+                    );
+                  }).toList(),
+                  underline: const SizedBox(),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 20, right: 20, bottom: 5),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: AppColors.lightGrey,
+                  ),
+                  borderRadius: BorderRadius.circular(5),
                 ),
                 child: DropdownButton<String>(
                   padding: const EdgeInsets.symmetric(horizontal: 20),

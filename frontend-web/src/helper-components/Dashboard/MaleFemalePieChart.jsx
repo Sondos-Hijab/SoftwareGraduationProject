@@ -21,7 +21,7 @@ export default function MaleFemalePieChart({ title, male, female }) {
     ],
   };
   return (
-    <div className="w-full lg:w-1/2 p-12">
+    <div className="w-full lg:w-1/2 p-12 h-[450px] flex flex-col justify-center items-center">
       <h2 className="text-center mb-4 text-[#696969] text-base font-bold">
         {title}
       </h2>

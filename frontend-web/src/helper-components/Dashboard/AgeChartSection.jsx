@@ -48,6 +48,7 @@ const AgeChartSection = () => {
           followers: moreThan30Follow,
           writtenFeed: moreThan30Feed,
         }}
+        title={"Age Chart"}
       />
     </div>
   );

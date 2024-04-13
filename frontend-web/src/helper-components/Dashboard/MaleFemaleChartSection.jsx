@@ -6,10 +6,10 @@ import {
 } from "@/apis/dashboardRequests";
 
 const MaleFemaleChartSection = () => {
-  const [maleFollowers, setMaleFollowers] = useState(4);
-  const [maleFeed, setMaleFeed] = useState(55);
-  const [femaleFollowers, setFemaleFollowers] = useState(25);
-  const [femaleFeed, setFemaleFeed] = useState(41);
+  const [maleFollowers, setMaleFollowers] = useState();
+  const [maleFeed, setMaleFeed] = useState();
+  const [femaleFollowers, setFemaleFollowers] = useState();
+  const [femaleFeed, setFemaleFeed] = useState();
 
   useEffect(() => {
     getFeedbackGenderRatio().then((value) => {

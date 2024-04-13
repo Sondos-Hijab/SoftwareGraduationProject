@@ -10,6 +10,8 @@ import placeholderUserPicture from "@/assets/images/placeholder.png";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { createBlobUrl, sortByDate } from "@/utils/utils";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const User = () => {
   const { username } = useParams();
@@ -60,6 +62,8 @@ const User = () => {
     fetchData();
   }, []);
 
+  //handle business name search
+  function handleBusinessNameSearch() {}
   return (
     <>
       <div className=" mt-8 h-full w-full flex flex-col justify-center items-center">
@@ -141,7 +145,7 @@ const User = () => {
                   defaultValue="choose"
                   name="selectedSorting"
                   id="sorting"
-                  className="rounded-md border border-gray-200 focus:ring-white w-1/2"
+                  className="rounded-md border border-gray-200 focus:ring-white w-full md:w-1/2"
                   onChange={(e) => {
                     setSelectedSorting(e.target.value);
                   }}
@@ -157,7 +161,7 @@ const User = () => {
                   defaultValue="choose"
                   name="selectedCategory"
                   id="category"
-                  className="rounded-md border border-gray-200 focus:ring-white w-1/2"
+                  className="rounded-md border border-gray-200 focus:ring-white w-full md:w-1/2"
                   onChange={(e) => {
                     setSelectedCategory(e.target.value);
                     console.log(e.target.value);
@@ -174,6 +178,20 @@ const User = () => {
                 </select>
               </div>
 
+              <div className="relative rounded-md  w-full mb-2">
+                <input
+                  className=" rounded-md border border-gray-200 focus:ring-white w-full "
+                  type="text"
+                  placeholder="Search for a business"
+                />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                  <FontAwesomeIcon
+                    icon={faSearch}
+                    onClick={handleBusinessNameSearch}
+                    className="cursor-pointer text-customYellow"
+                  />
+                </div>
+              </div>
               {selectedSorting == "oldToNew"
                 ? sortByDate(feedback, "oldToNew").map((value) => (
                     <FeedbackCard key={value.feedbackID} feedInfo={value} />
