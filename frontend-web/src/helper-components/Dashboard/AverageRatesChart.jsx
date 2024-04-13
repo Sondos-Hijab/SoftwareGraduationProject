@@ -25,16 +25,6 @@ const options = {
     legend: {
       position: "top",
     },
-    title: {
-      display: true,
-      text: "Average Rates Chart",
-      font: {
-        size: 18,
-        weight: "bold",
-      },
-      color: "#696969",
-      padding: 20,
-    },
   },
   scales: {
     x: {
@@ -70,7 +60,7 @@ const labels = [
   "Product/Service rate",
 ];
 
-export default function AverageRatesChart({ rates }) {
+export default function AverageRatesChart({ rates, title }) {
   const data = {
     labels: labels,
     datasets: [
@@ -86,7 +76,10 @@ export default function AverageRatesChart({ rates }) {
     ],
   };
   return (
-    <div className="pb-8 w-full md:w-4/5">
+    <div className="pb-8 w-full md:w-4/5 mt-8">
+      <h2 className="text-center mb-4 text-[#696969] text-base font-bold">
+        {title}
+      </h2>
       <Bar className="mt-8" options={options} data={data} />
     </div>
   );

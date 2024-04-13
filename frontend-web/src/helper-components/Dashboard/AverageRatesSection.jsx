@@ -83,6 +83,7 @@ const AverageRatesSection = () => {
           valueOfMoney: valueOfMoneyRate,
           productServiceRate: productServiceQualityRate,
         }}
+        title="Average Rates Chart"
       />
     </div>
   );

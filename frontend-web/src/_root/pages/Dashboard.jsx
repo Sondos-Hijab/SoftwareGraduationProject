@@ -2,6 +2,7 @@ import NumbersCards from "@/helper-components/Dashboard/NumbersCards";
 import AverageRatesSection from "@/helper-components/Dashboard/AverageRatesSection";
 import AgeChartSection from "@/helper-components/Dashboard/AgeChartSection";
 import MaleFemaleChartSection from "@/helper-components/Dashboard/MaleFemaleChartSection";
+import FeedbackAnalysis from "@/helper-components/Dashboard/FeedbackAnalysis";
 
 const Dashboard = () => {
   return (
@@ -15,6 +16,7 @@ const Dashboard = () => {
           <AverageRatesSection />
           <AgeChartSection />
           <MaleFemaleChartSection />
+          <FeedbackAnalysis />
         </main>
       </div>
     </div>

@@ -18,6 +18,8 @@ import placeholderBusinessPicture from "@/assets/images/placeholder.png";
 import FeedbackCard from "@/helper-components/Cards/FeedbackCard";
 import FollowCard from "@/helper-components/Cards/FollowCard";
 import BusinessPostCard from "@/helper-components/Cards/BusinessPostCard";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const BusinessPage = () => {
   const { businessname } = useParams();
@@ -98,6 +100,9 @@ const BusinessPage = () => {
 
     fetchData();
   }, []);
+
+  //handling username search
+  function handleUsernameSearch() {}
   return (
     <>
       <div className=" mt-8 h-full w-full flex flex-col justify-center items-center">
@@ -232,7 +237,7 @@ const BusinessPage = () => {
                   defaultValue="choose"
                   name="selectedSorting"
                   id="sorting"
-                  className="rounded-md border border-gray-200 focus:ring-white w-1/3"
+                  className="rounded-md border border-gray-200 focus:ring-white w-full md:w-1/2"
                   onChange={(e) => {
                     setSelectedFeedbackSorting(e.target.value);
                   }}
@@ -243,6 +248,21 @@ const BusinessPage = () => {
                   <option value="oldToNew">Oldest to newest</option>
                   <option value="newToOld">Newest to oldest</option>
                 </select>
+
+                <div className="relative rounded-md  w-full md:w-1/2">
+                  <input
+                    className=" rounded-md border border-gray-200 focus:ring-white w-full "
+                    type="text"
+                    placeholder="Search for username"
+                  />
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                    <FontAwesomeIcon
+                      icon={faSearch}
+                      onClick={handleUsernameSearch}
+                      className="cursor-pointer text-customYellow"
+                    />
+                  </div>
+                </div>
               </div>
 
               {selectedFeedbackSorting == "oldToNew"
@@ -257,12 +277,12 @@ const BusinessPage = () => {
           {/* posts */}
           {activeTab === "posts" && (
             <>
-              <div className="flex gap-4 flex-col md:flex-row justify-end my-4 ">
+              <div className="flex gap-4 flex-col md:flex-row justify-end my-4">
                 <select
                   defaultValue="choose"
                   name="selectedSorting"
                   id="sorting"
-                  className="rounded-md border border-gray-200 focus:ring-white w-1/3"
+                  className="rounded-md border border-gray-200 focus:ring-white w-full "
                   onChange={(e) => {
                     setSelectedPostsSorting(e.target.value);
                   }}
