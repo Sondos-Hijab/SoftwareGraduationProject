@@ -21,39 +21,33 @@ class BusinessPosts extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        Row(
-          children: [
-            Expanded(
-              child: RadioListTile<String>(
-                title: const Text(
-                  'Oldest to newest',
-                  style: TextStyle(fontSize: 11), // Adjust font size here
-                ),
-                value: "Oldest to newest",
-                groupValue: selectedPostsSortType,
-                onChanged: (String? value) {
-                  setPostsSortType(value!);
-                },
-                controlAffinity: ListTileControlAffinity.leading,
-                activeColor: AppColors.primaryGreen,
-              ),
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 20),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: AppColors.lightGrey,
             ),
-            Expanded(
-              child: RadioListTile<String>(
-                title: const Text(
-                  'Newest to oldest',
-                  style: TextStyle(fontSize: 11), // Adjust font size here
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: DropdownButton<String>(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            value: "Newest to oldest",
+            onChanged: (String? value) {
+              setPostsSortType(value!);
+            },
+            isExpanded: true, // Make the dropdown button full width
+            items: <String>['Newest to oldest', 'Oldest to newest']
+                .map((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(
+                  value,
+                  style: const TextStyle(color: AppColors.grey, fontSize: 16),
                 ),
-                value: 'Newest to oldest',
-                groupValue: selectedPostsSortType,
-                onChanged: (String? value) {
-                  setPostsSortType(value!);
-                },
-                controlAffinity: ListTileControlAffinity.leading,
-                activeColor: AppColors.primaryGreen,
-              ),
-            ),
-          ],
+              );
+            }).toList(),
+            underline: const SizedBox(),
+          ),
         ),
         ...List.generate(
             businessesPosts!.length,
