@@ -90,7 +90,8 @@ const Profile = () => {
   const [selectedFeedbackSorting, setSelectedFeedbackSorting] =
     useState("newToOld");
   const [selectedPostsSorting, setSelectedPostsSorting] = useState("newToOld");
-
+  const [selectedFeedbackType, setSelectFeedbackType] =
+    useState("All Feedback");
   //state management useReducer
   const [formState, formDispatch] = useReducer(formReducer, initialFormState);
   const [modalState, modalDispatch] = useReducer(
@@ -248,7 +249,7 @@ const Profile = () => {
         </div>
 
         {/* info */}
-        <div className="mt-12 w-3/5">
+        <div className="mt-12 w-3/4">
           <div className="px-4 sm:px-0 relative">
             <h3 className="text-base font-semibold leading-7 text-customPurple flex justify-between">
               Business Information{" "}
@@ -353,7 +354,7 @@ const Profile = () => {
         </div>
 
         {/* select */}
-        <ul className="w-3/5 mt-16 text-sm font-medium text-center text-gray-500 rounded-lg shadow flex ">
+        <ul className="w-3/4 mt-16 text-sm font-medium text-center text-gray-500 rounded-lg shadow flex ">
           <li className="w-full focus-within:z-10 rounded-lg">
             <Link
               className={`inline-block w-full p-4 ${
@@ -395,7 +396,7 @@ const Profile = () => {
           </li>
         </ul>
 
-        <div className="w-3/5 mb-8">
+        <div className="w-3/4 mb-8">
           {/* feedback */}
           {activeTab === "feedback" && (
             <>
@@ -416,19 +417,34 @@ const Profile = () => {
                   <option value="newToOld">Newest to oldest</option>
                 </select>
 
-                <div className="relative rounded-md  w-full md:w-1/2">
-                  <input
-                    className=" rounded-md border border-gray-200 focus:ring-white w-full "
-                    type="text"
-                    placeholder="Search for username"
+                <select
+                  defaultValue="All Feedback"
+                  name="selectedFeedbackType"
+                  id="feedbackType"
+                  className="rounded-md border border-gray-200 focus:ring-white w-full md:w-1/2"
+                  onChange={(e) => {
+                    setSelectFeedbackType(e.target.value);
+                  }}
+                >
+                  <option value="All Feedback">All Feedback</option>
+                  <option value="Positive Feedback">Positive Feedback</option>
+                  <option value="Neutral Feedback">Neutral Feedback</option>
+                  <option value="Negative Feedback">Negative Feedback</option>
+                </select>
+              </div>
+
+              <div className="relative rounded-md  my-4 w-full">
+                <input
+                  className=" rounded-md border border-gray-200 focus:ring-white w-full "
+                  type="text"
+                  placeholder="Search for username"
+                />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                  <FontAwesomeIcon
+                    icon={faSearch}
+                    onClick={handleUsernameSearch}
+                    className="cursor-pointer text-customYellow"
                   />
-                  <div className="absolute inset-y-0 right-0 flex items-center pr-3">
-                    <FontAwesomeIcon
-                      icon={faSearch}
-                      onClick={handleUsernameSearch}
-                      className="cursor-pointer text-customYellow"
-                    />
-                  </div>
                 </div>
               </div>
 

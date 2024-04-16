@@ -35,6 +35,8 @@ const BusinessPage = () => {
   const [selectedFeedbackSorting, setSelectedFeedbackSorting] =
     useState("newToOld");
   const [selectedPostsSorting, setSelectedPostsSorting] = useState("newToOld");
+  const [selectedFeedbackType, setSelectFeedbackType] =
+    useState("All Feedback");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -249,19 +251,33 @@ const BusinessPage = () => {
                   <option value="newToOld">Newest to oldest</option>
                 </select>
 
-                <div className="relative rounded-md  w-full md:w-1/2">
-                  <input
-                    className=" rounded-md border border-gray-200 focus:ring-white w-full "
-                    type="text"
-                    placeholder="Search for username"
+                <select
+                  defaultValue="All Feedback"
+                  name="selectedFeedbackType"
+                  id="feedbackType"
+                  className="rounded-md border border-gray-200 focus:ring-white w-full md:w-1/2"
+                  onChange={(e) => {
+                    setSelectFeedbackType(e.target.value);
+                  }}
+                >
+                  <option value="All Feedback">All Feedback</option>
+                  <option value="Positive Feedback">Positive Feedback</option>
+                  <option value="Neutral Feedback">Neutral Feedback</option>
+                  <option value="Negative Feedback">Negative Feedback</option>
+                </select>
+              </div>
+              <div className="relative rounded-md  my-4 w-full">
+                <input
+                  className=" rounded-md border border-gray-200 focus:ring-white w-full "
+                  type="text"
+                  placeholder="Search for username"
+                />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                  <FontAwesomeIcon
+                    icon={faSearch}
+                    onClick={handleUsernameSearch}
+                    className="cursor-pointer text-customYellow"
                   />
-                  <div className="absolute inset-y-0 right-0 flex items-center pr-3">
-                    <FontAwesomeIcon
-                      icon={faSearch}
-                      onClick={handleUsernameSearch}
-                      className="cursor-pointer text-customYellow"
-                    />
-                  </div>
                 </div>
               </div>
 

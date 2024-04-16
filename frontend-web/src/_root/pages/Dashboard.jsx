@@ -3,6 +3,8 @@ import AverageRatesSection from "@/helper-components/Dashboard/AverageRatesSecti
 import AgeChartSection from "@/helper-components/Dashboard/AgeChartSection";
 import MaleFemaleChartSection from "@/helper-components/Dashboard/MaleFemaleChartSection";
 import FeedbackAnalysis from "@/helper-components/Dashboard/FeedbackAnalysis";
+import FeedbackNumbersCards from "@/helper-components/Dashboard/FeedbackNumberCards";
+import FeedbackNumbersSection from "@/helper-components/Dashboard/FeedbackNumbersSection";
 
 const Dashboard = () => {
   return (
@@ -13,10 +15,12 @@ const Dashboard = () => {
       <div className="flex min-h-screen w-full flex-col">
         <main className="flex flex-1 flex-col gap-4 ">
           <NumbersCards />
+          <FeedbackNumbersCards />
           <AverageRatesSection />
           <AgeChartSection />
           <MaleFemaleChartSection />
           <FeedbackAnalysis />
+          <FeedbackNumbersSection />
         </main>
       </div>
     </div>

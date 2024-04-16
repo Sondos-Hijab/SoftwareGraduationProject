@@ -4,6 +4,8 @@ import React, { useState, useEffect, useReducer } from "react";
 import Modal from "@/helper-components/WarningsErrors/Modal";
 import { useAppContext } from "@/Providers/AppPovider";
 import { sortByDate } from "@/utils/utils";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const initialModalState = {
   showModal: false,
@@ -32,6 +34,13 @@ const Home = () => {
 
   //state management useState
   const [feedback, setFeedback] = useState([]);
+  const [selectedFeedbackSorting, setSelectedFeedbackSorting] =
+    useState("newToOld");
+  const [selectedFeedbackType, setSelectFeedbackType] =
+    useState("All Feedback");
+
+  //handling username search
+  function handleUsernameSearch() {}
 
   useEffect(() => {
     fetchFeedback(businessName, accessToken).then((value) => {
@@ -45,13 +54,66 @@ const Home = () => {
 
   return (
     <>
-      <div className="flex flex-col flex-1 justify-center px-10 md:px-20 lg:px-44 py-12">
+      <div className="flex flex-col flex-1 justify-center px-10 md:px-20 lg:px-32 py-12">
         <h2 className="text-2xl font-bold leading-7 text-customPurple mb-5">
           Recent Feedback
         </h2>
-        {sortByDate(feedback).map((value) => {
-          return <FeedbackCard key={value.feedbackID} feedInfo={value} />;
-        })}
+
+        <div className="flex gap-4 flex-col md:flex-row  my-4 ">
+          <select
+            defaultValue="choose"
+            name="selectedSorting"
+            id="sorting"
+            className="rounded-md border border-gray-200 focus:ring-white w-full md:w-1/2"
+            onChange={(e) => {
+              setSelectedFeedbackSorting(e.target.value);
+            }}
+          >
+            <option value="choose" disabled>
+              Sort by
+            </option>
+            <option value="oldToNew">Oldest to newest</option>
+            <option value="newToOld">Newest to oldest</option>
+          </select>
+
+          <select
+            defaultValue="All Feedback"
+            name="selectedFeedbackType"
+            id="feedbackType"
+            className="rounded-md border border-gray-200 focus:ring-white w-full md:w-1/2"
+            onChange={(e) => {
+              setSelectFeedbackType(e.target.value);
+            }}
+          >
+            <option value="All Feedback">All Feedback</option>
+            <option value="Positive Feedback">Positive Feedback</option>
+            <option value="Neutral Feedback">Neutral Feedback</option>
+            <option value="Negative Feedback">Negative Feedback</option>
+          </select>
+        </div>
+
+        <div className="relative rounded-md mb-4 w-full">
+          <input
+            className=" rounded-md border border-gray-200 focus:ring-white w-full "
+            type="text"
+            placeholder="Search for username"
+          />
+          <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+            <FontAwesomeIcon
+              icon={faSearch}
+              onClick={handleUsernameSearch}
+              className="cursor-pointer text-customYellow"
+            />
+          </div>
+        </div>
+
+        {selectedFeedbackSorting == "oldToNew"
+          ? sortByDate(feedback, "oldToNew").map((value) => (
+              <FeedbackCard key={value.feedbackID} feedInfo={value} />
+            ))
+          : sortByDate(feedback, "newToOld").map((value) => (
+              <FeedbackCard key={value.feedbackID} feedInfo={value} />
+            ))}
       </div>
 
       {modalState.showModal && (

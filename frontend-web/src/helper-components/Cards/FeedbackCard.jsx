@@ -1,4 +1,10 @@
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import {
+  faFaceAngry,
+  faFaceFrown,
+  faFaceMeh,
+  faFaceSmile,
+  faStar,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import placeholderUserPicture from "@/assets/images/placeholder.png";
 import emptyFeedbackPicture from "@/assets/images/empty.png";
@@ -64,7 +70,7 @@ const FeedbackCard = ({ feedInfo }) => {
               >
                 <dt className="sr-only">Business name</dt>
 
-                <dd className="text-base font-semibold text-customPurple">
+                <dd className="text-lg font-semibold text-customPurple">
                   {`Feedback for: ${feedInfo["businessName"]}`}
                 </dd>
               </Link>
@@ -75,7 +81,80 @@ const FeedbackCard = ({ feedInfo }) => {
             </div>
           </dl>
 
-          <div className="mt-6 flex flex-wrap justify-start gap-8 text-xs flex-col sm:flex-row sm:justify-around ">
+          <div class="grid grid-cols-3 p-4 gap-4">
+            {[
+              "Customer Service Rate",
+              "Value Of Money Rate",
+              "Product/Service Quality Rate",
+            ].map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  className="sm:inline-flex sm:shrink-0 sm:items-center sm:gap-2"
+                >
+                  <FontAwesomeIcon
+                    className="text-customYellow text-lg"
+                    icon={faStar}
+                  />
+
+                  <div className="mt-1.5 sm:mt-0">
+                    <p className="text-customPurple font-semibold text-sm">
+                      {item}
+                    </p>
+                    <p className="font-medium text-sm">{`${parseFloat(
+                      feedInfo[`rate${index + 1}`]
+                    )} / 5.0`}</p>
+                  </div>
+                </div>
+              );
+            })}
+            {[
+              {
+                type: "Positive",
+                icon: (
+                  <FontAwesomeIcon
+                    className="text-customBlue text-lg"
+                    icon={faFaceSmile}
+                  />
+                ),
+              },
+              {
+                type: "Neutral",
+                icon: (
+                  <FontAwesomeIcon
+                    className="text-customGreen text-lg"
+                    icon={faFaceMeh}
+                  />
+                ),
+              },
+              {
+                type: "Negative",
+                icon: (
+                  <FontAwesomeIcon
+                    className="text-customRed text-lg"
+                    icon={faFaceFrown}
+                  />
+                ),
+              },
+            ].map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  className="sm:inline-flex sm:shrink-0 sm:items-center sm:gap-2"
+                >
+                  {item.icon}
+
+                  <div className="mt-1.5 sm:mt-0">
+                    <p className="text-customPurple font-semibold text-sm">
+                      {item.type}
+                    </p>
+                    <p className="font-medium text-sm">{"35%"}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          {/* <div className="mt-6 flex flex-wrap justify-start gap-8 text-xs flex-col sm:flex-row sm:justify-evenly ">
             {[
               "Customer Service Rate",
               "Value Of Money Rate",
@@ -100,9 +179,57 @@ const FeedbackCard = ({ feedInfo }) => {
                 </div>
               );
             })}
-          </div>
+          </div> */}
 
-          <div className="flex flex-1 justify-between mt-5">
+          {/* <div className="mt-6 flex flex-wrap justify-start gap-8 text-xs flex-col sm:flex-row sm:justify-evenly ">
+            {[
+              {
+                type: "Positive",
+                icon: (
+                  <FontAwesomeIcon
+                    className="text-customBlue text-lg"
+                    icon={faFaceSmile}
+                  />
+                ),
+              },
+              {
+                type: "Neutral",
+                icon: (
+                  <FontAwesomeIcon
+                    className="text-customGreen text-lg"
+                    icon={faFaceMeh}
+                  />
+                ),
+              },
+              {
+                type: "Negative",
+                icon: (
+                  <FontAwesomeIcon
+                    className="text-customRed text-lg"
+                    icon={faFaceFrown}
+                  />
+                ),
+              },
+            ].map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  className="sm:inline-flex sm:shrink-0 sm:items-center sm:gap-2"
+                >
+                  {item.icon}
+
+                  <div className="mt-1.5 sm:mt-0">
+                    <p className="text-customPurple font-semibold">
+                      {item.type}
+                    </p>
+                    <p className="font-medium">{"35%"}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div> */}
+
+          <div className="flex flex-1 justify-between">
             <p className="text-customBlue">Date: {formattedDate}</p>
             <p className="text-customBlue">Time: {formattedTime}</p>
           </div>
