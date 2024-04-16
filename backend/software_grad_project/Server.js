@@ -48,6 +48,8 @@ const feedbackGenderRatio = require('./Routes/feedbackGenderRatio');
 const followGenderRatio = require('./Routes/followGenderRatio'); 
 const followAgeRatio = require('./Routes/followAgeRatio'); 
 const feedbackAgeRatio = require('./Routes/feedbackAgeRatio'); 
+const ageFeedbackRatio = require('./Routes/ageFeedbackRatio'); 
+const genderFeedbackRatio = require('./Routes/genderFeedbackRatio'); 
 
 
 app.use(express.json());
@@ -98,6 +100,8 @@ app.use('/RateRelay', feedbackGenderRatio);
 app.use('/RateRelay', followGenderRatio); 
 app.use('/RateRelay', followAgeRatio); 
 app.use('/RateRelay', feedbackAgeRatio); 
+app.use('/RateRelay', genderFeedbackRatio); 
+app.use('/RateRelay', ageFeedbackRatio); 
 
 
 app.listen(PORT, (err) => {

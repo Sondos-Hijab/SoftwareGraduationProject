@@ -7,13 +7,13 @@ const { sendingEmail } = require('../HelperObjects/sendEmail');
 const { generateEmailContent } = require('../HelperObjects/emailContent');
 const { emailContent } = require('../HelperConstants/registrationEmail');
 
-
 const queryAsync = promisify(con.query).bind(con);
 
 const signup = async (req, res, next) => {
-  const { name, password: plaintextPassword, confirmPassword, email } = req.body;
+  const { name, password: plaintextPassword, confirmPassword, email, age, gender } = req.body;
 
   try {
+    // Check if the user name already exists
     const existingUserByName = await getUserByField('name', name);
     if (existingUserByName) {
       return res.status(409).json({ 
@@ -22,6 +22,7 @@ const signup = async (req, res, next) => {
       });
     }
 
+    // Validate email format
     if (!validator.isEmail(email)) {
       return res.status(400).json({ 
         error: 'Invalid email format',
@@ -29,14 +30,16 @@ const signup = async (req, res, next) => {
       });
     }
 
+    // Check if the email already exists
     const existingUserByEmail = await getUserByField('email', email);
     if (existingUserByEmail) {
       return res.status(409).json({ 
         error: 'Email already exists',
         statusCode: '409',
-       });
+      });
     }
 
+    // Validate password format
     if (typeof plaintextPassword !== 'string') {
       return res.status(400).json({ 
         error: 'Invalid password format',
@@ -44,6 +47,7 @@ const signup = async (req, res, next) => {
       });
     }
 
+    // Check if passwords match
     if (plaintextPassword !== confirmPassword) {
       return res.status(400).json({ 
         error: 'Passwords do not match',
@@ -51,7 +55,12 @@ const signup = async (req, res, next) => {
       });
     }
 
+    // Hash the password
     const hash = await bcrypt.hash(plaintextPassword, 10);
+
+    // Insert user into the database
+    await queryAsync('INSERT INTO user (name, email, password, age, gender) VALUES (?, ?, ?, ?, ?)', [name, email, hash, age, gender]);
+
     const userData = [
       {
         name: name,
@@ -63,16 +72,6 @@ const signup = async (req, res, next) => {
 
     // Send registration email
     await sendingEmail(email, 'Registration', registrationEmailContent);
-
-    // Insert user into the database after sending the email
-    await queryAsync('INSERT INTO user (name, email, password) VALUES (?, ?, ?)', [name, email, hash]);
-
-    const trueName = await getUserByField('name', name);
-
-    const userID = trueName.userID;
-
-    await queryAsync('INSERT INTO userprofile (name, user_id) VALUES (?, ?)', [name, userID]);
-
 
     return res.status(201).json({ 
       msg: 'User created and registration email sent',
@@ -87,7 +86,6 @@ const signup = async (req, res, next) => {
     });
   }
 };
-
 
 module.exports = {
   signup,
