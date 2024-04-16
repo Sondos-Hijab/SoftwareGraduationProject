@@ -1,14 +1,31 @@
 import React, { useEffect, useState } from "react";
 import MaleFemalePieChart from "./MaleFemalePieChart";
+import {
+  getFeedbackGenderRatio,
+  getFollowGenderRatio,
+} from "@/apis/dashboardRequests";
 
 const MaleFemaleChartSection = () => {
-  const [maleFollowers, setMaleFollowers] = useState(4);
-  const [maleFeed, setMaleFeed] = useState(55);
-  const [femaleFollowers, setFemaleFollowers] = useState(25);
-  const [femaleFeed, setFemaleFeed] = useState(41);
+  const [maleFollowers, setMaleFollowers] = useState();
+  const [maleFeed, setMaleFeed] = useState();
+  const [femaleFollowers, setFemaleFollowers] = useState();
+  const [femaleFeed, setFemaleFeed] = useState();
 
   useEffect(() => {
-    //get data
+    getFeedbackGenderRatio().then((value) => {
+      if (value?.error) console.log(value.error);
+      else {
+        setFemaleFeed(value.femalePercentage);
+        setMaleFeed(value.malePercentage);
+      }
+    });
+    getFollowGenderRatio().then((value) => {
+      if (value?.error) console.log(value.error);
+      else {
+        setFemaleFollowers(value.femalePercentage);
+        setMaleFollowers(value.malePercentage);
+      }
+    });
   }, []);
 
   return (

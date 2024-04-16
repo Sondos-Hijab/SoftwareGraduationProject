@@ -31,6 +31,7 @@ abstract class BusinessPagesController extends GetxController {
   getFollowers(String businessName);
   setFeedbackSortType(String sortType);
   setPostsSortType(String sortType);
+  getAverageRates(String businessName, String rateType);
 }
 
 class BusinessPagesControllerImp extends BusinessPagesController {
@@ -64,6 +65,9 @@ class BusinessPagesControllerImp extends BusinessPagesController {
   List<FollowerModel>? businessFollowers = [];
   String? feedbackSortType = "Newest to oldest";
   String? postsSortType = "Newest to oldest";
+  double rate1 = 0.0;
+  double rate2 = 0.0;
+  double rate3 = 0.0;
 
   @override
   void onInit() {
@@ -73,6 +77,10 @@ class BusinessPagesControllerImp extends BusinessPagesController {
     businessImage = arguments['businessImage'];
     getBusinessInfo(businessName!);
     getFollowers(businessName!);
+    getAverageRates(businessName!, "rate1");
+    getAverageRates(businessName!, "rate2");
+    getAverageRates(businessName!, "rate3");
+
     super.onInit();
   }
 
@@ -107,6 +115,34 @@ class BusinessPagesControllerImp extends BusinessPagesController {
           DateTime.parse(a.createdAt!).compareTo(DateTime.parse(b.createdAt!)));
     }
     update();
+  }
+
+  @override
+  getAverageRates(String businessName, String rateType) async {
+    StatusRequest? statusRequest = StatusRequest.loading;
+    String? accessToken = myServices.sharedPreferences.getString("accessToken");
+
+    var response = await businessInfoDatasource.getBusinessAverageRate(
+        accessToken!, businessName, rateType, "2024-01-01", "2024-12-31");
+
+    statusRequest = handlingData(response);
+    if (StatusRequest.success == statusRequest) {
+      if (response['statusCode'] == "200") {
+        String inString = response['averageRate'].toStringAsFixed(2);
+        double inDouble = double.parse(inString);
+        if (rateType == "rate1") {
+          rate1 = inDouble;
+        } else if (rateType == "rate2") {
+          rate2 = inDouble;
+        } else {
+          rate3 = inDouble;
+        }
+      } else {
+        Get.defaultDialog(
+            title: "Error", middleText: "We are sorry, something went wrong");
+      }
+      update();
+    }
   }
 
   @override

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CircleDollarSign, ShoppingBagIcon, Star, Users } from "lucide-react";
+import { Frown, Meh, MessageCircle, Smile } from "lucide-react";
 import { getAvgRate } from "@/apis/dashboardRequests";
 import { getFormattedDate } from "@/utils/utils";
 import { getNumberOfFollowers } from "@/apis/businessPageRequests";
-const NumbersCards = () => {
-  const [followersNumber, setFollowersNumber] = useState();
-  const [customerServiceRate, setCustomerServiceRate] = useState(0);
-  const [valueOfMoneyRate, setValueOfMoneyRate] = useState(0);
-  const [productServiceQualityRate, setProductServiceQualityRate] = useState(0);
+const FeedbackNumbersCards = () => {
+  const [totalFeedbackNumber, setTotalFeedbackNumber] = useState();
+  const [positiveFeedbackNumber, setPositiveFeedbackNumber] = useState(0);
+  const [neutralFeedbackNumber, setNeutralFeedbackNumber] = useState(0);
+  const [negativeFeedbackNumber, setNegativeFeedbackNumber] = useState(0);
 
   useEffect(() => {
     // For 1/1/2023
@@ -16,7 +16,7 @@ const NumbersCards = () => {
     // Get date of today
     var rangeLastDay = new Date();
 
-    //get customer service rate
+    //get total feedback number
     getAvgRate(
       "rate1",
       getFormattedDate(rangeStartDay),
@@ -25,9 +25,9 @@ const NumbersCards = () => {
       if (value?.error) {
         console.log("An error fetching customer service avergae rate");
       }
-      setCustomerServiceRate(value.averageRate);
+      setPositiveFeedbackNumber(value.averageRate);
     });
-    //get value of money rate
+    //get positive feedback number
     getAvgRate(
       "rate2",
       getFormattedDate(rangeStartDay),
@@ -36,10 +36,10 @@ const NumbersCards = () => {
       if (value?.error) {
         console.log("An error fetching value of money rate occured");
       }
-      setValueOfMoneyRate(value.averageRate);
+      setNegativeFeedbackNumber(value.averageRate);
     });
 
-    //get product/service quality rate
+    //get neutral feedback number
     getAvgRate(
       "rate3",
       getFormattedDate(rangeStartDay),
@@ -48,10 +48,10 @@ const NumbersCards = () => {
       if (value?.error) {
         console.log("An error fetching product/service quality rate occured");
       }
-      setProductServiceQualityRate(value.averageRate);
+      setNeutralFeedbackNumber(value.averageRate);
     });
 
-    //get followers number
+    //get negative feedback number
     getNumberOfFollowers(
       localStorage.getItem("businessName"),
       localStorage.getItem("accessToken")
@@ -59,7 +59,7 @@ const NumbersCards = () => {
       if (value.error) {
         console.error("Error fetching business followers");
       } else {
-        setFollowersNumber(value.followerCount);
+        setTotalFeedbackNumber(value.followerCount);
       }
     });
   }, []);
@@ -69,52 +69,52 @@ const NumbersCards = () => {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 text-customGreen">
           <CardTitle className="text-sm font-medium ">
-            Followers Number
+            Total Number Of Feedback
           </CardTitle>
-          <Users className="h-4 w-4 text-muted-foreground" />
+          <MessageCircle className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold text-customYellow">
-            {followersNumber}
+            {totalFeedbackNumber}
           </div>
         </CardContent>
       </Card>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 text-customGreen">
           <CardTitle className="text-sm font-medium">
-            Customer Service Rate
+            Positive Feedback Number
           </CardTitle>
-          <Star className="h-4 w-4 text-muted-foreground" />
+          <Smile className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold text-customYellow">
-            {customerServiceRate.toFixed(2)}
+            {positiveFeedbackNumber}
           </div>
         </CardContent>
       </Card>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 text-customGreen">
           <CardTitle className="text-sm font-medium">
-            Value Of Money Rate
+            Neutral Feedback Number
           </CardTitle>
-          <CircleDollarSign className="h-4 w-4 text-muted-foreground" />
+          <Meh className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold text-customYellow">
-            {valueOfMoneyRate.toFixed(2)}
+            {neutralFeedbackNumber}
           </div>
         </CardContent>
       </Card>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 text-customGreen">
           <CardTitle className="text-sm font-medium">
-            Product/Service Quality Rate
+            Negative Feedback Number
           </CardTitle>
-          <ShoppingBagIcon className="h-4 w-4 text-muted-foreground" />
+          <Frown className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold text-customYellow">
-            {productServiceQualityRate.toFixed(2)}
+            {negativeFeedbackNumber}
           </div>
         </CardContent>
       </Card>
@@ -122,4 +122,4 @@ const NumbersCards = () => {
   );
 };
 
-export default NumbersCards;
+export default FeedbackNumbersCards;

@@ -91,6 +91,9 @@ class BusinessPage extends StatelessWidget {
                   phoneNumber: controller.fetchedBusinessInfo!.phoneNumber,
                   email: controller.fetchedBusinessInfo!.email,
                   isFollowing: controller.isFollowing,
+                  rate1: controller.rate1,
+                  rate2: controller.rate2,
+                  rate3: controller.rate3,
                   onPressFollowing: () {
                     controller.pressFollowUnfollow();
                     Get.snackbar(

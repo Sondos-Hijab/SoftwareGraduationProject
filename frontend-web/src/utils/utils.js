@@ -42,8 +42,10 @@ export function stringToLocationMarker(location) {
 }
 
 export function isExpired(dateToCheck) {
+  let dateObject = new Date(dateToCheck);
   const currentDate = new Date();
-  return currentDate > dateToCheck;
+
+  return currentDate > dateObject;
 }
 
 export function sortByDate(array, type) {
@@ -61,4 +63,13 @@ export function sortByDate(array, type) {
   }
 
   return newArray;
+}
+
+export function getFormattedDate(date) {
+  let year = date.getFullYear(); // Get the full year (e.g., 2024)
+  let month = (date.getMonth() + 1).toString().padStart(2, "0"); // Get the month (0-11), add 1 to get (1-12), padStart to ensure two digits
+  let day = date.getDate().toString().padStart(2, "0"); // Get the day of the month, padStart to ensure two digits
+
+  let formattedDate = year + "-" + month + "-" + day;
+  return formattedDate;
 }

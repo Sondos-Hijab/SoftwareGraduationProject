@@ -42,35 +42,27 @@ const options = {
       display: true,
       title: {
         display: true,
-        text: "Average",
+        text: "Number of feedback",
         color: "#696969",
         font: {
           size: 14,
         },
       },
       suggestedMin: 0,
-      suggestedMax: 5,
+      suggestedMax: 50,
     },
   },
 };
 
-const labels = [
-  "Customer service rate",
-  "Value of money rate",
-  "Product/Service rate",
-];
+const labels = ["Positive Feedback", "Neutral Feedback", "Negative Feedback"];
 
-export default function AverageRatesChart({ rates, title }) {
+export default function FeedbackNumbersChart({ numbers, title }) {
   const data = {
     labels: labels,
     datasets: [
       {
-        label: "Average rate",
-        data: [
-          rates.customerService,
-          rates.valueOfMoney,
-          rates.productServiceRate,
-        ],
+        label: "Feedback Number",
+        data: [numbers.positive, numbers.neutral, numbers.negative],
         backgroundColor: "#d0f4de",
       },
     ],

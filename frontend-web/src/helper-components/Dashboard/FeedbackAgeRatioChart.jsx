@@ -19,24 +19,30 @@ ChartJS.register(
   Legend
 );
 
-export const options = {
-  indexAxis: "y",
-  elements: {
-    bar: {
-      borderWidth: 2,
-    },
-  },
+const options = {
   responsive: true,
   plugins: {
     legend: {
-      position: "right",
+      position: "top",
     },
   },
   scales: {
     x: {
+      display: true,
       title: {
         display: true,
-        text: "Number of people",
+        text: "Rates",
+        color: "#696969",
+        font: {
+          size: 14,
+        },
+      },
+    },
+    y: {
+      display: true,
+      title: {
+        display: true,
+        text: "Percentage",
         color: "#696969",
         font: {
           size: 12,
@@ -45,54 +51,24 @@ export const options = {
       suggestedMin: 0,
       suggestedMax: 100,
     },
-    y: {
-      title: {
-        display: true,
-        text: "Ages",
-        color: "#696969",
-        font: {
-          size: 12,
-        },
-      },
-    },
   },
 };
 
 const labels = ["< 18", "18 - 30", "> 30"];
 
-export default function AgeChart({
-  lessThan18,
-  between18and30,
-  moreThan30,
-  title,
-}) {
+export default function FeedbackAgeRatioChart({ rates, title }) {
   const data = {
-    labels,
+    labels: labels,
     datasets: [
       {
-        label: "# of followers",
-        data: [
-          lessThan18.followers,
-          between18and30.followers,
-          moreThan30.followers,
-        ],
-        borderColor: "#fcf6bd",
-        backgroundColor: "#fcf6bd",
-      },
-      {
-        label: "# of people who wrote feedback",
-        data: [
-          lessThan18.writtenFeed,
-          between18and30.writtenFeed,
-          moreThan30.writtenFeed,
-        ],
-        borderColor: "#ffbf69",
-        backgroundColor: "#ffbf69",
+        label: "Feedback writing age ratio",
+        data: [rates.lessThan18, rates.between18and30, rates.moreThan30],
+        backgroundColor: "#d0f4de",
       },
     ],
   };
   return (
-    <div className="w-full md:w-4/5 pb-8">
+    <div className="pb-8 w-full md:w-1/2 ">
       <h2 className="text-center mb-4 text-[#696969] text-base font-bold">
         {title}
       </h2>

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import AverageRatesChart from "./AverageRatesChart";
 import { getFormattedDate } from "@/utils/utils";
-import { getAvgRate } from "@/apis/dashboardRequests";
+import FeedbackNumbersChart from "./FeedbackNumbersChart";
 
-const AverageRatesSection = () => {
+const FeedbackNumbersSection = () => {
   // For 1/1/current year
   const firstDayOfYear = new Date(new Date().getFullYear(), 0, 1);
   // For 31/12/current year
@@ -11,34 +11,11 @@ const AverageRatesSection = () => {
   const [startDate, setStartDate] = useState(getFormattedDate(firstDayOfYear));
   const [endDate, setEndDate] = useState(getFormattedDate(lastDayOfYear));
 
-  const [customerServiceRate, setCustomerServiceRate] = useState(0);
-  const [valueOfMoneyRate, setValueOfMoneyRate] = useState(0);
-  const [productServiceQualityRate, setProductServiceQualityRate] = useState(0);
+  const [positive, setPositive] = useState(20);
+  const [neutral, setNeutral] = useState(11);
+  const [negative, setNegative] = useState(30);
 
-  const generateChart = () => {
-    //get customer service rate
-    getAvgRate("rate1", startDate, endDate).then((value) => {
-      if (value?.error) {
-        console.log("An error fetching customer service avergae rate");
-      }
-      setCustomerServiceRate(value.averageRate);
-    });
-    //get value of money rate
-    getAvgRate("rate2", startDate, endDate).then((value) => {
-      if (value?.error) {
-        console.log("An error fetching value of money rate occured");
-      }
-      setValueOfMoneyRate(value.averageRate);
-    });
-
-    //get product/service quality rate
-    getAvgRate("rate3", startDate, endDate).then((value) => {
-      if (value?.error) {
-        console.log("An error fetching product/service quality rate occured");
-      }
-      setProductServiceQualityRate(value.averageRate);
-    });
-  };
+  const generateChart = () => {};
 
   useEffect(() => {
     generateChart();
@@ -77,16 +54,16 @@ const AverageRatesSection = () => {
           Generate Chart
         </button>
       </div>
-      <AverageRatesChart
-        rates={{
-          customerService: customerServiceRate,
-          valueOfMoney: valueOfMoneyRate,
-          productServiceRate: productServiceQualityRate,
+      <FeedbackNumbersChart
+        numbers={{
+          positive: positive,
+          neutral: neutral,
+          negative: negative,
         }}
-        title="Average Rates Chart"
+        title="Feedback Numbers Chart"
       />
     </div>
   );
 };
 
-export default AverageRatesSection;
+export default FeedbackNumbersSection;

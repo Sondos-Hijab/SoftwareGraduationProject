@@ -10,6 +10,8 @@ import placeholderUserPicture from "@/assets/images/placeholder.png";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { createBlobUrl, sortByDate } from "@/utils/utils";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const User = () => {
   const { username } = useParams();
@@ -25,6 +27,8 @@ const User = () => {
   );
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSorting, setSelectedSorting] = useState("newToOld");
+  const [selectedFeedbackType, setSelectFeedbackType] =
+    useState("All Feedback");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,6 +64,8 @@ const User = () => {
     fetchData();
   }, []);
 
+  //handle business name search
+  function handleBusinessNameSearch() {}
   return (
     <>
       <div className=" mt-8 h-full w-full flex flex-col justify-center items-center">
@@ -73,7 +79,7 @@ const User = () => {
         </div>
 
         {/* info */}
-        <div className="mt-12 w-3/5">
+        <div className="mt-12 w-3/4">
           <div className="px-4 sm:px-0">
             <h3 className="text-base font-semibold leading-7 text-[#2f47c6] ">
               User Information
@@ -103,7 +109,7 @@ const User = () => {
         </div>
 
         {/* select */}
-        <ul className="w-3/5 mt-16 text-sm font-medium text-center text-gray-500 rounded-lg shadow flex ">
+        <ul className="w-3/4 mt-16 text-sm font-medium text-center text-gray-500 rounded-lg shadow flex ">
           <li className="w-full focus-within:z-10 rounded-lg">
             <Link
               className={`inline-block w-full p-4 ${
@@ -132,7 +138,7 @@ const User = () => {
         </ul>
 
         {/* displaying values depending on tab menu selected value*/}
-        <div className="w-3/5 mb-8">
+        <div className="w-3/4 mb-8">
           {/* feedback */}
           {activeTab === "feedback" && (
             <>
@@ -141,7 +147,7 @@ const User = () => {
                   defaultValue="choose"
                   name="selectedSorting"
                   id="sorting"
-                  className="rounded-md border border-gray-200 focus:ring-white w-1/2"
+                  className="rounded-md border border-gray-200 focus:ring-white w-full md:w-1/2"
                   onChange={(e) => {
                     setSelectedSorting(e.target.value);
                   }}
@@ -157,7 +163,7 @@ const User = () => {
                   defaultValue="choose"
                   name="selectedCategory"
                   id="category"
-                  className="rounded-md border border-gray-200 focus:ring-white w-1/2"
+                  className="rounded-md border border-gray-200 focus:ring-white w-full md:w-1/2"
                   onChange={(e) => {
                     setSelectedCategory(e.target.value);
                     console.log(e.target.value);
@@ -174,6 +180,37 @@ const User = () => {
                 </select>
               </div>
 
+              <div className="flex gap-4 flex-col md:flex-row justify-center my-4">
+                <div className="relative rounded-md  w-full md:w-1/2">
+                  <input
+                    className=" rounded-md border border-gray-200 focus:ring-white w-full "
+                    type="text"
+                    placeholder="Search for a business"
+                  />
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                    <FontAwesomeIcon
+                      icon={faSearch}
+                      onClick={handleBusinessNameSearch}
+                      className="cursor-pointer text-customYellow"
+                    />
+                  </div>
+                </div>
+
+                <select
+                  defaultValue="All Feedback"
+                  name="selectedFeedbackType"
+                  id="feedbackType"
+                  className="rounded-md border border-gray-200 focus:ring-white w-full md:w-1/2"
+                  onChange={(e) => {
+                    setSelectFeedbackType(e.target.value);
+                  }}
+                >
+                  <option value="All Feedback">All Feedback</option>
+                  <option value="Positive Feedback">Positive Feedback</option>
+                  <option value="Neutral Feedback">Neutral Feedback</option>
+                  <option value="Negative Feedback">Negative Feedback</option>
+                </select>
+              </div>
               {selectedSorting == "oldToNew"
                 ? sortByDate(feedback, "oldToNew").map((value) => (
                     <FeedbackCard key={value.feedbackID} feedInfo={value} />

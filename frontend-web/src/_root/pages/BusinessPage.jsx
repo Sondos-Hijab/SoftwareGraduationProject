@@ -18,6 +18,8 @@ import placeholderBusinessPicture from "@/assets/images/placeholder.png";
 import FeedbackCard from "@/helper-components/Cards/FeedbackCard";
 import FollowCard from "@/helper-components/Cards/FollowCard";
 import BusinessPostCard from "@/helper-components/Cards/BusinessPostCard";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const BusinessPage = () => {
   const { businessname } = useParams();
@@ -33,6 +35,8 @@ const BusinessPage = () => {
   const [selectedFeedbackSorting, setSelectedFeedbackSorting] =
     useState("newToOld");
   const [selectedPostsSorting, setSelectedPostsSorting] = useState("newToOld");
+  const [selectedFeedbackType, setSelectFeedbackType] =
+    useState("All Feedback");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -98,6 +102,9 @@ const BusinessPage = () => {
 
     fetchData();
   }, []);
+
+  //handling username search
+  function handleUsernameSearch() {}
   return (
     <>
       <div className=" mt-8 h-full w-full flex flex-col justify-center items-center">
@@ -232,7 +239,7 @@ const BusinessPage = () => {
                   defaultValue="choose"
                   name="selectedSorting"
                   id="sorting"
-                  className="rounded-md border border-gray-200 focus:ring-white w-1/3"
+                  className="rounded-md border border-gray-200 focus:ring-white w-full md:w-1/2"
                   onChange={(e) => {
                     setSelectedFeedbackSorting(e.target.value);
                   }}
@@ -243,6 +250,35 @@ const BusinessPage = () => {
                   <option value="oldToNew">Oldest to newest</option>
                   <option value="newToOld">Newest to oldest</option>
                 </select>
+
+                <select
+                  defaultValue="All Feedback"
+                  name="selectedFeedbackType"
+                  id="feedbackType"
+                  className="rounded-md border border-gray-200 focus:ring-white w-full md:w-1/2"
+                  onChange={(e) => {
+                    setSelectFeedbackType(e.target.value);
+                  }}
+                >
+                  <option value="All Feedback">All Feedback</option>
+                  <option value="Positive Feedback">Positive Feedback</option>
+                  <option value="Neutral Feedback">Neutral Feedback</option>
+                  <option value="Negative Feedback">Negative Feedback</option>
+                </select>
+              </div>
+              <div className="relative rounded-md  my-4 w-full">
+                <input
+                  className=" rounded-md border border-gray-200 focus:ring-white w-full "
+                  type="text"
+                  placeholder="Search for username"
+                />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                  <FontAwesomeIcon
+                    icon={faSearch}
+                    onClick={handleUsernameSearch}
+                    className="cursor-pointer text-customYellow"
+                  />
+                </div>
               </div>
 
               {selectedFeedbackSorting == "oldToNew"
@@ -257,12 +293,12 @@ const BusinessPage = () => {
           {/* posts */}
           {activeTab === "posts" && (
             <>
-              <div className="flex gap-4 flex-col md:flex-row justify-end my-4 ">
+              <div className="flex gap-4 flex-col md:flex-row justify-end my-4">
                 <select
                   defaultValue="choose"
                   name="selectedSorting"
                   id="sorting"
-                  className="rounded-md border border-gray-200 focus:ring-white w-1/3"
+                  className="rounded-md border border-gray-200 focus:ring-white w-full "
                   onChange={(e) => {
                     setSelectedPostsSorting(e.target.value);
                   }}

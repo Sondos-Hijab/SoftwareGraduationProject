@@ -22,9 +22,9 @@ class CustomAppBar extends StatelessWidget {
         onChanged: onChanged,
         decoration: InputDecoration(
             prefixIcon: IconButton(
-                icon: Icon(Icons.search), onPressed: onPressedSearch),
+                icon: const Icon(Icons.search), onPressed: onPressedSearch),
             hintText: titleappbar,
-            hintStyle: TextStyle(fontSize: 18),
+            hintStyle: const TextStyle(fontSize: 18),
             border: OutlineInputBorder(
                 borderSide: BorderSide.none,
                 borderRadius: BorderRadius.circular(10)),
