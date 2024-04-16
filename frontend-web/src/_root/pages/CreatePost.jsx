@@ -76,7 +76,7 @@ const CreatePost = () => {
   return (
     <>
       <form
-        className="flex flex-1 flex-col px-10 md:px-20 lg:px-44 py-12"
+        className="flex flex-1 flex-col px-10 md:px-20 lg:px-32 py-12"
         onSubmit={handlePostSubmission}
       >
         <div className="space-y-12">
