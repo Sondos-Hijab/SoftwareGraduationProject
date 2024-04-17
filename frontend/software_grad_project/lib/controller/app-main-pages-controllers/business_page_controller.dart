@@ -32,6 +32,7 @@ abstract class BusinessPagesController extends GetxController {
   setFeedbackSortType(String sortType);
   setPostsSortType(String sortType);
   getAverageRates(String businessName, String rateType);
+  filterFeedback();
 }
 
 class BusinessPagesControllerImp extends BusinessPagesController {
@@ -68,6 +69,7 @@ class BusinessPagesControllerImp extends BusinessPagesController {
   double rate1 = 0.0;
   double rate2 = 0.0;
   double rate3 = 0.0;
+  late TextEditingController search;
 
   @override
   void onInit() {
@@ -75,6 +77,7 @@ class BusinessPagesControllerImp extends BusinessPagesController {
     var arguments = Get.arguments;
     businessName = arguments['businessName'];
     businessImage = arguments['businessImage'];
+    search = TextEditingController();
     getBusinessInfo(businessName!);
     getFollowers(businessName!);
     getAverageRates(businessName!, "rate1");
@@ -122,8 +125,11 @@ class BusinessPagesControllerImp extends BusinessPagesController {
     StatusRequest? statusRequest = StatusRequest.loading;
     String? accessToken = myServices.sharedPreferences.getString("accessToken");
 
+    DateTime now = DateTime.now();
+    String formattedDate = '${now.year}-${now.month}-${now.day}';
+
     var response = await businessInfoDatasource.getBusinessAverageRate(
-        accessToken!, businessName, rateType, "2024-01-01", "2024-12-31");
+        accessToken!, businessName, rateType, "2023-01-01", formattedDate);
 
     statusRequest = handlingData(response);
     if (StatusRequest.success == statusRequest) {
@@ -175,6 +181,45 @@ class BusinessPagesControllerImp extends BusinessPagesController {
           businessesPosts!.sort((a, b) => DateTime.parse(a.createdAt!)
               .compareTo(DateTime.parse(b.createdAt!)));
         }
+      } else {
+        Get.defaultDialog(
+            title: "Error", middleText: "We are sorry, something went wrong");
+      }
+      update();
+    }
+  }
+
+  @override
+  filterFeedback() async {
+    StatusRequest? statusRequest = StatusRequest.loading;
+    String? accessToken = myServices.sharedPreferences.getString("accessToken");
+
+    var response = await businessFeedbackDatasource.filterFeedback(
+        accessToken!, businessName!, search.text);
+    statusRequest = handlingData(response);
+
+    if (StatusRequest.success == statusRequest) {
+      if (response['statusCode'] == "200") {
+        List<dynamic> feedback = response['feedback'];
+        businessFeedback = feedback.map((feed) {
+          return FetchedFeedbackModel(
+            feed['feedbackID'],
+            feed['user_id'],
+            feed['admin_id'],
+            feed['businessName'],
+            feed['userName'],
+            feed['text'],
+            convertDataToFile(feed['picture']),
+            feed['rate1'].toDouble(),
+            feed['rate2'].toDouble(),
+            feed['rate3'].toDouble(),
+            feed['created_at'],
+            convertDataToFile(feed['userProfilePicture']),
+          );
+        }).toList();
+
+        businessFeedback!.sort((a, b) => DateTime.parse(b.createdAt!)
+            .compareTo(DateTime.parse(a.createdAt!)));
       } else {
         Get.defaultDialog(
             title: "Error", middleText: "We are sorry, something went wrong");
@@ -379,6 +424,7 @@ class BusinessPagesControllerImp extends BusinessPagesController {
 
   @override
   void dispose() {
+    search.dispose();
     super.dispose();
   }
 }

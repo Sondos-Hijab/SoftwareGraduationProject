@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:software_grad_project/core/classes/status_request.dart';
@@ -14,6 +15,7 @@ abstract class UserFeedbackController extends GetxController {
   updateValueOfMoneyRate(String rate);
   updateProductQualityRate(String rate);
   uploadImage();
+
 }
 
 class UserFeedbackControllerImp extends UserFeedbackController {

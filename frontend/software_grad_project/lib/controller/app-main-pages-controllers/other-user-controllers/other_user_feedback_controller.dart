@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:software_grad_project/core/classes/status_request.dart';
 import 'package:software_grad_project/core/constants/routes_names.dart';
@@ -11,7 +12,9 @@ abstract class OtherUserFeedbackPageController extends GetxController {
   getUserFeedback(String username);
   goToUserPage(String username);
   setFeedbackSortType(String sortType);
-    setSelectedCategory(String category);
+  setSelectedCategory(String category);
+  filterFeedbackBasedOnCategory(String category);
+  filterFeedbackBasedOnBusinessName();
 }
 
 class OtherUserFeedbackPageControllerImp
@@ -25,28 +28,108 @@ class OtherUserFeedbackPageControllerImp
   String? username = "";
   List<FetchedFeedbackModel>? userFeedback = [];
   String feedbackSortType = "Newest to oldest";
-    String selectedCategory = "Choose a category";
-
+  String selectedCategory = "All Feedback";
+  late TextEditingController search;
 
   @override
   void onInit() {
     username = Get.arguments['username'];
     getUserFeedback(username!);
+    search = TextEditingController();
     super.onInit();
   }
 
-@override
+  @override
   setSelectedCategory(String category) {
     selectedCategory = category;
-    if (selectedCategory == "Choose a category") {
+    if (selectedCategory == "All Feedback") {
       //show the full array
+      getUserFeedback(username!);
     } else {
       //make a request and get the businesses from that category
+      filterFeedbackBasedOnCategory(selectedCategory);
     }
     update();
   }
-  
- @override
+
+  @override
+  filterFeedbackBasedOnBusinessName() async {
+    StatusRequest? statusRequest = StatusRequest.loading;
+    String? accessToken = myServices.sharedPreferences.getString("accessToken");
+
+    var response =
+        await otherUserInfoDataSource.filterFeedbackBasedOnBusinessName(
+            accessToken!, search.text, username!);
+
+    statusRequest = handlingData(response);
+    if (StatusRequest.success == statusRequest) {
+      if (response['statusCode'] == "200") {
+        List<dynamic> feedback = response['feedback'];
+        userFeedback = feedback.map((feed) {
+          return FetchedFeedbackModel(
+            feed['feedbackID'],
+            feed['user_id'],
+            feed['admin_id'],
+            feed['businessName'],
+            feed['userName'],
+            feed['text'],
+            convertDataToFile(feed['picture']),
+            feed['rate1'].toDouble(),
+            feed['rate2'].toDouble(),
+            feed['rate3'].toDouble(),
+            feed['created_at'],
+            convertDataToFile(feed['userProfilePicture']),
+          );
+        }).toList();
+        userFeedback!.sort((a, b) => DateTime.parse(b.createdAt!)
+            .compareTo(DateTime.parse(a.createdAt!)));
+      } else {
+        Get.defaultDialog(
+            title: "Error", middleText: "We are sorry, something went wrong");
+      }
+      update();
+    }
+  }
+
+  @override
+  filterFeedbackBasedOnCategory(String category) async {
+    StatusRequest? statusRequest = StatusRequest.loading;
+    String? accessToken = myServices.sharedPreferences.getString("accessToken");
+
+    var response = await otherUserInfoDataSource.filterFeedbackBasedOnCategory(
+        accessToken!, username!, category);
+
+    statusRequest = handlingData(response);
+    if (StatusRequest.success == statusRequest) {
+      if (response['statusCode'] == "200") {
+        List<dynamic> feedback = response['feedback'];
+        userFeedback = feedback.map((feed) {
+          return FetchedFeedbackModel(
+            feed['feedbackID'],
+            feed['user_id'],
+            feed['admin_id'],
+            feed['businessName'],
+            feed['userName'],
+            feed['text'],
+            convertDataToFile(feed['picture']),
+            feed['rate1'].toDouble(),
+            feed['rate2'].toDouble(),
+            feed['rate3'].toDouble(),
+            feed['created_at'],
+            convertDataToFile(feed['userProfilePicture']),
+          );
+        }).toList();
+        userFeedback!.sort((a, b) => DateTime.parse(b.createdAt!)
+            .compareTo(DateTime.parse(a.createdAt!)));
+      } else {
+        Get.defaultDialog(
+            title: "Error", middleText: "We are sorry, something went wrong");
+      }
+      update();
+    }
+  }
+
+  @override
   setFeedbackSortType(String sortType) {
     feedbackSortType = sortType;
     if (feedbackSortType == "Newest to oldest") {
@@ -107,6 +190,7 @@ class OtherUserFeedbackPageControllerImp
 
   @override
   void dispose() {
+    search.dispose();
     super.dispose();
   }
 }

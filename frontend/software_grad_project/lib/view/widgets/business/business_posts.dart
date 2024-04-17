@@ -31,7 +31,7 @@ class BusinessPosts extends StatelessWidget {
           ),
           child: DropdownButton<String>(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            value: "Newest to oldest",
+            value: selectedPostsSortType,
             onChanged: (String? value) {
               setPostsSortType(value!);
             },

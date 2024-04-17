@@ -48,4 +48,12 @@ class AppLink {
   static const String followersNumberLink = "$server/user/followersNumber";
   static const String followersLink = "$server/user/followers";
   static const String followingLink = "$server/user/following";
+
+  //filter feedback
+  static const String filterFeedbackBasedOnUsername =
+      "$server/user/filterFeedbackByName";
+  static const String filterFeedbackBasedOnBusinessName =
+      "$server/user/filterFeedbackByName";
+  static const String filterFeedbackBasedOnCatgory =
+      "$server/user/filterFeedbackByCategory";
 }
