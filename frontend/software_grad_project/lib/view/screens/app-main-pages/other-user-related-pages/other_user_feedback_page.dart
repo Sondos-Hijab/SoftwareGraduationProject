@@ -28,6 +28,7 @@ class OtherUserFeedbackPage extends StatelessWidget {
                 margin: const EdgeInsets.only(
                     left: 20, right: 20, top: 10, bottom: 5),
                 child: TextFormField(
+                  controller: controller.search,
                   decoration: InputDecoration(
                     hintText: "Search",
                     hintStyle: const TextStyle(
@@ -43,7 +44,9 @@ class OtherUserFeedbackPage extends StatelessWidget {
                       ),
                     ),
                     suffixIcon: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        controller.filterFeedbackBasedOnBusinessName();
+                      },
                       child: const Icon(Icons.search_rounded),
                     ),
                     suffixIconColor: AppColors.lightGrey,
@@ -64,7 +67,7 @@ class OtherUserFeedbackPage extends StatelessWidget {
                 ),
                 child: DropdownButton<String>(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  value: "Newest to oldest",
+                  value: controller.feedbackSortType,
                   onChanged: (String? value) {
                     controller.setFeedbackSortType(value!);
                   },
@@ -99,7 +102,7 @@ class OtherUserFeedbackPage extends StatelessWidget {
                   },
                   isExpanded: true,
                   items: <String>[
-                    "Choose a category",
+                    "All Feedback",
                     "gym",
                     "beauty",
                     "clothes",

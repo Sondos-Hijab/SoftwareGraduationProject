@@ -56,7 +56,8 @@ class CRUDRequests {
         if (response.statusCode == 200 ||
             response.statusCode == 201 ||
             response.statusCode == 400 ||
-            response.statusCode == 403) {
+            response.statusCode == 403 ||
+            response.statusCode == 404) {
           var responseBody = json.decode(response.body);
           return Right(responseBody);
         } else {

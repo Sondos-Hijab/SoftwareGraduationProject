@@ -50,7 +50,7 @@ class SignUp extends StatelessWidget {
                           iconData: Icons.person_2_outlined,
                           mycontroller: controller.username,
                           valid: (val) {
-                            return validInput(val!, 4, 30, "username");
+                            return validInput(val!, 4, 50, "username");
                           },
                         ),
                         CustomeTextFormAuth(
@@ -59,7 +59,7 @@ class SignUp extends StatelessWidget {
                           iconData: Icons.email_outlined,
                           mycontroller: controller.email,
                           valid: (val) {
-                            return validInput(val!, 8, 30, "email");
+                            return validInput(val!, 8, 50, "email");
                           },
                         ),
                         CustomeTextFormAuth(

@@ -8,12 +8,16 @@ class BusinessFeedback extends StatelessWidget {
   final void Function(String username) goToUserPage;
   final void Function(String sortType) setFeedbackSortType;
   final String selectedFeedbackSortType;
+  final void Function() filterFeedbackBasedOnUsername;
+  final TextEditingController searchController;
   const BusinessFeedback(
       {super.key,
       required this.businessFeedback,
       required this.goToUserPage,
       required this.setFeedbackSortType,
-      required this.selectedFeedbackSortType});
+      required this.selectedFeedbackSortType,
+      required this.filterFeedbackBasedOnUsername,
+      required this.searchController});
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +26,7 @@ class BusinessFeedback extends StatelessWidget {
         Container(
           margin: const EdgeInsets.all(20),
           child: TextFormField(
+            controller: searchController,
             decoration: InputDecoration(
               hintText: "Search",
               hintStyle:
@@ -37,7 +42,9 @@ class BusinessFeedback extends StatelessWidget {
                 ),
               ),
               suffixIcon: InkWell(
-                onTap: () {},
+                onTap: () {
+                  filterFeedbackBasedOnUsername();
+                },
                 child: const Icon(Icons.search_rounded),
               ),
               suffixIconColor: AppColors.lightGrey,
@@ -57,7 +64,7 @@ class BusinessFeedback extends StatelessWidget {
           ),
           child: DropdownButton<String>(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            value: "Newest to oldest",
+            value: selectedFeedbackSortType,
             onChanged: (String? value) {
               setFeedbackSortType(value!);
             },
