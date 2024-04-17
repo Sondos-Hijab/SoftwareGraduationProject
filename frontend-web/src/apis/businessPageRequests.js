@@ -84,3 +84,23 @@ export async function getNumberOfFollowers(name, accessToken) {
     if (error.response) return error.response.data;
   }
 }
+
+export async function filterFeedbackDependingOnUsername(
+  username,
+  businessName
+) {
+  const accessToken = localStorage.getItem("accessToken");
+  try {
+    const response = await axios.get(
+      `http://localhost:3000/RateRelay/user/filterFeedbackByName?userName=${username}&businessName=${businessName}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    if (error.response) return error.response.data;
+  }
+}

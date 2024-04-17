@@ -23,6 +23,7 @@ import {
   fetchBusinessFeedback,
   fetchBusinessFollowers,
   fetchBusinessPosts,
+  filterFeedbackDependingOnUsername,
   getNumberOfFollowers,
 } from "@/apis/businessPageRequests";
 import PostCard from "@/helper-components/Cards/PostCard";
@@ -92,6 +93,7 @@ const Profile = () => {
   const [selectedPostsSorting, setSelectedPostsSorting] = useState("newToOld");
   const [selectedFeedbackType, setSelectFeedbackType] =
     useState("All Feedback");
+  const [usernameSearch, setUsernameSearch] = useState("");
   //state management useReducer
   const [formState, formDispatch] = useReducer(formReducer, initialFormState);
   const [modalState, modalDispatch] = useReducer(
@@ -220,7 +222,18 @@ const Profile = () => {
   }
 
   //handling username search
-  function handleUsernameSearch() {}
+  async function handleUsernameSearch() {
+    const filteredFeedback = await filterFeedbackDependingOnUsername(
+      usernameSearch,
+      localStorage.getItem("businessName")
+    );
+
+    if (filteredFeedback?.error) {
+      console.error("Error filtering feedback");
+    } else {
+      setFeedback(filteredFeedback.feedback);
+    }
+  }
 
   return (
     <>
@@ -418,7 +431,7 @@ const Profile = () => {
                 </select>
 
                 <select
-                  defaultValue="All Feedback"
+                  defaultValue="Select Feedback Tone"
                   name="selectedFeedbackType"
                   id="feedbackType"
                   className="rounded-md border border-gray-200 focus:ring-white w-full md:w-1/2"
@@ -426,6 +439,9 @@ const Profile = () => {
                     setSelectFeedbackType(e.target.value);
                   }}
                 >
+                  <option value="Select Feedback Tone" disabled>
+                    Select Feedback Tone
+                  </option>
                   <option value="All Feedback">All Feedback</option>
                   <option value="Positive Feedback">Positive Feedback</option>
                   <option value="Neutral Feedback">Neutral Feedback</option>
@@ -438,6 +454,10 @@ const Profile = () => {
                   className=" rounded-md border border-gray-200 focus:ring-white w-full "
                   type="text"
                   placeholder="Search for username"
+                  value={usernameSearch}
+                  onChange={(e) => {
+                    setUsernameSearch(e.target.value);
+                  }}
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3">
                   <FontAwesomeIcon

@@ -3,6 +3,8 @@ import {
   fetchUserFeedback,
   fetchUserFollowing,
   fetchUserInfo,
+  filterFeedbackDependingOnBusinessName,
+  filterFeedbackDependingOnCategory,
 } from "@/apis/userRequests";
 import FeedbackCard from "@/helper-components/Cards/FeedbackCard";
 import FollowCard from "@/helper-components/Cards/FollowCard";
@@ -29,6 +31,7 @@ const User = () => {
   const [selectedSorting, setSelectedSorting] = useState("newToOld");
   const [selectedFeedbackType, setSelectFeedbackType] =
     useState("All Feedback");
+  const [businessNameSearch, setBusinessNameSearch] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -65,7 +68,42 @@ const User = () => {
   }, []);
 
   //handle business name search
-  function handleBusinessNameSearch() {}
+  async function handleBusinessNameSearch() {
+    const filteredFeedback = await filterFeedbackDependingOnBusinessName(
+      username,
+      businessNameSearch
+    );
+
+    if (filteredFeedback?.error) {
+      console.error("Error filtering feedback");
+    } else {
+      setFeedback(filteredFeedback.feedback);
+    }
+  }
+
+  async function handleFeedbackFilteringDependingOnCategory(e) {
+    setSelectedCategory(e.target.value);
+
+    if (e.target.value == "All Categories") {
+      const feedbackData = await fetchUserFeedback(username, accessToken);
+      if (feedbackData.error) {
+        console.error("Error fetching user feedback");
+      } else {
+        setFeedback(feedbackData.feedback);
+      }
+    } else {
+      const filteredFeedback = await filterFeedbackDependingOnCategory(
+        username,
+        e.target.value
+      );
+
+      if (filteredFeedback?.error) {
+        console.error("Error filtering feedback");
+      } else {
+        setFeedback(filteredFeedback.feedback);
+      }
+    }
+  }
   return (
     <>
       <div className=" mt-8 h-full w-full flex flex-col justify-center items-center">
@@ -165,13 +203,14 @@ const User = () => {
                   id="category"
                   className="rounded-md border border-gray-200 focus:ring-white w-full md:w-1/2"
                   onChange={(e) => {
-                    setSelectedCategory(e.target.value);
-                    console.log(e.target.value);
+                    handleFeedbackFilteringDependingOnCategory(e);
                   }}
                 >
                   <option value="choose" disabled>
-                    Select a category
+                    Select Category
                   </option>
+
+                  <option value="All Categories">All Categories</option>
                   <option value="Gym">Gyms</option>
                   <option value="Beauty">Beauty</option>
                   <option value="Clothes">Clothes</option>
@@ -181,11 +220,15 @@ const User = () => {
               </div>
 
               <div className="flex gap-4 flex-col md:flex-row justify-center my-4">
-                <div className="relative rounded-md  w-full md:w-1/2">
+                <div className="relative rounded-md  w-full">
                   <input
                     className=" rounded-md border border-gray-200 focus:ring-white w-full "
                     type="text"
                     placeholder="Search for a business"
+                    value={businessNameSearch}
+                    onChange={(e) => {
+                      setBusinessNameSearch(e.target.value);
+                    }}
                   />
                   <div className="absolute inset-y-0 right-0 flex items-center pr-3">
                     <FontAwesomeIcon
@@ -195,21 +238,6 @@ const User = () => {
                     />
                   </div>
                 </div>
-
-                <select
-                  defaultValue="All Feedback"
-                  name="selectedFeedbackType"
-                  id="feedbackType"
-                  className="rounded-md border border-gray-200 focus:ring-white w-full md:w-1/2"
-                  onChange={(e) => {
-                    setSelectFeedbackType(e.target.value);
-                  }}
-                >
-                  <option value="All Feedback">All Feedback</option>
-                  <option value="Positive Feedback">Positive Feedback</option>
-                  <option value="Neutral Feedback">Neutral Feedback</option>
-                  <option value="Negative Feedback">Negative Feedback</option>
-                </select>
               </div>
               {selectedSorting == "oldToNew"
                 ? sortByDate(feedback, "oldToNew").map((value) => (
@@ -218,6 +246,12 @@ const User = () => {
                 : sortByDate(feedback, "newToOld").map((value) => (
                     <FeedbackCard key={value.feedbackID} feedInfo={value} />
                   ))}
+              {feedback.length == 0 && (
+                <div className="px-2 flex justify-center items-center">
+                  Sorry, we couldn't find any feedback associated with this
+                  account with the selected filtering options.
+                </div>
+              )}
             </>
           )}
 

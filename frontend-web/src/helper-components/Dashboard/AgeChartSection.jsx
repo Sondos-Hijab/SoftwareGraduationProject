@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import AgeChart from "./AgeChart";
 import {
-  getFeedbackAgeRatio,
   getFollowAgeRatio,
+  getUniqueFeedbackAgeRatio,
 } from "@/apis/dashboardRequests";
 const AgeChartSection = () => {
   const [lessThan18Feed, setLessThan18Feed] = useState(0);
@@ -14,20 +14,20 @@ const AgeChartSection = () => {
   const [moreThan30Follow, setMoreThan30Follow] = useState(0);
 
   useEffect(() => {
-    getFeedbackAgeRatio().then((value) => {
+    getUniqueFeedbackAgeRatio().then((value) => {
       if (value?.error) console.log(value.error);
       else {
-        setLessThan18Feed(value["below18Percentage"]);
-        setBetween18and30Feed(value["age18to30Percentage"]);
-        setMoreThan30Feed(value["above30Percentage"]);
+        setLessThan18Feed(value["below18"]);
+        setBetween18and30Feed(value["age18to30"]);
+        setMoreThan30Feed(value["above30"]);
       }
     });
     getFollowAgeRatio().then((value) => {
       if (value?.error) console.log(value.error);
       else {
-        setLessThan18Follow(value["below18Percentage"]);
-        setBetween18and30Follow(value["age18to30Percentage"]);
-        setMoreThan30Follow(value["above30Percentage"]);
+        setLessThan18Follow(value["below18"]);
+        setBetween18and30Follow(value["age18to30"]);
+        setMoreThan30Follow(value["above30"]);
       }
     });
   }, []);

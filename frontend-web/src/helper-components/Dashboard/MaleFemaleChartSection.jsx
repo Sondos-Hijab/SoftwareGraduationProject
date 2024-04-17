@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import MaleFemalePieChart from "./MaleFemalePieChart";
 import {
-  getFeedbackGenderRatio,
   getFollowGenderRatio,
+  getUniqueFeedbackGenderRatio,
 } from "@/apis/dashboardRequests";
 
 const MaleFemaleChartSection = () => {
@@ -12,7 +12,7 @@ const MaleFemaleChartSection = () => {
   const [femaleFeed, setFemaleFeed] = useState();
 
   useEffect(() => {
-    getFeedbackGenderRatio().then((value) => {
+    getUniqueFeedbackGenderRatio().then((value) => {
       if (value?.error) console.log(value.error);
       else {
         setFemaleFeed(value.femalePercentage);

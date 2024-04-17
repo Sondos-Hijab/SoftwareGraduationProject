@@ -6,6 +6,7 @@ import { useAppContext } from "@/Providers/AppPovider";
 import { sortByDate } from "@/utils/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { filterFeedbackDependingOnUsername } from "@/apis/businessPageRequests";
 
 const initialModalState = {
   showModal: false,
@@ -38,9 +39,21 @@ const Home = () => {
     useState("newToOld");
   const [selectedFeedbackType, setSelectFeedbackType] =
     useState("All Feedback");
+  const [usernameSearch, setUsernameSearch] = useState("");
 
   //handling username search
-  function handleUsernameSearch() {}
+  async function handleUsernameSearch() {
+    const filteredFeedback = await filterFeedbackDependingOnUsername(
+      usernameSearch,
+      localStorage.getItem("businessName")
+    );
+
+    if (filteredFeedback?.error) {
+      console.error("Error filtering feedback");
+    } else {
+      setFeedback(filteredFeedback.feedback);
+    }
+  }
 
   useEffect(() => {
     fetchFeedback(businessName, accessToken).then((value) => {
@@ -77,7 +90,7 @@ const Home = () => {
           </select>
 
           <select
-            defaultValue="All Feedback"
+            defaultValue="Select Feedback Tone"
             name="selectedFeedbackType"
             id="feedbackType"
             className="rounded-md border border-gray-200 focus:ring-white w-full md:w-1/2"
@@ -85,6 +98,9 @@ const Home = () => {
               setSelectFeedbackType(e.target.value);
             }}
           >
+            <option value="Select Feedback Tone" disabled>
+              Select Feedback Tone
+            </option>
             <option value="All Feedback">All Feedback</option>
             <option value="Positive Feedback">Positive Feedback</option>
             <option value="Neutral Feedback">Neutral Feedback</option>
@@ -97,6 +113,10 @@ const Home = () => {
             className=" rounded-md border border-gray-200 focus:ring-white w-full "
             type="text"
             placeholder="Search for username"
+            value={usernameSearch}
+            onChange={(e) => {
+              setUsernameSearch(e.target.value);
+            }}
           />
           <div className="absolute inset-y-0 right-0 flex items-center pr-3">
             <FontAwesomeIcon
