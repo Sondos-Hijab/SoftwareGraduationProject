@@ -5,10 +5,10 @@ import { getAvgRate } from "@/apis/dashboardRequests";
 import { getFormattedDate } from "@/utils/utils";
 import { getNumberOfFollowers } from "@/apis/businessPageRequests";
 const FeedbackNumbersCards = () => {
-  const [totalFeedbackNumber, setTotalFeedbackNumber] = useState();
-  const [positiveFeedbackNumber, setPositiveFeedbackNumber] = useState(0);
-  const [neutralFeedbackNumber, setNeutralFeedbackNumber] = useState(0);
-  const [negativeFeedbackNumber, setNegativeFeedbackNumber] = useState(0);
+  const [totalFeedbackNumber, setTotalFeedbackNumber] = useState(35);
+  const [positiveFeedbackNumber, setPositiveFeedbackNumber] = useState(20);
+  const [neutralFeedbackNumber, setNeutralFeedbackNumber] = useState(10);
+  const [negativeFeedbackNumber, setNegativeFeedbackNumber] = useState(5);
 
   useEffect(() => {
     // For 1/1/2023
@@ -17,51 +17,12 @@ const FeedbackNumbersCards = () => {
     var rangeLastDay = new Date();
 
     //get total feedback number
-    getAvgRate(
-      "rate1",
-      getFormattedDate(rangeStartDay),
-      getFormattedDate(rangeLastDay)
-    ).then((value) => {
-      if (value?.error) {
-        console.log("An error fetching customer service avergae rate");
-      }
-      setPositiveFeedbackNumber(value.averageRate);
-    });
+
     //get positive feedback number
-    getAvgRate(
-      "rate2",
-      getFormattedDate(rangeStartDay),
-      getFormattedDate(rangeLastDay)
-    ).then((value) => {
-      if (value?.error) {
-        console.log("An error fetching value of money rate occured");
-      }
-      setNegativeFeedbackNumber(value.averageRate);
-    });
 
     //get neutral feedback number
-    getAvgRate(
-      "rate3",
-      getFormattedDate(rangeStartDay),
-      getFormattedDate(rangeLastDay)
-    ).then((value) => {
-      if (value?.error) {
-        console.log("An error fetching product/service quality rate occured");
-      }
-      setNeutralFeedbackNumber(value.averageRate);
-    });
 
     //get negative feedback number
-    getNumberOfFollowers(
-      localStorage.getItem("businessName"),
-      localStorage.getItem("accessToken")
-    ).then((value) => {
-      if (value.error) {
-        console.error("Error fetching business followers");
-      } else {
-        setTotalFeedbackNumber(value.followerCount);
-      }
-    });
   }, []);
 
   return (

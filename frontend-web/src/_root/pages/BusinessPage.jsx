@@ -7,6 +7,7 @@ import {
   fetchBusinessFollowers,
   fetchBusinessInfo,
   fetchBusinessPosts,
+  filterFeedbackDependingOnUsername,
   getNumberOfFollowers,
 } from "@/apis/businessPageRequests";
 import {
@@ -37,6 +38,7 @@ const BusinessPage = () => {
   const [selectedPostsSorting, setSelectedPostsSorting] = useState("newToOld");
   const [selectedFeedbackType, setSelectFeedbackType] =
     useState("All Feedback");
+  const [usernameSearch, setUsernameSearch] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -104,7 +106,18 @@ const BusinessPage = () => {
   }, []);
 
   //handling username search
-  function handleUsernameSearch() {}
+  async function handleUsernameSearch() {
+    const filteredFeedback = await filterFeedbackDependingOnUsername(
+      usernameSearch,
+      businessname
+    );
+
+    if (filteredFeedback?.error) {
+      console.error("Error filtering feedback");
+    } else {
+      setFeedback(filteredFeedback.feedback);
+    }
+  }
   return (
     <>
       <div className=" mt-8 h-full w-full flex flex-col justify-center items-center">
@@ -118,7 +131,7 @@ const BusinessPage = () => {
         </div>
 
         {/* info */}
-        <div className="mt-12 w-3/5">
+        <div className="mt-12 w-3/4">
           <div className="px-4 sm:px-0">
             <h3 className="text-base font-semibold leading-7 text-[#2f47c6] ">
               Business Information
@@ -188,7 +201,7 @@ const BusinessPage = () => {
         </div>
 
         {/* select */}
-        <ul className="w-3/5 mt-16 text-sm font-medium text-center text-gray-500 rounded-lg shadow flex ">
+        <ul className="w-3/4 mt-16 text-sm font-medium text-center text-gray-500 rounded-lg shadow flex ">
           <li className="w-full focus-within:z-10 rounded-lg">
             <Link
               className={`inline-block w-full p-4 ${
@@ -230,7 +243,7 @@ const BusinessPage = () => {
           </li>
         </ul>
 
-        <div className="w-3/5 mb-8">
+        <div className="w-3/4 mb-8">
           {/* feedback */}
           {activeTab === "feedback" && (
             <>
@@ -252,7 +265,7 @@ const BusinessPage = () => {
                 </select>
 
                 <select
-                  defaultValue="All Feedback"
+                  defaultValue="Select Feedback Tone"
                   name="selectedFeedbackType"
                   id="feedbackType"
                   className="rounded-md border border-gray-200 focus:ring-white w-full md:w-1/2"
@@ -260,6 +273,9 @@ const BusinessPage = () => {
                     setSelectFeedbackType(e.target.value);
                   }}
                 >
+                  <option value="Select Feedback Tone" disabled>
+                    Select Feedback Tone
+                  </option>
                   <option value="All Feedback">All Feedback</option>
                   <option value="Positive Feedback">Positive Feedback</option>
                   <option value="Neutral Feedback">Neutral Feedback</option>
@@ -270,6 +286,10 @@ const BusinessPage = () => {
                 <input
                   className=" rounded-md border border-gray-200 focus:ring-white w-full "
                   type="text"
+                  value={usernameSearch}
+                  onChange={(e) => {
+                    setUsernameSearch(e.target.value);
+                  }}
                   placeholder="Search for username"
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3">
