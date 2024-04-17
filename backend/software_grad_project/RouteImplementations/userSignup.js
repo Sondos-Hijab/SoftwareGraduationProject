@@ -61,6 +61,13 @@ const signup = async (req, res, next) => {
     // Insert user into the database
     await queryAsync('INSERT INTO user (name, email, password, age, gender) VALUES (?, ?, ?, ?, ?)', [name, email, hash, age, gender]);
 
+    
+    const trueName = await getUserByField('name', name);
+
+    const userID = trueName.userID;
+
+    await queryAsync('INSERT INTO userprofile (name, user_id) VALUES (?, ?)', [name, userID]);
+
     const userData = [
       {
         name: name,
