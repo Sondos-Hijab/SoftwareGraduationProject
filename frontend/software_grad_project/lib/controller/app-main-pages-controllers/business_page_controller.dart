@@ -33,6 +33,8 @@ abstract class BusinessPagesController extends GetxController {
   setPostsSortType(String sortType);
   getAverageRates(String businessName, String rateType);
   filterFeedback();
+  filterFeedbackBasedOnTone(String tone);
+  resetFeedback();
 }
 
 class BusinessPagesControllerImp extends BusinessPagesController {
@@ -63,8 +65,10 @@ class BusinessPagesControllerImp extends BusinessPagesController {
       BusinessInfoModel(0, "", "", "", [], 0, "", "", null);
   List<FetchedPostModel>? businessesPosts = [];
   List<FetchedFeedbackModel>? businessFeedback = [];
+  List<FetchedFeedbackModel>? allFeedback = [];
   List<FollowerModel>? businessFollowers = [];
   String? feedbackSortType = "Newest to oldest";
+  String? feedbackFilterTone = "All Feedback";
   String? postsSortType = "Newest to oldest";
   double rate1 = 0.0;
   double rate2 = 0.0;
@@ -190,6 +194,28 @@ class BusinessPagesControllerImp extends BusinessPagesController {
   }
 
   @override
+  filterFeedbackBasedOnTone(String tone) async {
+    feedbackFilterTone = tone;
+    if (feedbackFilterTone == "All Feedback") {
+      resetFeedback();
+    }
+    update();
+  }
+
+  @override
+  resetFeedback() {
+    businessFeedback = List.from(allFeedback!);
+    if (feedbackSortType == "Newest to oldest") {
+      businessFeedback!.sort((a, b) =>
+          DateTime.parse(b.createdAt!).compareTo(DateTime.parse(a.createdAt!)));
+    } else {
+      businessFeedback!.sort((a, b) =>
+          DateTime.parse(a.createdAt!).compareTo(DateTime.parse(b.createdAt!)));
+    }
+    update();
+  }
+
+  @override
   filterFeedback() async {
     StatusRequest? statusRequest = StatusRequest.loading;
     String? accessToken = myServices.sharedPreferences.getString("accessToken");
@@ -257,6 +283,7 @@ class BusinessPagesControllerImp extends BusinessPagesController {
           );
         }).toList();
 
+        allFeedback = List.from(businessFeedback!);
         businessFeedback!.sort((a, b) => DateTime.parse(b.createdAt!)
             .compareTo(DateTime.parse(a.createdAt!)));
       } else {

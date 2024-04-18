@@ -115,8 +115,11 @@ class BusinessPage extends StatelessWidget {
                     setFeedbackSortType: controller.setFeedbackSortType,
                     selectedFeedbackSortType: controller.feedbackSortType!,
                     filterFeedbackBasedOnUsername: controller.filterFeedback,
-                    searchController: controller.search
-                 ),
+                    searchController: controller.search,
+                    filterFeedbackBasedOnTone:
+                        controller.filterFeedbackBasedOnTone,
+                    feedbackFilterTone: controller.feedbackFilterTone!,
+                    resetFeedback: controller.resetFeedback),
                 BusinessPosts(
                     businessImage: controller.businessImage,
                     businessesPosts: controller.businessesPosts,
