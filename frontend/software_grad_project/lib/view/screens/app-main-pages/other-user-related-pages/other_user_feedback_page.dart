@@ -29,6 +29,11 @@ class OtherUserFeedbackPage extends StatelessWidget {
                     left: 20, right: 20, top: 10, bottom: 5),
                 child: TextFormField(
                   controller: controller.search,
+                  onChanged: (value) {
+                    if (value.isEmpty) {
+                      controller.resetFeedback();
+                    }
+                  },
                   decoration: InputDecoration(
                     hintText: "Search",
                     hintStyle: const TextStyle(
