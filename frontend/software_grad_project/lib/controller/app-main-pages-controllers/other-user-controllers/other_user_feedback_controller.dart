@@ -15,6 +15,7 @@ abstract class OtherUserFeedbackPageController extends GetxController {
   setSelectedCategory(String category);
   filterFeedbackBasedOnCategory(String category);
   filterFeedbackBasedOnBusinessName();
+  resetFeedback();
 }
 
 class OtherUserFeedbackPageControllerImp
@@ -27,6 +28,7 @@ class OtherUserFeedbackPageControllerImp
   //variables
   String? username = "";
   List<FetchedFeedbackModel>? userFeedback = [];
+  List<FetchedFeedbackModel>? allFeedback = [];
   String feedbackSortType = "Newest to oldest";
   String selectedCategory = "All Feedback";
   late TextEditingController search;
@@ -37,6 +39,19 @@ class OtherUserFeedbackPageControllerImp
     getUserFeedback(username!);
     search = TextEditingController();
     super.onInit();
+  }
+
+  @override
+  resetFeedback() {
+    userFeedback = List.from(allFeedback!);
+    if (feedbackSortType == "Newest to oldest") {
+      userFeedback!.sort((a, b) =>
+          DateTime.parse(b.createdAt!).compareTo(DateTime.parse(a.createdAt!)));
+    } else {
+      userFeedback!.sort((a, b) =>
+          DateTime.parse(a.createdAt!).compareTo(DateTime.parse(b.createdAt!)));
+    }
+    update();
   }
 
   @override
@@ -81,6 +96,7 @@ class OtherUserFeedbackPageControllerImp
             convertDataToFile(feed['userProfilePicture']),
           );
         }).toList();
+
         userFeedback!.sort((a, b) => DateTime.parse(b.createdAt!)
             .compareTo(DateTime.parse(a.createdAt!)));
       } else {
@@ -119,6 +135,7 @@ class OtherUserFeedbackPageControllerImp
             convertDataToFile(feed['userProfilePicture']),
           );
         }).toList();
+        allFeedback = List.from(userFeedback!);
         userFeedback!.sort((a, b) => DateTime.parse(b.createdAt!)
             .compareTo(DateTime.parse(a.createdAt!)));
       } else {
@@ -177,6 +194,7 @@ class OtherUserFeedbackPageControllerImp
             convertDataToFile(feed['userProfilePicture']),
           );
         }).toList();
+        allFeedback = List.from(userFeedback!);
 
         userFeedback!.sort((a, b) => DateTime.parse(b.createdAt!)
             .compareTo(DateTime.parse(a.createdAt!)));

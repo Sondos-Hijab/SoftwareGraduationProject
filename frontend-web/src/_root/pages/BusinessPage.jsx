@@ -28,6 +28,7 @@ const BusinessPage = () => {
 
   //state manaegement
   const [feedback, setFeedback] = useState([]);
+  const [allFeedback, setAllFeedback] = useState([]);
   const [posts, setPosts] = useState([]);
   const [followers, setFollowers] = useState([]);
   const [businessInfo, setBusinessInfo] = useState({});
@@ -66,6 +67,7 @@ const BusinessPage = () => {
           console.error("Error fetching business feedback");
         } else {
           setFeedback(feedbackData.feedback);
+          setAllFeedback(feedbackData.feedback);
         }
 
         //fetch business posts
@@ -289,6 +291,9 @@ const BusinessPage = () => {
                   value={usernameSearch}
                   onChange={(e) => {
                     setUsernameSearch(e.target.value);
+                    if (e.target.value.length == 0) {
+                      setFeedback(allFeedback);
+                    }
                   }}
                   placeholder="Search for username"
                 />

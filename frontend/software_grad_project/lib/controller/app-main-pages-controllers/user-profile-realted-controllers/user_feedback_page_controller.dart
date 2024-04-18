@@ -15,6 +15,7 @@ abstract class UserFeedbackPageController extends GetxController {
   setSelectedCategory(String category);
   filterFeedbackBasedOnCategory(String category);
   filterFeedbackBasedOnBusinessName();
+  resetFeedback();
 }
 
 class UserFeedbackPageControllerImp extends UserFeedbackPageController {
@@ -27,6 +28,7 @@ class UserFeedbackPageControllerImp extends UserFeedbackPageController {
 
   //variables
   List<FetchedFeedbackModel>? userFeedback = [];
+  List<FetchedFeedbackModel>? allFeedback = [];
   String? username = "";
   String feedbackSortType = "Newest to oldest";
   String selectedCategory = "All Feedback";
@@ -43,6 +45,19 @@ class UserFeedbackPageControllerImp extends UserFeedbackPageController {
   @override
   goToUserPage(String username) {
     Get.back();
+  }
+
+  @override
+  resetFeedback() {
+    userFeedback = List.from(allFeedback!);
+    if (feedbackSortType == "Newest to oldest") {
+      userFeedback!.sort((a, b) =>
+          DateTime.parse(b.createdAt!).compareTo(DateTime.parse(a.createdAt!)));
+    } else {
+      userFeedback!.sort((a, b) =>
+          DateTime.parse(a.createdAt!).compareTo(DateTime.parse(b.createdAt!)));
+    }
+    update();
   }
 
   @override
@@ -177,6 +192,9 @@ class UserFeedbackPageControllerImp extends UserFeedbackPageController {
             convertDataToFile(feed['userProfilePicture']),
           );
         }).toList();
+
+        allFeedback = List.from(userFeedback!);
+
         userFeedback!.sort((a, b) => DateTime.parse(b.createdAt!)
             .compareTo(DateTime.parse(a.createdAt!)));
       } else {

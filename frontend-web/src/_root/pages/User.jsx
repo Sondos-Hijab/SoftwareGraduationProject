@@ -21,6 +21,7 @@ const User = () => {
 
   //state management
   const [feedback, setFeedback] = useState([]);
+  const [allFeedback, setAllFeedback] = useState([]);
   const [following, setFollowing] = useState([]);
   const [userBio, setUserBio] = useState("");
   const [activeTab, setActiveTab] = useState("feedback");
@@ -41,6 +42,7 @@ const User = () => {
           console.error("Error fetching user feedback");
         } else {
           setFeedback(feedbackData.feedback);
+          setAllFeedback(feedbackData.feedback);
         }
 
         const userInfoData = await fetchUserInfo(username, accessToken);
@@ -228,6 +230,9 @@ const User = () => {
                     value={businessNameSearch}
                     onChange={(e) => {
                       setBusinessNameSearch(e.target.value);
+                      if (e.target.value.length == 0) {
+                        setFeedback(allFeedback);
+                      }
                     }}
                   />
                   <div className="absolute inset-y-0 right-0 flex items-center pr-3">

@@ -85,6 +85,7 @@ const Profile = () => {
   //state management useState
   const [activeTab, setActiveTab] = useState("feedback");
   const [feedback, setFeedback] = useState([]);
+  const [allFeedback, setAllFeedback] = useState([]);
   const [posts, setPosts] = useState([]);
   const [followers, setFollowers] = useState([]);
   const [followersNumber, setFollowersNumber] = useState(0);
@@ -164,6 +165,7 @@ const Profile = () => {
           console.error("Error fetching business feedback");
         } else {
           setFeedback(feedbackData.feedback);
+          setAllFeedback(feedbackData.feedback);
         }
 
         //fetch business posts
@@ -457,6 +459,9 @@ const Profile = () => {
                   value={usernameSearch}
                   onChange={(e) => {
                     setUsernameSearch(e.target.value);
+                    if (e.target.value.length == 0) {
+                      setFeedback(allFeedback);
+                    }
                   }}
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3">

@@ -9,7 +9,10 @@ class BusinessFeedback extends StatelessWidget {
   final void Function(String sortType) setFeedbackSortType;
   final String selectedFeedbackSortType;
   final void Function() filterFeedbackBasedOnUsername;
+  final void Function(String tone) filterFeedbackBasedOnTone;
   final TextEditingController searchController;
+  final String feedbackFilterTone;
+  final void Function() resetFeedback;
   const BusinessFeedback(
       {super.key,
       required this.businessFeedback,
@@ -17,16 +20,24 @@ class BusinessFeedback extends StatelessWidget {
       required this.setFeedbackSortType,
       required this.selectedFeedbackSortType,
       required this.filterFeedbackBasedOnUsername,
-      required this.searchController});
+      required this.searchController,
+      required this.filterFeedbackBasedOnTone,
+      required this.feedbackFilterTone,
+      required this.resetFeedback});
 
   @override
   Widget build(BuildContext context) {
     return ListView(
       children: [
         Container(
-          margin: const EdgeInsets.all(20),
+          margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
           child: TextFormField(
             controller: searchController,
+            onChanged: (value) {
+              if (value.isEmpty) {
+                resetFeedback();
+              }
+            },
             decoration: InputDecoration(
               hintText: "Search",
               hintStyle:
@@ -71,6 +82,38 @@ class BusinessFeedback extends StatelessWidget {
             isExpanded: true, // Make the dropdown button full width
             items: <String>['Newest to oldest', 'Oldest to newest']
                 .map((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(
+                  value,
+                  style: const TextStyle(color: AppColors.grey, fontSize: 16),
+                ),
+              );
+            }).toList(),
+            underline: const SizedBox(),
+          ),
+        ),
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: AppColors.lightGrey,
+            ),
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: DropdownButton<String>(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            value: feedbackFilterTone,
+            onChanged: (String? value) {
+              filterFeedbackBasedOnTone(value!);
+            },
+            isExpanded: true,
+            items: <String>[
+              'All Feedback',
+              'Positive Feedback',
+              'Neutral Feedback',
+              'Negative Feedback'
+            ].map((String value) {
               return DropdownMenuItem<String>(
                 value: value,
                 child: Text(

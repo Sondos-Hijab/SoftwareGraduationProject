@@ -35,6 +35,7 @@ const Home = () => {
 
   //state management useState
   const [feedback, setFeedback] = useState([]);
+  const [allFeedback, setAllFeedback] = useState([]);
   const [selectedFeedbackSorting, setSelectedFeedbackSorting] =
     useState("newToOld");
   const [selectedFeedbackType, setSelectFeedbackType] =
@@ -61,6 +62,7 @@ const Home = () => {
         modalDispatch({ type: "SHOW_MODAL", payload: value.error });
       } else {
         setFeedback(value.feedback);
+        setAllFeedback(value.feedback);
       }
     });
   }, [businessName]);
@@ -116,6 +118,9 @@ const Home = () => {
             value={usernameSearch}
             onChange={(e) => {
               setUsernameSearch(e.target.value);
+              if (e.target.value.length == 0) {
+                setFeedback(allFeedback);
+              }
             }}
           />
           <div className="absolute inset-y-0 right-0 flex items-center pr-3">
