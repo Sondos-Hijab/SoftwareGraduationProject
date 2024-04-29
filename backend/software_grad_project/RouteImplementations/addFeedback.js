@@ -3,6 +3,7 @@ const con = require("../config/config");
 const multerConfig = require("../config/multerConfig");
 const { getUserByField } = require("../HelperObjects/user");
 const { getAdminByField } = require("../HelperObjects/admin");
+const { analyzeSentiment } = require("../HelperObjects/analyzeSentiment");
 
 const queryAsync = promisify(con.query).bind(con);
 
@@ -19,6 +20,17 @@ const addFeedback = async (req, res) => {
         statusCode: "400",
       });
     }
+
+    const resultForAnalyzation = await analyzeSentiment(text);
+
+    // Round the sentiment values to two decimal places
+    const roundedSentiment = {
+      neg: Number(resultForAnalyzation.neg.toFixed(2)),
+      neu: Number(resultForAnalyzation.neu.toFixed(2)),
+      pos: Number(resultForAnalyzation.pos.toFixed(2)),
+    };
+
+    const { neg, neu, pos } = roundedSentiment;
 
     // Check if a file is provided in the request
     let picture = null;
@@ -53,8 +65,21 @@ const addFeedback = async (req, res) => {
 
     // Add the feedback to the database using queryAsync
     await queryAsync(
-      "INSERT INTO feedback (userName, user_id, businessName, admin_id, text, picture, rate1, rate2, rate3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-      [userName, user_id, businessName, admin_id, text, picture, rate1, rate2, rate3]
+      "INSERT INTO feedback (userName, user_id, businessName, admin_id, text, picture, rate1, rate2, rate3, negative, positive, neutral) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [
+        userName,
+        user_id,
+        businessName,
+        admin_id,
+        text,
+        picture,
+        rate1,
+        rate2,
+        rate3,
+        neg,
+        pos,
+        neu,
+      ]
     );
 
     return res.status(200).json({
