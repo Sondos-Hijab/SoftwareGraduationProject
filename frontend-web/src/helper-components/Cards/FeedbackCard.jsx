@@ -117,6 +117,7 @@ const FeedbackCard = ({ feedInfo }) => {
                     icon={faFaceSmile}
                   />
                 ),
+                value: feedInfo.positive,
               },
               {
                 type: "Neutral",
@@ -126,6 +127,7 @@ const FeedbackCard = ({ feedInfo }) => {
                     icon={faFaceMeh}
                   />
                 ),
+                value: feedInfo.neutral,
               },
               {
                 type: "Negative",
@@ -135,6 +137,7 @@ const FeedbackCard = ({ feedInfo }) => {
                     icon={faFaceFrown}
                   />
                 ),
+                value: feedInfo.negative,
               },
             ].map((item, index) => {
               return (
@@ -148,86 +151,12 @@ const FeedbackCard = ({ feedInfo }) => {
                     <p className="text-customPurple font-semibold text-sm">
                       {item.type}
                     </p>
-                    <p className="font-medium text-sm">{"35%"}</p>
+                    <p className="font-medium text-sm">{item.value}</p>
                   </div>
                 </div>
               );
             })}
           </div>
-          {/* <div className="mt-6 flex flex-wrap justify-start gap-8 text-xs flex-col sm:flex-row sm:justify-evenly ">
-            {[
-              "Customer Service Rate",
-              "Value Of Money Rate",
-              "Product/Service Quality Rate",
-            ].map((item, index) => {
-              return (
-                <div
-                  key={index}
-                  className="sm:inline-flex sm:shrink-0 sm:items-center sm:gap-2"
-                >
-                  <FontAwesomeIcon
-                    className="text-customYellow text-lg"
-                    icon={faStar}
-                  />
-
-                  <div className="mt-1.5 sm:mt-0">
-                    <p className="text-customPurple font-semibold">{item}</p>
-                    <p className="font-medium">{`${parseFloat(
-                      feedInfo[`rate${index + 1}`]
-                    )} / 5.0`}</p>
-                  </div>
-                </div>
-              );
-            })}
-          </div> */}
-
-          {/* <div className="mt-6 flex flex-wrap justify-start gap-8 text-xs flex-col sm:flex-row sm:justify-evenly ">
-            {[
-              {
-                type: "Positive",
-                icon: (
-                  <FontAwesomeIcon
-                    className="text-customBlue text-lg"
-                    icon={faFaceSmile}
-                  />
-                ),
-              },
-              {
-                type: "Neutral",
-                icon: (
-                  <FontAwesomeIcon
-                    className="text-customGreen text-lg"
-                    icon={faFaceMeh}
-                  />
-                ),
-              },
-              {
-                type: "Negative",
-                icon: (
-                  <FontAwesomeIcon
-                    className="text-customRed text-lg"
-                    icon={faFaceFrown}
-                  />
-                ),
-              },
-            ].map((item, index) => {
-              return (
-                <div
-                  key={index}
-                  className="sm:inline-flex sm:shrink-0 sm:items-center sm:gap-2"
-                >
-                  {item.icon}
-
-                  <div className="mt-1.5 sm:mt-0">
-                    <p className="text-customPurple font-semibold">
-                      {item.type}
-                    </p>
-                    <p className="font-medium">{"35%"}</p>
-                  </div>
-                </div>
-              );
-            })}
-          </div> */}
 
           <div className="flex flex-1 justify-between">
             <p className="text-customBlue">Date: {formattedDate}</p>

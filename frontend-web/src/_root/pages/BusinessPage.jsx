@@ -21,6 +21,7 @@ import FollowCard from "@/helper-components/Cards/FollowCard";
 import BusinessPostCard from "@/helper-components/Cards/BusinessPostCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { filterFeedbackBasedOnTone } from "@/apis/feedbackRequests";
 
 const BusinessPage = () => {
   const { businessname } = useParams();
@@ -41,6 +42,24 @@ const BusinessPage = () => {
     useState("All Feedback");
   const [usernameSearch, setUsernameSearch] = useState("");
 
+  function handleFeedbackTypeChange(e) {
+    if (e.target.value == "All Feedback") setFeedback(allFeedback);
+    else {
+      let tone = "";
+      setSelectFeedbackType(e.target.value);
+      if (e.target.value == "Positive Feedback") tone = "Positive";
+      else if (e.target.value == "Negative Feedback") tone = "Negative";
+      else if (e.target.value == "Neutral Feedback") tone = "Neutral";
+
+      filterFeedbackBasedOnTone(businessname, tone).then((value) => {
+        if (value?.error) {
+          modalDispatch({ type: "SHOW_MODAL", payload: value.error });
+        } else {
+          setFeedback(value.feedback);
+        }
+      });
+    }
+  }
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -271,9 +290,7 @@ const BusinessPage = () => {
                   name="selectedFeedbackType"
                   id="feedbackType"
                   className="rounded-md border border-gray-200 focus:ring-white w-full md:w-1/2"
-                  onChange={(e) => {
-                    setSelectFeedbackType(e.target.value);
-                  }}
+                  onChange={handleFeedbackTypeChange}
                 >
                   <option value="Select Feedback Tone" disabled>
                     Select Feedback Tone

@@ -14,6 +14,7 @@ import { Link, useParams } from "react-router-dom";
 import { createBlobUrl, sortByDate } from "@/utils/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { filterFeedbackBasedOnToneUser } from "@/apis/feedbackRequests";
 
 const User = () => {
   const { username } = useParams();
@@ -33,6 +34,25 @@ const User = () => {
   const [selectedFeedbackType, setSelectFeedbackType] =
     useState("All Feedback");
   const [businessNameSearch, setBusinessNameSearch] = useState("");
+
+  function handleFeedbackTypeChange(e) {
+    if (e.target.value == "All Feedback") setFeedback(allFeedback);
+    else {
+      let tone = "";
+      setSelectFeedbackType(e.target.value);
+      if (e.target.value == "Positive Feedback") tone = "Positive";
+      else if (e.target.value == "Negative Feedback") tone = "Negative";
+      else if (e.target.value == "Neutral Feedback") tone = "Neutral";
+
+      filterFeedbackBasedOnToneUser(username, tone).then((value) => {
+        if (value?.error) {
+          console.log("Error filtering feedback");
+        } else {
+          setFeedback(value.feedback);
+        }
+      });
+    }
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -222,7 +242,7 @@ const User = () => {
               </div>
 
               <div className="flex gap-4 flex-col md:flex-row justify-center my-4">
-                <div className="relative rounded-md  w-full">
+                <div className="relative rounded-md  w-full md:w-1/2">
                   <input
                     className=" rounded-md border border-gray-200 focus:ring-white w-full "
                     type="text"
@@ -243,6 +263,22 @@ const User = () => {
                     />
                   </div>
                 </div>
+
+                <select
+                  defaultValue="Select Feedback Tone"
+                  name="selectedFeedbackType"
+                  id="feedbackType"
+                  className="rounded-md border border-gray-200 focus:ring-white w-full md:w-1/2"
+                  onChange={handleFeedbackTypeChange}
+                >
+                  <option value="Select Feedback Tone" disabled>
+                    Select Feedback Tone
+                  </option>
+                  <option value="All Feedback">All Feedback</option>
+                  <option value="Positive Feedback">Positive Feedback</option>
+                  <option value="Neutral Feedback">Neutral Feedback</option>
+                  <option value="Negative Feedback">Negative Feedback</option>
+                </select>
               </div>
               {selectedSorting == "oldToNew"
                 ? sortByDate(feedback, "oldToNew").map((value) => (
