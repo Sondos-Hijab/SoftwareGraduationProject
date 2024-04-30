@@ -198,7 +198,53 @@ class BusinessPagesControllerImp extends BusinessPagesController {
     feedbackFilterTone = tone;
     if (feedbackFilterTone == "All Feedback") {
       resetFeedback();
+    } else {
+      String tone = "";
+      if (feedbackFilterTone == 'Positive Feedback') {
+        tone = "Positive";
+      } else if (feedbackFilterTone == 'Neutral Feedback') {
+        tone = "Neutral";
+      } else if (feedbackFilterTone == 'Negative Feedback') {
+        tone = "Negative";
+      }
+      StatusRequest? statusRequest = StatusRequest.loading;
+      String? accessToken =
+          myServices.sharedPreferences.getString("accessToken");
+
+      var response = await businessFeedbackDatasource.filterFeedbackBasedOnTone(
+          accessToken!, businessName!, tone);
+      statusRequest = handlingData(response);
+
+      if (StatusRequest.success == statusRequest) {
+        if (response['statusCode'] == "200") {
+          List<dynamic> feedback = response['feedback'];
+          businessFeedback = feedback.map((feed) {
+            return FetchedFeedbackModel(
+              feed['feedbackID'],
+              feed['user_id'],
+              feed['admin_id'],
+              feed['businessName'],
+              feed['userName'],
+              feed['text'],
+              convertDataToFile(feed['picture']),
+              feed['rate1'].toDouble(),
+              feed['rate2'].toDouble(),
+              feed['rate3'].toDouble(),
+              feed['created_at'],
+              convertDataToFile(feed['userProfilePicture']),
+            );
+          }).toList();
+
+          businessFeedback!.sort((a, b) => DateTime.parse(b.createdAt!)
+              .compareTo(DateTime.parse(a.createdAt!)));
+        } else {
+          Get.defaultDialog(
+              title: "Error", middleText: "We are sorry, something went wrong");
+        }
+        update();
+      }
     }
+
     update();
   }
 

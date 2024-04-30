@@ -15,7 +15,6 @@ abstract class UserFeedbackController extends GetxController {
   updateValueOfMoneyRate(String rate);
   updateProductQualityRate(String rate);
   uploadImage();
-
 }
 
 class UserFeedbackControllerImp extends UserFeedbackController {
@@ -86,7 +85,6 @@ class UserFeedbackControllerImp extends UserFeedbackController {
         accessToken!);
 
     statusRequest = handlingData(response);
-
     if (StatusRequest.success == statusRequest) {
       if (response['statusCode'] == "200") {
         Get.dialog(

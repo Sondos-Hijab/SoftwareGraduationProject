@@ -56,4 +56,6 @@ class AppLink {
       "$server/user/filterFeedbackByName";
   static const String filterFeedbackBasedOnCatgory =
       "$server/user/filterFeedbackByCategory";
+  static const String filterFeedbackBasedOnTone =
+      "$server/user/getBusinessFeedbackByType";
 }
