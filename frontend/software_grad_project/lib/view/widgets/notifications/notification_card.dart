@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:software_grad_project/core/constants/routes_names.dart';
 import 'package:software_grad_project/data/model/notification_item_model.dart';
 
 class NotificationCard extends StatelessWidget {
@@ -8,14 +10,18 @@ class NotificationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundImage: AssetImage(notification.userPicture!),
+    return InkWell(
+      onTap: () {
+        Get.toNamed(AppRoutes.speceficNotificationPage);
+      },
+      child: Card(
+        child: ListTile(
+          leading: CircleAvatar(
+            backgroundImage: AssetImage(notification.userPicture!),
+          ),
+          title: Text("${notification.username!} made a new post"),
+          subtitle: Text(notification.time!),
         ),
-        title: Text("${notification.username!} made a new post"),
-        subtitle: Text(notification.time!),
-        onTap: () {},
       ),
     );
   }

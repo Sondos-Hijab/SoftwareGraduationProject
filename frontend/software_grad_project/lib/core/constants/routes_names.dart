@@ -37,6 +37,7 @@ class AppRoutes {
 
   //notifications page
   static const String notificationsPage = '/notificationsPage';
+  static const String speceficNotificationPage = '/speceficNotificationsPage';
 
   //other user profile page
   static const String otherUserProfilePage = '/otherUserProfilePage';

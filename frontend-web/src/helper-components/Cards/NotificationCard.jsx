@@ -4,7 +4,10 @@ import { Link } from "react-router-dom";
 const NotificationCard = () => {
   return (
     <div>
-      <Link className="border p-4 flex justify-between bg-slate-50">
+      <Link
+        className="border p-4 flex justify-between bg-slate-50"
+        to="/feedback/8"
+      >
         <div className="flex items-center gap-4">
           <img
             alt=""
