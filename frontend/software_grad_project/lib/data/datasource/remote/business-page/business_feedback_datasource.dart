@@ -21,4 +21,13 @@ class BusinessFeedbackDataSource {
         authToken);
     return response.fold((l) => l, (r) => r);
   }
+
+  filterFeedbackBasedOnTone(
+      String authToken, String businessName, String type) async {
+    var response = await crud.getDataWithAuthorizationParams(
+        AppLink.filterFeedbackBasedOnTone,
+        {"businessName": businessName, "type": type},
+        authToken);
+    return response.fold((l) => l, (r) => r);
+  }
 }

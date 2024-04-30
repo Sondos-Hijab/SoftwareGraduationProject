@@ -28,6 +28,7 @@ class FeedbackInfo extends StatelessWidget {
     String time =
         '${formatNumber(dateTime.hour)}:${formatNumber(dateTime.minute)}:${formatNumber(dateTime.second)}';
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(children: [
           Text(
@@ -38,14 +39,12 @@ class FeedbackInfo extends StatelessWidget {
         const SizedBox(
           height: 5,
         ),
-        Container(
-          child: Text(feedbackText,
-              textAlign: TextAlign.left,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodySmall!
-                  .copyWith(color: AppColors.grey, fontSize: 12)),
-        ),
+        Text(feedbackText,
+            textAlign: TextAlign.left,
+            style: Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(color: AppColors.grey, fontSize: 12)),
         const SizedBox(
           height: 5,
         ),

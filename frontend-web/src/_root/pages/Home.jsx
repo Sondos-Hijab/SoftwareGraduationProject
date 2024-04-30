@@ -1,4 +1,7 @@
-import { fetchFeedback } from "@/apis/feedbackRequests";
+import {
+  fetchFeedback,
+  filterFeedbackBasedOnTone,
+} from "@/apis/feedbackRequests";
 import FeedbackCard from "@/helper-components/Cards/FeedbackCard";
 import React, { useState, useEffect, useReducer } from "react";
 import Modal from "@/helper-components/WarningsErrors/Modal";
@@ -56,6 +59,24 @@ const Home = () => {
     }
   }
 
+  function handleFeedbackTypeChange(e) {
+    if (e.target.value == "All Feedback") setFeedback(allFeedback);
+    else {
+      let tone = "";
+      setSelectFeedbackType(e.target.value);
+      if (e.target.value == "Positive Feedback") tone = "Positive";
+      else if (e.target.value == "Negative Feedback") tone = "Negative";
+      else if (e.target.value == "Neutral Feedback") tone = "Neutral";
+
+      filterFeedbackBasedOnTone(businessName, tone).then((value) => {
+        if (value?.error) {
+          modalDispatch({ type: "SHOW_MODAL", payload: value.error });
+        } else {
+          setFeedback(value.feedback);
+        }
+      });
+    }
+  }
   useEffect(() => {
     fetchFeedback(businessName, accessToken).then((value) => {
       if (value?.error) {
@@ -96,9 +117,7 @@ const Home = () => {
             name="selectedFeedbackType"
             id="feedbackType"
             className="rounded-md border border-gray-200 focus:ring-white w-full md:w-1/2"
-            onChange={(e) => {
-              setSelectFeedbackType(e.target.value);
-            }}
+            onChange={handleFeedbackTypeChange}
           >
             <option value="Select Feedback Tone" disabled>
               Select Feedback Tone

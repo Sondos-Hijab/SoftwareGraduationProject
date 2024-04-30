@@ -29,6 +29,7 @@ import {
 import PostCard from "@/helper-components/Cards/PostCard";
 import ResetPasswordModal from "@/helper-components/EditBusinessInfo/ResetPasswordModal";
 import { logout } from "@/apis/authRequests";
+import { filterFeedbackBasedOnTone } from "@/apis/feedbackRequests";
 
 const modalReducer = (state, action) => {
   switch (action.type) {
@@ -137,6 +138,27 @@ const Profile = () => {
     });
   };
 
+  function handleFeedbackTypeChange(e) {
+    if (e.target.value == "All Feedback") setFeedback(allFeedback);
+    else {
+      let tone = "";
+      setSelectFeedbackType(e.target.value);
+      if (e.target.value == "Positive Feedback") tone = "Positive";
+      else if (e.target.value == "Negative Feedback") tone = "Negative";
+      else if (e.target.value == "Neutral Feedback") tone = "Neutral";
+
+      filterFeedbackBasedOnTone(
+        localStorage.getItem("businessName"),
+        tone
+      ).then((value) => {
+        if (value?.error) {
+          modalDispatch({ type: "SHOW_MODAL", payload: value.error });
+        } else {
+          setFeedback(value.feedback);
+        }
+      });
+    }
+  }
   useEffect(() => {
     fetchInfo(accessToken).then((businessInfo) => {
       formDispatch({
@@ -437,9 +459,7 @@ const Profile = () => {
                   name="selectedFeedbackType"
                   id="feedbackType"
                   className="rounded-md border border-gray-200 focus:ring-white w-full md:w-1/2"
-                  onChange={(e) => {
-                    setSelectFeedbackType(e.target.value);
-                  }}
+                  onChange={handleFeedbackTypeChange}
                 >
                   <option value="Select Feedback Tone" disabled>
                     Select Feedback Tone
