@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Frown, Meh, MessageCircle, Smile } from "lucide-react";
-import { getAvgRate } from "@/apis/dashboardRequests";
-import { getFormattedDate } from "@/utils/utils";
-import { getNumberOfFollowers } from "@/apis/businessPageRequests";
+import { getSentimentAnalysisFeedbackStats } from "@/apis/dashboardRequests";
+
 const FeedbackNumbersCards = () => {
   const [totalFeedbackNumber, setTotalFeedbackNumber] = useState(35);
   const [positiveFeedbackNumber, setPositiveFeedbackNumber] = useState(20);
@@ -11,18 +10,15 @@ const FeedbackNumbersCards = () => {
   const [negativeFeedbackNumber, setNegativeFeedbackNumber] = useState(5);
 
   useEffect(() => {
-    // For 1/1/2023
-    const rangeStartDay = new Date(2023, 0, 1);
-    // Get date of today
-    var rangeLastDay = new Date();
-
-    //get total feedback number
-
-    //get positive feedback number
-
-    //get neutral feedback number
-
-    //get negative feedback number
+    getSentimentAnalysisFeedbackStats().then((value) => {
+      if (value?.error) {
+        console.log("An error fetching feedback stats");
+      }
+      setTotalFeedbackNumber(value.totalCount);
+      setPositiveFeedbackNumber(value.countPositive);
+      setNegativeFeedbackNumber(value.countNegative);
+      setNeutralFeedbackNumber(value.countNeutral);
+    });
   }, []);
 
   return (

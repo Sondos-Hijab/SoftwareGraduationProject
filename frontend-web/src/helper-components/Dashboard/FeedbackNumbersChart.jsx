@@ -31,7 +31,7 @@ const options = {
       display: true,
       title: {
         display: true,
-        text: "Rates",
+        text: "Feedback Type",
         color: "#696969",
         font: {
           size: 14,
@@ -42,7 +42,7 @@ const options = {
       display: true,
       title: {
         display: true,
-        text: "Number of feedback",
+        text: "Percentage of feedback",
         color: "#696969",
         font: {
           size: 14,
