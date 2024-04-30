@@ -8,6 +8,7 @@ import 'package:software_grad_project/view/screens/app-main-pages/notifications_
 import 'package:software_grad_project/view/screens/app-main-pages/other-user-related-pages/other_user_feedback_page.dart';
 import 'package:software_grad_project/view/screens/app-main-pages/other-user-related-pages/other_user_followed_businesses.dart';
 import 'package:software_grad_project/view/screens/app-main-pages/other-user-related-pages/other_user_profile.dart';
+import 'package:software_grad_project/view/screens/app-main-pages/specefic_notification.dart';
 import 'package:software_grad_project/view/screens/app-main-pages/user-profile-related-pages/change_password.dart';
 import 'package:software_grad_project/view/screens/app-main-pages/user-profile-related-pages/success_changing_password.dart';
 import 'package:software_grad_project/view/screens/app-main-pages/user-profile-related-pages/user_feedback.dart';
@@ -84,6 +85,9 @@ List<GetPage<dynamic>>? routes = [
   //notifications page
   GetPage(
       name: AppRoutes.notificationsPage, page: () => const NotificationsPage()),
+  GetPage(
+      name: AppRoutes.speceficNotificationPage,
+      page: () => const SpeceficNotification()),
 
   //other user profile page
   GetPage(
