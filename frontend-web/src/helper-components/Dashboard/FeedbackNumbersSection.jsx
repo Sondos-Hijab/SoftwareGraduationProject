@@ -68,7 +68,7 @@ const FeedbackNumbersSection = () => {
           neutral: neutral,
           negative: negative,
         }}
-        title="Feedback Numbers Chart"
+        title="Feedback Status"
       />
     </div>
   );

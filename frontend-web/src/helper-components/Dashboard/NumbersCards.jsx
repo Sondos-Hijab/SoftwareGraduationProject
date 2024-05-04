@@ -88,7 +88,7 @@ const NumbersCards = () => {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold text-customYellow">
-            {customerServiceRate.toFixed(2)}
+            {`${customerServiceRate.toFixed(2)} / 5.00`}
           </div>
         </CardContent>
       </Card>
@@ -101,7 +101,7 @@ const NumbersCards = () => {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold text-customYellow">
-            {valueOfMoneyRate.toFixed(2)}
+            {`${valueOfMoneyRate.toFixed(2)} / 5.00`}
           </div>
         </CardContent>
       </Card>
@@ -114,7 +114,7 @@ const NumbersCards = () => {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold text-customYellow">
-            {productServiceQualityRate.toFixed(2)}
+            {`${productServiceQualityRate.toFixed(2)} / 5.00`}
           </div>
         </CardContent>
       </Card>

@@ -3,7 +3,9 @@ const { spawn } = require("child_process");
 // Function to analyze sentiment using Python script
 const analyzeSentiment = (sentence) => {
   return new Promise((resolve, reject) => {
-    const pythonProcess = spawn("python", ["sentiment-analysis.py"]);
+    const pythonProcess = spawn("python", [
+      "HelperObjects/sentiment-analysis.py",
+    ]);
 
     // Send sentence to Python script
     pythonProcess.stdin.write(sentence + "\n");

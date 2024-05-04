@@ -4,7 +4,7 @@ import 'package:software_grad_project/bindings/initial_binding.dart';
 import 'package:software_grad_project/core/constants/colors.dart';
 import 'package:software_grad_project/core/constants/routes_names.dart';
 import 'package:software_grad_project/core/services/service.dart';
-import 'package:software_grad_project/routes.dart';
+import 'package:software_grad_project/routes.dart'; 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
