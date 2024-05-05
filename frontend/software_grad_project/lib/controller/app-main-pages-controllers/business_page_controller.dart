@@ -354,6 +354,7 @@ class BusinessPagesControllerImp extends BusinessPagesController {
         var info = response['business'];
 
         List<double> coordinates = extractCoordinates(info['location']);
+
         double lat = coordinates[0];
         double lng = coordinates[1];
 
