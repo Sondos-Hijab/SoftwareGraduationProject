@@ -5,7 +5,7 @@ import LocationForm from "@/helper-components/Location/LocationForm";
 import Modal from "@/helper-components/WarningsErrors/Modal";
 import { signup } from "@/apis/authRequests";
 import { styles } from "./FormStyles";
-
+import { cities, countries } from "@/constants";
 const initialModalState = {
   showModal: false,
   modalMessage: "",
@@ -35,6 +35,8 @@ const LocationInfoForm = () => {
     modalReducer,
     initialModalState
   );
+  const [selectedCountry, setSelectedCountry] = useState("Palestine");
+  const [selectedCity, setSelectedCity] = useState("Nablus");
 
   // Function to handle map click
   const handleMapClick = (lngLat) => {
@@ -47,14 +49,20 @@ const LocationInfoForm = () => {
     event.preventDefault();
 
     // Basic validation
-    if (!selectedMarker) {
+    if (!selectedMarker || !selectedCity || !selectedCountry) {
       setError("Please specify your location.");
       return;
     }
 
+    const location = {
+      lat: selectedMarker.lat,
+      lng: selectedMarker.lng,
+      country: selectedCountry,
+      city: selectedCity,
+    };
     const signupInfo = {
       ...userAndBusinessEnteredData,
-      location: `lat: ${selectedMarker.lat}, lng:${selectedMarker.lng}`,
+      location: JSON.stringify(location),
     };
 
     signup(signupInfo).then((value) => {
@@ -67,12 +75,17 @@ const LocationInfoForm = () => {
     });
   };
 
+  const handleCountryChange = (event) => {
+    setSelectedCountry(event.target.value);
+    setSelectedCity(""); // Reset city when country changes
+  };
+
   return (
     <>
       <div className={styles.formContainer}>
         <div className={styles["header-info-container"]}>
           <img src={logo} alt="RateRelay" />
-          <h2>Enter your business location</h2>
+          <h2 className="text-center">Enter your business location</h2>
         </div>
 
         <div className={styles.formContainer}>
@@ -80,9 +93,41 @@ const LocationInfoForm = () => {
             <LocationForm
               handleMapClick={handleMapClick}
               selectedMarker={selectedMarker}
-              width={"500px"}
+              width={"600px"}
             />
 
+            <div className="w-[600px] flex justify-between items-center  flex-wrap ">
+              <label htmlFor="country">Country:</label>
+              <select
+                id="country"
+                value={selectedCountry}
+                onChange={handleCountryChange}
+                className="rounded-lg w-80"
+              >
+                <option value="">Select Country</option>
+                {countries.map((country, index) => (
+                  <option key={index} value={country}>
+                    {country}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="w-[600px] flex justify-between items-center  flex-wrap">
+              <label htmlFor="city">City:</label>
+              <select
+                id="city"
+                value={selectedCity}
+                onChange={(event) => setSelectedCity(event.target.value)}
+                className="rounded-lg w-80"
+              >
+                <option value="">Select City</option>
+                {cities[selectedCountry].map((city, index) => (
+                  <option key={index} value={city}>
+                    {city}
+                  </option>
+                ))}
+              </select>
+            </div>
             {error && <p className={styles.error}>{error}</p>}
 
             <button

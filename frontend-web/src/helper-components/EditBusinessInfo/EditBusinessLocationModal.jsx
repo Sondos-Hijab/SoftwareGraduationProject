@@ -4,10 +4,12 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { useAppContext } from "@/Providers/AppPovider";
-
+import { cities, countries } from "@/constants";
 const EditBusinessLocationModal = ({ setShowModal, setBusinessLocation }) => {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [error, setError] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState("Palestine");
+  const [selectedCity, setSelectedCity] = useState("Nablus");
 
   const { accessToken } = useAppContext();
 
@@ -19,17 +21,20 @@ const EditBusinessLocationModal = ({ setShowModal, setBusinessLocation }) => {
   async function handleLocationChange(event) {
     event.preventDefault();
 
-    if (!selectedMarker) {
+    if (!selectedMarker || !selectedCity || !selectedCountry) {
       setError("Please specify your location.");
       return;
     }
 
-    const coordinatesString = Object.entries(selectedMarker)
-      .map(([key, value]) => `${key}:${value}`)
-      .join(", ");
+    const coordinatesString = {
+      lat: selectedMarker.lat,
+      lng: selectedMarker.lng,
+      country: selectedCountry,
+      city: selectedCity,
+    };
 
     const location = {
-      location: coordinatesString,
+      location: JSON.stringify(coordinatesString),
     };
 
     updateInfo(accessToken, location).then((response) => {
@@ -41,6 +46,10 @@ const EditBusinessLocationModal = ({ setShowModal, setBusinessLocation }) => {
       }
     });
   }
+  const handleCountryChange = (event) => {
+    setSelectedCountry(event.target.value);
+    setSelectedCity(""); // Reset city when country changes
+  };
   return (
     <div className="fixed top-0 right-0 w-screen h-screen bg-[#0000007f]">
       <div className="mx-auto py-16 max-w-screen-xl sm:px-6 lg:px-8 mt-10 sm:mt-0">
@@ -62,6 +71,38 @@ const EditBusinessLocationModal = ({ setShowModal, setBusinessLocation }) => {
               handleMapClick={handleMapClick}
               selectedMarker={selectedMarker}
             />
+          </div>
+          <div className="flex-1 flex justify-between items-center  flex-wrap pb-3 ">
+            <label htmlFor="country">Country:</label>
+            <select
+              id="country"
+              value={selectedCountry}
+              onChange={handleCountryChange}
+              className="rounded-lg w-80"
+            >
+              <option value="">Select Country</option>
+              {countries.map((country, index) => (
+                <option key={index} value={country}>
+                  {country}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex-1 flex justify-between items-center  flex-wrap pb-3">
+            <label htmlFor="city">City:</label>
+            <select
+              id="city"
+              value={selectedCity}
+              onChange={(event) => setSelectedCity(event.target.value)}
+              className="rounded-lg w-80"
+            >
+              <option value="">Select City</option>
+              {cities[selectedCountry].map((city, index) => (
+                <option key={index} value={city}>
+                  {city}
+                </option>
+              ))}
+            </select>
           </div>
           {error && <p className="text-[#d90429]">{error}</p>}
 

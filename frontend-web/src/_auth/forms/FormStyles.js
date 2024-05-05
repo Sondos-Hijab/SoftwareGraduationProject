@@ -18,7 +18,7 @@ export const styles = {
 
   categoryLabel: "ml-2",
 
-  error: "text-customRed text-base self-start mt-4",
+  error: "text-customRed text-base self-start ",
 
   button:
     "w-full mt-4 mb-4 bg-customBlue rounded-lg h-10 text-white shadow-md hover:bg-customPurple",
