@@ -1,11 +1,14 @@
+import 'dart:convert';
+
 List<double> extractCoordinates(String input) {
   List<double> coordinates = [];
-  RegExp regex = RegExp(r'[-+]?\d*\.\d+');
-  Iterable<RegExpMatch> matches = regex.allMatches(input);
+  Map<String, dynamic> location = jsonDecode(input);
 
-  for (RegExpMatch match in matches) {
-    double value = double.parse(match.group(0)!);
-    coordinates.add(value);
+  if (location.containsKey('lat') && location.containsKey('lng')) {
+    double lat = location['lat'];
+    double lng = location['lng'];
+    coordinates.add(lat);
+    coordinates.add(lng);
   }
 
   return coordinates;

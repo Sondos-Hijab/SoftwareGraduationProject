@@ -32,11 +32,10 @@ export function createBlobUrl(data) {
 
 export function stringToLocationMarker(location) {
   if (!location) return null;
-  //handling location to set a marker
-  const locationParts = location.split(/[,:]/).map((part) => part.trim());
+  location = JSON.parse(location);
   const locationMarker = {
-    lat: parseFloat(locationParts[1]),
-    lng: parseFloat(locationParts[3]),
+    lat: location.lat,
+    lng: location.lng,
   };
   return locationMarker;
 }

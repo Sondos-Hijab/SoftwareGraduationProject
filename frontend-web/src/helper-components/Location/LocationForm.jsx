@@ -20,7 +20,7 @@ const LocationForm = (props) => {
 
   const mapContainerStyle = {
     width: props.width,
-    height: "400px",
+    height: "300px",
   };
   return (
     <div>
