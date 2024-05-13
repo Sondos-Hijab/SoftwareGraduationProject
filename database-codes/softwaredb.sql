@@ -98,3 +98,19 @@ CREATE TABLE `follow` (
   CONSTRAINT `follow_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`userID`),
   CONSTRAINT `follow_ibfk_2` FOREIGN KEY (`admin_id`) REFERENCES `business` (`adminID`)
 )
+
+CREATE TABLE `chat` (
+  `chatID` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  `userName` VARCHAR(800) NOT NULL,
+  `admin_id` INT NOT NULL,
+  `businessName` VARCHAR(800) NOT NULL,
+  `text` VARCHAR(1000) NULL,
+  `photo` BLOB NULL,
+  `sender` TINYINT NOT NULL,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`chatID`),
+  -- Add foreign key constraints
+  CONSTRAINT `fk_chat_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`userID`),
+  CONSTRAINT `fk_chat_admin_id` FOREIGN KEY (`admin_id`) REFERENCES `business` (`adminID`)
+);
