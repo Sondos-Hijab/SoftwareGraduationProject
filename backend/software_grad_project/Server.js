@@ -55,6 +55,10 @@ const genderFeedbackRatio = require('./Routes/genderFeedbackRatio');
 const getBusinessFeedbackByType = require('./Routes/getBusinessFeedbackByType'); 
 const getUserFeedbackByType = require('./Routes/getUserFeedbackByType'); 
 const getFeedbackStatsByType = require('./Routes/getFeedbackStatsByType'); 
+const addChatMessage = require('./Routes/addChatMessage'); 
+const getChatMessages = require('./Routes/getChatMessages'); 
+const userChatPartners = require('./Routes/userChatPartners'); 
+const businessChatPartners = require('./Routes/businessChatPartners'); 
 
 
 app.use(express.json());
@@ -112,6 +116,10 @@ app.use('/RateRelay', ageFeedbackRatio);
 app.use('/RateRelay', getBusinessFeedbackByType); 
 app.use('/RateRelay', getUserFeedbackByType); 
 app.use('/RateRelay', getFeedbackStatsByType); 
+app.use('/RateRelay', addChatMessage); 
+app.use('/RateRelay', getChatMessages); 
+app.use('/RateRelay', userChatPartners); 
+app.use('/RateRelay', businessChatPartners); 
 
 
 app.listen(PORT, (err) => {
