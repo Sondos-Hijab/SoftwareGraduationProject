@@ -1,10 +1,38 @@
-const con = require('./config/config')
 const express = require("express");
-const app = express();
-const PORT = process.env.PORT || 3000;
+const http = require("http");
+const socketIo = require("socket.io");
 const cors = require("cors");
 
+const app = express();
+const server = http.createServer(app);
+const io = socketIo(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+  },
+});
 
+const PORT = process.env.PORT || 3000;
+
+// Middleware setup
+app.use(express.json());
+app.use(cors());
+
+// Socket.IO setup
+io.on("connection", (socket) => {
+  console.log("New client connected:", socket.id);
+
+  socket.on("disconnect", () => {
+    console.log("Client disconnected:", socket.id);
+  });
+
+  socket.on("sendMessage", (message) => {
+    console.log("Message received:", message);
+    io.emit("receiveMessage", message);
+  });
+});
+
+// Include your routes
 const userSignup = require('./Routes/userSignup'); 
 const login = require('./Routes/login'); 
 const refreshToken = require('./Routes/refreshToken'); 
@@ -55,17 +83,12 @@ const genderFeedbackRatio = require('./Routes/genderFeedbackRatio');
 const getBusinessFeedbackByType = require('./Routes/getBusinessFeedbackByType'); 
 const getUserFeedbackByType = require('./Routes/getUserFeedbackByType'); 
 const getFeedbackStatsByType = require('./Routes/getFeedbackStatsByType'); 
-const addChatMessage = require('./Routes/addChatMessage'); 
+const addChatMessageRoute = require('./Routes/addChatMessage'); 
 const getChatMessages = require('./Routes/getChatMessages'); 
 const userChatPartners = require('./Routes/userChatPartners'); 
-const businessChatPartners = require('./Routes/businessChatPartners'); 
+const businessChatPartners = require('./Routes/businessChatPartners');
 
-
-app.use(express.json());
-app.use(cors());
-
-
-
+// Use your routes
 app.use('/RateRelay', userSignup); 
 app.use('/RateRelay', login); 
 app.use('/RateRelay', refreshToken); 
@@ -116,17 +139,16 @@ app.use('/RateRelay', ageFeedbackRatio);
 app.use('/RateRelay', getBusinessFeedbackByType); 
 app.use('/RateRelay', getUserFeedbackByType); 
 app.use('/RateRelay', getFeedbackStatsByType); 
-app.use('/RateRelay', addChatMessage); 
+app.use('/RateRelay', addChatMessageRoute(io)); 
 app.use('/RateRelay', getChatMessages); 
 app.use('/RateRelay', userChatPartners); 
-app.use('/RateRelay', businessChatPartners); 
+app.use('/RateRelay', businessChatPartners);
 
-
-app.listen(PORT, (err) => {
-    if (err) {
-        console.log(err);
-    } else {
-        console.log("listen on port " + PORT);
-        console.log(`server is running on http://localhost:${PORT}`);
-    }
+// Start server
+server.listen(PORT, (err) => {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  }
 });

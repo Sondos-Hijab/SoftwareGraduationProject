@@ -6,7 +6,7 @@ const { getAdminByField } = require("../HelperObjects/admin");
 
 const queryAsync = promisify(con.query).bind(con);
 
-const addChatMessage = async (req, res) => {
+const addChatMessage = (io) => async (req, res) => {
   const { userName, businessName, sender } = req.body;
   const text = req.body.text || null;
   let photo = null;
@@ -52,6 +52,19 @@ const addChatMessage = async (req, res) => {
       [user_id, userName, admin_id, businessName, text, photo, sender]
     );
 
+    const newMessage = {
+      user_id,
+      userName,
+      admin_id,
+      businessName,
+      text,
+      photo,
+      sender,
+    };
+
+    // Emit the new message to all connected clients
+    io.emit("newChatMessage", newMessage);
+
     return res.status(200).json({
       message: "Chat message added successfully",
       statusCode: "200",
@@ -65,4 +78,4 @@ const addChatMessage = async (req, res) => {
   }
 };
 
-module.exports = [multerConfig.single("photo"), addChatMessage];
+module.exports = (io) => [multerConfig.single("photo"), addChatMessage(io)];
