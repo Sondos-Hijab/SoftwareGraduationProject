@@ -1,26 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import placeholderUserPicture from "@/assets/images/placeholder.png";
+import { createBlobUrl } from "@/utils/utils";
+import { Link } from "react-router-dom";
 
-const UserChatCard = () => {
+const UserChatCard = ({ userData }) => {
+  const [userProfilePicture, setUserProfilePicture] = useState(
+    placeholderUserPicture
+  );
+  useEffect(() => {
+    setUserProfilePicture(createBlobUrl(userData.picture.data));
+  }, []);
+
   return (
-    <div className="flex items-start gap-4 p-4 border-b-2">
+    <Link
+      className="flex items-center gap-4 p-4 border-b-2"
+      to={`/chatting/${userData.userName}`}
+    >
       <img
-        alt=""
-        src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YXZhdGFyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
-        className="size-10 md:size-16 rounded-full object-cover"
+        alt="User Picture"
+        src={userProfilePicture}
+        className="size-10 md:size-12 rounded-full object-cover"
       />
 
-      <div className="flex flex-col justify-between ">
-        <h3 className="font-medium text-sm sm:text-lg text-customGreen">
-          Username
-        </h3>
-
-        <p className="line-clamp-2 text-sm text-gray-950">Last message sent</p>
-
-        <p className="line-clamp-2  text-sm text-gray-500">
-          {new Date().toUTCString()}
-        </p>
-      </div>
-    </div>
+      <h3 className="font-medium text-sm sm:text-lg text-customGreen">
+        {userData.userName}
+      </h3>
+    </Link>
   );
 };
 
