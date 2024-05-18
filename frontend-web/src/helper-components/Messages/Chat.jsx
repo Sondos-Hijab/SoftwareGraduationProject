@@ -15,9 +15,7 @@ const Chat = ({
     // Scroll to the bottom of the chat when chatMessages change
     if (chatRef.current) {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
-      chatRef.current.scrollIntoView({ behavior: "smooth" });
     }
-    console.log(chatMessages);
   }, [chatMessages, imagePreview]);
 
   return (
