@@ -21,53 +21,56 @@ const Chat = ({
   return (
     <div
       ref={chatRef}
-      className="flex flex-col gap-8 mt-4 h-[70vh] overflow-auto"
+      className="flex flex-col gap-8 mt-4 h-[70vh] overflow-auto  justify-between"
     >
-      {chatMessages.map((message) => {
-        return (
-          <div
-            className={`flex gap-4 ${
-              message.sender == 1 ? "flex-row-reverse " : "flex-row"
-            }`}
-          >
-            <img
-              src={
-                message.sender == 1
-                  ? localStorage.getItem("businessProfilePicture")
-                  : userPicture
-              }
-              className={`size-8 rounded-full inline-block`}
-            />
-            <div className="relative w-full">
-              <div
-                className={`p-4 rounded-xl ${
+      <div className="flex flex-col gap-8">
+        {chatMessages.map((message) => {
+          return (
+            <div
+              className={`flex gap-4 ${
+                message.sender == 1 ? "flex-row-reverse " : "flex-row"
+              }`}
+            >
+              <img
+                src={
                   message.sender == 1
-                    ? "bg-customBlue text-white"
-                    : "bg-gray-100 text-gray-600"
-                }`}
-              >
-                {message.text !== "undefined" && <p>{message.text}</p>}
+                    ? localStorage.getItem("businessProfilePicture")
+                    : userPicture
+                }
+                className={`size-8 rounded-full inline-block`}
+              />
+              <div className="relative w-full">
+                <div
+                  className={`p-4 rounded-xl ${
+                    message.sender == 1
+                      ? "bg-customBlue text-white"
+                      : "bg-gray-100 text-gray-600"
+                  }`}
+                >
+                  {message.text !== "undefined" && <p>{message.text}</p>}
 
-                {message?.photo && (
-                  <img
-                    src={createBlobUrl(message?.photo.data)}
-                    alt="picture message"
-                    className="w-[200px] h-auto"
-                  />
-                )}
+                  {message?.photo && (
+                    <img
+                      src={createBlobUrl(message?.photo.data)}
+                      alt="picture message"
+                      className="w-[200px] h-auto"
+                    />
+                  )}
+                </div>
+
+                <p
+                  className={`text-xs absolute ${
+                    message.sender == 1 ? "left-0" : "right-0"
+                  }`}
+                >
+                  {message["created_at"]}
+                </p>
               </div>
-
-              <p
-                className={`text-xs absolute ${
-                  message.sender == 1 ? "left-0" : "right-0"
-                }`}
-              >
-                {message["created_at"]}
-              </p>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
+
       {imagePreview && (
         <div className="flex justify-center mt-2">
           <img

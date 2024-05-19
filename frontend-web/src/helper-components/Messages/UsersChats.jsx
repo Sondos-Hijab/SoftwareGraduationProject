@@ -6,7 +6,7 @@ const UsersChats = ({ chatPartners }) => {
     <div className=" overflow-auto h-[80vh]">
       <div className="rounded-lg border-2 border-gray-100 bg-white mt-4">
         {chatPartners.map((partner) => (
-          <UserChatCard userData={partner} />
+          <UserChatCard key={partner.userName} userData={partner} />
         ))}
       </div>
     </div>

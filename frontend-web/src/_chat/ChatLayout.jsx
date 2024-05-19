@@ -1,31 +1,38 @@
 import React, { useEffect, useState } from "react";
 import UsersChats from "@/helper-components/Messages/UsersChats";
 import { Outlet } from "react-router-dom";
-import { addChatMessage, getBusinessChatPartners } from "@/apis/chatRequests";
+import { getBusinessChatPartners } from "@/apis/chatRequests";
 
 const ChatLayout = () => {
   const [chatPartners, setChatPartners] = useState([]);
 
   useEffect(() => {
-    // addChatMessage({
-    //   userName: "LorelaiG",
-    //   businessName: "BeFit",
-    //   sender: "1",
-    //   text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum impedit rerum quos? Impedit rerum odit esse et, repellat magni a rem ab praesentium fugit maiores cumque quas excepturi illum architecto!",
-    // }).then((val) => {
-    //   console.log(val);
-    // });
-    getBusinessChatPartners().then((value) => {
-      setChatPartners(value.chatPartners.data);
-    });
+    refreshChatPartners();
   }, []);
+
+  const refreshChatPartners = () => {
+    getBusinessChatPartners().then((value) => {
+      setChatPartners([...value.chatPartners.data]);
+    });
+  };
 
   return (
     <div className="grid grid-cols-6 gap-4 p-6 shadow-sm h-screen">
       <div className=" col-span-6 md:col-span-2 p-4 border rounded-md">
-        <h1 className="text-2xl font-semibold text-customPurple">
-          Recent Chats
-        </h1>
+        <div className="flex justify-between items-center">
+          <h1 className="text-2xl font-semibold text-customPurple">
+            Recent Chats
+          </h1>
+
+          {/* Button to refresh */}
+          <button
+            onClick={refreshChatPartners}
+            className="bg-customYellow hover:bg-white text-white hover:text-customYellow font-bold py-2 px-4 rounded mt-4 border border-customYellow transition-colors duration-300"
+          >
+            Refresh Chat Partners
+          </button>
+        </div>
+
         {/* search */}
         {/* <UserChatSearch /> */}
 
