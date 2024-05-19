@@ -13,6 +13,7 @@ import { createBlobUrl, getDatTimeFromString } from "@/utils/utils";
 import { Link } from "react-router-dom";
 
 const FeedbackCard = ({ feedInfo }) => {
+  console.log(feedInfo);
   const { formattedDate, formattedTime } = getDatTimeFromString(
     feedInfo["created_at"]
   );
@@ -43,12 +44,12 @@ const FeedbackCard = ({ feedInfo }) => {
                   </p>
                 </dd>
               </Link>
-              <button
-                type="button"
+              <Link
+                to={`/chatting/${feedInfo["userName"]}`}
                 className=" text-white self-center sm:font-semibold text-sm h-3/4 px-1 sm:px-4 rounded-3xl py-2 justify-self-end bg-customGreen inline-flex items-center justify-center cursor-pointer"
               >
                 Send a message
-              </button>
+              </Link>
             </div>
           </dl>
 

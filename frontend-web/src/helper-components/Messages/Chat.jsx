@@ -1,67 +1,90 @@
-import React from "react";
+import { createBlobUrl } from "@/utils/utils";
+import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useEffect, useRef } from "react";
 
-const Chat = () => {
-  const imgSource =
-    "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YXZhdGFyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60";
-  const recentChats = [
-    {
-      sender: "You",
-      msg: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-    },
-    {
-      sender: "User",
-      msg: "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it.",
-    },
-    {
-      sender: "You",
-      msg: "to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",
-    },
-    {
-      sender: "User",
-      msg: "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
-    },
-    {
-      sender: "You",
-      msg: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-    },
-    {
-      sender: "User",
-      msg: "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it.",
-    },
-    {
-      sender: "You",
-      msg: "to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",
-    },
-    {
-      sender: "User",
-      msg: "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
-    },
-  ];
+const Chat = ({
+  chatMessages,
+  userPicture,
+  imagePreview,
+  handleDeleteImage,
+}) => {
+  const chatRef = useRef(null);
+
+  useEffect(() => {
+    // Scroll to the bottom of the chat when chatMessages change
+    if (chatRef.current) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    }
+  }, [chatMessages, imagePreview]);
+
   return (
-    <div className="flex flex-col gap-8 mt-4 h-[70vh] overflow-auto">
-      {recentChats.map((message) => {
-        return (
-          <div
-            className={`flex gap-4 ${
-              message.sender == "You" ? "flex-row-reverse " : "flex-row"
-            }`}
-          >
-            <img
-              src={imgSource}
-              className={`size-10 rounded-full inline-block`}
-            />
-            <p
-              className={`p-4 w-3/4  rounded-xl ${
-                message.sender == "You"
-                  ? "bg-customBlue text-white"
-                  : "bg-gray-100 text-gray-600"
+    <div
+      ref={chatRef}
+      className="flex flex-col gap-8 mt-4 h-[70vh] overflow-auto  justify-between"
+    >
+      <div className="flex flex-col gap-8">
+        {chatMessages.map((message) => {
+          return (
+            <div
+              className={`flex gap-4 ${
+                message.sender == 1 ? "flex-row-reverse " : "flex-row"
               }`}
             >
-              {message.msg}
-            </p>
-          </div>
-        );
-      })}
+              <img
+                src={
+                  message.sender == 1
+                    ? localStorage.getItem("businessProfilePicture")
+                    : userPicture
+                }
+                className={`size-8 rounded-full inline-block`}
+              />
+              <div className="relative w-full">
+                <div
+                  className={`p-4 rounded-xl ${
+                    message.sender == 1
+                      ? "bg-customBlue text-white"
+                      : "bg-gray-100 text-gray-600"
+                  }`}
+                >
+                  {message.text !== "undefined" && <p>{message.text}</p>}
+
+                  {message?.photo && (
+                    <img
+                      src={createBlobUrl(message?.photo.data)}
+                      alt="picture message"
+                      className="w-[200px] h-auto"
+                    />
+                  )}
+                </div>
+
+                <p
+                  className={`text-xs absolute ${
+                    message.sender == 1 ? "left-0" : "right-0"
+                  }`}
+                >
+                  {message["created_at"]}
+                </p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {imagePreview && (
+        <div className="flex justify-center mt-2">
+          <img
+            src={imagePreview}
+            alt="Image Preview"
+            className="w-[200px] h-auto"
+          />
+          <FontAwesomeIcon
+            icon={faTimesCircle}
+            className="text-customRed ml-2 cursor-pointer"
+            onClick={handleDeleteImage}
+          />
+        </div>
+      )}
     </div>
   );
 };

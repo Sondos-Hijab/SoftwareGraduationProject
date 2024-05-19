@@ -17,10 +17,11 @@ const AppPovider = ({ children }) => {
     setAccessToken(fetchedAccessToken);
   }
   // funtions to handle image change
-  
+
   // when image is fetched in root layout
   function setFetchedImage(image) {
     setProfileImage(image);
+    localStorage.setItem("businessProfilePicture", image);
   }
 
   // when image is changed from profile page
@@ -34,6 +35,7 @@ const AppPovider = ({ children }) => {
         else {
           reader.onloadend = () => {
             setProfileImage(reader.result);
+            localStorage.setItem("businessProfilePicture", reader.result);
           };
           reader.readAsDataURL(file);
         }

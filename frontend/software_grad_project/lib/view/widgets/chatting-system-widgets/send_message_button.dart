@@ -1,7 +1,21 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:software_grad_project/core/constants/colors.dart';
 
 class SendMessageButton extends StatelessWidget {
-  const SendMessageButton({super.key});
+  final TextEditingController messageTextController;
+  final Function handleSendMessage;
+  final File? imageFile;
+  final Function pickImage;
+
+  const SendMessageButton({
+    Key? key,
+    required this.messageTextController,
+    required this.handleSendMessage,
+    required this.imageFile,
+    required this.pickImage,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,24 +34,47 @@ class SendMessageButton extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const Expanded(
+          Expanded(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.0),
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: TextField(
-                decoration: InputDecoration(
+                controller: messageTextController,
+                decoration: const InputDecoration(
                   hintText: 'Type your message...',
                   border: InputBorder.none, // Remove border
                 ),
               ),
             ),
           ),
+          Stack(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.photo),
+                onPressed: () {
+                  pickImage();
+                },
+              ),
+              if (imageFile != null) // Show badge if imageFile is not null
+                const Positioned(
+                  right: 0,
+                  child: CircleAvatar(
+                    radius: 8,
+                    backgroundColor: Colors.red,
+                    child: Text(
+                      '1',
+                      style: TextStyle(color: Colors.white, fontSize: 10),
+                    ),
+                  ),
+                ),
+            ],
+          ),
           Material(
             borderRadius: BorderRadius.circular(20.0),
-            color: Colors.blue,
+            color: AppColors.primaryBlue,
             child: InkWell(
               borderRadius: BorderRadius.circular(20.0),
               onTap: () {
-                // Handle sending message
+                handleSendMessage();
               },
               child: const Padding(
                 padding: EdgeInsets.all(10.0),

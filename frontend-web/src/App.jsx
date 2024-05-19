@@ -17,7 +17,6 @@ import {
   CreatePost,
   Posts,
   FeedbackPage,
-  Chatting,
   Notifications,
   User,
   BusinessPage,
@@ -25,6 +24,8 @@ import {
 } from "./_root/pages";
 import Error from "./helper-components/WarningsErrors/Error";
 import AppPovider from "./Providers/AppPovider";
+import ChatLayout from "./_chat/ChatLayout";
+import Chatting from "./_chat/Chatting";
 
 function App() {
   const router = createBrowserRouter([
@@ -44,8 +45,9 @@ function App() {
       ],
     },
     {
-      path: "chatting",
-      element: <Chatting />,
+      path: "/chatting",
+      element: <ChatLayout />,
+      children: [{ path: ":username", element: <Chatting /> }],
     },
     {
       path: "/auth",

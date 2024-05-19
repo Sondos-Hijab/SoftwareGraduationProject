@@ -2,7 +2,6 @@ import axios from "axios";
 
 export async function createPost(accessToken, postInfo) {
   const accessTokenLocalStorage = localStorage.getItem("accessToken");
-  console.log(postInfo.get("picture"));
   try {
     const response = await axios.post(
       "http://localhost:3000/RateRelay/user/addPost",
