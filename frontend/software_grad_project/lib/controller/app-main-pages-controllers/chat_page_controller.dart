@@ -66,6 +66,25 @@ class ChatsPageControllerImp extends ChatsPageController {
     });
 
     socket.on('receiveMessage', (data) {
+      Uint8List? photoData;
+      if (data['photo'] != null) {
+        // Convert 'photo' to Uint8List if it's not null
+        photoData = Uint8List.fromList(data['photo'].cast<int>());
+      }
+
+      messages.add(MessageModel(
+        data['chatID'],
+        data['admin_id'],
+        data['user_id'],
+        int.parse(data['sender']),
+        data['userName'],
+        data['businessName'],
+        data['created_at'],
+        data['text'],
+        photoData,
+      ));
+      update();
+
       print('Received message: $data');
     });
 
@@ -149,7 +168,6 @@ class ChatsPageControllerImp extends ChatsPageController {
 
     if (StatusRequest.success == statusRequest) {
       if (response['statusCode'] == "200") {
-        loadMessages();
         messageTextController.text = "";
         imageFile = null;
         update();
