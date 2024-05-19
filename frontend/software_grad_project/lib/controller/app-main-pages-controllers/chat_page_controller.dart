@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:software_grad_project/core/classes/status_request.dart';
 import 'package:software_grad_project/core/functions/convert_data_to_file.dart';
 import 'package:software_grad_project/core/functions/handling_data_function.dart';
@@ -18,6 +20,7 @@ abstract class ChatsPageController extends GetxController {
 class ChatsPageControllerImp extends ChatsPageController {
   GlobalKey<ScaffoldState>? scaffoldKey;
   late TextEditingController messageTextController;
+  late IO.Socket socket;
 
   // ignore: avoid_init_to_null
   late File? imageFile = null;
@@ -44,6 +47,50 @@ class ChatsPageControllerImp extends ChatsPageController {
     businessName = Get.arguments['businessName'] ?? '';
     messageTextController = TextEditingController();
     loadMessages();
+    initSocket();
+  }
+
+  void initSocket() {
+    const SOCKET_URL = "http://192.168.1.49:3000";
+
+    socket = IO.io(SOCKET_URL, <String, dynamic>{
+      'transports': ['websocket'],
+    });
+
+    socket.on('connect', (_) {
+      print('Connected with socket ID: ${socket.id}');
+    });
+
+    socket.on('disconnect', (_) {
+      print('Disconnected from socket server');
+    });
+
+    socket.on('receiveMessage', (data) {
+      print('Received message: $data');
+    });
+
+    socket.on('newChatMessage', (data) {
+      Uint8List? photoData;
+      if (data['photo'] != null) {
+        // Convert 'photo' to Uint8List if it's not null
+        photoData = Uint8List.fromList(data['photo'].cast<int>());
+      }
+
+      messages.add(MessageModel(
+        data['chatID'],
+        data['admin_id'],
+        data['user_id'],
+        int.parse(data['sender']),
+        data['userName'],
+        data['businessName'],
+        data['created_at'],
+        data['text'],
+        photoData,
+      ));
+      update();
+
+      print('Received new chat message: $data');
+    });
   }
 
   @override
@@ -112,6 +159,4 @@ class ChatsPageControllerImp extends ChatsPageController {
       }
     }
   }
-
-  
 }
