@@ -205,6 +205,15 @@ class CRUDRequests {
             ),
           );
         }
+        if (data.containsKey('photo')) {
+          request.files.add(
+            await http.MultipartFile.fromPath(
+              'photo',
+              data['photo'],
+              contentType: MediaType('image', '*'),
+            ),
+          );
+        }
 
         var streamedResponse = await request.send();
         var response = await http.Response.fromStream(streamedResponse);
