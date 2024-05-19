@@ -25,6 +25,8 @@ const Chat = ({
     >
       <div className="flex flex-col gap-8">
         {chatMessages.map((message) => {
+          console.log(message["photo"]);
+
           return (
             <div
               className={`flex gap-4 ${
@@ -52,9 +54,16 @@ const Chat = ({
                 >
                   {message.text !== "undefined" && <p>{message.text}</p>}
 
-                  {message?.photo && (
+                  {message?.photo && message?.photo?.data && (
                     <img
                       src={createBlobUrl(message?.photo.data)}
+                      alt="picture message"
+                      className="w-[200px] h-auto"
+                    />
+                  )}
+                  {message?.photo && !message?.photo?.data && (
+                    <img
+                      src={createBlobUrl(message?.photo)}
                       alt="picture message"
                       className="w-[200px] h-auto"
                     />
