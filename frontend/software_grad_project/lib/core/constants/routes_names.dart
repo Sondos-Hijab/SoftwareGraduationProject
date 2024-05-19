@@ -32,9 +32,6 @@ class AppRoutes {
   //feedback form
   static const String feedbackFormPage = '/feedbackFormPage';
 
-  //messages page
-  static const String speceficChatPage = '/speceficChatPage';
-
   //notifications page
   static const String notificationsPage = '/notificationsPage';
   static const String speceficNotificationPage = '/speceficNotificationsPage';
