@@ -45,7 +45,7 @@ const InputMessage = ({
           setTextMessage("");
           handleDeleteImage();
           fetchMessages(username).then((value) => {
-            setChatMessages(value.chatMessages);
+            console.log(value);
           });
         } else {
           console.log(value.error);
@@ -62,7 +62,6 @@ const InputMessage = ({
     });
 
     socket.on("newChatMessage", (newMessage) => {
-      console.log(newMessage);
       setChatMessages((prevMessages) => [...prevMessages, newMessage]);
     });
 
