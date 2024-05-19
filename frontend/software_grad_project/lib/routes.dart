@@ -27,7 +27,6 @@ import 'package:software_grad_project/view/screens/auth/login.dart';
 import 'package:software_grad_project/view/screens/auth/forgot-password/reset_password.dart';
 import 'package:software_grad_project/view/screens/auth/signup.dart';
 import 'package:software_grad_project/view/screens/auth/forgot-password/success_reset_password.dart';
-// import 'package:software_grad_project/view/testview.dart';
 
 List<GetPage<dynamic>>? routes = [
   //OnBoarding
@@ -78,9 +77,7 @@ List<GetPage<dynamic>>? routes = [
       name: AppRoutes.feedbackFormPage, page: () => const FeedbackFormPage()),
 
   //chatting system pages
-  GetPage(
-      name: AppRoutes.speceficChatPage, page: () => const SpecificChatPage()),
-  GetPage(name: AppRoutes.chatPage, page: () => const ChatPage()),
+  GetPage(name: AppRoutes.chatPage, page: () => const SpecificChatPage()),
 
   //notifications page
   GetPage(

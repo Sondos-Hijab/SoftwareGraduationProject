@@ -1,6 +1,6 @@
 class AppLink {
   //Server link
-  static const String server = "http://192.168.1.49:3000/RateRelay";
+  static const String server = "http://192.168.1.2:3000/RateRelay";
   //Authentication links
   static const String signupLink = "$server/user/signup";
   static const String loginLink = "$server/user/login";
@@ -58,4 +58,9 @@ class AppLink {
       "$server/user/filterFeedbackByCategory";
   static const String filterFeedbackBasedOnTone =
       "$server/user/getBusinessFeedbackByType";
+
+  //chatting
+  static const String addChatMessage = "$server/user/addChatMessage";
+  static const String fetchUserChatPartners = "$server/user/userChatPartners";
+  static const String fetchChatMessages = "$server/user/getChatMessages";
 }
