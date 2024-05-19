@@ -1,29 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:software_grad_project/core/constants/routes_names.dart';
+import 'dart:typed_data';
+import 'package:software_grad_project/core/constants/images_assets.dart';
 
 class MessageCardView extends StatelessWidget {
-  const MessageCardView({super.key});
+  final String? businessName;
+  final Uint8List? picture;
+  final Function()? onTap;
+
+  const MessageCardView(
+      {super.key, this.businessName, this.picture, this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Get.toNamed(AppRoutes.chatPage);
-      },
-      child: Card(
-        margin: const EdgeInsets.symmetric(vertical: 1),
-        child: ListTile(
-          title: const Text("Business Name"),
-          subtitle: const Text(
-            "last message is displayed here",
-            style: TextStyle(fontSize: 12),
-          ),
-          leading: ClipOval(
-            child: Image.asset(
-              "assets/images/no-user.jpg",
-              width: 60,
-            ),
+    return Card(
+      margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
+      color: Colors.white,
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Row(
+            children: [
+              picture != null
+                  ? CircleAvatar(
+                      radius: 30, backgroundImage: MemoryImage(picture!))
+                  : const CircleAvatar(
+                      radius: 30,
+                      backgroundImage: AssetImage(AppImageAssets.noUserImage),
+                    ),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Text(
+                  businessName!,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              )
+            ],
           ),
         ),
       ),

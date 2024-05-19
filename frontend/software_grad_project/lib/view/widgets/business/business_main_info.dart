@@ -236,7 +236,10 @@ class BusinessMainInfoWidget extends StatelessWidget {
                     Expanded(
                       child: InkWell(
                         onTap: () {
-                          Get.toNamed(AppRoutes.messagesPage);
+                          Get.toNamed(
+                            AppRoutes.chatPage,
+                            arguments: {'businessName': businessName},
+                          );
                         },
                         child: Container(
                           decoration: BoxDecoration(
