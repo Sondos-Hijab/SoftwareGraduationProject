@@ -1,4 +1,4 @@
-import { createBlobUrl } from "@/utils/utils";
+import { createBlobUrl, getFormattedDateAndTime } from "@/utils/utils";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useRef } from "react";
@@ -39,7 +39,10 @@ const Chat = ({
                 }
                 className={`size-8 rounded-full inline-block`}
               />
-              <div className="relative w-full">
+              <div
+                className="relative"
+                title={getFormattedDateAndTime(message["created_at"])}
+              >
                 <div
                   className={`p-4 rounded-xl ${
                     message.sender == 1
@@ -57,14 +60,6 @@ const Chat = ({
                     />
                   )}
                 </div>
-
-                <p
-                  className={`text-xs absolute ${
-                    message.sender == 1 ? "left-0" : "right-0"
-                  }`}
-                >
-                  {message["created_at"]}
-                </p>
               </div>
             </div>
           );
