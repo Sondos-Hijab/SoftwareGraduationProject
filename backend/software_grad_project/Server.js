@@ -87,6 +87,7 @@ const addChatMessageRoute = require('./Routes/addChatMessage');
 const getChatMessages = require('./Routes/getChatMessages'); 
 const userChatPartners = require('./Routes/userChatPartners'); 
 const businessChatPartners = require('./Routes/businessChatPartners');
+const getPostsForFollowedBusinesses = require('./Routes/getPostsForFollowedBusinesses');
 
 // Use your routes
 app.use('/RateRelay', userSignup); 
@@ -143,6 +144,7 @@ app.use('/RateRelay', addChatMessageRoute(io));
 app.use('/RateRelay', getChatMessages); 
 app.use('/RateRelay', userChatPartners); 
 app.use('/RateRelay', businessChatPartners);
+app.use('/RateRelay', getPostsForFollowedBusinesses);
 
 // Start server
 server.listen(PORT, (err) => {
