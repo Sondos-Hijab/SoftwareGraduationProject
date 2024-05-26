@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import UsersChats from "@/helper-components/Messages/UsersChats";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { getBusinessChatPartners } from "@/apis/chatRequests";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHouse, faSyncAlt } from "@fortawesome/free-solid-svg-icons";
 
 const ChatLayout = () => {
   const [chatPartners, setChatPartners] = useState([]);
@@ -20,17 +22,28 @@ const ChatLayout = () => {
     <div className="grid grid-cols-6 gap-4 p-6 shadow-sm h-screen">
       <div className=" col-span-6 md:col-span-2 p-4 border rounded-md">
         <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-semibold text-customPurple">
-            Recent Chats
-          </h1>
-
-          {/* Button to refresh */}
-          <button
+          {/* Icon for refresh */}
+          <Link
+            to="/"
             onClick={refreshChatPartners}
-            className="bg-customYellow hover:bg-white text-white hover:text-customYellow font-bold py-2 px-4 rounded mt-4 border border-customYellow transition-colors duration-300"
+            className="cursor-pointer text-customYellow"
           >
-            Refresh Chat Partners
-          </button>
+            <FontAwesomeIcon icon={faHouse} size={24} />
+          </Link>
+
+          <div className="flex items-center">
+            <h1 className="text-2xl font-semibold text-customPurple">
+              Recent Chats
+            </h1>
+          </div>
+
+          {/* Icon for refresh */}
+          <div
+            onClick={refreshChatPartners}
+            className="cursor-pointer text-customYellow"
+          >
+            <FontAwesomeIcon icon={faSyncAlt} size={24} />
+          </div>
         </div>
 
         {/* search */}
