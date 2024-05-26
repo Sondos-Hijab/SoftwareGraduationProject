@@ -13,7 +13,6 @@ import { createBlobUrl, getDatTimeFromString } from "@/utils/utils";
 import { Link } from "react-router-dom";
 
 const FeedbackCard = ({ feedInfo }) => {
-  console.log(feedInfo);
   const { formattedDate, formattedTime } = getDatTimeFromString(
     feedInfo["created_at"]
   );
@@ -82,7 +81,7 @@ const FeedbackCard = ({ feedInfo }) => {
             </div>
           </dl>
 
-          <div class="grid grid-cols-3 p-4 gap-4">
+          <div className="grid grid-cols-3 p-4 gap-4">
             {[
               "Customer Service Rate",
               "Value Of Money Rate",

@@ -78,7 +78,7 @@ const Home = () => {
     }
   }
   useEffect(() => {
-    fetchFeedback(businessName, accessToken).then((value) => {
+    fetchFeedback().then((value) => {
       if (value?.error) {
         modalDispatch({ type: "SHOW_MODAL", payload: value.error });
       } else {
