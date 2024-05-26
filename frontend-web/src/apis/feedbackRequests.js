@@ -1,15 +1,14 @@
 import axios from "axios";
 
-export async function fetchFeedback(name, accessToken) {
+export async function fetchFeedback() {
   const accessTokenLocalStorage = localStorage.getItem("accessToken");
   const businessName = localStorage.getItem("businessName");
-  const passedParameter = name ? name : businessName;
   try {
     const response = await axios.get(
-      `http://localhost:3000/RateRelay/user/getBusinessFeedback?businessName=${passedParameter}`,
+      `http://localhost:3000/RateRelay/user/getBusinessFeedback?businessName=${businessName}`,
       {
         headers: {
-          Authorization: `Bearer ${accessToken || accessTokenLocalStorage}`,
+          Authorization: `Bearer ${accessTokenLocalStorage}`,
         },
       }
     );
