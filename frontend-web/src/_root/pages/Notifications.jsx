@@ -1,5 +1,6 @@
 import { fetchFeedback } from "@/apis/feedbackRequests";
 import NotificationCard from "@/helper-components/Cards/NotificationCard";
+import { sortByDate } from "@/utils/utils";
 import React, { useEffect, useState } from "react";
 
 const Notifications = () => {
@@ -22,7 +23,7 @@ const Notifications = () => {
       </h2>
 
       <div className="mb-4 block rounded-lg p-4 shadow-md shadow-gray-200 ">
-        {feedback.map((feed) => (
+        {sortByDate(feedback, "newToOld").map((feed) => (
           <NotificationCard key={feed["feedbackID"]} feedback={feed} />
         ))}
       </div>
