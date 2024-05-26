@@ -1,4 +1,4 @@
-import { createBlobUrl } from "@/utils/utils";
+import { createBlobUrl, getFormattedDateAndTime } from "@/utils/utils";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -23,6 +23,9 @@ const NotificationCard = ({ feedback }) => {
             </strong>
 
             <p className="mt-1 text-sm ">{feedback["text"]}</p>
+            <p className="text-xs text-customGreen">
+              {getFormattedDateAndTime(feedback["created_at"])}
+            </p>
           </div>
         </div>
 
