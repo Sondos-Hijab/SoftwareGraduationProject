@@ -1,15 +1,40 @@
-import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
-const apiKey = "AIzaSyBy1NOGFFQuymSwJw0syVAR73lR1fhVLXg";
+import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
+
+import React from "react";
+
+const containerStyle = {
+  width: "100%",
+  height: "30rem",
+};
 
 const LocationView = (props) => {
-  return (
-    <APIProvider apiKey={apiKey}>
-      <div className="h-96 w-full">
-        <Map zoom={15} center={props.position}>
-          <Marker position={props.position} />
-        </Map>
-      </div>
-    </APIProvider>
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: "AIzaSyBy1NOGFFQuymSwJw0syVAR73lR1fhVLXg",
+  });
+
+  const [map, setMap] = React.useState(null);
+
+  const onLoad = React.useCallback(function callback(map) {
+    setMap(map);
+  }, []);
+
+  const onUnmount = React.useCallback(function callback(map) {
+    setMap(null);
+  }, []);
+
+  return isLoaded ? (
+    <GoogleMap
+      mapContainerStyle={containerStyle}
+      center={props.position}
+      zoom={10}
+      onLoad={onLoad}
+      onUnmount={onUnmount}
+    >
+      <Marker position={props.position} />
+    </GoogleMap>
+  ) : (
+    <></>
   );
 };
 
