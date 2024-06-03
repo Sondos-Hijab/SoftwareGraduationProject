@@ -6,8 +6,7 @@ const { getAdminByField } = require("../HelperObjects/admin");
 const { analyzeSentiment } = require("../HelperObjects/analyzeSentiment");
 
 const queryAsync = promisify(con.query).bind(con);
-
-const addFeedback = async (req, res) => {
+const addFeedback = (io, socketConnections) => async (req, res) => {
   const user = req.user;
   const userName = user.name;
 
@@ -82,6 +81,21 @@ const addFeedback = async (req, res) => {
       ]
     );
 
+    // Send socket message to admin
+    const message = {
+      userName,
+      text,
+      rate1,
+      rate2,
+      rate3,
+      neg,
+      pos,
+      neu,
+    };
+    if (adminResult.socketId && io && socketConnections) {
+      io.to(adminResult.socketId).emit("newFeedback", message);
+    }
+
     return res.status(200).json({
       message: "Feedback added successfully",
       statusCode: "200",
@@ -95,4 +109,7 @@ const addFeedback = async (req, res) => {
   }
 };
 
-module.exports = [multerConfig.single("picture"), addFeedback];
+module.exports = (io, socketConnections) => [
+  multerConfig.single("picture"),
+  addFeedback(io, socketConnections),
+];
