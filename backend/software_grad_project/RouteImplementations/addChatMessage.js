@@ -6,7 +6,7 @@ const { getAdminByField } = require("../HelperObjects/admin");
 
 const queryAsync = promisify(con.query).bind(con);
 
-const addChatMessage = (io) => async (req, res) => {
+const addChatMessage = (io, socketConnections) => async (req, res) => {
   const { userName, businessName, sender } = req.body;
   const text = req.body.text || null;
   let photo = null;
@@ -47,12 +47,23 @@ const addChatMessage = (io) => async (req, res) => {
     const admin_id = adminResult.adminID;
 
     // Insert chat message into the database
-    await queryAsync(
+    const insertResult = await queryAsync(
       "INSERT INTO chat (user_id, userName, admin_id, businessName, text, photo, sender) VALUES (?, ?, ?, ?, ?, ?, ?)",
       [user_id, userName, admin_id, businessName, text, photo, sender]
     );
 
+    const chatID = insertResult.insertId;
+
+    // Fetch the created_at timestamp
+    const chatResult = await queryAsync(
+      "SELECT created_at FROM chat WHERE chatID = ?",
+      [chatID]
+    );
+
+    const created_at = chatResult[0].created_at;
+
     const newMessage = {
+      chatID,
       user_id,
       userName,
       admin_id,
@@ -60,13 +71,25 @@ const addChatMessage = (io) => async (req, res) => {
       text,
       photo,
       sender,
+      created_at
     };
 
-    // Emit the new message to all connected clients
-    io.emit("newChatMessage", newMessage);
+    // Emit the new message to the specific user and business
+    const userSocket = socketConnections[user_id];
+    const businessSocket = socketConnections[admin_id];
+
+    if (userSocket) {
+      io.to(userSocket).emit("newChatMessage", newMessage);
+    }
+
+    if (businessSocket) {
+      io.to(businessSocket).emit("newChatMessage", newMessage);
+    }
 
     return res.status(200).json({
       message: "Chat message added successfully",
+      chatID,
+      created_at,
       statusCode: "200",
     });
   } catch (error) {
@@ -78,4 +101,7 @@ const addChatMessage = (io) => async (req, res) => {
   }
 };
 
-module.exports = (io) => [multerConfig.single("photo"), addChatMessage(io)];
+module.exports = (io, socketConnections) => [
+  multerConfig.single("photo"),
+  addChatMessage(io, socketConnections),
+];

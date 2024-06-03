@@ -5,8 +5,10 @@ const { getAdminByField } = require("../HelperObjects/admin");
 
 const queryAsync = promisify(con.query).bind(con);
 
-const addPost = async (req, res) => {
+const addPost = (io, socketConnections) => async (req, res) => {
   const user = req.user;
+  const name = user.name;
+
 
   try {
     // Check if required fields are provided in the request
@@ -26,17 +28,40 @@ const addPost = async (req, res) => {
     }
 
     // Fetch the true name from the admin table
-    const trueNameResult = await getAdminByField("name", user.name);
+    const trueNameResult = await getAdminByField("name", name);
 
     const admin_id = trueNameResult.adminID;
 
     // Add the post to the database using queryAsync
     const result = await queryAsync(
       "INSERT INTO post (admin_id, name, description, picture) VALUES (?, ?, ?, ?)",
-      [admin_id, user.name, description, picture]
+      [admin_id, name, description, picture]
     );
 
+    const message = {
+      admin_id,
+      name,
+      description,
+      picture,
+    };
+
     const postId = result.insertId; // ID of the newly inserted post
+
+    // Emit a message to all connected users who follow the business associated with the new post
+    const followersQuery = await queryAsync(
+      "SELECT user_id FROM follow WHERE businessName = ? AND admin_id = ?",
+      [name, admin_id]
+    );
+
+    if (followersQuery.length > 0) {
+      const followersIds = followersQuery.map((follower) => follower.user_id);
+      followersIds.forEach((userId) => {
+        const userSocket = socketConnections[userId];
+        if (userSocket && io) {
+          io.to(userSocket).emit("newPost", message);
+        }
+      });
+    }
 
     return res.status(200).json({
       message: "Post added successfully",
@@ -52,4 +77,7 @@ const addPost = async (req, res) => {
   }
 };
 
-module.exports = [multerConfig.single("picture"), addPost];
+module.exports = (io, socketConnections) => [
+  multerConfig.single("picture"),
+  addPost(io, socketConnections),
+];

@@ -3,9 +3,7 @@ const router = express.Router();
 const authenticateToken = require('../HelperObjects/checkAuth');
 const addFeedback = require('../RouteImplementations/addFeedback');
 
-router.post('/user/addFeedback', authenticateToken, addFeedback);
-
-module.exports = router;
-
-
-
+module.exports = (io, socketConnections) => {
+    router.post('/user/addFeedback', authenticateToken, addFeedback(io, socketConnections));
+    return router;
+  };
