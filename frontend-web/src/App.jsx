@@ -26,6 +26,7 @@ import Error from "./helper-components/WarningsErrors/Error";
 import AppPovider from "./Providers/AppPovider";
 import ChatLayout from "./_chat/ChatLayout";
 import Chatting from "./_chat/Chatting";
+import ChattingMobile from "./_chat/ChattingMobile";
 
 function App() {
   const router = createBrowserRouter([
@@ -47,7 +48,10 @@ function App() {
     {
       path: "/chatting",
       element: <ChatLayout />,
-      children: [{ path: ":username", element: <Chatting /> }],
+      children: [
+        { path: ":username", element: <Chatting /> },
+        { path: "chat/:username", element: <ChattingMobile /> },
+      ],
     },
     {
       path: "/auth",

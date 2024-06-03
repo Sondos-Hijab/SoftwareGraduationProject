@@ -3,7 +3,7 @@ import placeholderUserPicture from "@/assets/images/placeholder.png";
 import { createBlobUrl } from "@/utils/utils";
 import { Link } from "react-router-dom";
 
-const UserChatCard = ({ userData }) => {
+const UserChatCard = ({ userData, isMobile, chatClicked }) => {
   const [userProfilePicture, setUserProfilePicture] = useState(
     placeholderUserPicture
   );
@@ -14,7 +14,12 @@ const UserChatCard = ({ userData }) => {
   return (
     <Link
       className="flex items-center gap-4 p-4 border-b-2"
-      to={`/chatting/${userData.userName}`}
+      to={
+        !isMobile
+          ? `/chatting/${userData.userName}`
+          : `/chatting/chat/${userData.userName}`
+      }
+      onClick={chatClicked}
     >
       <img
         alt="User Picture"
