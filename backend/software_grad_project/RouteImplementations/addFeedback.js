@@ -92,8 +92,8 @@ const addFeedback = (io, socketConnections) => async (req, res) => {
       pos,
       neu,
     };
-    if (adminResult.socketId && io && socketConnections) {
-      io.to(adminResult.socketId).emit("newFeedback", message);
+    if (socketConnections[businessName] && io && socketConnections) {
+      io.to(socketConnections[businessName]).emit("newFeedback", message);
     }
 
     return res.status(200).json({

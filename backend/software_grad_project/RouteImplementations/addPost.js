@@ -9,7 +9,6 @@ const addPost = (io, socketConnections) => async (req, res) => {
   const user = req.user;
   const name = user.name;
 
-
   try {
     // Check if required fields are provided in the request
     const { description } = req.body;
@@ -38,25 +37,36 @@ const addPost = (io, socketConnections) => async (req, res) => {
       [admin_id, name, description, picture]
     );
 
+    const postID = result.insertId;
+
+    // Fetch the created_at timestamp
+    const postResult = await queryAsync(
+      "SELECT created_at FROM post WHERE postID = ?",
+      [postID]
+    );
+
+    const created_at = postResult[0].created_at;
+
     const message = {
       admin_id,
       name,
       description,
       picture,
+      created_at,
     };
 
     const postId = result.insertId; // ID of the newly inserted post
 
     // Emit a message to all connected users who follow the business associated with the new post
     const followersQuery = await queryAsync(
-      "SELECT user_id FROM follow WHERE businessName = ? AND admin_id = ?",
+      "SELECT userName FROM follow WHERE businessName = ? AND admin_id = ?",
       [name, admin_id]
     );
 
     if (followersQuery.length > 0) {
-      const followersIds = followersQuery.map((follower) => follower.user_id);
-      followersIds.forEach((userId) => {
-        const userSocket = socketConnections[userId];
+      const followerNames = followersQuery.map((follower) => follower.userName);
+      followerNames.forEach((followerName) => {
+        const userSocket = socketConnections[followerName];
         if (userSocket && io) {
           io.to(userSocket).emit("newPost", message);
         }
