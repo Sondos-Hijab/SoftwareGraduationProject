@@ -25,9 +25,9 @@ const addFeedback = (io, socketConnections) => async (req, res) => {
 
     // Round the sentiment values to two decimal places
     const roundedSentiment = {
-      negative: Number(resultForAnalyzation.negative.toFixed(2)),
-      neutral: Number(resultForAnalyzation.neutral.toFixed(2)),
-      positive: Number(resultForAnalyzation.positive.toFixed(2)),
+      negative: Number(resultForAnalyzation.neg.toFixed(2)),
+      neutral: Number(resultForAnalyzation.neu.toFixed(2)),
+      positive: Number(resultForAnalyzation.pos.toFixed(2)),
     };
 
     const { negative, neutral, positive } = roundedSentiment;
