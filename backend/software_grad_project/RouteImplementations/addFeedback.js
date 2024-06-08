@@ -6,6 +6,7 @@ const { getAdminByField } = require("../HelperObjects/admin");
 const { analyzeSentiment } = require("../HelperObjects/analyzeSentiment");
 
 const queryAsync = promisify(con.query).bind(con);
+
 const addFeedback = (io, socketConnections) => async (req, res) => {
   const user = req.user;
   const userName = user.name;
@@ -24,12 +25,12 @@ const addFeedback = (io, socketConnections) => async (req, res) => {
 
     // Round the sentiment values to two decimal places
     const roundedSentiment = {
-      neg: Number(resultForAnalyzation.neg.toFixed(2)),
-      neu: Number(resultForAnalyzation.neu.toFixed(2)),
-      pos: Number(resultForAnalyzation.pos.toFixed(2)),
+      negative: Number(resultForAnalyzation.negative.toFixed(2)),
+      neutral: Number(resultForAnalyzation.neutral.toFixed(2)),
+      positive: Number(resultForAnalyzation.positive.toFixed(2)),
     };
 
-    const { neg, neu, pos } = roundedSentiment;
+    const { negative, neutral, positive } = roundedSentiment;
 
     // Check if a file is provided in the request
     let picture = null;
@@ -75,25 +76,31 @@ const addFeedback = (io, socketConnections) => async (req, res) => {
         rate1,
         rate2,
         rate3,
-        neg,
-        pos,
-        neu,
+        negative,
+        positive,
+        neutral,
       ]
     );
 
-    // Send socket message to admin
-    const message = {
-      userName,
-      text,
-      rate1,
-      rate2,
-      rate3,
-      neg,
-      pos,
-      neu,
-    };
+    // Retrieve the newly added feedback along with user profile picture
+    const feedback = await queryAsync(`
+      SELECT feedback.*, userprofile.picture AS userProfilePicture
+      FROM feedback
+      INNER JOIN userprofile ON feedback.user_id = userprofile.user_id
+      WHERE feedback.userName = ?
+      ORDER BY feedbackID DESC LIMIT 1`, [userName]);
+
+    if (feedback.length === 0) {
+      return res.status(500).json({
+        error: "Feedback retrieval failed",
+        statusCode: "500",
+      });
+    }
+
+    // Send socket message to admin with full feedback details
+    const fullFeedback = feedback[0];
     if (socketConnections[businessName] && io && socketConnections) {
-      io.to(socketConnections[businessName]).emit("newFeedback", message);
+      io.to(socketConnections[businessName]).emit("newFeedback", fullFeedback);
     }
 
     return res.status(200).json({
