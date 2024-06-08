@@ -11,6 +11,7 @@ import {
   ResetPasswordForm,
   EmailConfirmationForm,
 } from "./_auth/forms";
+
 import {
   Profile,
   Home,
@@ -24,6 +25,7 @@ import {
 } from "./_root/pages";
 import Error from "./helper-components/WarningsErrors/Error";
 import AppPovider from "./Providers/AppPovider";
+import MessagesProvider from "./Providers/MessagesProvider";
 import ChatLayout from "./_chat/ChatLayout";
 import Chatting from "./_chat/Chatting";
 import ChattingMobile from "./_chat/ChattingMobile";
@@ -71,7 +73,9 @@ function App() {
 
   return (
     <AppPovider>
-      <RouterProvider router={router} />
+      <MessagesProvider>
+        <RouterProvider router={router} />
+      </MessagesProvider>
     </AppPovider>
   );
 }
