@@ -45,12 +45,23 @@ class NotificationsPageControllerImp extends NotificationsPageController {
     });
 
     socket.on('newPost', (data) {
-      Uint8List? photoData;
+      Uint8List? postPicture;
       if (data['picture'] != null) {
-        photoData = Uint8List.fromList(data['picture'].cast<int>());
+        postPicture = Uint8List.fromList(data['picture'].cast<int>());
       }
-      final newNotification = NotificationModel(data['admin_id'], data['name'],
-          data['description'], photoData, photoData, data['created_at']);
+      Uint8List? businessPicture;
+      if (data['businessPicture'] != null) {
+        businessPicture =
+            Uint8List.fromList(data['businessPicture'].cast<int>());
+      }
+      final newNotification = NotificationModel(
+        data['postID'],
+        data['name'],
+        data['description'],
+        postPicture,
+        businessPicture,
+        data['created_at'],
+      );
 
       notifications?.add(newNotification);
 
