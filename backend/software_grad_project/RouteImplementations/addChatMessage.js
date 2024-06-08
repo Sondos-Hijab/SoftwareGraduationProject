@@ -71,20 +71,15 @@ const addChatMessage = (io, socketConnections) => async (req, res) => {
       text,
       photo,
       sender,
-      created_at
+      created_at,
     };
 
     // Emit the new message to the specific user and business
-    const userSocket = socketConnections[user_id];
-    const businessSocket = socketConnections[admin_id];
+    const userSocket = socketConnections[userName];
+    const businessSocket = socketConnections[businessName];
 
-    if (userSocket) {
-      io.to(userSocket).emit("newChatMessage", newMessage);
-    }
-
-    if (businessSocket) {
-      io.to(businessSocket).emit("newChatMessage", newMessage);
-    }
+    io.to(userSocket).emit("newChatMessage", newMessage);
+    io.to(businessSocket).emit("newChatMessage", newMessage);
 
     return res.status(200).json({
       message: "Chat message added successfully",

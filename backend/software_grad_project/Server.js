@@ -26,12 +26,12 @@ io.on("connection", (socket) => {
   console.log("New client connected:", socket.id);
 
   // Register user or business with their socket ID
-  socket.on("register", ({ userId, adminId }) => {
-    if (userId) {
-      socketConnections[userId] = socket.id;
+  socket.on("register", ({ username, businessName }) => {
+    if (username) {
+      socketConnections[username] = socket.id;
     }
-    if (adminId) {
-      socketConnections[adminId] = socket.id;
+    if (businessName) {
+      socketConnections[businessName] = socket.id;
     }
   });
 
