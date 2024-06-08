@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:get/get.dart';
 import 'package:software_grad_project/core/classes/status_request.dart';
 import 'package:software_grad_project/core/functions/convert_data_to_file.dart';
@@ -5,6 +8,7 @@ import 'package:software_grad_project/core/functions/handling_data_function.dart
 import 'package:software_grad_project/core/services/service.dart';
 import 'package:software_grad_project/data/datasource/remote/notifications/notifications_datasource.dart';
 import 'package:software_grad_project/data/model/notification_model.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 abstract class NotificationsPageController extends GetxController {
   fetchNotifications();
@@ -13,6 +17,7 @@ abstract class NotificationsPageController extends GetxController {
 class NotificationsPageControllerImp extends NotificationsPageController {
   //myServices
   final myServices = Get.find<MyServices>();
+  late IO.Socket socket;
 
   //datasources
   NotificationsDatasource notificationsDatasource =
@@ -21,11 +26,47 @@ class NotificationsPageControllerImp extends NotificationsPageController {
   late String username;
   List<NotificationModel>? notifications = [];
 
+  void initSocket() {
+    const SOCKET_URL = "http://192.168.1.49:3000";
+
+    socket = IO.io(SOCKET_URL, <String, dynamic>{
+      'transports': ['websocket'],
+    });
+
+    socket.on('connect', (_) {
+      print('Connected with socket ID: ${socket.id}');
+      socket.emit('register', {
+        'username': username,
+      });
+    });
+
+    socket.on('disconnect', (_) {
+      print('Disconnected from socket server');
+    });
+
+    socket.on('newPost', (data) {
+      Uint8List? photoData;
+      if (data['picture'] != null) {
+        photoData = Uint8List.fromList(data['picture'].cast<int>());
+      }
+      final newNotification = NotificationModel(data['admin_id'], data['name'],
+          data['description'], photoData, photoData, data['created_at']);
+
+      notifications?.add(newNotification);
+
+      notifications!.sort((a, b) => DateTime.parse(b.postCreatedAt!)
+          .compareTo(DateTime.parse(a.postCreatedAt!)));
+
+      update();
+    });
+  }
+
   @override
   void onInit() {
     super.onInit();
     username = myServices.sharedPreferences.getString("username")!;
     fetchNotifications();
+    initSocket();
   }
 
   @override
