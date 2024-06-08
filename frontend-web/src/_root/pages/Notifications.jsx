@@ -13,7 +13,6 @@ const Notifications = () => {
         console.log("error fetching notifications");
       } else {
         setFeedback(value.feedback);
-        console.log(value.feedback);
       }
     });
   }, []);
@@ -38,7 +37,7 @@ const Notifications = () => {
 
     socket.on("newFeedback", (newFeedback) => {
       console.log("new feedback", newFeedback);
-      // setFeedback([...feedback, newFeedback]);
+      setFeedback((prevFeedback) => [...prevFeedback, newFeedback]);
     });
 
     return () => {
