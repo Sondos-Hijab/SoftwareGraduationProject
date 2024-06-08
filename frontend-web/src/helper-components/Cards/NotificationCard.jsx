@@ -11,11 +11,22 @@ const NotificationCard = ({ feedback }) => {
         state={feedback}
       >
         <div className="flex items-center gap-4">
-          <img
-            alt="user profile picture"
-            src={createBlobUrl(feedback["userProfilePicture"]["data"])}
-            className="size-16 rounded-full object-cover"
-          />
+          {feedback?.userProfilePicture &&
+            feedback?.userProfilePicture?.data && (
+              <img
+                alt="user profile picture"
+                src={createBlobUrl(feedback["userProfilePicture"]["data"])}
+                className="size-16 rounded-full object-cover"
+              />
+            )}
+          {feedback?.userProfilePicture &&
+            !feedback?.userProfilePicture?.data && (
+              <img
+                alt="user profile picture"
+                src={createBlobUrl(feedback["userProfilePicture"])}
+                className="size-16 rounded-full object-cover"
+              />
+            )}
 
           <div>
             <strong className="font-medium text-customBlue">
@@ -29,11 +40,20 @@ const NotificationCard = ({ feedback }) => {
           </div>
         </div>
 
-        <img
-          alt="feedback image"
-          src={createBlobUrl(feedback["picture"]["data"])}
-          className="size-16 object-cover"
-        />
+        {feedback?.picture && feedback?.picture?.data && (
+          <img
+            alt="user profile picture"
+            src={createBlobUrl(feedback["picture"]["data"])}
+            className="size-16 object-cover"
+          />
+        )}
+        {feedback?.picture && !feedback?.picture?.data && (
+          <img
+            alt="user profile picture"
+            src={createBlobUrl(feedback["picture"])}
+            className="size-16 object-cover"
+          />
+        )}
       </Link>
     </div>
   );
