@@ -59,6 +59,8 @@ const ChattingMobile = () => {
         userPicture={userProfilePicture}
         imagePreview={imagePreview}
         handleDeleteImage={handleDeleteImage}
+        setChatMessages={setChatMessages}
+        username={username}
       />
       {/* input bar */}
       <InputMessage

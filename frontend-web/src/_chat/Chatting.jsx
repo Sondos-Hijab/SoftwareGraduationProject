@@ -59,6 +59,8 @@ const Chatting = () => {
         userPicture={userProfilePicture}
         imagePreview={imagePreview}
         handleDeleteImage={handleDeleteImage}
+        setChatMessages={setChatMessages}
+        username={username}
       />
       {/* input bar */}
       <InputMessage
@@ -67,7 +69,6 @@ const Chatting = () => {
         chatImage={chatImage}
         imagePreview={imagePreview}
         handleDeleteImage={handleDeleteImage}
-        setChatMessages={setChatMessages}
       />
     </>
   );

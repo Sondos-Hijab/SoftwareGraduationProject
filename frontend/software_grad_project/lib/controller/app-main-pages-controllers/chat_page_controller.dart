@@ -59,6 +59,9 @@ class ChatsPageControllerImp extends ChatsPageController {
 
     socket.on('connect', (_) {
       print('Connected with socket ID: ${socket.id}');
+      socket.emit('register', {
+        'username': username,
+      });
     });
 
     socket.on('disconnect', (_) {
