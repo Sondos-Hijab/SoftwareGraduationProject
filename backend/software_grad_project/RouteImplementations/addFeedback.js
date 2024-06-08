@@ -25,9 +25,9 @@ const addFeedback = (io, socketConnections) => async (req, res) => {
 
     // Round the sentiment values to two decimal places
     const roundedSentiment = {
-      negative: Number(resultForAnalyzation.negative.toFixed(2)),
-      neutral: Number(resultForAnalyzation.neutral.toFixed(2)),
-      positive: Number(resultForAnalyzation.positive.toFixed(2)),
+      negative: Number(resultForAnalyzation.neg.toFixed(2)),
+      neutral: Number(resultForAnalyzation.neu.toFixed(2)),
+      positive: Number(resultForAnalyzation.pos.toFixed(2)),
     };
 
     const { negative, neutral, positive } = roundedSentiment;
@@ -83,12 +83,15 @@ const addFeedback = (io, socketConnections) => async (req, res) => {
     );
 
     // Retrieve the newly added feedback along with user profile picture
-    const feedback = await queryAsync(`
+    const feedback = await queryAsync(
+      `
       SELECT feedback.*, userprofile.picture AS userProfilePicture
       FROM feedback
       INNER JOIN userprofile ON feedback.user_id = userprofile.user_id
       WHERE feedback.userName = ?
-      ORDER BY feedbackID DESC LIMIT 1`, [userName]);
+      ORDER BY feedbackID DESC LIMIT 1`,
+      [userName]
+    );
 
     if (feedback.length === 0) {
       return res.status(500).json({
