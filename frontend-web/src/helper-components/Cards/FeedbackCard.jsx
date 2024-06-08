@@ -17,13 +17,17 @@ const FeedbackCard = ({ feedInfo }) => {
     feedInfo["created_at"]
   );
 
-  const userProfilePicture = feedInfo.userProfilePicture
+  let userProfilePicture = feedInfo.userProfilePicture.data
     ? createBlobUrl(feedInfo.userProfilePicture.data)
-    : placeholderUserPicture;
+    : createBlobUrl(feedInfo.userProfilePicture);
 
-  const feedbackPicture = feedInfo.picture
+  if (userProfilePicture == null) userProfilePicture = placeholderUserPicture;
+
+  let feedbackPicture = feedInfo.picture.data
     ? createBlobUrl(feedInfo.picture.data)
-    : emptyFeedbackPicture;
+    : createBlobUrl(feedInfo.picture);
+
+  if (feedbackPicture == null) feedbackPicture = emptyFeedbackPicture;
 
   return (
     <>
