@@ -51,6 +51,7 @@ const Chat = ({
     return () => {
       socket.off("receiveMessage");
       socket.off("newChatMessage");
+      console.log("cleaning");
     };
   }, [username]);
   return (
