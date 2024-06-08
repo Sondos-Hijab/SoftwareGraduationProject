@@ -1,31 +1,15 @@
 import { addChatMessage, fetchMessages } from "@/apis/chatRequests";
 import { faImage, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
-import { io } from "socket.io-client";
+import React, { useState } from "react";
 
 const InputMessage = ({
   username,
   handleImageChange,
   chatImage,
   handleDeleteImage,
-  setChatMessages,
 }) => {
-  const SOCKET_URL = "http://localhost:3000";
-
-  const socket = io(SOCKET_URL, {
-    transports: ["websocket"],
-  });
-
-  socket.on("connect", () => {
-    console.log(`Connected with socket ID: ${socket.id}`);
-  });
-
-  socket.on("disconnect", () => {
-    console.log("Disconnected from socket server");
-  });
-
-  const [textMessage, setTextMessage] = useState();
+  const [textMessage, setTextMessage] = useState("");
 
   const handleSendingMessage = () => {
     const messageInfo = new FormData();
@@ -55,21 +39,6 @@ const InputMessage = ({
         console.error("Error sending message:", error);
       });
   };
-
-  useEffect(() => {
-    socket.on("receiveMessage", (newMessage) => {
-      setChatMessages((prevMessages) => [...prevMessages, newMessage]);
-    });
-
-    socket.on("newChatMessage", (newMessage) => {
-      setChatMessages((prevMessages) => [...prevMessages, newMessage]);
-    });
-
-    return () => {
-      socket.off("receiveMessage");
-      socket.off("newChatMessage");
-    };
-  }, []);
 
   return (
     <>

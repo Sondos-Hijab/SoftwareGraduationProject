@@ -16,12 +16,8 @@ const ChatLayout = () => {
 
   useEffect(() => {
     refreshChatPartners();
-    // Add event listener for screen size
     window.addEventListener("resize", handleResize);
-    // Check initial screen size
     handleResize();
-    console.log(isMobile);
-    // Cleanup
     return () => window.removeEventListener("resize", handleResize);
   }, [isMobile]);
 
@@ -36,14 +32,16 @@ const ChatLayout = () => {
   };
 
   const chatClicked = () => {
-    setHideRecentChats(true);
+    if (isMobile) {
+      setHideRecentChats(true);
+    }
   };
 
   return (
     <div className="grid grid-cols-6 gap-4 p-6 shadow-sm h-screen">
       <div className=" col-span-6 md:col-span-2 p-4 border rounded-md">
         <div className="flex justify-between items-center">
-          {/* Icon for refresh */}
+          {/* Icons for refresh home and refresh */}
           {!hideRecentChats ? (
             <Link to="/" className="cursor-pointer text-customYellow">
               <FontAwesomeIcon icon={faHouse} size="lg" />
