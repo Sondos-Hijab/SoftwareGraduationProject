@@ -28,10 +28,12 @@ CREATE TABLE `business` (
   `email` varchar(800) NOT NULL,
   `name` varchar(800) NOT NULL,
   `location` varchar(300) NOT NULL,
-  `phoneNumber` int NOT NULL,
+  `phoneNumber` bigint NOT NULL,
   `category` varchar(100) NOT NULL,
   `description` varchar(2000) NOT NULL,
   `picture` blob,
+  `city` varchar(45) NOT NULL,
+  `country` varchar(45) NOT NULL,
   PRIMARY KEY (`adminID`)
 ) 
 
