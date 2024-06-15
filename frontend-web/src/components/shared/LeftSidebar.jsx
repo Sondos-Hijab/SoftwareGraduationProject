@@ -8,12 +8,14 @@ import { smallScreenLeftSidebar } from "./SmallScreenLeftSidebar";
 import { appContext as AppContext } from "@/store/app-context";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { logout } from "@/apis/authRequests";
+import { useNotificationsContext } from "@/Providers/NotificationsProvider";
 
 const LeftSidebar = ({ showNavbar, setShowNavbar }) => {
   const useAppContext = () => useContext(AppContext);
   const { profileImage, businessName, accessToken } = useAppContext();
 
   const navigate = useNavigate();
+  const { notificationsCount } = useNotificationsContext();
 
   //handling logout
   function handleLogout() {
@@ -63,23 +65,36 @@ const LeftSidebar = ({ showNavbar, setShowNavbar }) => {
             </div>
           </Link>
 
-          {leftSidebarLinks.map((element) => (
-            <Link
-              key={element.label}
-              to={element.route}
-              className={
-                showNavbar
-                  ? smallScreenLeftSidebar.linkStyle
-                  : leftSidebarStyles.linkStyle
-              }
-            >
-              <FontAwesomeIcon
-                className={leftSidebarStyles.iconStyle}
-                icon={element.icon}
-              />
-              {element.label}
-            </Link>
-          ))}
+          {leftSidebarLinks.map((element) => {
+            return (
+              <Link
+                key={element.label}
+                to={element.route}
+                className={
+                  showNavbar
+                    ? smallScreenLeftSidebar.linkStyle
+                    : leftSidebarStyles.linkStyle
+                }
+              >
+                <FontAwesomeIcon
+                  className={leftSidebarStyles.iconStyle}
+                  icon={element.icon}
+                />
+                {element.label === "Notifications" ? (
+                  <div className="inline-flex justify-center items-center">
+                    <span>{element.label} </span>
+                    {notificationsCount > 0 && (
+                      <span className=" bg-red-500 w-6 h-6 rounded-full text-white text-xs flex justify-center items-center mx-4">
+                        {notificationsCount}
+                      </span>
+                    )}
+                  </div>
+                ) : (
+                  element.label
+                )}
+              </Link>
+            );
+          })}
 
           <a
             className={
