@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import { useAppContext } from "@/Providers/AppPovider";
 import { fetchImage, fetchInfo } from "@/apis/profileAndBusinessInfo";
 import { isExpired } from "@/utils/utils";
+import { socket } from "@/constants";
 
 const RootLayout = () => {
   const { handleBusinessNameChange, setFetchedImage, accessToken } =
@@ -32,6 +33,12 @@ const RootLayout = () => {
       fetchInfo(accessToken).then((businessInfo) => {
         handleBusinessNameChange(businessInfo["name"]);
         localStorage.setItem("businessName", businessInfo["name"]);
+        socket.emit("register", {
+          businessName: businessInfo["name"],
+        });
+        socket.on("newChatMessage", (newMessage) => {
+          console.log("Recieved Message", newMessage);
+        });
       });
     }
   }, []);
