@@ -19,22 +19,13 @@ const NotificationsProvider = ({ children }) => {
   };
 
   const increaseNotificationsCount = () => {
-    setNotificationsCount((prevCount) => {
-      localStorage.setItem("notificationsCount", prevCount + 1);
-      return prevCount + 1;
-    });
+    setNotificationsCount((prevCount) => prevCount + 1);
   };
   const resetNotificationsCount = () => {
     setNotificationsCount(0);
   };
   const decreaseNotificationsCount = () => {
-    setNotificationsCount((prevCount) => {
-      localStorage.setItem(
-        "notificationsCount",
-        prevCount == 0 ? 0 : prevCount - 1
-      );
-      return prevCount == 0 ? 0 : prevCount - 1;
-    });
+    setNotificationsCount((prevCount) => (prevCount == 0 ? 0 : prevCount - 1));
   };
 
   const addNotification = (newNotification) => {
