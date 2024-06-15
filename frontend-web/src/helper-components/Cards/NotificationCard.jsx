@@ -1,10 +1,13 @@
+import { useNotificationsContext } from "@/Providers/NotificationsProvider";
 import { createBlobUrl, getFormattedDateAndTime } from "@/utils/utils";
 import React from "react";
 import { Link } from "react-router-dom";
 
 const NotificationCard = ({ feedback }) => {
+  const { decreaseNotificationsCount } = useNotificationsContext();
+
   return (
-    <div>
+    <div onClick={decreaseNotificationsCount}>
       <Link
         className="border p-4 flex justify-between bg-slate-50"
         to={`/notifications/${feedback["feedbackID"]}`}
