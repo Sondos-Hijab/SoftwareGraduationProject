@@ -11,7 +11,7 @@ import {
   ResetPasswordForm,
   EmailConfirmationForm,
 } from "./_auth/forms";
-
+import { socket } from "./constants";
 import {
   Profile,
   Home,
@@ -29,6 +29,8 @@ import MessagesProvider from "./Providers/MessagesProvider";
 import ChatLayout from "./_chat/ChatLayout";
 import Chatting from "./_chat/Chatting";
 import ChattingMobile from "./_chat/ChattingMobile";
+import { useEffect } from "react";
+import NotificationsProvider from "@/Providers/NotificationsProvider";
 
 function App() {
   const router = createBrowserRouter([
@@ -71,10 +73,27 @@ function App() {
     { path: "*", element: <Error /> },
   ]);
 
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log(`Connected with socket ID: ${socket.id}`);
+    });
+
+    socket.on("disconnect", () => {
+      console.log("Disconnected from socket server");
+    });
+
+    return () => {
+      socket.off("connect");
+      socket.off("disconnect");
+    };
+  }, []);
+
   return (
     <AppPovider>
       <MessagesProvider>
-        <RouterProvider router={router} />
+        <NotificationsProvider>
+          <RouterProvider router={router} />
+        </NotificationsProvider>
       </MessagesProvider>
     </AppPovider>
   );
