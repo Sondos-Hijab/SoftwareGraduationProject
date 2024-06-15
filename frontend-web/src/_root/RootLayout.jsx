@@ -36,9 +36,6 @@ const RootLayout = () => {
         socket.emit("register", {
           businessName: businessInfo["name"],
         });
-        socket.on("newChatMessage", (newMessage) => {
-          console.log("Recieved Message", newMessage);
-        });
       });
     }
   }, []);
