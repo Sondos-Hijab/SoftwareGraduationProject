@@ -9,6 +9,7 @@ import { appContext as AppContext } from "@/store/app-context";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { logout } from "@/apis/authRequests";
 import { useNotificationsContext } from "@/Providers/NotificationsProvider";
+import { useMessagesContext } from "@/Providers/MessagesProvider";
 
 const LeftSidebar = ({ showNavbar, setShowNavbar }) => {
   const useAppContext = () => useContext(AppContext);
@@ -16,7 +17,7 @@ const LeftSidebar = ({ showNavbar, setShowNavbar }) => {
 
   const navigate = useNavigate();
   const { notificationsCount } = useNotificationsContext();
-
+  const { totalMessagesCount } = useMessagesContext();
   //handling logout
   function handleLogout() {
     logout(accessToken).then((value) => {
@@ -81,11 +82,20 @@ const LeftSidebar = ({ showNavbar, setShowNavbar }) => {
                   icon={element.icon}
                 />
                 {element.label === "Notifications" ? (
-                  <div className="inline-flex justify-center items-center">
+                  <div className="inline-flex justify-between items-center flex-1">
                     <span>{element.label} </span>
                     {notificationsCount > 0 && (
-                      <span className=" bg-red-500 w-6 h-6 rounded-full text-white text-xs flex justify-center items-center mx-4">
+                      <span className=" bg-red-500 w-6 h-6 rounded-full text-white text-xs flex justify-center items-center">
                         {notificationsCount}
+                      </span>
+                    )}
+                  </div>
+                ) : element.label === "Messages" ? (
+                  <div className="inline-flex justify-between items-center flex-1">
+                    <span>{element.label} </span>
+                    {totalMessagesCount > 0 && (
+                      <span className=" bg-red-500 w-6 h-6 rounded-full text-white text-xs flex justify-center items-center">
+                        {totalMessagesCount}
                       </span>
                     )}
                   </div>
