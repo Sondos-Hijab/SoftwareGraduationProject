@@ -6,6 +6,7 @@ import {
   faTableColumns,
   faUpload,
 } from "@fortawesome/free-solid-svg-icons";
+import { io } from "socket.io-client";
 
 export const leftSidebarLinks = [
   {
@@ -136,3 +137,10 @@ export const cities = {
   "United Arab Emirates": ["Dubai", "Abu Dhabi", "Sharjah", "Al Ain", "Ajman"],
   Yemen: ["Sanaa", "Aden", "Taiz", "Al Hudaydah", "Ibb"],
 };
+
+
+export const SOCKET_URL = "http://localhost:3000";
+
+export const socket = io(SOCKET_URL, {
+  transports: ["websocket"],
+});
