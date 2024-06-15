@@ -2,21 +2,12 @@ import { createBlobUrl, getFormattedDateAndTime } from "@/utils/utils";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useRef } from "react";
-import { io } from "socket.io-client";
-
-const SOCKET_URL = "http://localhost:3000";
-
-const socket = io(SOCKET_URL, {
-  transports: ["websocket"],
-});
 
 const Chat = ({
   chatMessages,
   userPicture,
   imagePreview,
   handleDeleteImage,
-  setChatMessages,
-  username,
 }) => {
   const chatRef = useRef(null);
 
@@ -27,33 +18,6 @@ const Chat = ({
     }
   }, [chatMessages, imagePreview]);
 
-  useEffect(() => {
-    socket.on("connect", () => {
-      console.log(`Connected with socket ID: ${socket.id}`);
-      socket.emit("register", {
-        businessName: localStorage.getItem("businessName"),
-      });
-    });
-
-    socket.on("disconnect", () => {
-      console.log("Disconnected from socket server");
-    });
-
-    socket.on("receiveMessage", (newMessage) => {
-      setChatMessages((prevMessages) => [...prevMessages, newMessage]);
-    });
-
-    socket.on("newChatMessage", (newMessage) => {
-      if (newMessage.userName === username)
-        setChatMessages((prevMessages) => [...prevMessages, newMessage]);
-    });
-
-    return () => {
-      socket.off("receiveMessage");
-      socket.off("newChatMessage");
-      console.log("cleaning");
-    };
-  }, [username]);
   return (
     <div
       ref={chatRef}
