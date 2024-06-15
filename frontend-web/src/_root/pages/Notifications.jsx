@@ -1,48 +1,13 @@
-import { fetchFeedback } from "@/apis/feedbackRequests";
 import NotificationCard from "@/helper-components/Cards/NotificationCard";
 import { sortByDate } from "@/utils/utils";
-import React, { useEffect, useState } from "react";
-import { io } from "socket.io-client";
+import React, { useEffect } from "react";
+import { useNotificationsContext } from "@/Providers/NotificationsProvider";
 
 const Notifications = () => {
-  const [feedback, setFeedback] = useState([]);
+  const { notifications, getNotifications } = useNotificationsContext();
 
   useEffect(() => {
-    fetchFeedback().then((value) => {
-      if (value?.error) {
-        console.log("error fetching notifications");
-      } else {
-        setFeedback(value.feedback);
-      }
-    });
-  }, []);
-
-  const SOCKET_URL = "http://localhost:3000";
-
-  const socket = io(SOCKET_URL, {
-    transports: ["websocket"],
-  });
-
-  useEffect(() => {
-    socket.on("connect", () => {
-      console.log(`Connected with socket ID: ${socket.id}`);
-      socket.emit("register", {
-        businessName: localStorage.getItem("businessName"),
-      });
-    });
-
-    socket.on("disconnect", () => {
-      console.log("Disconnected from socket server");
-    });
-
-    socket.on("newFeedback", (newFeedback) => {
-      console.log("new feedback", newFeedback);
-      setFeedback((prevFeedback) => [...prevFeedback, newFeedback]);
-    });
-
-    return () => {
-      socket.off("newFeedback");
-    };
+    getNotifications();
   }, []);
 
   return (
@@ -52,7 +17,7 @@ const Notifications = () => {
       </h2>
 
       <div className="mb-4 block rounded-lg p-4 shadow-md shadow-gray-200 ">
-        {sortByDate(feedback, "newToOld").map((feed) => (
+        {sortByDate(notifications, "newToOld").map((feed) => (
           <NotificationCard key={feed["feedbackID"]} feedback={feed} />
         ))}
       </div>
