@@ -8,14 +8,15 @@ import {
   faHouse,
   faSyncAlt,
 } from "@fortawesome/free-solid-svg-icons";
+import { useMessagesContext } from "@/Providers/MessagesProvider";
 
 const ChatLayout = () => {
-  const [chatPartners, setChatPartners] = useState([]);
   const [isMobile, setIsMobile] = useState(false);
   const [hideRecentChats, setHideRecentChats] = useState(false);
+  const { chatPartners, loadChatPartners } = useMessagesContext();
 
   useEffect(() => {
-    refreshChatPartners();
+    loadChatPartners();
     window.addEventListener("resize", handleResize);
     handleResize();
     return () => window.removeEventListener("resize", handleResize);
@@ -23,12 +24,6 @@ const ChatLayout = () => {
 
   const handleResize = () => {
     setIsMobile(window.innerWidth < 768);
-  };
-
-  const refreshChatPartners = () => {
-    getBusinessChatPartners().then((value) => {
-      setChatPartners([...value.chatPartners.data]);
-    });
   };
 
   const chatClicked = () => {
@@ -69,7 +64,7 @@ const ChatLayout = () => {
           {/* Icon for refresh */}
           {!hideRecentChats && (
             <div
-              onClick={refreshChatPartners}
+              onClick={loadChatPartners}
               className="cursor-pointer text-customYellow"
             >
               <FontAwesomeIcon icon={faSyncAlt} size="lg" />

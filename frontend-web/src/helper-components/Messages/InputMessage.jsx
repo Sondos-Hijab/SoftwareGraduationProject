@@ -28,9 +28,7 @@ const InputMessage = ({
         if (value.message) {
           setTextMessage("");
           handleDeleteImage();
-          fetchMessages(username).then((value) => {
-            console.log(value);
-          });
+          fetchMessages(username).then((value) => {});
         } else {
           console.log(value.error);
         }

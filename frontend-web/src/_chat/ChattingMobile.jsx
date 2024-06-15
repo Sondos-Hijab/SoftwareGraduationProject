@@ -2,16 +2,17 @@ import React, { useEffect, useState } from "react";
 import Chat from "@/helper-components/Messages/Chat";
 import InputMessage from "@/helper-components/Messages/InputMessage";
 import { useParams } from "react-router-dom";
-import { fetchMessages } from "@/apis/chatRequests";
-import placeholderUserPicture from "@/assets/images/placeholder.png";
-import { createBlobUrl } from "@/utils/utils";
+import { useMessagesContext } from "@/Providers/MessagesProvider";
 
 const ChattingMobile = () => {
+  const {
+    chatMessages,
+    loadChatMessages,
+    userProfilePicture,
+  } = useMessagesContext();
+
   const { username } = useParams();
-  const [userProfilePicture, setUserProfilePicture] = useState(
-    placeholderUserPicture
-  );
-  const [chatMessages, setChatMessages] = useState([]);
+
   const [imagePreview, setImagePreview] = useState(null);
   const [chatImage, setChatImage] = useState();
 
@@ -33,10 +34,7 @@ const ChattingMobile = () => {
   };
 
   useEffect(() => {
-    fetchMessages(username).then((value) => {
-      setChatMessages(value.chatMessages);
-      setUserProfilePicture(createBlobUrl(value.userProfilePicture.data));
-    });
+    loadChatMessages(username);
   }, [username]);
 
   return (
@@ -59,8 +57,6 @@ const ChattingMobile = () => {
         userPicture={userProfilePicture}
         imagePreview={imagePreview}
         handleDeleteImage={handleDeleteImage}
-        setChatMessages={setChatMessages}
-        username={username}
       />
       {/* input bar */}
       <InputMessage
@@ -69,7 +65,6 @@ const ChattingMobile = () => {
         chatImage={chatImage}
         imagePreview={imagePreview}
         handleDeleteImage={handleDeleteImage}
-        setChatMessages={setChatMessages}
       />
     </>
   );

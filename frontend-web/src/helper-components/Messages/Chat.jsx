@@ -2,15 +2,12 @@ import { createBlobUrl, getFormattedDateAndTime } from "@/utils/utils";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useRef } from "react";
-import { socket } from "@/constants";
 
 const Chat = ({
   chatMessages,
   userPicture,
   imagePreview,
   handleDeleteImage,
-  setChatMessages,
-  username,
 }) => {
   const chatRef = useRef(null);
 
@@ -21,25 +18,6 @@ const Chat = ({
     }
   }, [chatMessages, imagePreview]);
 
-  useEffect(() => {
-    socket.emit("register", {
-      businessName: localStorage.getItem("businessName"),
-    });
-    
-    socket.on("receiveMessage", (newMessage) => {
-      setChatMessages((prevMessages) => [...prevMessages, newMessage]);
-    });
-
-    socket.on("newChatMessage", (newMessage) => {
-      if (newMessage.userName === username)
-        setChatMessages((prevMessages) => [...prevMessages, newMessage]);
-    });
-
-    return () => {
-      socket.off("receiveMessage");
-      socket.off("newChatMessage");
-    };
-  }, [username]);
   return (
     <div
       ref={chatRef}
