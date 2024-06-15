@@ -2,5 +2,5 @@ import { createContext } from "react";
 
 export const notificationsContext = createContext({
   notifications: [],
-  notificayionsCount: 0,
+  notificationsCount: Number(localStorage.getItem("notificationsCount")) || 0,
 });

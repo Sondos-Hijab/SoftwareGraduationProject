@@ -4,7 +4,9 @@ import { fetchFeedback } from "@/apis/feedbackRequests";
 import { socket } from "@/constants";
 const NotificationsProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
-  const [notificationsCount, setNotificationsCount] = useState(0);
+  const [notificationsCount, setNotificationsCount] = useState(
+    Number(localStorage.getItem("notificationsCount")) || 0
+  );
 
   const getNotifications = () => {
     fetchFeedback().then((value) => {
@@ -17,13 +19,22 @@ const NotificationsProvider = ({ children }) => {
   };
 
   const increaseNotificationsCount = () => {
-    setNotificationsCount((prevCount) => prevCount + 1);
+    setNotificationsCount((prevCount) => {
+      localStorage.setItem("notificationsCount", prevCount + 1);
+      return prevCount + 1;
+    });
   };
   const resetNotificationsCount = () => {
     setNotificationsCount(0);
   };
   const decreaseNotificationsCount = () => {
-    setNotificationsCount((prevCount) => prevCount - 1);
+    setNotificationsCount((prevCount) => {
+      localStorage.setItem(
+        "notificationsCount",
+        prevCount == 0 ? 0 : prevCount - 1
+      );
+      return prevCount == 0 ? 0 : prevCount - 1;
+    });
   };
 
   const addNotification = (newNotification) => {
@@ -31,14 +42,10 @@ const NotificationsProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    socket.emit("register", {
-      businessName: localStorage.getItem("businessName"),
-    });
-
     socket.on("newFeedback", (newFeedback) => {
       addNotification(newFeedback);
+      increaseNotificationsCount();
     });
-
     return () => {
       socket.off("newFeedback");
     };
