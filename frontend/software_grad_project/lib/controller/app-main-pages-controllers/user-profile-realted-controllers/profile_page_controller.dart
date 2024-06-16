@@ -12,6 +12,7 @@ import 'package:software_grad_project/data/datasource/remote/authentication/logo
 import 'package:software_grad_project/data/datasource/remote/profile-page/bio_datasource.dart';
 import 'package:software_grad_project/data/datasource/remote/profile-page/profile_image_datasource.dart';
 import 'package:software_grad_project/data/datasource/remote/authentication/check_authentication_datasource.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 abstract class ProfilePageController extends GetxController {
   editMode();
@@ -44,6 +45,53 @@ class ProfilePageControllerImp extends ProfilePageController {
   String? username;
   //request variables
   StatusRequest? statusRequest;
+  late IO.Socket socket;
+
+  void initSocket() {
+    const SOCKET_URL = "http://192.168.1.49:3000";
+
+    socket = IO.io(SOCKET_URL, <String, dynamic>{
+      'transports': ['websocket'],
+    });
+
+    socket.on('connect', (_) {
+      print('Connected with socket ID: ${socket.id}');
+    });
+
+    socket.on('disconnect', (_) {
+      print('Disconnected from socket server');
+    });
+
+    socket.emit('register', {
+      'username': username,
+    });
+
+    socket.on('newChatMessage', (data) {
+      MyServices myServices = Get.find();
+      String businessName = data['businessName'];
+      if (data["sender"] == "1") {
+        int? currentValue = myServices.sharedPreferences.getInt(businessName);
+        currentValue ??= 0;
+        myServices.sharedPreferences.setInt(businessName, currentValue + 1);
+
+        int? totalMessages =
+            myServices.sharedPreferences.getInt("totalMessages");
+        totalMessages ??= 0;
+        myServices.sharedPreferences.setInt("totalMessages", totalMessages + 1);
+        update();
+      }
+    });
+
+    socket.on('newPost', (data) {
+      MyServices myServices = Get.find();
+      int? totalNotifications =
+          myServices.sharedPreferences.getInt("totalNotifications");
+      totalNotifications ??= 0;
+      myServices.sharedPreferences
+          .setInt("totalNotifications", totalNotifications + 1);
+      update();
+    });
+  }
 
   @override
   void onInit() {
@@ -54,6 +102,7 @@ class ProfilePageControllerImp extends ProfilePageController {
     bioController = TextEditingController();
     getBio();
     getProfileImage();
+    initSocket();
   }
 
   @override

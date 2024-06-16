@@ -4,11 +4,14 @@ import 'package:software_grad_project/core/constants/colors.dart';
 class HomePageHeader extends StatelessWidget {
   final String? username;
   final void Function()? onPressedNotificationButton;
+  final int notificationCount;
 
-  const HomePageHeader(
-      {super.key,
-      required this.username,
-      required this.onPressedNotificationButton});
+  const HomePageHeader({
+    super.key,
+    required this.username,
+    required this.onPressedNotificationButton,
+    required this.notificationCount,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -37,13 +40,57 @@ class HomePageHeader extends StatelessWidget {
               ],
             ),
           ),
-          IconButton(
-              onPressed: onPressedNotificationButton,
-              icon: Icon(
-                Icons.notifications_active_outlined,
-                size: 35,
-                color: Colors.grey.shade700,
-              ))
+          Stack(
+            children: [
+              IconButton(
+                onPressed: onPressedNotificationButton,
+                icon: Icon(
+                  Icons.notifications_active_outlined,
+                  size: 35,
+                  color: Colors.grey.shade700,
+                ),
+              ),
+              Stack(
+                children: [
+                  IconButton(
+                    onPressed: onPressedNotificationButton,
+                    icon: Icon(
+                      Icons.notifications_active_outlined,
+                      size: 35,
+                      color: Colors.grey.shade700,
+                    ),
+                  ),
+                  notificationCount != 0
+                      ? Positioned(
+                          top: 5,
+                          right: 5,
+                          child: Container(
+                            width: 20,
+                            height: 20,
+                            decoration: const BoxDecoration(
+                              color: Colors.red,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  notificationCount > 9
+                                      ? '9+'
+                                      : '$notificationCount',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      : Text(""),
+                ],
+              ),
+            ],
+          ),
         ],
       ),
     );

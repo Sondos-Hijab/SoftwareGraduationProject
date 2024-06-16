@@ -6,9 +6,14 @@ class MessageCardView extends StatelessWidget {
   final String? businessName;
   final Uint8List? picture;
   final Function()? onTap;
+  final int? unseenMessagesCount;
 
   const MessageCardView(
-      {super.key, this.businessName, this.picture, this.onTap});
+      {super.key,
+      this.businessName,
+      this.picture,
+      this.onTap,
+      this.unseenMessagesCount});
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +34,27 @@ class MessageCardView extends StatelessWidget {
                       backgroundImage: AssetImage(AppImageAssets.noUserImage),
                     ),
               Padding(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.only(left: 20),
                 child: Text(
                   businessName!,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
-              )
+              ),
+              const Spacer(),
+              if (unseenMessagesCount != null && unseenMessagesCount! > 0)
+                Container(
+                  margin: const EdgeInsets.only(right: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Text(
+                    '$unseenMessagesCount new',
+                    style: const TextStyle(color: Colors.white, fontSize: 12),
+                  ),
+                ),
             ],
           ),
         ),

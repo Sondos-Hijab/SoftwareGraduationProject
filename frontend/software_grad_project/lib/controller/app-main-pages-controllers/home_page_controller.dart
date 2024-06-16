@@ -15,6 +15,7 @@ abstract class HomePageController extends GetxController {
   goToBusinessPage(String businessName, Uint8List businessImage);
   getBusinessesByCategory(String category);
   setCatagory(String cat);
+  getTotalNotificationsCount();
 }
 
 class HomePageControllerImp extends HomePageController {
@@ -99,5 +100,11 @@ class HomePageControllerImp extends HomePageController {
   @override
   void dispose() {
     super.dispose();
+  }
+
+  @override
+  getTotalNotificationsCount() {
+    MyServices myServices = Get.find();
+    return myServices.sharedPreferences.getInt("totalNotifications");
   }
 }

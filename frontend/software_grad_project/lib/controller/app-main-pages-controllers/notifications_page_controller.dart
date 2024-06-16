@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:get/get.dart';
@@ -12,6 +11,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 abstract class NotificationsPageController extends GetxController {
   fetchNotifications();
+  decreaseNotificationsCount();
 }
 
 class NotificationsPageControllerImp extends NotificationsPageController {
@@ -31,17 +31,6 @@ class NotificationsPageControllerImp extends NotificationsPageController {
 
     socket = IO.io(SOCKET_URL, <String, dynamic>{
       'transports': ['websocket'],
-    });
-
-    socket.on('connect', (_) {
-      print('Connected with socket ID: ${socket.id}');
-      socket.emit('register', {
-        'username': username,
-      });
-    });
-
-    socket.on('disconnect', (_) {
-      print('Disconnected from socket server');
     });
 
     socket.on('newPost', (data) {
@@ -112,5 +101,12 @@ class NotificationsPageControllerImp extends NotificationsPageController {
       }
       update();
     }
+  }
+
+  @override
+  decreaseNotificationsCount() {
+    final current = myServices.sharedPreferences.getInt("totalNotifications");
+    if (current! > 0)
+      myServices.sharedPreferences.setInt("totalNotifications", current - 1);
   }
 }
