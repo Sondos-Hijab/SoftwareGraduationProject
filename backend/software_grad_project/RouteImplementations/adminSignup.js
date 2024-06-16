@@ -20,6 +20,8 @@ const adminSignup = async (req, res, next) => {
     phoneNumber,
     category,
     description,
+    country,
+    city,
   } = req.body;
 
   try {
@@ -78,6 +80,8 @@ const adminSignup = async (req, res, next) => {
         phoneNumber: phoneNumber,
         category: category,
         description: description,
+        country: country,
+        city: city,
       },
     ];
     // Generate registration email content
@@ -91,8 +95,19 @@ const adminSignup = async (req, res, next) => {
 
     // Insert user into the database after sending the email
     await queryAsync(
-      "INSERT INTO business (adminName,email,password,name,location,phoneNumber,category,description) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-      [adminName, email, hash,name,location,phoneNumber,category,description]
+      "INSERT INTO business (adminName,email,password,name,location,phoneNumber,category,description,country,city) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,?)",
+      [
+        adminName,
+        email,
+        hash,
+        name,
+        location,
+        phoneNumber,
+        category,
+        description,
+        country,
+        city,
+      ]
     );
 
     return res.status(201).json({

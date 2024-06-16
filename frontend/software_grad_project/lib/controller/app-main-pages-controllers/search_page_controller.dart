@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
 import 'package:software_grad_project/core/classes/status_request.dart';
 import 'package:software_grad_project/core/constants/routes_names.dart';
 import 'package:software_grad_project/core/functions/convert_data_to_file.dart';
@@ -18,7 +17,6 @@ abstract class SearchPageController extends GetxController {
   setSelectedCity(String city);
   setSelectedCountry(String country);
   setSelectedCategory(String category);
-  setChosenCities(String country);
 }
 
 class SearchPageControllerImp extends SearchPageController {
@@ -44,9 +42,9 @@ class SearchPageControllerImp extends SearchPageController {
   @override
   void onInit() {
     searchText = TextEditingController();
-    selectedCategory.value = 'gym';
-    selectedCountry.value = 'Algeria';
-    selectedCity.value = 'Algiers';
+    selectedCategory.value = 'Select Category';
+    selectedCountry.value = 'Select Country';
+    selectedCity.value = 'Select City';
     chosenCities.value = cities[selectedCountry.value]!;
     super.onInit();
   }
@@ -74,10 +72,14 @@ class SearchPageControllerImp extends SearchPageController {
   Future<void> onSearch() async {
     isSearch.value = true;
 
-    if (searchText.text == "") {
+    if (searchText.text == "" &&
+        selectedCategory.value == 'Select Category' &&
+        selectedCountry.value == 'Select Country' &&
+        selectedCity.value == 'Select City') {
       Get.defaultDialog(
           title: "Alert",
-          middleText: "You should write a business name to search for");
+          middleText:
+              "You should write a business name or select a category, country, city to search for businesses");
       return;
     }
 
@@ -85,14 +87,17 @@ class SearchPageControllerImp extends SearchPageController {
     String? accessToken = myServices.sharedPreferences.getString("accessToken");
 
     var response = await businessDatasource.searchDataWithParams(
-        accessToken!, searchText.text);
+        accessToken!,
+        searchText.text,
+        selectedCategory.value,
+        selectedCountry.value,
+        selectedCity.value);
 
     statusRequest = handlingData(response);
 
     if (statusRequest == StatusRequest.success) {
       if (response['statusCode'] == "200") {
         List<dynamic> businesses = response['businesses'];
-
         businessesList!.assignAll(businesses.map((business) {
           return BusinessViewModel(
             business['name'],
@@ -101,6 +106,7 @@ class SearchPageControllerImp extends SearchPageController {
         }));
       } else if (response['statusCode'] == "404") {
         Get.defaultDialog(title: "Error", middleText: response["error"]);
+        businessesList!.clear();
       } else {
         Get.defaultDialog(
             title: "Error", middleText: "We are sorry, something went wrong");
@@ -128,15 +134,11 @@ class SearchPageControllerImp extends SearchPageController {
   @override
   void setSelectedCountry(String country) {
     selectedCountry.value = country;
-    // Update chosenCities with cities of the selected country
-    chosenCities.assignAll(cities[country]!);
-
-    // Select the first city as default
+    if (country == 'Select Category') {
+      chosenCities.assignAll(['Select City']);
+    } else {
+      chosenCities.assignAll(cities[country]!);
+    }
     selectedCity.value = chosenCities[0];
-  }
-
-  @override
-  setChosenCities(String country) {
-    chosenCities.assignAll(cities[country]!);
   }
 }

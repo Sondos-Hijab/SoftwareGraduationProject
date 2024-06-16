@@ -36,90 +36,17 @@ Map<int, String> categoriesMapping = {
   4: "restaurants",
 };
 
-final List<NotificationItem> notifications = [
-  NotificationItem(
-    userPicture: 'assets/images/no-user.jpg',
-    username: 'business1',
-    time: '2 hours ago',
-  ),
-  NotificationItem(
-    userPicture: 'assets/images/no-user.jpg',
-    username: 'business2',
-    time: '1 hour ago',
-  ),
-  NotificationItem(
-    userPicture: 'assets/images/no-user.jpg',
-    username: 'business1',
-    time: '2 hours ago',
-  ),
-  NotificationItem(
-    userPicture: 'assets/images/no-user.jpg',
-    username: 'business2',
-    time: '1 hour ago',
-  ),
-  NotificationItem(
-    userPicture: 'assets/images/no-user.jpg',
-    username: 'business1',
-    time: '2 hours ago',
-  ),
-  NotificationItem(
-    userPicture: 'assets/images/no-user.jpg',
-    username: 'business2',
-    time: '1 hour ago',
-  ),
-  NotificationItem(
-    userPicture: 'assets/images/no-user.jpg',
-    username: 'business1',
-    time: '2 hours ago',
-  ),
-  NotificationItem(
-    userPicture: 'assets/images/no-user.jpg',
-    username: 'business2',
-    time: '1 hour ago',
-  ),
-  NotificationItem(
-    userPicture: 'assets/images/no-user.jpg',
-    username: 'business1',
-    time: '2 hours ago',
-  ),
-  NotificationItem(
-    userPicture: 'assets/images/no-user.jpg',
-    username: 'business2',
-    time: '1 hour ago',
-  ),
-  NotificationItem(
-    userPicture: 'assets/images/no-user.jpg',
-    username: 'business1',
-    time: '2 hours ago',
-  ),
-  NotificationItem(
-    userPicture: 'assets/images/no-user.jpg',
-    username: 'business2',
-    time: '1 hour ago',
-  ),
-  NotificationItem(
-    userPicture: 'assets/images/no-user.jpg',
-    username: 'business1',
-    time: '2 hours ago',
-  ),
-  NotificationItem(
-    userPicture: 'assets/images/no-user.jpg',
-    username: 'business2',
-    time: '1 hour ago',
-  ),
-  NotificationItem(
-    userPicture: 'assets/images/no-user.jpg',
-    username: 'business1',
-    time: '2 hours ago',
-  ),
-  NotificationItem(
-    userPicture: 'assets/images/no-user.jpg',
-    username: 'business2',
-    time: '1 hour ago',
-  ),
-];
+Map<int, String> categoriesMap = {
+  0: "Select Category",
+  1: "gym",
+  2: "beauty",
+  3: "clothes",
+  4: "devices",
+  5: "restaurants",
+};
 
 List<String> countries = [
+  'Select Country',
   'Algeria',
   'Bahrain',
   'Comoros',
@@ -132,7 +59,6 @@ List<String> countries = [
   'Libya',
   'Mauritania',
   'Morocco',
-  'Oman',
   'Palestine',
   'Qatar',
   'Saudi Arabia',
@@ -145,26 +71,85 @@ List<String> countries = [
 ];
 
 Map<String, List<String>> cities = {
-  'Algeria': ['Algiers', 'Oran', 'Constantine', 'Annaba', 'Batna'],
-  'Bahrain': ['Manama', 'Riffa', 'Muharraq', 'Hamad Town', 'Isa Town'],
-  'Comoros': ['Moroni', 'Moutsamoudou', 'Fomboni', 'Domoni', 'Tsimbeo'],
-  'Djibouti': ['Djibouti City', 'Ali Sabieh', 'Tadjourah', 'Obock', 'Dikhil'],
-  'Egypt': ['Cairo', 'Alexandria', 'Giza', 'Shubra El-Kheima', 'Port Said'],
-  'Iraq': ['Baghdad', 'Basra', 'Sulaymaniyah', 'Erbil', 'Najaf'],
-  'Jordan': ['Amman', 'Zarqa', 'Irbid', 'Russeifa', 'Al-Salt'],
+  'Select Country': ['Select City'],
+  'Algeria': [
+    'Select City',
+    'Algiers',
+    'Oran',
+    'Constantine',
+    'Annaba',
+    'Batna'
+  ],
+  'Bahrain': [
+    'Select City',
+    'Manama',
+    'Riffa',
+    'Muharraq',
+    'Hamad Town',
+    'Isa Town'
+  ],
+  'Comoros': [
+    'Select City',
+    'Moroni',
+    'Moutsamoudou',
+    'Fomboni',
+    'Domoni',
+    'Tsimbeo'
+  ],
+  'Djibouti': [
+    'Select City',
+    'Djibouti City',
+    'Ali Sabieh',
+    'Tadjourah',
+    'Obock',
+    'Dikhil'
+  ],
+  'Egypt': [
+    'Select City',
+    'Cairo',
+    'Alexandria',
+    'Giza',
+    'Shubra El-Kheima',
+    'Port Said'
+  ],
+  'Iraq': ['Select City', 'Baghdad', 'Basra', 'Sulaymaniyah', 'Erbil', 'Najaf'],
+  'Jordan': ['Select City', 'Amman', 'Zarqa', 'Irbid', 'Russeifa', 'Al-Salt'],
   'Kuwait': [
+    'Select City',
     'Kuwait City',
     'Al Ahmadi',
     'Hawalli',
     'As Salimiyah',
     'Sabah as Salim'
   ],
-  'Lebanon': ['Beirut', 'Tripoli', 'Sidon', 'Tyre', 'Jounieh'],
-  'Libya': ['Tripoli', 'Benghazi', 'Misrata', 'Tarhuna', 'Zawiya'],
-  'Mauritania': ['Nouakchott', 'Nouadhibou', 'Kiffa', 'Zouérat', 'Atar'],
-  'Morocco': ['Casablanca', 'Rabat', 'Fes', 'Marrakesh', 'Tangier'],
-  'Oman': ['Muscat', 'Seeb', 'Salalah', 'Bawshar', 'Suhar'],
+  'Lebanon': ['Select City', 'Beirut', 'Tripoli', 'Sidon', 'Tyre', 'Jounieh'],
+  'Libya': [
+    'Select City',
+    'Tripoli',
+    'Benghazi',
+    'Misrata',
+    'Tarhuna',
+    'Zawiya'
+  ],
+  'Mauritania': [
+    'Select City',
+    'Nouakchott',
+    'Nouadhibou',
+    'Kiffa',
+    'Zouérat',
+    'Atar'
+  ],
+  'Morocco': [
+    'Select City',
+    'Casablanca',
+    'Rabat',
+    'Fes',
+    'Marrakesh',
+    'Tangier'
+  ],
+  'Oman': ['Select City', 'Muscat', 'Seeb', 'Salalah', 'Bawshar', 'Suhar'],
   'Palestine': [
+    'Select City',
     'Jerusalem',
     'Gaza',
     'Hebron',
@@ -204,12 +189,47 @@ Map<String, List<String>> cities = {
     'ad-Dhahiriya',
     'Abu Dis'
   ],
-  'Qatar': ['Doha', 'Al Rayyan', 'Umm Salal', 'Al Wakrah', 'Al Khor'],
-  'Saudi Arabia': ['Riyadh', 'Jeddah', 'Mecca', 'Medina', 'Dammam'],
-  'Somalia': ['Mogadishu', 'Hargeisa', 'Bosaso', 'Kismaayo', 'Mereeg'],
-  'Sudan': ['Khartoum', 'Omdurman', 'Port Sudan', 'Kassala', 'El Obeid'],
-  'Syria': ['Damascus', 'Aleppo', 'Homs', 'Hama', 'Latakia'],
-  'Tunisia': ['Tunis', 'Sfax', 'Sousse', 'Kairouan', 'Bizerte'],
-  'United Arab Emirates': ['Dubai', 'Abu Dhabi', 'Sharjah', 'Al Ain', 'Ajman'],
-  'Yemen': ['Sanaa', 'Aden', 'Taiz', 'Al Hudaydah', 'Ibb'],
+  'Qatar': [
+    'Select City',
+    'Doha',
+    'Al Rayyan',
+    'Umm Salal',
+    'Al Wakrah',
+    'Al Khor'
+  ],
+  'Saudi Arabia': [
+    'Select City',
+    'Riyadh',
+    'Jeddah',
+    'Mecca',
+    'Medina',
+    'Dammam'
+  ],
+  'Somalia': [
+    'Select City',
+    'Mogadishu',
+    'Hargeisa',
+    'Bosaso',
+    'Kismaayo',
+    'Mereeg'
+  ],
+  'Sudan': [
+    'Select City',
+    'Khartoum',
+    'Omdurman',
+    'Port Sudan',
+    'Kassala',
+    'El Obeid'
+  ],
+  'Syria': ['Select City', 'Damascus', 'Aleppo', 'Homs', 'Hama', 'Latakia'],
+  'Tunisia': ['Select City', 'Tunis', 'Sfax', 'Sousse', 'Kairouan', 'Bizerte'],
+  'United Arab Emirates': [
+    'Select City',
+    'Dubai',
+    'Abu Dhabi',
+    'Sharjah',
+    'Al Ain',
+    'Ajman'
+  ],
+  'Yemen': ['Select City', 'Sanaa', 'Aden', 'Taiz', 'Al Hudaydah', 'Ibb'],
 };

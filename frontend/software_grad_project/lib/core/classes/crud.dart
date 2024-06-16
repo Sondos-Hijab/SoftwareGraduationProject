@@ -52,7 +52,8 @@ class CRUDRequests {
             'Authorization': 'Bearer $authToken',
           },
         );
-
+        print(params);
+        print(json.decode(response.body));
         if (response.statusCode == 200 ||
             response.statusCode == 201 ||
             response.statusCode == 400 ||
