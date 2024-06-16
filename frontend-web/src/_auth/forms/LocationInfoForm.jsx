@@ -57,12 +57,12 @@ const LocationInfoForm = () => {
     const location = {
       lat: selectedMarker.lat,
       lng: selectedMarker.lng,
-      country: selectedCountry,
-      city: selectedCity,
     };
     const signupInfo = {
       ...userAndBusinessEnteredData,
       location: JSON.stringify(location),
+      country: selectedCountry,
+      city: selectedCity,
     };
 
     signup(signupInfo).then((value) => {
