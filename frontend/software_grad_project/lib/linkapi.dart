@@ -22,8 +22,7 @@ class AppLink {
       "$server/user/getBusinessesBySearch";
   static const String getBusinessesByCategoryLink =
       "$server/user/getBusinessesByCategory";
-  static const String getBusinessByNameLink =
-      "$server/user/getBusinessesByName";
+  static const String getBusinessByNameLink = "$server/user/getBusinesses";
   static const String getBusinessPostsLink = "$server/user/getPost";
   static const String getBusinessFeedbackLink =
       "$server/user/getBusinessFeedback";
@@ -65,5 +64,6 @@ class AppLink {
   static const String fetchChatMessages = "$server/user/getChatMessages";
 
 //notifications
-  static const String fetchNotifications = "$server/user/getPostsForFollowedBusinesses";
+  static const String fetchNotifications =
+      "$server/user/getPostsForFollowedBusinesses";
 }
