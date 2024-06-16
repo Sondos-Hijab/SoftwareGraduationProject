@@ -72,7 +72,6 @@ class SearchPage extends StatelessWidget {
                           value: controller.selectedCountry.value,
                           onChanged: (String? newValue) {
                             controller.setSelectedCountry(newValue!);
-                            controller.setSelectedCity(cities[newValue]![0]);
                           },
                           items: countries.map<DropdownMenuItem<String>>(
                             (String country) {
@@ -108,11 +107,11 @@ class SearchPage extends StatelessWidget {
                           ),
                         ),
                         DropdownButtonFormField<String>(
-                          value: 'gym', // Default value
+                          value: 'Select Category', // Default value
                           onChanged: (String? newValue) {
-                            // You can handle the state change here if needed
+                            controller.selectedCategory.value = newValue!;
                           },
-                          items: categoriesMapping.entries
+                          items: categoriesMap.entries
                               .map<DropdownMenuItem<String>>(
                             (MapEntry<int, String> entry) {
                               return DropdownMenuItem<String>(
