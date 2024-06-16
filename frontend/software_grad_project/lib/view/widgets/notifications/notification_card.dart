@@ -8,10 +8,11 @@ import 'package:software_grad_project/data/model/notification_model.dart';
 
 class NotificationCard extends StatelessWidget {
   final NotificationModel notification;
-
+  final Function decreaseNotificationsCount;
   const NotificationCard({
     Key? key,
     required this.notification,
+    required this.decreaseNotificationsCount,
   }) : super(key: key);
 
   @override
@@ -24,6 +25,7 @@ class NotificationCard extends StatelessWidget {
 
     return InkWell(
       onTap: () {
+        decreaseNotificationsCount();
         Get.toNamed(AppRoutes.speceficNotificationPage,
             arguments: notification);
       },

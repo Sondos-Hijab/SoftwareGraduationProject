@@ -9,7 +9,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(HomeScreenControllerImp());
+    Get.put(HomeScreenControllerImp()); // Put the controller instance here
 
     return GetBuilder<HomeScreenControllerImp>(builder: (controller) {
       return Scaffold(
@@ -49,13 +49,21 @@ class HomeScreen extends StatelessWidget {
       "Profile",
     ];
 
+    String badgeContent = '';
+    if (indexPage == 1) {
+      badgeContent = Get.find<HomeScreenControllerImp>()
+          .getTotalMessagesCount()
+          .toString();
+    }
+
     return CustomButtomAppBarItem(
-      textButton: titles[indexPage],
-      iconData: icons[indexPage],
-      onPressed: () {
-        changePage(indexPage);
-      },
-      color: indexPage == currentPage ? AppColors.primaryBlue : AppColors.grey,
-    );
+        textButton: titles[indexPage],
+        iconData: icons[indexPage],
+        onPressed: () {
+          changePage(indexPage);
+        },
+        color:
+            indexPage == currentPage ? AppColors.primaryBlue : AppColors.grey,
+        badgeContent: badgeContent);
   }
 }

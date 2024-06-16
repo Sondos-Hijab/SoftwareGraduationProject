@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:software_grad_project/core/services/service.dart';
 import 'package:software_grad_project/view/screens/app-main-pages/home_page.dart';
 import 'package:software_grad_project/view/screens/app-main-pages/chatting-system-pages/messages_page.dart';
 import 'package:software_grad_project/view/screens/app-main-pages/user-profile-related-pages/profile_page.dart';
@@ -7,6 +8,7 @@ import 'package:software_grad_project/view/screens/app-main-pages/search_page.da
 
 abstract class HomeScreenController extends GetxController {
   changePage(int pageIndex);
+  getTotalMessagesCount();
 }
 
 class HomeScreenControllerImp extends HomeScreenController {
@@ -22,5 +24,11 @@ class HomeScreenControllerImp extends HomeScreenController {
   changePage(int pageIndex) {
     currentPage = pageIndex;
     update();
+  }
+
+  @override
+  getTotalMessagesCount() {
+    MyServices myServices = Get.find();
+    return myServices.sharedPreferences.getInt("totalMessages");
   }
 }

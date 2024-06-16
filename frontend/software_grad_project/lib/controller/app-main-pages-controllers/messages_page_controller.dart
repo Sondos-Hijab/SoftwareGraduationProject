@@ -9,6 +9,7 @@ import 'package:software_grad_project/data/model/businesses_name_image_model.dar
 abstract class MessagesPageController extends GetxController {
   fetchChatPartners();
   refreshChatPartnersList();
+  resetNewMessagesCount(String businessName);
 }
 
 class MessagesPageControllerImp extends MessagesPageController {
@@ -20,6 +21,7 @@ class MessagesPageControllerImp extends MessagesPageController {
 
   late String username;
   late List<BusinessViewModel>? businessesList = [];
+  late List unseenMessagesCount = [];
 
   @override
   void onInit() {
@@ -47,6 +49,12 @@ class MessagesPageControllerImp extends MessagesPageController {
             convertDataToFile(business['picture']),
           );
         }).toList();
+
+        unseenMessagesCount = businesses.map((business) {
+          return myServices.sharedPreferences.getInt(business['businessName']);
+        }).toList();
+
+        print(unseenMessagesCount);
       } else {
         Get.defaultDialog(
             title: "Error", middleText: "We are sorry, something went wrong");
@@ -58,5 +66,17 @@ class MessagesPageControllerImp extends MessagesPageController {
   @override
   refreshChatPartnersList() {
     fetchChatPartners();
+  }
+
+  @override
+  resetNewMessagesCount(String businessName) {
+    int? currentValue = myServices.sharedPreferences.getInt(businessName);
+    currentValue ??= 0;
+    myServices.sharedPreferences.setInt(businessName, 0);
+
+    int? totalMessages = myServices.sharedPreferences.getInt("totalMessages");
+    totalMessages ??= 0;
+    myServices.sharedPreferences
+        .setInt("totalMessages", totalMessages - currentValue);
   }
 }

@@ -36,7 +36,11 @@ class MessagesPage extends StatelessWidget {
               (index) => MessageCardView(
                 businessName: controller.businessesList![index].businessName,
                 picture: controller.businessesList![index].picture,
+                unseenMessagesCount: controller.unseenMessagesCount[index],
                 onTap: () {
+                  controller.resetNewMessagesCount(
+                      controller.businessesList![index].businessName ?? "");
+
                   Get.toNamed(
                     AppRoutes.chatPage,
                     arguments: {

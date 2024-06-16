@@ -31,7 +31,9 @@ class HomePage extends StatelessWidget {
                   username: username,
                   onPressedNotificationButton: () {
                     Get.toNamed(AppRoutes.notificationsPage);
-                  }),
+                  },
+                  notificationCount:
+                      controller.getTotalNotificationsCount() ?? 0),
 
               HomePageSlider(
                 sliderList: sliderList,

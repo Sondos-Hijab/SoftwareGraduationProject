@@ -57,42 +57,9 @@ class ChatsPageControllerImp extends ChatsPageController {
       'transports': ['websocket'],
     });
 
-    socket.on('connect', (_) {
-      print('Connected with socket ID: ${socket.id}');
-      socket.emit('register', {
-        'username': username,
-      });
-    });
-
-    socket.on('disconnect', (_) {
-      print('Disconnected from socket server');
-    });
-
-    socket.on('receiveMessage', (data) {
-      Uint8List? photoData;
-      if (data['photo'] != null) {
-        // Convert 'photo' to Uint8List if it's not null
-        photoData = Uint8List.fromList(data['photo'].cast<int>());
-      }
-
-      messages.add(MessageModel(
-        data['chatID'],
-        data['admin_id'],
-        data['user_id'],
-        int.parse(data['sender']),
-        data['userName'],
-        data['businessName'],
-        data['created_at'],
-        data['text'],
-        photoData,
-      ));
-      update();
-
-      print('Received message: $data');
-    });
-
     socket.on('newChatMessage', (data) {
       Uint8List? photoData;
+
       if (data['photo'] != null) {
         // Convert 'photo' to Uint8List if it's not null
         photoData = Uint8List.fromList(data['photo'].cast<int>());
@@ -109,6 +76,7 @@ class ChatsPageControllerImp extends ChatsPageController {
         data['text'],
         photoData,
       ));
+
       update();
 
       print('Received new chat message: $data');
