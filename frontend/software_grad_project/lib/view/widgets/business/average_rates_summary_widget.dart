@@ -35,7 +35,7 @@ class AverageRatesSummaryWidget extends StatelessWidget {
               children: [
                 const Text(
                   "Customer Service Rate ",
-                  style: TextStyle(fontSize: 12, color: AppColors.grey),
+                  style: TextStyle(fontSize: 10, color: AppColors.grey),
                 ),
                 Row(
                   children: [
@@ -51,7 +51,7 @@ class AverageRatesSummaryWidget extends StatelessWidget {
                     Text(
                       " ${convertToFixedDouble(rate1)}",
                       style:
-                          const TextStyle(fontSize: 12, color: AppColors.grey),
+                          const TextStyle(fontSize: 10, color: AppColors.grey),
                     ),
                   ],
                 )
@@ -65,7 +65,7 @@ class AverageRatesSummaryWidget extends StatelessWidget {
               children: [
                 const Text(
                   "Value of money Rate ",
-                  style: TextStyle(fontSize: 12, color: AppColors.grey),
+                  style: TextStyle(fontSize: 10, color: AppColors.grey),
                 ),
                 Row(
                   children: [
@@ -81,7 +81,7 @@ class AverageRatesSummaryWidget extends StatelessWidget {
                     Text(
                       " ${convertToFixedDouble(rate2)}",
                       style:
-                          const TextStyle(fontSize: 12, color: AppColors.grey),
+                          const TextStyle(fontSize: 10, color: AppColors.grey),
                     ),
                   ],
                 )
@@ -95,7 +95,7 @@ class AverageRatesSummaryWidget extends StatelessWidget {
               children: [
                 const Text(
                   "Product Service Rate",
-                  style: TextStyle(fontSize: 12, color: AppColors.grey),
+                  style: TextStyle(fontSize: 10, color: AppColors.grey),
                 ),
                 Row(
                   children: [
@@ -111,7 +111,7 @@ class AverageRatesSummaryWidget extends StatelessWidget {
                     Text(
                       " ${convertToFixedDouble(rate3)}",
                       style:
-                          const TextStyle(fontSize: 12, color: AppColors.grey),
+                          const TextStyle(fontSize: 10, color: AppColors.grey),
                     ),
                   ],
                 )

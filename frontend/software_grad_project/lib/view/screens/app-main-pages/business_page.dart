@@ -27,7 +27,7 @@ class BusinessPage extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium
-                        ?.copyWith(color: Colors.black, fontSize: 14),
+                        ?.copyWith(color: Colors.black, fontSize: 13),
                   ),
                 ),
                 Tab(
@@ -36,7 +36,7 @@ class BusinessPage extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium
-                        ?.copyWith(color: Colors.black, fontSize: 14),
+                        ?.copyWith(color: Colors.black, fontSize: 13),
                   ),
                 ),
                 Tab(
@@ -45,7 +45,7 @@ class BusinessPage extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium
-                        ?.copyWith(color: Colors.black, fontSize: 14),
+                        ?.copyWith(color: Colors.black, fontSize: 13),
                   ),
                 ),
                 Tab(
@@ -54,7 +54,7 @@ class BusinessPage extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium
-                        ?.copyWith(color: Colors.black, fontSize: 14),
+                        ?.copyWith(color: Colors.black, fontSize: 13),
                   ),
                 ),
               ],
