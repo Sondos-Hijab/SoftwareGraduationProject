@@ -1,5 +1,4 @@
-convertToFixedDouble(d) {
-  String inString = d.toStringAsFixed(3);
-  double inDouble = double.parse(inString);
-  return inDouble;
+String convertToFixedDouble(double d) {
+  String inString = d.toStringAsFixed(2);
+  return inString;
 }

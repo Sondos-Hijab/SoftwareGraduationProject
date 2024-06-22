@@ -106,7 +106,8 @@ class NotificationsPageControllerImp extends NotificationsPageController {
   @override
   decreaseNotificationsCount() {
     final current = myServices.sharedPreferences.getInt("totalNotifications");
-    if (current! > 0)
+    if (current! > 0) {
       myServices.sharedPreferences.setInt("totalNotifications", current - 1);
+    }
   }
 }

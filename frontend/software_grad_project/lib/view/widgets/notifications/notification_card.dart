@@ -25,7 +25,7 @@ class NotificationCard extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        decreaseNotificationsCount();
+        // decreaseNotificationsCount();
         Get.toNamed(AppRoutes.speceficNotificationPage,
             arguments: notification);
       },

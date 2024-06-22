@@ -131,7 +131,7 @@ const PostCard = ({
           />
 
           <div className="p-4 sm:p-6">
-            <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-500">
+            <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-500 max-w-[910px]">
               {description}
             </p>
 
