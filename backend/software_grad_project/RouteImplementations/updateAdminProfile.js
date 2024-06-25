@@ -6,7 +6,7 @@ const queryAsync = promisify(con.query).bind(con);
 
 const updateAdminProfile = async (req, res, next) => {
   const user = req.user;
-  const { location, phoneNumber, description } = req.body;
+  const { location, phoneNumber, description, country, city } = req.body;
 
   try {
     // Retrieve existing business information
@@ -20,8 +20,10 @@ const updateAdminProfile = async (req, res, next) => {
     }
 
     // Update the data if provided in the request
-    if (location) {
+    if (location && city && country) {
       existingBusinessByName.location = location;
+      existingBusinessByName.city = city;
+      existingBusinessByName.country = country;
     }
     if (phoneNumber) {
       existingBusinessByName.phoneNumber = phoneNumber;
@@ -32,9 +34,11 @@ const updateAdminProfile = async (req, res, next) => {
 
     // Update the data in the database
     await queryAsync(
-      "UPDATE business SET location=?, phoneNumber=?, description=? WHERE name=?",
+      "UPDATE business SET location=?, country=?, city=?, phoneNumber=?, description=? WHERE name=?",
       [
         existingBusinessByName.location,
+        existingBusinessByName.country,
+        existingBusinessByName.city,
         existingBusinessByName.phoneNumber,
         existingBusinessByName.description,
         user.name,

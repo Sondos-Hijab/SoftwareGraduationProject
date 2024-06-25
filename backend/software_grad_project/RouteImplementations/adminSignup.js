@@ -21,7 +21,7 @@ const adminSignup = async (req, res, next) => {
     category,
     description,
     country,
-    city,
+    city
   } = req.body;
 
   try {
@@ -95,19 +95,8 @@ const adminSignup = async (req, res, next) => {
 
     // Insert user into the database after sending the email
     await queryAsync(
-      "INSERT INTO business (adminName,email,password,name,location,phoneNumber,category,description,country,city) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,?)",
-      [
-        adminName,
-        email,
-        hash,
-        name,
-        location,
-        phoneNumber,
-        category,
-        description,
-        country,
-        city,
-      ]
+      "INSERT INTO business (adminName,email,password,name,location,phoneNumber,category,description, country, city) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [adminName, email, hash,name,location,phoneNumber,category,description, country, city],
     );
 
     return res.status(201).json({
