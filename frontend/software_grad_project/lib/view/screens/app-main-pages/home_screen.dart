@@ -51,9 +51,10 @@ class HomeScreen extends StatelessWidget {
 
     String badgeContent = '';
     if (indexPage == 1) {
-      badgeContent = Get.find<HomeScreenControllerImp>()
-          .getTotalMessagesCount()
-          .toString();
+      var content = Get.find<HomeScreenControllerImp>().getTotalMessagesCount();
+      if (content != 0) {
+        badgeContent = content.toString();
+      }
     }
 
     return CustomButtomAppBarItem(
