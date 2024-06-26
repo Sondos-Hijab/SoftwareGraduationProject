@@ -14,6 +14,8 @@ const MessagesProvider = ({ children }) => {
   const [totalMessagesCount, setTotalMessagesCount] = useState(0);
 
   const [unseenMessagesCount, setUnseenMessagesCount] = useState(new Map());
+  const [flag, setFlag] = useState(true);
+  const [user, setUser] = useState("");
 
   const loadChatPartners = () => {
     getBusinessChatPartners().then((value) => {
@@ -30,8 +32,10 @@ const MessagesProvider = ({ children }) => {
 
   const addChatToChatMessages = (chatMessage) => {
     setChatMessages((prevMessages) => [...prevMessages, chatMessage]);
-    if (chatMessage.sender == "0")
-      increaseUnseenMessagesCount(chatMessage.userName);
+    if (chatMessage.sender == "0") {
+      setFlag(true);
+      setUser(chatMessage.userName);
+    }
   };
   const increaseUnseenMessagesCount = (username) => {
     const currentCount = unseenMessagesCount.get(username.toString());
@@ -44,7 +48,6 @@ const MessagesProvider = ({ children }) => {
         prevCount.set(username.toString(), currentCount + 1)
       );
     }
-    setTotalMessagesCount((prev) => prev + 1);
   };
 
   const resetUnseenMessagesCount = (username) => {
@@ -52,7 +55,10 @@ const MessagesProvider = ({ children }) => {
     setUnseenMessagesCount((prev) => {
       return prev.set(username.toString(), 0);
     });
-    setTotalMessagesCount((prev) => prev - previousCount);
+    setTotalMessagesCount((prev) => {
+      if (prev - previousCount >= 0) return prev - previousCount;
+      else return 0;
+    });
   };
   useEffect(() => {
     socket.on("newChatMessage", (newMessage) => {
@@ -75,8 +81,12 @@ const MessagesProvider = ({ children }) => {
         addChatToChatMessages,
         increaseUnseenMessagesCount,
         resetUnseenMessagesCount,
+        setTotalMessagesCount,
         userProfilePicture,
         totalMessagesCount,
+        flag,
+        setFlag,
+        user,
       }}
     >
       {children}

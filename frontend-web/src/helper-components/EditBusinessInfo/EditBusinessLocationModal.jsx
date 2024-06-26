@@ -35,8 +35,10 @@ const EditBusinessLocationModal = ({ setShowModal, setBusinessLocation }) => {
 
     const location = {
       location: JSON.stringify(coordinatesString),
+      country: selectedCountry,
+      city: selectedCity,
     };
-
+    console.log(location);
     updateInfo(accessToken, location).then((response) => {
       if (response.error) {
         console.log(errorMessage.error);

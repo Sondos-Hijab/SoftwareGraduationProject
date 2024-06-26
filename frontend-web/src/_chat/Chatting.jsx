@@ -5,13 +5,30 @@ import { useParams } from "react-router-dom";
 import { useMessagesContext } from "@/Providers/MessagesProvider";
 
 const Chatting = () => {
-  const { chatMessages, loadChatMessages, userProfilePicture } =
-    useMessagesContext();
+  const {
+    chatMessages,
+    loadChatMessages,
+    userProfilePicture,
+    flag,
+    user,
+    increaseUnseenMessagesCount,
+    setFlag,
+    setTotalMessagesCount,
+    totalMessagesCount,
+  } = useMessagesContext();
 
   const { username } = useParams();
 
   const [imagePreview, setImagePreview] = useState(null);
   const [chatImage, setChatImage] = useState();
+  useEffect(() => {
+    if (flag && username !== user) {
+      console.log(totalMessagesCount);
+      increaseUnseenMessagesCount(user);
+      setTotalMessagesCount((prev) => Number(prev) + 1);
+      setFlag(false);
+    }
+  }, [user, username, flag, totalMessagesCount]);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
